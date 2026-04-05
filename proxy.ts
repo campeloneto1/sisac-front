@@ -7,7 +7,11 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isProtectedRoute =
-    pathname.startsWith("/dashboard") || pathname.startsWith("/users") || pathname.startsWith("/profile");
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/users") ||
+    pathname.startsWith("/roles") ||
+    pathname.startsWith("/permissions") ||
+    pathname.startsWith("/profile");
 
   if (isProtectedRoute && !isAuthenticated) {
     return NextResponse.redirect(new URL("/login", request.url));
@@ -21,5 +25,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/dashboard/:path*", "/users/:path*", "/profile/:path*"],
+  matcher: ["/login", "/dashboard/:path*", "/users/:path*", "/roles/:path*", "/permissions/:path*", "/profile/:path*"],
 };

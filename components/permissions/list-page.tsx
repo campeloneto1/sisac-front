@@ -1,0 +1,95 @@
+"use client";
+
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { Plus } from "lucide-react";
+
+import { useAuth } from "@/contexts/auth-context";
+import { usePermissions } from "@/hooks/use-permissions";
+import { hasPermission } from "@/lib/permissions";
+import { usePermissionItems } from "@/hooks/use-permission-resources";
+import { Button } from "@/components/ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { PermissionsFilters } from "@/components/permissions/filters";
+import { PermissionsTable } from "@/components/permissions/table";
+
+export function PermissionsListPage() {
+  const { user } = useAuth();
+  const permissions = usePermissions("permissions");
+  const [search, setSearch] = useState("");
+  const filters = useMemo(
+    () => ({
+      page: 1,
+      per_page: 15,
+      search: search || undefined,
+    }),
+    [search],
+  );
+  const permissionItemsQuery = usePermissionItems(filters);
+
+  if (!hasPermission(user, "administrator") || !permissions.canViewAny) {
+    return (
+      <Card className="border-slate-200/70 bg-white/80">
+        <CardHeader>
+          <CardTitle>Acesso negado</CardTitle>
+          <CardDescription>
+            O modulo de permissoes fica dentro de Administrador e exige `administrator` + `permissions.viewAny`.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="font-display text-3xl text-slate-900">Permissoes</h1>
+          <p className="text-sm text-slate-500">Gerencie os slugs que alimentam o RBAC do sistema.</p>
+        </div>
+
+        {permissions.canCreate ? (
+          <Button asChild>
+            <Link href="/permissions/create">
+              <Plus className="mr-2 h-4 w-4" />
+              Nova permissao
+            </Link>
+          </Button>
+        ) : null}
+      </div>
+
+      <PermissionsFilters
+        search={search}
+        onSearchChange={setSearch}
+        onClear={() => {
+          setSearch("");
+        }}
+      />
+
+      {permissionItemsQuery.isLoading ? (
+        <div className="space-y-3">
+          <Skeleton className="h-24 w-full" />
+          <Skeleton className="h-24 w-full" />
+        </div>
+      ) : permissionItemsQuery.isError ? (
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Erro ao carregar permissoes</CardTitle>
+            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+          </CardHeader>
+        </Card>
+      ) : !permissionItemsQuery.data?.data.length ? (
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Nenhuma permissao encontrada</CardTitle>
+            <CardDescription>Crie uma nova permissao ou refine a busca.</CardDescription>
+          </CardHeader>
+        </Card>
+      ) : (
+        <PermissionsTable permissionsList={permissionItemsQuery.data.data} />
+      )}
+    </div>
+  );
+}
+

@@ -16,8 +16,19 @@ const generalItems = [
   { href: "#", label: "Projetos", icon: FolderKanban, visible: true },
 ];
 
-const administratorItems = [
-  { href: "#", label: "Configuracoes admin", icon: Settings2 },
+const administratorItems: Array<{
+  href: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  requirements: PermissionRequirement[];
+}> = [
+  { href: "/roles", label: "Perfis", icon: Settings2, requirements: [{ type: "resource", resource: "roles", action: "viewAny" }] },
+  {
+    href: "/permissions",
+    label: "Permissoes",
+    icon: Shield,
+    requirements: [{ type: "resource", resource: "permissions", action: "viewAny" }],
+  },
 ];
 
 const managerItems = [
@@ -77,6 +88,9 @@ export function AppSidebar() {
   const visibleReportsItems = reportsItems
     .filter((item) => hasAllPermissions(user, item.requirements))
     .map(({ href, label, icon }) => ({ href, label, icon }));
+  const visibleAdministratorItems = administratorItems
+    .filter((item) => hasAllPermissions(user, item.requirements))
+    .map(({ href, label, icon }) => ({ href, label, icon }));
 
   return (
     <aside className="hidden w-[228px] shrink-0 rounded-[24px] border border-white/60 bg-slate-950 px-3 py-4 text-white shadow-spotlight lg:flex lg:flex-col">
@@ -87,7 +101,9 @@ export function AppSidebar() {
 
       <nav className="mt-4 space-y-4">
         <SidebarSection items={visibleGeneralItems} />
-        {canSeeAdministratorMenu ? <SidebarSection title="Administrador" items={administratorItems} /> : null}
+        {canSeeAdministratorMenu && visibleAdministratorItems.length ? (
+          <SidebarSection title="Administrador" items={visibleAdministratorItems} />
+        ) : null}
         {canSeeManagerMenu ? <SidebarSection title="Gestor" items={managerItems} /> : null}
         {canSeeReportsMenu ? <SidebarSection title="Relatorios" items={visibleReportsItems} /> : null}
       </nav>
