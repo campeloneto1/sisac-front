@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Search } from "lucide-react";
+import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 
 import { usePermissionOptions } from "@/hooks/use-roles";
 import { useCreateRoleMutation, useUpdateRoleMutation } from "@/hooks/use-role-mutations";
@@ -42,6 +42,8 @@ export function RoleForm({ mode, role }: RoleFormProps) {
   const [permissionSearch, setPermissionSearch] = useState("");
   const initialPermissionIds = useMemo(() => role?.permissions?.map((item) => item.id) ?? [], [role?.permissions]);
   const [selectedPermissionIds, setSelectedPermissionIds] = useState<number[]>(initialPermissionIds);
+  const [highlightedAvailableIds, setHighlightedAvailableIds] = useState<number[]>([]);
+  const [highlightedSelectedIds, setHighlightedSelectedIds] = useState<number[]>([]);
   const {
     register,
     handleSubmit,
@@ -83,6 +85,43 @@ export function RoleForm({ mode, role }: RoleFormProps) {
       );
     });
   }, [permissionSearch, permissionsQuery.data?.data]);
+
+  const availablePermissions = useMemo(
+    () => filteredPermissions.filter((permission) => !selectedPermissionIds.includes(permission.id)),
+    [filteredPermissions, selectedPermissionIds],
+  );
+
+  const selectedPermissions = useMemo(
+    () =>
+      filteredPermissions
+        .filter((permission) => selectedPermissionIds.includes(permission.id))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    [filteredPermissions, selectedPermissionIds],
+  );
+
+  function toggleHighlightedId(id: number, side: "available" | "selected") {
+    const setter = side === "available" ? setHighlightedAvailableIds : setHighlightedSelectedIds;
+
+    setter((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]));
+  }
+
+  function moveToSelected() {
+    if (!highlightedAvailableIds.length) {
+      return;
+    }
+
+    setSelectedPermissionIds((current) => Array.from(new Set([...current, ...highlightedAvailableIds])));
+    setHighlightedAvailableIds([]);
+  }
+
+  function moveToAvailable() {
+    if (!highlightedSelectedIds.length) {
+      return;
+    }
+
+    setSelectedPermissionIds((current) => current.filter((id) => !highlightedSelectedIds.includes(id)));
+    setHighlightedSelectedIds([]);
+  }
 
   async function onSubmit(values: RoleFormValues) {
     const payloadBase = {
@@ -166,42 +205,81 @@ export function RoleForm({ mode, role }: RoleFormProps) {
               />
             </div>
 
-            <div className="max-h-[420px] space-y-2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-3">
-              {permissionsQuery.isLoading ? (
-                <p className="text-sm text-slate-500">Carregando permissoes...</p>
-              ) : filteredPermissions.length ? (
-                filteredPermissions.map((permission) => {
-                  const checked = selectedPermissionIds.includes(permission.id);
+            <div className="grid gap-3 lg:grid-cols-[1fr_auto_1fr]">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-medium text-slate-700">Disponiveis</p>
+                  <span className="text-xs text-slate-500">{availablePermissions.length}</span>
+                </div>
+                <div className="max-h-[420px] space-y-2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-3">
+                  {permissionsQuery.isLoading ? (
+                    <p className="text-sm text-slate-500">Carregando permissoes...</p>
+                  ) : availablePermissions.length ? (
+                    availablePermissions.map((permission) => {
+                      const active = highlightedAvailableIds.includes(permission.id);
 
-                  return (
-                    <label
-                      key={permission.id}
-                      className="flex cursor-pointer items-start gap-3 rounded-xl px-3 py-2 transition hover:bg-slate-50"
-                    >
-                      <input
-                        type="checkbox"
-                        className="mt-1 h-4 w-4 rounded border-slate-300"
-                        checked={checked}
-                        onChange={(event) => {
-                          setSelectedPermissionIds((current) => {
-                            if (event.target.checked) {
-                              return [...current, permission.id];
-                            }
+                      return (
+                        <button
+                          key={permission.id}
+                          type="button"
+                          onClick={() => toggleHighlightedId(permission.id, "available")}
+                          className={`w-full rounded-xl border px-3 py-2 text-left transition ${
+                            active
+                              ? "border-primary bg-secondary text-slate-900"
+                              : "border-transparent hover:bg-slate-50"
+                          }`}
+                        >
+                          <p className="text-sm font-medium">{permission.name}</p>
+                          <p className="text-xs text-slate-500">{permission.slug}</p>
+                        </button>
+                      );
+                    })
+                  ) : (
+                    <p className="text-sm text-slate-500">Nenhuma permissao disponivel.</p>
+                  )}
+                </div>
+              </div>
 
-                            return current.filter((id) => id !== permission.id);
-                          });
-                        }}
-                      />
-                      <div>
-                        <p className="text-sm font-medium text-slate-900">{permission.name}</p>
-                        <p className="text-xs text-slate-500">{permission.slug}</p>
-                      </div>
-                    </label>
-                  );
-                })
-              ) : (
-                <p className="text-sm text-slate-500">Nenhuma permissao encontrada.</p>
-              )}
+              <div className="flex flex-row items-center justify-center gap-2 lg:flex-col">
+                <Button type="button" variant="outline" size="icon" onClick={moveToSelected} disabled={!highlightedAvailableIds.length}>
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+                <Button type="button" variant="outline" size="icon" onClick={moveToAvailable} disabled={!highlightedSelectedIds.length}>
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-medium text-slate-700">Selecionadas</p>
+                  <span className="text-xs text-slate-500">{selectedPermissionIds.length}</span>
+                </div>
+                <div className="max-h-[420px] space-y-2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-3">
+                  {selectedPermissions.length ? (
+                    selectedPermissions.map((permission) => {
+                      const active = highlightedSelectedIds.includes(permission.id);
+
+                      return (
+                        <button
+                          key={permission.id}
+                          type="button"
+                          onClick={() => toggleHighlightedId(permission.id, "selected")}
+                          className={`w-full rounded-xl border px-3 py-2 text-left transition ${
+                            active
+                              ? "border-primary bg-secondary text-slate-900"
+                              : "border-transparent hover:bg-slate-50"
+                          }`}
+                        >
+                          <p className="text-sm font-medium">{permission.name}</p>
+                          <p className="text-xs text-slate-500">{permission.slug}</p>
+                        </button>
+                      );
+                    })
+                  ) : (
+                    <p className="text-sm text-slate-500">Nenhuma permissao selecionada.</p>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
