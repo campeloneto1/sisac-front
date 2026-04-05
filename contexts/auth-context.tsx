@@ -66,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const token = window.localStorage.getItem(AUTH_TOKEN_KEY);
 
-    if (!token || user) {
+    if (!token) {
       return;
     }
 
@@ -77,10 +77,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(normalizedUser);
         persistAuth(normalizedUser, token);
       } catch {
+        setUser(null);
         persistAuth(null);
       }
     })();
-  }, [user]);
+  }, []);
 
   const value = useMemo<AuthContextValue>(
     () => ({

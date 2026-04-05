@@ -38,11 +38,47 @@ function normalizePermissionAction(action: string): PermissionAction | null {
   }
 }
 
+function extractPermissionParts(slug: string) {
+  const normalizedSlug = slug.trim().toLowerCase();
+
+  if (normalizedSlug.includes(".")) {
+    const [resource, action] = normalizedSlug.split(".", 2);
+
+    return {
+      resource,
+      action,
+    };
+  }
+
+  const knownSuffixes = [
+    "view-any",
+    "reset-password",
+    "view",
+    "create",
+    "update",
+    "delete",
+  ] as const;
+
+  for (const suffix of knownSuffixes) {
+    if (normalizedSlug.endsWith(suffix)) {
+      return {
+        resource: normalizedSlug.slice(0, -suffix.length),
+        action: suffix,
+      };
+    }
+  }
+
+  return {
+    resource: "",
+    action: "",
+  };
+}
+
 export function mapPermissions(user: BackendAuthUser): PermissionMap {
   const entries = user.role?.permissions ?? [];
 
   return entries.reduce<PermissionMap>((acc, permission) => {
-    const [resource, action] = permission.slug.split(".");
+    const { resource, action } = extractPermissionParts(permission.slug);
 
     if (!resource || !action) {
       return acc;
@@ -67,6 +103,7 @@ export function normalizeAuthUser(user: BackendAuthUser) {
     role: user.role ?? null,
     subunits: user.subunits ?? [],
     permissions: mapPermissions(user),
+    permissionSlugs: (user.role?.permissions ?? []).map((permission) => permission.slug),
     avatarFallback: buildAvatarFallback(user.name, user.email),
   };
 }

@@ -40,6 +40,7 @@ export interface AuthUser {
   role: AuthRole | null;
   avatarFallback: string;
   permissions: PermissionMap;
+  permissionSlugs: string[];
   subunits: Subunit[];
 }
 

@@ -20,28 +20,28 @@ export function AppHeader() {
   const { user, logout } = useAuth();
 
   return (
-    <header className="border-b border-slate-200/70 px-4 py-4 md:px-6">
-      <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+    <header className="border-b border-slate-200/70 px-3 py-3 md:px-4">
+      <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
         <div className="space-y-1">
           <p className="text-xs uppercase tracking-[0.22em] text-slate-400">Area autenticada</p>
-          <h1 className="font-display text-2xl text-slate-900">Dashboard inicial</h1>
+          <h1 className="font-display text-xl text-slate-900">Dashboard inicial</h1>
         </div>
 
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-          <div className="relative min-w-[260px]">
+        <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+          <div className="relative min-w-[220px] xl:min-w-[260px]">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <Input className="pl-9" placeholder="Buscar modulos, pessoas ou processos" />
+            <Input className="h-10 pl-9" placeholder="Buscar modulos, pessoas ou processos" />
           </div>
 
           <SubunitSwitcher />
 
-          <Button size="icon" variant="outline" className="rounded-2xl">
+          <Button size="icon" variant="outline" className="h-10 w-10 rounded-xl">
             <Bell className="h-4 w-4" />
           </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="h-12 rounded-2xl px-3">
+              <Button variant="outline" className="h-10 rounded-xl px-3">
                 <Avatar className="h-8 w-8">
                   <AvatarFallback>{user?.avatarFallback ?? "US"}</AvatarFallback>
                 </Avatar>
