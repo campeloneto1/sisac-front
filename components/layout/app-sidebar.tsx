@@ -1,21 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { LayoutDashboard, Shield, Workflow, FolderKanban } from "lucide-react";
+import { FolderKanban, LayoutDashboard, Shield, Users, Workflow } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { usePermissions } from "@/hooks/use-permissions";
 
 const items = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, resource: "dashboard" },
-  { href: "/dashboard/profile", label: "Perfil", icon: Shield, resource: "dashboard" },
-  { href: "#", label: "Permissoes", icon: Shield, resource: "dashboard" },
-  { href: "#", label: "Fluxos", icon: Workflow, resource: "dashboard" },
-  { href: "#", label: "Projetos", icon: FolderKanban, resource: "dashboard" },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, visible: true },
+  { href: "/users", label: "Usuarios", icon: Users, visible: false, permissionResource: "users" },
+  { href: "/profile", label: "Perfil", icon: Shield, visible: true },
+  { href: "#", label: "Fluxos", icon: Workflow, visible: true },
+  { href: "#", label: "Projetos", icon: FolderKanban, visible: true },
 ];
 
 export function AppSidebar() {
-  usePermissions("dashboard");
+  const userPermissions = usePermissions("users");
 
   return (
     <aside className="hidden w-[280px] shrink-0 rounded-[28px] border border-white/60 bg-slate-950 p-4 text-white shadow-spotlight lg:flex lg:flex-col">
@@ -29,7 +29,7 @@ export function AppSidebar() {
 
       <nav className="mt-6 space-y-2">
         {items.map((item) => {
-          const visible = true;
+          const visible = item.permissionResource === "users" ? userPermissions.canViewAny : item.visible;
 
           if (!visible) {
             return null;

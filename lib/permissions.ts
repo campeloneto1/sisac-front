@@ -1,6 +1,6 @@
 import type { AuthUser } from "@/types/auth.type";
 
-export type PermissionAction = "viewAny" | "view" | "create" | "update" | "delete";
+export type PermissionAction = "viewAny" | "view" | "create" | "update" | "delete" | "resetPassword";
 
 export function can(user: AuthUser | null, action: PermissionAction, resource: string) {
   if (!user) {
@@ -19,4 +19,3 @@ export function can(user: AuthUser | null, action: PermissionAction, resource: s
 
   return resourcePermissions.includes("*") || resourcePermissions.includes(action);
 }
-

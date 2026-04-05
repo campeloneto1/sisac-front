@@ -15,6 +15,29 @@ export function buildAvatarFallback(name: string, email: string) {
   return email.slice(0, 2).toUpperCase();
 }
 
+function normalizePermissionAction(action: string): PermissionAction | null {
+  const normalized = action.trim().toLowerCase();
+
+  switch (normalized) {
+    case "view-any":
+    case "viewany":
+      return "viewAny";
+    case "view":
+      return "view";
+    case "create":
+      return "create";
+    case "update":
+      return "update";
+    case "delete":
+      return "delete";
+    case "reset-password":
+    case "resetpassword":
+      return "resetPassword";
+    default:
+      return null;
+  }
+}
+
 export function mapPermissions(user: BackendAuthUser): PermissionMap {
   const entries = user.role?.permissions ?? [];
 
@@ -25,8 +48,14 @@ export function mapPermissions(user: BackendAuthUser): PermissionMap {
       return acc;
     }
 
+    const normalizedAction = normalizePermissionAction(action);
+
+    if (!normalizedAction) {
+      return acc;
+    }
+
     const nextValues = new Set(acc[resource] ?? []);
-    nextValues.add(action as PermissionAction);
+    nextValues.add(normalizedAction);
     acc[resource] = Array.from(nextValues);
     return acc;
   }, {});

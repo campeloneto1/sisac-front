@@ -6,7 +6,10 @@ export function proxy(request: NextRequest) {
   const isAuthenticated = request.cookies.get(AUTH_COOKIE)?.value === "authenticated";
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith("/dashboard") && !isAuthenticated) {
+  const isProtectedRoute =
+    pathname.startsWith("/dashboard") || pathname.startsWith("/users") || pathname.startsWith("/profile");
+
+  if (isProtectedRoute && !isAuthenticated) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -18,6 +21,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/dashboard/:path*"],
+  matcher: ["/login", "/dashboard/:path*", "/users/:path*", "/profile/:path*"],
 };
-
