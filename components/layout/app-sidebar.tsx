@@ -8,13 +8,14 @@ import { usePermissions } from "@/hooks/use-permissions";
 
 const items = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, resource: "dashboard" },
+  { href: "/dashboard/profile", label: "Perfil", icon: Shield, resource: "dashboard" },
   { href: "#", label: "Permissoes", icon: Shield, resource: "dashboard" },
   { href: "#", label: "Fluxos", icon: Workflow, resource: "dashboard" },
   { href: "#", label: "Projetos", icon: FolderKanban, resource: "dashboard" },
 ];
 
 export function AppSidebar() {
-  const permissions = usePermissions("dashboard");
+  usePermissions("dashboard");
 
   return (
     <aside className="hidden w-[280px] shrink-0 rounded-[28px] border border-white/60 bg-slate-950 p-4 text-white shadow-spotlight lg:flex lg:flex-col">
@@ -28,7 +29,7 @@ export function AppSidebar() {
 
       <nav className="mt-6 space-y-2">
         {items.map((item) => {
-          const visible = item.resource === "dashboard" ? permissions.canViewAny : true;
+          const visible = true;
 
           if (!visible) {
             return null;
@@ -56,4 +57,3 @@ export function AppSidebar() {
     </aside>
   );
 }
-

@@ -21,13 +21,13 @@ export function SubunitSwitcher() {
       </div>
       <div className="min-w-0">
         <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Subunidade</p>
-        <Select value={activeSubunit?.id} onValueChange={setActiveSubunit}>
+        <Select value={activeSubunit ? String(activeSubunit.id) : undefined} onValueChange={setActiveSubunit}>
           <SelectTrigger className="h-auto min-w-[220px] border-0 px-0 py-0 shadow-none focus:ring-0">
             <SelectValue placeholder="Selecione a subunidade" />
           </SelectTrigger>
           <SelectContent>
             {subunits.map((subunit) => (
-              <SelectItem key={subunit.id} value={subunit.id}>
+              <SelectItem key={subunit.id} value={String(subunit.id)}>
                 {subunit.name}
               </SelectItem>
             ))}
@@ -37,4 +37,3 @@ export function SubunitSwitcher() {
     </div>
   );
 }
-

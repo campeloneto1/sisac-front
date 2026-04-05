@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +16,7 @@ import { Label } from "@/components/ui/label";
 const loginSchema = z.object({
   email: z.string().email("Informe um e-mail valido."),
   password: z.string().min(6, "A senha precisa ter ao menos 6 caracteres."),
+  device_name: z.string().max(255).optional(),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -29,8 +31,9 @@ export function LoginForm() {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "ana@sisac.local",
-      password: "123456",
+      email: "",
+      password: "",
+      device_name: "sisac-web",
     },
   });
 
@@ -100,6 +103,14 @@ export function LoginForm() {
               <Label htmlFor="password">Senha</Label>
               <Input id="password" type="password" placeholder="Sua senha" {...register("password")} />
               {errors.password ? <p className="text-sm text-destructive">{errors.password.message}</p> : null}
+            </div>
+
+            <input type="hidden" {...register("device_name")} />
+
+            <div className="flex items-center justify-end">
+              <Link href="/forgot-password" className="text-sm font-medium text-primary transition hover:opacity-80">
+                Esqueci minha senha
+              </Link>
             </div>
 
             <Button className="w-full" size="lg" type="submit" disabled={isSubmitting}>

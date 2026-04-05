@@ -43,7 +43,7 @@ export function SubunitProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (activeSubunit) {
-      window.localStorage.setItem(STORAGE_KEY, activeSubunit.id);
+      window.localStorage.setItem(STORAGE_KEY, String(activeSubunit.id));
       return;
     }
 
@@ -55,14 +55,14 @@ export function SubunitProvider({ children }: { children: React.ReactNode }) {
       activeSubunit,
       subunits,
       setActiveSubunit(subunitId) {
-        const nextSubunit = subunits.find((item) => item.id === subunitId);
+        const nextSubunit = subunits.find((item) => String(item.id) === subunitId);
 
         if (!nextSubunit) {
           toast.error("Subunidade invalida.");
           return;
         }
 
-        setActiveSubunitId(nextSubunit.id);
+        setActiveSubunitId(String(nextSubunit.id));
         queryClient.invalidateQueries();
         toast.success(`Contexto alterado para ${nextSubunit.name}.`);
       },

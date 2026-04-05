@@ -1,6 +1,8 @@
 export interface Subunit {
-  id: string;
+  id: string | number;
   name: string;
-  code: string;
+  code?: string;
+  abbreviation?: string | null;
+  email?: string | null;
+  phone?: string | null;
 }
-

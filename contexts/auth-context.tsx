@@ -1,9 +1,12 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState, useSyncExternalStore } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
+import { AUTH_COOKIE, AUTH_STORAGE_KEY, AUTH_TOKEN_KEY, normalizeAuthUser } from "@/lib/auth";
+import { getApiErrorMessage } from "@/lib/api";
+import { authService } from "@/services/auth/service";
 import type { AuthUser, LoginDTO } from "@/types/auth.type";
 
 interface AuthContextValue {
@@ -11,28 +14,10 @@ interface AuthContextValue {
   isReady: boolean;
   isAuthenticated: boolean;
   login: (payload: LoginDTO) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
+  refreshUser: () => Promise<void>;
+  setUser: (user: AuthUser | null) => void;
 }
-
-const AUTH_STORAGE_KEY = "sisac.auth-user";
-const AUTH_COOKIE = "sisac_session";
-
-const defaultUser: AuthUser = {
-  id: 1,
-  name: "Ana Martins",
-  email: "ana@sisac.local",
-  role: "Administrador",
-  avatarFallback: "AM",
-  permissions: {
-    "*": ["*"],
-    dashboard: ["viewAny", "view"],
-  },
-  subunits: [
-    { id: "recife-centro", name: "Recife Centro", code: "REC-CEN" },
-    { id: "olinda-norte", name: "Olinda Norte", code: "OLD-NOR" },
-    { id: "jaboatao-sul", name: "Jaboatao Sul", code: "JAB-SUL" },
-  ],
-};
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
@@ -51,26 +36,25 @@ function getInitialUser() {
     return JSON.parse(storedUser) as AuthUser;
   }
 
-  if (document.cookie.includes(`${AUTH_COOKIE}=authenticated`)) {
-    persistAuth(defaultUser);
-    return defaultUser;
-  }
-
   return null;
 }
 
-function persistAuth(user: AuthUser | null) {
+function persistAuth(user: AuthUser | null, token?: string | null) {
   if (typeof window === "undefined") {
     return;
   }
 
   if (user) {
     window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+    if (token) {
+      window.localStorage.setItem(AUTH_TOKEN_KEY, token);
+    }
     document.cookie = `${AUTH_COOKIE}=authenticated; path=/; max-age=86400; samesite=lax`;
     return;
   }
 
   window.localStorage.removeItem(AUTH_STORAGE_KEY);
+  window.localStorage.removeItem(AUTH_TOKEN_KEY);
   document.cookie = `${AUTH_COOKIE}=; path=/; max-age=0; samesite=lax`;
 }
 
@@ -79,32 +63,68 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(getInitialUser);
   const isReady = useSyncExternalStore(subscribe, () => true, () => false);
 
+  useEffect(() => {
+    const token = window.localStorage.getItem(AUTH_TOKEN_KEY);
+
+    if (!token || user) {
+      return;
+    }
+
+    void (async () => {
+      try {
+        const response = await authService.me();
+        const normalizedUser = normalizeAuthUser(response.data);
+        setUser(normalizedUser);
+        persistAuth(normalizedUser, token);
+      } catch {
+        persistAuth(null);
+      }
+    })();
+  }, [user]);
+
   const value = useMemo<AuthContextValue>(
     () => ({
       user,
       isReady,
       isAuthenticated: Boolean(user),
       async login(payload) {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
-        const nextUser: AuthUser = {
-          ...defaultUser,
-          email: payload.email,
-          name: payload.email.split("@")[0].replace(".", " "),
-          avatarFallback: payload.email.slice(0, 2).toUpperCase(),
-        };
-
-        setUser(nextUser);
-        persistAuth(nextUser);
-        toast.success("Login realizado com sucesso.");
-        router.push("/dashboard");
+        try {
+          const response = await authService.login({
+            ...payload,
+            device_name: payload.device_name ?? "sisac-web",
+          });
+          const normalizedUser = normalizeAuthUser(response.data.user);
+          setUser(normalizedUser);
+          persistAuth(normalizedUser, response.data.access_token);
+          toast.success(response.message);
+          router.push("/dashboard");
+        } catch (error) {
+          toast.error(getApiErrorMessage(error));
+          throw error;
+        }
       },
-      logout() {
-        setUser(null);
-        persistAuth(null);
-        window.localStorage.removeItem("sisac.active-subunit");
-        toast.success("Sessao encerrada.");
-        router.push("/login");
+      async logout() {
+        try {
+          await authService.logout();
+        } catch {
+          // continua limpando a sessao local mesmo se a API falhar
+        } finally {
+          setUser(null);
+          persistAuth(null);
+          window.localStorage.removeItem("sisac.active-subunit");
+          toast.success("Sessao encerrada.");
+          router.push("/login");
+        }
+      },
+      async refreshUser() {
+        const response = await authService.me();
+        const normalizedUser = normalizeAuthUser(response.data);
+        setUser(normalizedUser);
+        persistAuth(normalizedUser, window.localStorage.getItem(AUTH_TOKEN_KEY));
+      },
+      setUser(nextUser) {
+        setUser(nextUser);
+        persistAuth(nextUser, window.localStorage.getItem(AUTH_TOKEN_KEY));
       },
     }),
     [isReady, router, user],

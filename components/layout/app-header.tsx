@@ -47,7 +47,7 @@ export function AppHeader() {
                 </Avatar>
                 <span className="ml-3 hidden text-left sm:block">
                   <span className="block text-sm font-medium leading-none">{user?.name ?? "Usuario"}</span>
-                  <span className="mt-1 block text-xs text-slate-500">{user?.role ?? "Perfil"}</span>
+                  <span className="mt-1 block text-xs text-slate-500">{user?.role?.name ?? "Perfil"}</span>
                 </span>
               </Button>
             </DropdownMenuTrigger>
@@ -63,4 +63,3 @@ export function AppHeader() {
     </header>
   );
 }
-
