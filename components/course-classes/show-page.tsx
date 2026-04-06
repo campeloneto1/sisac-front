@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CourseClassDisciplinesSection } from "@/components/course-classes/disciplines-section";
 
 function getStatusVariant(status?: string | null) {
   switch (status) {
@@ -166,31 +167,10 @@ export function CourseClassShowPage() {
         </Card>
       </div>
 
-      <Card className="border-slate-200/70 bg-white/80">
-        <CardHeader>
-          <CardTitle>Disciplinas da turma</CardTitle>
-          <CardDescription>Snapshot das disciplinas copiado do curso no momento da criacao.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {courseClass.disciplines?.length ? (
-            <div className="grid gap-3 md:grid-cols-2">
-              {courseClass.disciplines.map((discipline) => (
-                <div key={discipline.id} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
-                  <p className="text-sm font-medium text-slate-900">{discipline.name}</p>
-                  <p className="mt-2 text-sm text-slate-600">
-                    Ordem: {discipline.order ?? 0} • Carga horaria: {discipline.workload_hours ?? 0}h
-                  </p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">
-                    {discipline.instructor ? `Instrutor: ${discipline.instructor.name}` : "Instrutor nao definido"}
-                  </p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-slate-500">Nenhuma disciplina retornada para esta turma.</p>
-          )}
-        </CardContent>
-      </Card>
+      <CourseClassDisciplinesSection
+        courseClassId={courseClass.id}
+        courseClassName={courseClass.name ?? `Turma #${courseClass.id}`}
+      />
     </div>
   );
 }
