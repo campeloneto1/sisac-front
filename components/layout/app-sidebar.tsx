@@ -360,6 +360,10 @@ export function AppSidebar() {
         return can(user, "viewAny", "police-officer-ranks");
       }
 
+      if (item.permissionResource === "police-officer-leaves") {
+        return can(user, "viewAny", "police-officer-leaves");
+      }
+
       return item.visible;
     })
     .map(({ href, label, icon }) => ({ href, label, icon }));
