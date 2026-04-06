@@ -15,6 +15,7 @@ import {
   Map,
   MapPinned,
   Network,
+  Orbit,
   Settings2,
   Shield,
   Shapes,
@@ -112,6 +113,12 @@ const administratorItems: Array<{
     label: "Bancos",
     icon: Landmark,
     requirements: [{ type: "resource", resource: "banks", action: "viewAny" }],
+  },
+  {
+    href: "/genders",
+    label: "Generos",
+    icon: Orbit,
+    requirements: [{ type: "resource", resource: "genders", action: "viewAny" }],
   },
   {
     href: "/permissions",
