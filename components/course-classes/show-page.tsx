@@ -43,6 +43,7 @@ function getStatusLabel(status?: string | null) {
 export function CourseClassShowPage() {
   const params = useParams<{ id: string }>();
   const permissions = usePermissions("course-classes");
+  const studentsPermissions = usePermissions("police-officer-courses");
   const courseClassQuery = useCourseClass(params.id);
 
   if (!permissions.canView) {
@@ -89,10 +90,19 @@ export function CourseClassShowPage() {
           </p>
         </div>
 
-        {permissions.canUpdate ? (
-          <Button asChild variant="outline">
-            <Link href={`/course-classes/${courseClass.id}/edit`}>Editar</Link>
-          </Button>
+        {permissions.canUpdate || studentsPermissions.canViewAny || studentsPermissions.canView ? (
+          <div className="flex flex-wrap gap-2">
+            {studentsPermissions.canViewAny || studentsPermissions.canView ? (
+              <Button asChild variant="outline">
+                <Link href={`/course-classes/${courseClass.id}/students`}>Gerenciar alunos</Link>
+              </Button>
+            ) : null}
+            {permissions.canUpdate ? (
+              <Button asChild variant="outline">
+                <Link href={`/course-classes/${courseClass.id}/edit`}>Editar</Link>
+              </Button>
+            ) : null}
+          </div>
         ) : null}
       </div>
 
