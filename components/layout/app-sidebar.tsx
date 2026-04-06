@@ -13,6 +13,7 @@ import {
   CarFront,
   ChevronDown,
   FileHeart,
+  Palmtree,
   Globe2,
   GraduationCap,
   LayoutDashboard,
@@ -73,6 +74,13 @@ const generalItems = [
     icon: FileHeart,
     visible: false,
     permissionResource: "police-officer-leaves",
+  },
+  {
+    href: "/police-officer-vacations",
+    label: "Ferias",
+    icon: Palmtree,
+    visible: false,
+    permissionResource: "police-officer-vacations",
   },
   {
     href: "/courses",
@@ -377,6 +385,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "police-officer-leaves") {
         return can(user, "viewAny", "police-officer-leaves");
+      }
+
+      if (item.permissionResource === "police-officer-vacations") {
+        return can(user, "viewAny", "police-officer-vacations");
       }
 
       if (item.permissionResource === "courses") {
