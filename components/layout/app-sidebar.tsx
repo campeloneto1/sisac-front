@@ -10,12 +10,12 @@ import {
   Building2,
   CarFront,
   ChevronDown,
-  FolderKanban,
   Globe2,
   GraduationCap,
   LayoutDashboard,
   Map,
   MapPinned,
+  Medal,
   Network,
   Orbit,
   Settings2,
@@ -57,8 +57,13 @@ const generalItems = [
     visible: false,
     permissionResource: "police-officers",
   },
-  { href: "#", label: "Fluxos", icon: Workflow, visible: true },
-  { href: "#", label: "Projetos", icon: FolderKanban, visible: true },
+  {
+    href: "/police-officer-ranks",
+    label: "Promoções",
+    icon: Medal,
+    visible: false,
+    permissionResource: "police-officer-ranks",
+  },
 ];
 
 const administratorItems: Array<{
@@ -117,7 +122,9 @@ const administratorItems: Array<{
     href: "/subunits",
     label: "Subunidades",
     icon: Network,
-    requirements: [{ type: "resource", resource: "subunits", action: "viewAny" }],
+    requirements: [
+      { type: "resource", resource: "subunits", action: "viewAny" },
+    ],
   },
   {
     href: "/banks",
@@ -129,13 +136,17 @@ const administratorItems: Array<{
     href: "/genders",
     label: "Generos",
     icon: Orbit,
-    requirements: [{ type: "resource", resource: "genders", action: "viewAny" }],
+    requirements: [
+      { type: "resource", resource: "genders", action: "viewAny" },
+    ],
   },
   {
     href: "/education-levels",
     label: "Escolaridade",
     icon: GraduationCap,
-    requirements: [{ type: "resource", resource: "education-levels", action: "viewAny" }],
+    requirements: [
+      { type: "resource", resource: "education-levels", action: "viewAny" },
+    ],
   },
   {
     href: "/ranks",
@@ -147,7 +158,9 @@ const administratorItems: Array<{
     href: "/sectors",
     label: "Setores",
     icon: Spline,
-    requirements: [{ type: "resource", resource: "sectors", action: "viewAny" }],
+    requirements: [
+      { type: "resource", resource: "sectors", action: "viewAny" },
+    ],
   },
   {
     href: "/permissions",
@@ -169,7 +182,17 @@ const managerItems: Array<{
     href: "/companies",
     label: "Empresas",
     icon: Building2,
-    requirements: [{ type: "resource", resource: "companies", action: "viewAny" }],
+    requirements: [
+      { type: "resource", resource: "companies", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/assignments",
+    label: "Funções",
+    icon: Workflow,
+    requirements: [
+      { type: "resource", resource: "assignments", action: "viewAny" },
+    ],
   },
 ];
 
@@ -312,9 +335,15 @@ export function AppSidebar() {
         return userPermissions.canViewAny;
       }
 
-      return item.permissionResource === "police-officers"
-        ? can(user, "viewAny", "police-officers")
-        : item.visible;
+      if (item.permissionResource === "police-officers") {
+        return can(user, "viewAny", "police-officers");
+      }
+
+      if (item.permissionResource === "police-officer-ranks") {
+        return can(user, "viewAny", "police-officer-ranks");
+      }
+
+      return item.visible;
     })
     .map(({ href, label, icon }) => ({ href, label, icon }));
   const visibleReportsItems = reportsItems

@@ -13,6 +13,7 @@ export function usePermissions(resource: string) {
     canCreate: can(user, "create", resource),
     canUpdate: can(user, "update", resource),
     canDelete: can(user, "delete", resource),
+    canBulkPromote: can(user, "bulkPromote", resource),
     canResetPassword: can(user, "resetPassword", resource),
   };
 }

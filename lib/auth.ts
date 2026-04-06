@@ -33,6 +33,9 @@ function normalizePermissionAction(action: string): PermissionAction | null {
     case "reset-password":
     case "resetpassword":
       return "resetPassword";
+    case "bulk-promote":
+    case "bulkpromote":
+      return "bulkPromote";
     default:
       return null;
   }
@@ -52,6 +55,7 @@ function extractPermissionParts(slug: string) {
 
   const knownSuffixes = [
     "view-any",
+    "bulk-promote",
     "reset-password",
     "view",
     "create",
