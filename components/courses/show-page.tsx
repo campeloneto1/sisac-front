@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CourseDisciplinesSection } from "@/components/courses/disciplines-section";
 
 export function CourseShowPage() {
   const params = useParams<{ id: string }>();
@@ -117,6 +118,8 @@ export function CourseShowPage() {
           </CardContent>
         </Card>
       </div>
+
+      <CourseDisciplinesSection courseId={course.id} courseName={course.name} />
     </div>
   );
 }
