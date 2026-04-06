@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   Award,
   BarChart3,
+  BookOpen,
   BriefcaseBusiness,
   Landmark,
   Building2,
@@ -72,6 +73,13 @@ const generalItems = [
     icon: FileHeart,
     visible: false,
     permissionResource: "police-officer-leaves",
+  },
+  {
+    href: "/courses",
+    label: "Cursos",
+    icon: BookOpen,
+    visible: false,
+    permissionResource: "courses",
   },
 ];
 
@@ -362,6 +370,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "police-officer-leaves") {
         return can(user, "viewAny", "police-officer-leaves");
+      }
+
+      if (item.permissionResource === "courses") {
+        return can(user, "viewAny", "courses");
       }
 
       return item.visible;
