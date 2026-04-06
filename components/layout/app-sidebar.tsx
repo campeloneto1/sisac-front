@@ -11,6 +11,7 @@ import {
   Building2,
   CarFront,
   ChevronDown,
+  FileHeart,
   Globe2,
   GraduationCap,
   LayoutDashboard,
@@ -64,6 +65,13 @@ const generalItems = [
     icon: Medal,
     visible: false,
     permissionResource: "police-officer-ranks",
+  },
+  {
+    href: "/police-officer-leaves",
+    label: "Afastamentos",
+    icon: FileHeart,
+    visible: false,
+    permissionResource: "police-officer-leaves",
   },
 ];
 
