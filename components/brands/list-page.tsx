@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
 import { hasPermission } from "@/lib/permissions";
 import { useBrands } from "@/hooks/use-brands";
+import type { BrandType } from "@/types/brand.type";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,7 +25,7 @@ export function BrandsListPage() {
   const { user } = useAuth();
   const permissions = usePermissions("brands");
   const [search, setSearch] = useState("");
-  const [type, setType] = useState("all");
+  const [type, setType] = useState<BrandType | "all">("all");
   const [page, setPage] = useState(1);
 
   const filters = useMemo(

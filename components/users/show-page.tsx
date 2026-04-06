@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useUser } from "@/hooks/use-users";
 import { useUserSubunits } from "@/hooks/use-user-subunits";
+import type { Subunit } from "@/types/subunit.type";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -70,7 +71,9 @@ export function UserShowPage() {
   const user = userQuery.data.data;
   const subunitsFromQuery = userSubunitsQuery.data?.data ?? [];
   const visibleSubunits = canViewUserSubunits
-    ? subunitsFromQuery.map((item) => item.subunit).filter(Boolean)
+    ? subunitsFromQuery
+        .map((item) => item.subunit)
+        .filter((subunit): subunit is Subunit => Boolean(subunit))
     : isSelf
       ? authenticatedUser?.subunits ?? []
       : [];

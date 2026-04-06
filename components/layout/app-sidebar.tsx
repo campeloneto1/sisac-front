@@ -20,6 +20,7 @@ import {
   Settings2,
   Shield,
   Shapes,
+  Spline,
   Users,
   Workflow,
 } from "lucide-react";
@@ -126,6 +127,12 @@ const administratorItems: Array<{
     label: "Postos/graduações",
     icon: Award,
     requirements: [{ type: "resource", resource: "ranks", action: "viewAny" }],
+  },
+  {
+    href: "/sectors",
+    label: "Setores",
+    icon: Spline,
+    requirements: [{ type: "resource", resource: "sectors", action: "viewAny" }],
   },
   {
     href: "/permissions",

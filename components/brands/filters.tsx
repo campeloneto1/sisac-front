@@ -2,16 +2,16 @@
 
 import { Search, X } from "lucide-react";
 
-import { brandTypeOptions } from "@/types/brand.type";
+import { brandTypeOptions, type BrandType } from "@/types/brand.type";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface BrandsFiltersProps {
   search: string;
-  type: string;
+  type: BrandType | "all";
   onSearchChange: (value: string) => void;
-  onTypeChange: (value: string) => void;
+  onTypeChange: (value: BrandType | "all") => void;
   onClear: () => void;
 }
 
