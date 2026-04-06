@@ -12,6 +12,7 @@ import {
   ChevronDown,
   FolderKanban,
   Globe2,
+  GraduationCap,
   LayoutDashboard,
   Map,
   MapPinned,
@@ -121,6 +122,12 @@ const administratorItems: Array<{
     label: "Generos",
     icon: Orbit,
     requirements: [{ type: "resource", resource: "genders", action: "viewAny" }],
+  },
+  {
+    href: "/education-levels",
+    label: "Escolaridade",
+    icon: GraduationCap,
+    requirements: [{ type: "resource", resource: "education-levels", action: "viewAny" }],
   },
   {
     href: "/ranks",
