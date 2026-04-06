@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { BarChart3, CarFront, ChevronDown, FolderKanban, Globe2, LayoutDashboard, Settings2, Shield, Shapes, Users, Workflow } from "lucide-react";
+import { BarChart3, CarFront, ChevronDown, FolderKanban, Globe2, LayoutDashboard, Map, Settings2, Shield, Shapes, Users, Workflow } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { cn } from "@/lib/utils";
@@ -27,6 +27,7 @@ const administratorItems: Array<{
   { href: "/brands", label: "Marcas", icon: CarFront, requirements: [{ type: "resource", resource: "brands", action: "viewAny" }] },
   { href: "/variants", label: "Variantes", icon: Shapes, requirements: [{ type: "resource", resource: "variants", action: "viewAny" }] },
   { href: "/countries", label: "Paises", icon: Globe2, requirements: [{ type: "resource", resource: "countries", action: "viewAny" }] },
+  { href: "/states", label: "Estados", icon: Map, requirements: [{ type: "resource", resource: "states", action: "viewAny" }] },
   {
     href: "/permissions",
     label: "Permissoes",
