@@ -50,8 +50,16 @@ export function PublicationTypeShowPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="font-display text-3xl text-slate-900">{publicationType.name}</h1>
-            <Badge variant={publicationType.is_positive ? "success" : "secondary"}>
-              {publicationType.is_positive ? "Positivo" : "Negativo"}
+            <Badge
+              variant={
+                publicationType.nature?.value === "positive"
+                  ? "success"
+                  : publicationType.nature?.value === "negative"
+                    ? "danger"
+                    : "secondary"
+              }
+            >
+              {publicationType.nature?.label ?? "Neutra"}
             </Badge>
             <Badge variant={publicationType.generates_points ? "info" : "secondary"}>
               {publicationType.generates_points ? "Gera pontos" : "Nao gera pontos"}
@@ -91,7 +99,7 @@ export function PublicationTypeShowPage() {
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Regras</p>
               </div>
               <div className="mt-2 space-y-1 text-sm text-slate-700">
-                <p>Natureza: {publicationType.is_positive ? "Positiva" : "Negativa"}</p>
+                <p>Natureza: {publicationType.nature?.label ?? "Neutra"}</p>
                 <p>Pontuacao: {publicationType.generates_points ? "Gera pontos" : "Nao gera pontos"}</p>
               </div>
             </div>

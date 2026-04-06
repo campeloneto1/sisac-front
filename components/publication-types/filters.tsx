@@ -8,24 +8,25 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+type NatureFilterValue = "all" | "positive" | "neutral" | "negative";
 type BooleanFilterValue = "all" | "true" | "false";
 
 interface PublicationTypesFiltersProps {
   search: string;
-  isPositive: BooleanFilterValue;
+  nature: NatureFilterValue;
   generatesPoints: BooleanFilterValue;
   onSearchChange: (value: string) => void;
-  onIsPositiveChange: (value: BooleanFilterValue) => void;
+  onNatureChange: (value: NatureFilterValue) => void;
   onGeneratesPointsChange: (value: BooleanFilterValue) => void;
   onClear: () => void;
 }
 
 export function PublicationTypesFilters({
   search,
-  isPositive,
+  nature,
   generatesPoints,
   onSearchChange,
-  onIsPositiveChange,
+  onNatureChange,
   onGeneratesPointsChange,
   onClear,
 }: PublicationTypesFiltersProps) {
@@ -54,14 +55,15 @@ export function PublicationTypesFilters({
 
         <div className="space-y-2">
           <Label>Natureza</Label>
-          <Select value={isPositive} onValueChange={(value) => onIsPositiveChange(value as BooleanFilterValue)}>
+          <Select value={nature} onValueChange={(value) => onNatureChange(value as NatureFilterValue)}>
             <SelectTrigger>
               <SelectValue placeholder="Selecione" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Todos</SelectItem>
-              <SelectItem value="true">Positivos</SelectItem>
-              <SelectItem value="false">Negativos</SelectItem>
+              <SelectItem value="positive">Positivas</SelectItem>
+              <SelectItem value="neutral">Neutras</SelectItem>
+              <SelectItem value="negative">Negativas</SelectItem>
             </SelectContent>
           </Select>
         </div>

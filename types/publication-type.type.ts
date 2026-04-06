@@ -5,7 +5,11 @@ export interface PublicationTypeItem {
   name: string;
   slug: string;
   description?: string | null;
-  is_positive?: boolean;
+  is_positive?: boolean | null;
+  nature?: {
+    value: "positive" | "neutral" | "negative";
+    label: string;
+  } | null;
   generates_points?: boolean;
   creator?: {
     id: number;
@@ -25,7 +29,7 @@ export interface PublicationTypeFilters {
   page?: number;
   per_page?: number;
   search?: string;
-  is_positive?: boolean;
+  nature?: "positive" | "neutral" | "negative";
   generates_points?: boolean;
 }
 
@@ -33,7 +37,7 @@ export interface CreatePublicationTypeDTO {
   name: string;
   slug: string;
   description?: string | null;
-  is_positive?: boolean;
+  nature?: "positive" | "neutral" | "negative";
   generates_points?: boolean;
 }
 

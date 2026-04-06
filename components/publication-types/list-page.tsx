@@ -14,6 +14,7 @@ import { PublicationTypesFilters } from "@/components/publication-types/filters"
 import { PublicationTypesTable } from "@/components/publication-types/table";
 
 type BooleanFilterValue = "all" | "true" | "false";
+type NatureFilterValue = "all" | "positive" | "neutral" | "negative";
 
 function mapBooleanFilter(value: BooleanFilterValue) {
   if (value === "all") {
@@ -26,7 +27,7 @@ function mapBooleanFilter(value: BooleanFilterValue) {
 export function PublicationTypesListPage() {
   const permissions = usePermissions("publication-types");
   const [search, setSearch] = useState("");
-  const [isPositive, setIsPositive] = useState<BooleanFilterValue>("all");
+  const [nature, setNature] = useState<NatureFilterValue>("all");
   const [generatesPoints, setGeneratesPoints] = useState<BooleanFilterValue>("all");
   const [page, setPage] = useState(1);
   const filters = useMemo(
@@ -34,10 +35,10 @@ export function PublicationTypesListPage() {
       page,
       per_page: 15,
       search: search || undefined,
-      is_positive: mapBooleanFilter(isPositive),
+      nature: nature !== "all" ? nature : undefined,
       generates_points: mapBooleanFilter(generatesPoints),
     }),
-    [generatesPoints, isPositive, page, search],
+    [generatesPoints, nature, page, search],
   );
   const publicationTypesQuery = usePublicationTypes(filters);
 
@@ -72,14 +73,14 @@ export function PublicationTypesListPage() {
 
       <PublicationTypesFilters
         search={search}
-        isPositive={isPositive}
+        nature={nature}
         generatesPoints={generatesPoints}
         onSearchChange={(value) => {
           setSearch(value);
           setPage(1);
         }}
-        onIsPositiveChange={(value) => {
-          setIsPositive(value);
+        onNatureChange={(value) => {
+          setNature(value);
           setPage(1);
         }}
         onGeneratesPointsChange={(value) => {
@@ -88,7 +89,7 @@ export function PublicationTypesListPage() {
         }}
         onClear={() => {
           setSearch("");
-          setIsPositive("all");
+          setNature("all");
           setGeneratesPoints("all");
           setPage(1);
         }}

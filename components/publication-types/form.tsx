@@ -14,13 +14,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
 const publicationTypeFormSchema = z.object({
   name: z.string().min(1, "Informe o nome.").max(100, "O nome deve ter no maximo 100 caracteres."),
   slug: z.string().min(1, "Informe o slug.").max(120, "O slug deve ter no maximo 120 caracteres."),
   description: z.string().optional(),
-  is_positive: z.boolean().default(true),
+  nature: z.enum(["positive", "neutral", "negative"]).default("neutral"),
   generates_points: z.boolean().default(false),
 });
 
@@ -48,12 +49,12 @@ export function PublicationTypeForm({ mode, publicationType }: PublicationTypeFo
       name: publicationType?.name ?? "",
       slug: publicationType?.slug ?? "",
       description: publicationType?.description ?? "",
-      is_positive: publicationType?.is_positive ?? true,
+      nature: publicationType?.nature?.value ?? "neutral",
       generates_points: publicationType?.generates_points ?? false,
     },
   });
 
-  const isPositive = useWatch({ control, name: "is_positive" });
+  const nature = useWatch({ control, name: "nature" });
   const generatesPoints = useWatch({ control, name: "generates_points" });
 
   useEffect(() => {
@@ -65,7 +66,7 @@ export function PublicationTypeForm({ mode, publicationType }: PublicationTypeFo
       name: publicationType.name,
       slug: publicationType.slug,
       description: publicationType.description ?? "",
-      is_positive: publicationType.is_positive ?? true,
+      nature: publicationType.nature?.value ?? "neutral",
       generates_points: publicationType.generates_points ?? false,
     });
   }, [publicationType, reset]);
@@ -75,7 +76,7 @@ export function PublicationTypeForm({ mode, publicationType }: PublicationTypeFo
       name: values.name.trim(),
       slug: values.slug.trim(),
       description: values.description?.trim() || null,
-      is_positive: values.is_positive,
+      nature: values.nature,
       generates_points: values.generates_points,
     };
 
@@ -129,13 +130,22 @@ export function PublicationTypeForm({ mode, publicationType }: PublicationTypeFo
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
-            <label className="flex items-start gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
-              <Checkbox checked={isPositive} onCheckedChange={(checked) => setValue("is_positive", Boolean(checked), { shouldValidate: true })} />
-              <span className="space-y-1">
-                <span className="block text-sm font-medium text-slate-900">Publicacao positiva</span>
-                <span className="block text-sm text-slate-500">Indica se o tipo representa efeito favoravel ao policial.</span>
-              </span>
-            </label>
+            <div className="space-y-2">
+              <Label>Natureza</Label>
+              <Select
+                value={nature}
+                onValueChange={(value) => setValue("nature", value as "positive" | "neutral" | "negative", { shouldValidate: true })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="positive">Positiva</SelectItem>
+                  <SelectItem value="neutral">Neutra</SelectItem>
+                  <SelectItem value="negative">Negativa</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             <label className="flex items-start gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <Checkbox checked={generatesPoints} onCheckedChange={(checked) => setValue("generates_points", Boolean(checked), { shouldValidate: true })} />
