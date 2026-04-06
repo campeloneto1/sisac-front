@@ -9,6 +9,7 @@ import { usePoliceOfficer } from "@/hooks/use-police-officers";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PoliceOfficerAllocationsSection } from "@/components/police-officers/allocations-section";
 
 export function PoliceOfficerShowPage() {
   const params = useParams<{ id: string }>();
@@ -168,6 +169,11 @@ export function PoliceOfficerShowPage() {
           )}
         </CardContent>
       </Card>
+
+      <PoliceOfficerAllocationsSection
+        policeOfficerId={policeOfficer.id}
+        policeOfficerName={policeOfficer.name ?? policeOfficer.user?.name ?? policeOfficer.war_name}
+      />
     </div>
   );
 }
