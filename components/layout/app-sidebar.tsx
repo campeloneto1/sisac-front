@@ -30,6 +30,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { cn } from "@/lib/utils";
 import { usePermissions } from "@/hooks/use-permissions";
 import {
+  can,
   hasAllPermissions,
   hasPermission,
   type PermissionRequirement,
@@ -48,6 +49,13 @@ const generalItems = [
     icon: Users,
     visible: false,
     permissionResource: "users",
+  },
+  {
+    href: "/police-officers",
+    label: "Policiais",
+    icon: Shield,
+    visible: false,
+    permissionResource: "police-officers",
   },
   { href: "#", label: "Fluxos", icon: Workflow, visible: true },
   { href: "#", label: "Projetos", icon: FolderKanban, visible: true },
@@ -283,11 +291,19 @@ export function AppSidebar() {
   const canSeeManagerMenu = hasPermission(user, "manager");
   const canSeeReportsMenu = hasPermission(user, "reports");
   const visibleGeneralItems = generalItems
-    .filter((item) =>
-      item.permissionResource === "users"
-        ? userPermissions.canViewAny
-        : item.visible,
-    )
+    .filter((item) => {
+      if (!item.permissionResource) {
+        return item.visible;
+      }
+
+      if (item.permissionResource === "users") {
+        return userPermissions.canViewAny;
+      }
+
+      return item.permissionResource === "police-officers"
+        ? can(user, "viewAny", "police-officers")
+        : item.visible;
+    })
     .map(({ href, label, icon }) => ({ href, label, icon }));
   const visibleReportsItems = reportsItems
     .filter((item) => hasAllPermissions(user, item.requirements))
