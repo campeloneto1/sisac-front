@@ -18,36 +18,27 @@ export const policeOfficersService = {
   async index(filters: PoliceOfficerFilters = {}): Promise<PaginatedResponse<PoliceOfficerItem>> {
     const { data } = await api.get<PaginatedResponse<PoliceOfficerItem>>("/police-officers", {
       params: filters,
-      skipSubunit: true,
     });
 
     return data;
   },
   async show(id: number | string): Promise<PoliceOfficerResponse> {
-    const { data } = await api.get<PoliceOfficerResponse>(`/police-officers/${id}`, {
-      skipSubunit: true,
-    });
+    const { data } = await api.get<PoliceOfficerResponse>(`/police-officers/${id}`);
 
     return data;
   },
   async create(payload: CreatePoliceOfficerDTO): Promise<PoliceOfficerResponse> {
-    const { data } = await api.post<PoliceOfficerResponse>("/police-officers", payload, {
-      skipSubunit: true,
-    });
+    const { data } = await api.post<PoliceOfficerResponse>("/police-officers", payload);
 
     return data;
   },
   async update(id: number | string, payload: UpdatePoliceOfficerDTO): Promise<PoliceOfficerResponse> {
-    const { data } = await api.put<PoliceOfficerResponse>(`/police-officers/${id}`, payload, {
-      skipSubunit: true,
-    });
+    const { data } = await api.put<PoliceOfficerResponse>(`/police-officers/${id}`, payload);
 
     return data;
   },
   async remove(id: number | string): Promise<ApiMessageResponse> {
-    const { data } = await api.delete<ApiMessageResponse>(`/police-officers/${id}`, {
-      skipSubunit: true,
-    });
+    const { data } = await api.delete<ApiMessageResponse>(`/police-officers/${id}`);
 
     return data;
   },

@@ -159,7 +159,19 @@ const administratorItems: Array<{
   },
 ];
 
-const managerItems = [{ href: "#", label: "Painel gestor", icon: Settings2 }];
+const managerItems: Array<{
+  href: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  requirements: PermissionRequirement[];
+}> = [
+  {
+    href: "/companies",
+    label: "Empresas",
+    icon: Building2,
+    requirements: [{ type: "resource", resource: "companies", action: "viewAny" }],
+  },
+];
 
 const reportsItems: Array<{
   href: string;
