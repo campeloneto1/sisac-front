@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { CalendarDays, GraduationCap, UserCircle2, Users2 } from "lucide-react";
+import { CalendarDays, GraduationCap, Printer, UserCircle2, Users2 } from "lucide-react";
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { useCourseClass } from "@/hooks/use-course-classes";
@@ -43,6 +43,7 @@ function getStatusLabel(status?: string | null) {
 export function CourseClassShowPage() {
   const params = useParams<{ id: string }>();
   const permissions = usePermissions("course-classes");
+  const disciplinesPermissions = usePermissions("course-class-disciplines");
   const studentsPermissions = usePermissions("police-officer-courses");
   const courseClassQuery = useCourseClass(params.id);
 
@@ -90,8 +91,28 @@ export function CourseClassShowPage() {
           </p>
         </div>
 
-        {permissions.canUpdate || studentsPermissions.canViewAny || studentsPermissions.canView ? (
+        {permissions.canUpdate ||
+        disciplinesPermissions.canViewAny ||
+        disciplinesPermissions.canView ||
+        studentsPermissions.canViewAny ||
+        studentsPermissions.canView ? (
           <div className="flex flex-wrap gap-2">
+            {disciplinesPermissions.canViewAny || disciplinesPermissions.canView ? (
+              <Button asChild variant="outline">
+                <Link href={`/course-classes/${courseClass.id}/print-disciplines`}>
+                  <Printer className="mr-2 h-4 w-4" />
+                  Imprimir grade
+                </Link>
+              </Button>
+            ) : null}
+            {studentsPermissions.canViewAny || studentsPermissions.canView ? (
+              <Button asChild variant="outline">
+                <Link href={`/course-classes/${courseClass.id}/print-students`}>
+                  <Printer className="mr-2 h-4 w-4" />
+                  Imprimir alunos
+                </Link>
+              </Button>
+            ) : null}
             {studentsPermissions.canViewAny || studentsPermissions.canView ? (
               <Button asChild variant="outline">
                 <Link href={`/course-classes/${courseClass.id}/students`}>Gerenciar alunos</Link>

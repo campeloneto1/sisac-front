@@ -134,6 +134,9 @@ export function CourseClassStudentsPage() {
           <Button asChild variant="outline">
             <Link href={`/course-classes/${courseClass.id}`}>Voltar para a turma</Link>
           </Button>
+          <Button asChild variant="outline">
+            <Link href={`/course-classes/${courseClass.id}/print-students`}>Imprimir alunos</Link>
+          </Button>
           {permissions.canCreate ? (
             <Button
               onClick={() => {
