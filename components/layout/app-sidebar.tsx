@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   Award,
   BarChart3,
+  BriefcaseBusiness,
   Landmark,
   Building2,
   CarFront,
@@ -153,6 +154,14 @@ const administratorItems: Array<{
     label: "Postos/graduações",
     icon: Award,
     requirements: [{ type: "resource", resource: "ranks", action: "viewAny" }],
+  },
+  {
+    href: "/leave-types",
+    label: "Tipos de afastamento",
+    icon: BriefcaseBusiness,
+    requirements: [
+      { type: "resource", resource: "leave-types", action: "viewAny" },
+    ],
   },
   {
     href: "/sectors",
