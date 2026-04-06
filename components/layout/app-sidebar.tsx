@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import {
+  Award,
   BarChart3,
   Landmark,
   Building2,
@@ -119,6 +120,12 @@ const administratorItems: Array<{
     label: "Generos",
     icon: Orbit,
     requirements: [{ type: "resource", resource: "genders", action: "viewAny" }],
+  },
+  {
+    href: "/ranks",
+    label: "Postos/graduações",
+    icon: Award,
+    requirements: [{ type: "resource", resource: "ranks", action: "viewAny" }],
   },
   {
     href: "/permissions",
