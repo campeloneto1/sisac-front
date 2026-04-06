@@ -8,6 +8,7 @@ import { usePermissions } from "@/hooks/use-permissions";
 import { useRoles, useUsers } from "@/hooks/use-users";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Pagination } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { UsersFilters } from "@/components/users/filters";
 import { UsersTable } from "@/components/users/table";
@@ -16,14 +17,16 @@ export function UsersListPage() {
   const permissions = usePermissions("users");
   const [search, setSearch] = useState("");
   const [roleId, setRoleId] = useState("all");
+  const [page, setPage] = useState(1);
+
   const filters = useMemo(
     () => ({
-      page: 1,
+      page,
       per_page: 15,
       search: search || undefined,
       role_id: roleId !== "all" ? Number(roleId) : null,
     }),
-    [roleId, search],
+    [page, roleId, search],
   );
   const usersQuery = useUsers(filters);
   const rolesQuery = useRoles();
@@ -61,11 +64,18 @@ export function UsersListPage() {
         search={search}
         roleId={roleId}
         roles={rolesQuery.data?.data ?? []}
-        onSearchChange={setSearch}
-        onRoleChange={setRoleId}
+        onSearchChange={(value) => {
+          setSearch(value);
+          setPage(1);
+        }}
+        onRoleChange={(value) => {
+          setRoleId(value);
+          setPage(1);
+        }}
         onClear={() => {
           setSearch("");
           setRoleId("all");
+          setPage(1);
         }}
       />
 
@@ -90,7 +100,18 @@ export function UsersListPage() {
           </CardHeader>
         </Card>
       ) : (
-        <UsersTable users={usersQuery.data.data} />
+        <div className="space-y-4">
+          <UsersTable users={usersQuery.data.data} />
+          <Pagination
+            currentPage={usersQuery.data.meta.current_page}
+            lastPage={usersQuery.data.meta.last_page}
+            total={usersQuery.data.meta.total}
+            from={usersQuery.data.meta.from}
+            to={usersQuery.data.meta.to}
+            onPageChange={setPage}
+            isDisabled={usersQuery.isFetching}
+          />
+        </div>
       )}
     </div>
   );

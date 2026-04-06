@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Bell, Search } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
@@ -55,6 +56,10 @@ export function AppHeader() {
               <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>{user?.email}</DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/profile">Perfil</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logout}>Sair</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import { usersService } from "@/services/users/service";
 import type { UserFilters } from "@/types/user.type";
@@ -9,6 +9,7 @@ export function useUsers(filters: UserFilters) {
   return useQuery({
     queryKey: ["users", filters],
     queryFn: () => usersService.index(filters),
+    placeholderData: keepPreviousData,
   });
 }
 
@@ -26,4 +27,3 @@ export function useRoles(search?: string) {
     queryFn: () => usersService.roles(search),
   });
 }
-

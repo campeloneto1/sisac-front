@@ -10,6 +10,7 @@ import { hasPermission } from "@/lib/permissions";
 import { useRoles } from "@/hooks/use-roles";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Pagination } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { RolesFilters } from "@/components/roles/filters";
 import { RolesTable } from "@/components/roles/table";
@@ -18,13 +19,15 @@ export function RolesListPage() {
   const { user } = useAuth();
   const permissions = usePermissions("roles");
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+
   const filters = useMemo(
     () => ({
-      page: 1,
+      page,
       per_page: 15,
       search: search || undefined,
     }),
-    [search],
+    [page, search],
   );
   const rolesQuery = useRoles(filters);
 
@@ -61,9 +64,13 @@ export function RolesListPage() {
 
       <RolesFilters
         search={search}
-        onSearchChange={setSearch}
+        onSearchChange={(value) => {
+          setSearch(value);
+          setPage(1);
+        }}
         onClear={() => {
           setSearch("");
+          setPage(1);
         }}
       />
 
@@ -87,9 +94,19 @@ export function RolesListPage() {
           </CardHeader>
         </Card>
       ) : (
-        <RolesTable roles={rolesQuery.data.data} />
+        <div className="space-y-4">
+          <RolesTable roles={rolesQuery.data.data} />
+          <Pagination
+            currentPage={rolesQuery.data.meta.current_page}
+            lastPage={rolesQuery.data.meta.last_page}
+            total={rolesQuery.data.meta.total}
+            from={rolesQuery.data.meta.from}
+            to={rolesQuery.data.meta.to}
+            onPageChange={setPage}
+            isDisabled={rolesQuery.isFetching}
+          />
+        </div>
       )}
     </div>
   );
 }
-

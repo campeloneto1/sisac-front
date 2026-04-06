@@ -10,6 +10,7 @@ import { hasPermission } from "@/lib/permissions";
 import { usePermissionItems } from "@/hooks/use-permission-resources";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Pagination } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PermissionsFilters } from "@/components/permissions/filters";
 import { PermissionsTable } from "@/components/permissions/table";
@@ -18,13 +19,15 @@ export function PermissionsListPage() {
   const { user } = useAuth();
   const permissions = usePermissions("permissions");
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+
   const filters = useMemo(
     () => ({
-      page: 1,
+      page,
       per_page: 15,
       search: search || undefined,
     }),
-    [search],
+    [page, search],
   );
   const permissionItemsQuery = usePermissionItems(filters);
 
@@ -61,9 +64,13 @@ export function PermissionsListPage() {
 
       <PermissionsFilters
         search={search}
-        onSearchChange={setSearch}
+        onSearchChange={(value) => {
+          setSearch(value);
+          setPage(1);
+        }}
         onClear={() => {
           setSearch("");
+          setPage(1);
         }}
       />
 
@@ -87,9 +94,19 @@ export function PermissionsListPage() {
           </CardHeader>
         </Card>
       ) : (
-        <PermissionsTable permissionsList={permissionItemsQuery.data.data} />
+        <div className="space-y-4">
+          <PermissionsTable permissionsList={permissionItemsQuery.data.data} />
+          <Pagination
+            currentPage={permissionItemsQuery.data.meta.current_page}
+            lastPage={permissionItemsQuery.data.meta.last_page}
+            total={permissionItemsQuery.data.meta.total}
+            from={permissionItemsQuery.data.meta.from}
+            to={permissionItemsQuery.data.meta.to}
+            onPageChange={setPage}
+            isDisabled={permissionItemsQuery.isFetching}
+          />
+        </div>
       )}
     </div>
   );
 }
-
