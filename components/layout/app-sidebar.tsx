@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { BarChart3, ChevronDown, FolderKanban, LayoutDashboard, Settings2, Shield, Users, Workflow } from "lucide-react";
+import { BarChart3, CarFront, ChevronDown, FolderKanban, LayoutDashboard, Settings2, Shield, Users, Workflow } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { cn } from "@/lib/utils";
@@ -24,6 +24,7 @@ const administratorItems: Array<{
   requirements: PermissionRequirement[];
 }> = [
   { href: "/roles", label: "Perfis", icon: Settings2, requirements: [{ type: "resource", resource: "roles", action: "viewAny" }] },
+  { href: "/brands", label: "Marcas", icon: CarFront, requirements: [{ type: "resource", resource: "brands", action: "viewAny" }] },
   {
     href: "/permissions",
     label: "Permissoes",

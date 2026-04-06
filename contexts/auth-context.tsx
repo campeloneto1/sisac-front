@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -20,24 +20,6 @@ interface AuthContextValue {
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
-
-function subscribe() {
-  return () => undefined;
-}
-
-function getInitialUser() {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  const storedUser = window.localStorage.getItem(AUTH_STORAGE_KEY);
-
-  if (storedUser) {
-    return JSON.parse(storedUser) as AuthUser;
-  }
-
-  return null;
-}
 
 function persistAuth(user: AuthUser | null, token?: string | null) {
   if (typeof window === "undefined") {
@@ -60,13 +42,23 @@ function persistAuth(user: AuthUser | null, token?: string | null) {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [user, setUser] = useState<AuthUser | null>(getInitialUser);
-  const isReady = useSyncExternalStore(subscribe, () => true, () => false);
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    const storedUser = window.localStorage.getItem(AUTH_STORAGE_KEY);
     const token = window.localStorage.getItem(AUTH_TOKEN_KEY);
 
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser) as AuthUser);
+      } catch {
+        window.localStorage.removeItem(AUTH_STORAGE_KEY);
+      }
+    }
+
     if (!token) {
+      setIsReady(true);
       return;
     }
 
@@ -79,6 +71,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } catch {
         setUser(null);
         persistAuth(null);
+      } finally {
+        setIsReady(true);
       }
     })();
   }, []);
