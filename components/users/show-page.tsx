@@ -7,12 +7,14 @@ import { CalendarClock, CreditCard, Mail, Phone, Shield, UserCircle2 } from "luc
 import { useAuth } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useUser } from "@/hooks/use-users";
+import { useUserSubunits } from "@/hooks/use-user-subunits";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ResetPasswordDialog } from "@/components/users/reset-password-dialog";
+import { UserSubunitsDialog } from "@/components/users/user-subunits-dialog";
 
 function InfoRow({ icon: Icon, label, value }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string }) {
   return (
@@ -32,8 +34,12 @@ export function UserShowPage() {
   const params = useParams<{ id: string }>();
   const { user: authenticatedUser } = useAuth();
   const permissions = usePermissions("users");
+  const userSubunitPermissions = usePermissions("user-subunits");
   const userQuery = useUser(params.id);
   const isSelf = authenticatedUser?.id === Number(params.id);
+  const canViewUserSubunits = userSubunitPermissions.canViewAny;
+  const canManageUserSubunits = userSubunitPermissions.canViewAny && (userSubunitPermissions.canCreate || userSubunitPermissions.canDelete);
+  const userSubunitsQuery = useUserSubunits(canViewUserSubunits ? Number(params.id) : undefined);
 
   if (!permissions.canView && !isSelf) {
     return (
@@ -62,6 +68,12 @@ export function UserShowPage() {
   }
 
   const user = userQuery.data.data;
+  const subunitsFromQuery = userSubunitsQuery.data?.data ?? [];
+  const visibleSubunits = canViewUserSubunits
+    ? subunitsFromQuery.map((item) => item.subunit).filter(Boolean)
+    : isSelf
+      ? authenticatedUser?.subunits ?? []
+      : [];
 
   return (
     <div className="space-y-6">
@@ -85,6 +97,9 @@ export function UserShowPage() {
             <Button asChild variant="outline">
               <Link href={`/users/${user.id}/edit`}>Editar</Link>
             </Button>
+          ) : null}
+          {canManageUserSubunits ? (
+            <UserSubunitsDialog userId={user.id} userName={user.name} />
           ) : null}
           {permissions.canResetPassword ? <ResetPasswordDialog userId={user.id} userName={user.name} /> : null}
         </div>
@@ -142,20 +157,32 @@ export function UserShowPage() {
         <CardHeader>
           <CardTitle>Subunidades</CardTitle>
           <CardDescription>
-            O `UserResource` preve esta relacao, mas ela so aparecera se o backend a carregar no repositório.
+            Estas subunidades definem o que o usuario pode selecionar na navbar e qual `X-Active-Subunit` pode ser enviado para a API.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {user.subunits?.length ? (
+          {canViewUserSubunits && userSubunitsQuery.isLoading ? (
             <div className="flex flex-wrap gap-2">
-              {user.subunits.map((subunit) => (
+              <Skeleton className="h-7 w-32" />
+              <Skeleton className="h-7 w-28" />
+              <Skeleton className="h-7 w-36" />
+            </div>
+          ) : visibleSubunits.length ? (
+            <div className="flex flex-wrap gap-2">
+              {visibleSubunits.map((subunit) => (
                 <Badge key={String(subunit.id)} variant="outline">
                   {subunit.name}
                 </Badge>
               ))}
             </div>
+          ) : canViewUserSubunits ? (
+            <p className="text-sm text-slate-500">Nenhuma subunidade vinculada para este usuario.</p>
+          ) : isSelf ? (
+            <p className="text-sm text-slate-500">
+              As subunidades disponiveis para a sua sessao sao exibidas aqui a partir do contexto autenticado.
+            </p>
           ) : (
-            <p className="text-sm text-slate-500">Nenhuma subunidade retornada pela API para este usuario.</p>
+            <p className="text-sm text-slate-500">Voce nao possui permissao para visualizar os vinculos de subunidade deste usuario.</p>
           )}
         </CardContent>
       </Card>

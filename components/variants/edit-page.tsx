@@ -6,7 +6,12 @@ import { useAuth } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useVariant } from "@/hooks/use-variants";
 import { hasPermission } from "@/lib/permissions";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { VariantForm } from "@/components/variants/form";
 
@@ -21,7 +26,10 @@ export function VariantEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `variants.update` para editar variantes.</CardDescription>
+          <CardDescription>
+            Voce precisa de `administrator` e `variants.update` para editar
+            modelos.
+          </CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +44,9 @@ export function VariantEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar variante</CardTitle>
-          <CardDescription>A variante nao pode ser editada agora.</CardDescription>
+          <CardDescription>
+            A variante nao pode ser editada agora.
+          </CardDescription>
         </CardHeader>
       </Card>
     );

@@ -1,17 +1,13 @@
 import type { PaginatedMeta } from "@/types/brand.type";
 import type { CityItem } from "@/types/city.type";
-import type { UnitItem, UnitOfficerOption } from "@/types/unit.type";
 
-export interface Subunit {
-  id: string | number;
-  name: string;
-  code?: string;
-  abbreviation?: string | null;
-  email?: string | null;
-  phone?: string | null;
+export interface UnitOfficerOption {
+  id: number;
+  name?: string | null;
+  registration_number?: string | null;
 }
 
-export interface SubunitItem {
+export interface UnitItem {
   id: number;
   name: string;
   abbreviation: string;
@@ -22,11 +18,9 @@ export interface SubunitItem {
   neighborhood?: string | null;
   postal_code?: string | null;
   city_id: number | null;
-  unit_id: number | null;
   commander_id: number | null;
   deputy_commander_id: number | null;
   city?: Pick<CityItem, "id" | "name" | "abbreviation"> | null;
-  unit?: Pick<UnitItem, "id" | "name" | "abbreviation"> | null;
   commander?: UnitOfficerOption | null;
   deputy_commander?: UnitOfficerOption | null;
   creator?: {
@@ -43,15 +37,14 @@ export interface SubunitItem {
   updated_at?: string | null;
 }
 
-export interface SubunitFilters {
+export interface UnitFilters {
   page?: number;
   per_page?: number;
   search?: string;
   city_id?: number | null;
-  unit_id?: number | null;
 }
 
-export interface CreateSubunitDTO {
+export interface CreateUnitDTO {
   name: string;
   abbreviation: string;
   phone?: string | null;
@@ -61,12 +54,11 @@ export interface CreateSubunitDTO {
   neighborhood?: string | null;
   postal_code?: string | null;
   city_id?: number | null;
-  unit_id?: number | null;
   commander_id?: number | null;
   deputy_commander_id?: number | null;
 }
 
-export interface UpdateSubunitDTO {
+export interface UpdateUnitDTO {
   name?: string;
   abbreviation?: string;
   phone?: string | null;
@@ -76,14 +68,13 @@ export interface UpdateSubunitDTO {
   neighborhood?: string | null;
   postal_code?: string | null;
   city_id?: number | null;
-  unit_id?: number | null;
   commander_id?: number | null;
   deputy_commander_id?: number | null;
 }
 
-export interface SubunitResponse {
+export interface UnitResponse {
   message: string;
-  data: SubunitItem;
+  data: UnitItem;
 }
 
 export interface PaginatedResponse<T> {
@@ -97,17 +88,12 @@ export interface PaginatedResponse<T> {
   meta: PaginatedMeta;
 }
 
-export interface SubunitCityListResponse {
+export interface UnitCityListResponse {
   data: Pick<CityItem, "id" | "name" | "abbreviation">[];
   meta: PaginatedMeta;
 }
 
-export interface SubunitUnitListResponse {
-  data: Pick<UnitItem, "id" | "name" | "abbreviation">[];
-  meta: PaginatedMeta;
-}
-
-export interface SubunitOfficerListResponse {
+export interface UnitOfficerListResponse {
   data: UnitOfficerOption[];
   meta: PaginatedMeta;
 }

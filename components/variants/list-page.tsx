@@ -9,7 +9,12 @@ import { usePermissions } from "@/hooks/use-permissions";
 import { useVariantBrands, useVariants } from "@/hooks/use-variants";
 import { hasPermission } from "@/lib/permissions";
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Pagination } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { VariantsFilters } from "@/components/variants/filters";
@@ -38,7 +43,10 @@ export function VariantsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `variants.viewAny` para visualizar variantes.</CardDescription>
+          <CardDescription>
+            Voce precisa de `administrator` e `variants.viewAny` para visualizar
+            modelos.
+          </CardDescription>
         </CardHeader>
       </Card>
     );
@@ -48,8 +56,11 @@ export function VariantsListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Variantes</h1>
-          <p className="text-sm text-slate-500">Gerencie os modelos vinculados a marcas dentro do catalogo administrativo.</p>
+          <h1 className="font-display text-3xl text-slate-900">Modelos</h1>
+          <p className="text-sm text-slate-500">
+            Gerencie os modelos vinculados a marcas dentro do catalogo
+            administrativo.
+          </p>
         </div>
 
         {permissions.canCreate ? (
@@ -89,15 +100,19 @@ export function VariantsListPage() {
       ) : variantsQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar variantes</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardTitle>Erro ao carregar modelos</CardTitle>
+            <CardDescription>
+              Verifique a API e as permissoes do usuario autenticado.
+            </CardDescription>
           </CardHeader>
         </Card>
       ) : !variantsQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Nenhuma variante encontrada</CardTitle>
-            <CardDescription>Crie uma nova variante ou refine os filtros aplicados.</CardDescription>
+            <CardDescription>
+              Crie uma nova variante ou refine os filtros aplicados.
+            </CardDescription>
           </CardHeader>
         </Card>
       ) : (
