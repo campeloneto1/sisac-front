@@ -81,6 +81,13 @@ const generalItems = [
     visible: false,
     permissionResource: "courses",
   },
+  {
+    href: "/course-classes",
+    label: "Turmas",
+    icon: GraduationCap,
+    visible: false,
+    permissionResource: "course-classes",
+  },
 ];
 
 const administratorItems: Array<{
@@ -374,6 +381,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "courses") {
         return can(user, "viewAny", "courses");
+      }
+
+      if (item.permissionResource === "course-classes") {
+        return can(user, "viewAny", "course-classes");
       }
 
       return item.visible;
