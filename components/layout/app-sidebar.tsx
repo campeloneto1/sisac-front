@@ -210,6 +210,14 @@ const administratorItems: Array<{
       { type: "resource", resource: "permissions", action: "viewAny" },
     ],
   },
+  {
+    href: "/publication-types",
+    label: "Tipos de publicacao",
+    icon: FileHeart,
+    requirements: [
+      { type: "resource", resource: "publication-types", action: "viewAny" },
+    ],
+  },
 ];
 
 const managerItems: Array<{
