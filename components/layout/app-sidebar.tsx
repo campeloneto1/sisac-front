@@ -5,6 +5,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   BarChart3,
+  Landmark,
   Building2,
   CarFront,
   ChevronDown,
@@ -105,6 +106,12 @@ const administratorItems: Array<{
     label: "Subunidades",
     icon: Network,
     requirements: [{ type: "resource", resource: "subunits", action: "viewAny" }],
+  },
+  {
+    href: "/banks",
+    label: "Bancos",
+    icon: Landmark,
+    requirements: [{ type: "resource", resource: "banks", action: "viewAny" }],
   },
   {
     href: "/permissions",
