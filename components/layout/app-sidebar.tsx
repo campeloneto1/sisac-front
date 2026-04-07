@@ -224,6 +224,14 @@ const administratorItems: Array<{
     ],
   },
   {
+    href: "/contract-objects",
+    label: "Objetos de contrato",
+    icon: FileHeart,
+    requirements: [
+      { type: "resource", resource: "contract-objects", action: "viewAny" },
+    ],
+  },
+  {
     href: "/vehicle-types",
     label: "Tipos de veiculo",
     icon: CarFront,
