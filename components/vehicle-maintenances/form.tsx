@@ -11,13 +11,15 @@ import {
   useCreateVehicleMaintenanceMutation,
   useUpdateVehicleMaintenanceMutation,
 } from "@/hooks/use-vehicle-maintenance-mutations";
-import { useAvailableVehicles, useVehicles } from "@/hooks/use-vehicles";
 import { useWorkshops } from "@/hooks/use-workshops";
+import { formatVehicleOptionLabel } from "@/lib/option-labels";
+import { vehiclesService } from "@/services/vehicles/service";
 import type {
   CreateVehicleMaintenanceDTO,
   UpdateVehicleMaintenanceDTO,
   VehicleMaintenanceItem,
 } from "@/types/vehicle-maintenance.type";
+import { AsyncSearchableSelect } from "@/components/ui/async-searchable-select";
 import {
   vehicleMaintenanceStatusOptions,
   vehicleMaintenanceTypeOptions,
@@ -90,14 +92,6 @@ export function VehicleMaintenanceForm({
   const router = useRouter();
   const createMutation = useCreateVehicleMaintenanceMutation();
   const updateMutation = useUpdateVehicleMaintenanceMutation();
-  const vehiclesQuery = useVehicles(
-    { per_page: 100 },
-    { enabled: mode === "edit" },
-  );
-  const availableVehiclesQuery = useAvailableVehicles(
-    { per_page: 100 },
-    { enabled: mode === "create" },
-  );
   const workshopsQuery = useWorkshops({ per_page: 100 });
 
   const {
@@ -237,10 +231,12 @@ export function VehicleMaintenanceForm({
   }
 
   const isPending = createMutation.isPending || updateMutation.isPending;
-  const selectableVehicles =
-    mode === "create"
-      ? (availableVehiclesQuery.data?.data ?? [])
-      : (vehiclesQuery.data?.data ?? []);
+  const selectedVehicleOption = maintenance?.vehicle
+    ? {
+        value: String(maintenance.vehicle_id),
+        label: formatVehicleOptionLabel({ ...maintenance.vehicle, id: maintenance.vehicle_id }),
+      }
+    : null;
 
   return (
     <Card className="border-slate-200/70 bg-white/80">
@@ -258,27 +254,31 @@ export function VehicleMaintenanceForm({
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
               <Label>Veiculo</Label>
-              <Select
-                value={selectedVehicleId || "none"}
+              <AsyncSearchableSelect
+                value={selectedVehicleId || undefined}
                 onValueChange={(value) =>
-                  setValue("vehicle_id", value === "none" ? "" : value, {
+                  setValue("vehicle_id", value, {
                     shouldValidate: true,
                     shouldDirty: true,
                   })
                 }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione um veiculo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">Selecione um veiculo</SelectItem>
-                  {selectableVehicles.map((vehicle) => (
-                    <SelectItem key={vehicle.id} value={String(vehicle.id)}>
-                      {vehicle.license_plate}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                queryKey={["vehicle-maintenances", "vehicles", mode]}
+                loadPage={({ page, search }) =>
+                  (mode === "create" ? vehiclesService.available : vehiclesService.index)({
+                    page,
+                    per_page: 20,
+                    search: search || undefined,
+                  })
+                }
+                mapOption={(vehicle) => ({
+                  value: String(vehicle.id),
+                  label: formatVehicleOptionLabel(vehicle),
+                })}
+                selectedOption={selectedVehicleOption}
+                placeholder="Selecione um veiculo"
+                searchPlaceholder="Buscar por placa, marca ou variante"
+                emptyMessage="Nenhum veiculo encontrado."
+              />
               {errors.vehicle_id ? (
                 <p className="text-sm text-destructive">
                   {errors.vehicle_id.message}

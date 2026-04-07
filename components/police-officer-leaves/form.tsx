@@ -9,8 +9,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useCreatePoliceOfficerLeaveMutation, useUpdatePoliceOfficerLeaveMutation } from "@/hooks/use-police-officer-leave-mutations";
 import { usePoliceOfficerLeaves } from "@/hooks/use-police-officer-leaves";
-import { usePoliceOfficers } from "@/hooks/use-police-officers";
 import { useLeaveTypes } from "@/hooks/use-leave-types";
+import { formatPoliceOfficerOptionLabel } from "@/lib/option-labels";
+import { policeOfficersService } from "@/services/police-officers/service";
 import {
   POLICE_OFFICER_LEAVE_COPEM_RESULT_OPTIONS,
   POLICE_OFFICER_LEAVE_STATUS_OPTIONS,
@@ -18,6 +19,7 @@ import {
   type PoliceOfficerLeaveItem,
   type UpdatePoliceOfficerLeaveDTO,
 } from "@/types/police-officer-leave.type";
+import { AsyncSearchableSelect } from "@/components/ui/async-searchable-select";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -85,7 +87,6 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
   const router = useRouter();
   const createMutation = useCreatePoliceOfficerLeaveMutation();
   const updateMutation = useUpdatePoliceOfficerLeaveMutation();
-  const policeOfficersQuery = usePoliceOfficers({ per_page: 100 });
   const leaveTypesQuery = useLeaveTypes({ per_page: 100 });
   const {
     control,
@@ -206,6 +207,15 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
   }
 
   const isPending = createMutation.isPending || updateMutation.isPending;
+  const selectedPoliceOfficerOption = policeOfficerLeave?.police_officer
+    ? {
+        value: String(policeOfficerLeave.police_officer_id),
+        label: formatPoliceOfficerOptionLabel({
+          ...policeOfficerLeave.police_officer,
+          id: policeOfficerLeave.police_officer_id,
+        }),
+      }
+    : null;
 
   return (
     <Card className="border-slate-200/70 bg-white/80">
@@ -225,19 +235,26 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
                 <Label>Policial</Label>
-                <Select value={selectedPoliceOfficerId} onValueChange={(value) => setValue("police_officer_id", value, { shouldValidate: true })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">Selecione</SelectItem>
-                    {(policeOfficersQuery.data?.data ?? []).map((officer) => (
-                      <SelectItem key={officer.id} value={String(officer.id)}>
-                        {(officer.name ?? officer.user?.name ?? officer.war_name) || `Policial #${officer.id}`}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <AsyncSearchableSelect
+                  value={selectedPoliceOfficerId === "none" ? undefined : selectedPoliceOfficerId}
+                  onValueChange={(value) => setValue("police_officer_id", value, { shouldValidate: true })}
+                  queryKey={["police-officer-leaves", "police-officers"]}
+                  loadPage={({ page, search }) =>
+                    policeOfficersService.index({
+                      page,
+                      per_page: 20,
+                      search: search || undefined,
+                    })
+                  }
+                  mapOption={(officer) => ({
+                    value: String(officer.id),
+                    label: formatPoliceOfficerOptionLabel(officer),
+                  })}
+                  selectedOption={selectedPoliceOfficerOption}
+                  placeholder="Selecione"
+                  searchPlaceholder="Buscar policial por nome ou matricula"
+                  emptyMessage="Nenhum policial encontrado."
+                />
                 {errors.police_officer_id ? <p className="text-sm text-destructive">{errors.police_officer_id.message}</p> : null}
               </div>
 

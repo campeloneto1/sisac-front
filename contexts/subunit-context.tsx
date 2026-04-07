@@ -34,12 +34,12 @@ export function SubunitProvider({ children }: { children: React.ReactNode }) {
       return null;
     }
 
-    return subunits.find((subunit) => subunit.id === activeSubunitId) ?? subunits[0];
+    return subunits.find((subunit) => String(subunit.id) === activeSubunitId) ?? subunits[0];
   }, [activeSubunitId, subunits]);
 
   useEffect(() => {
-    setActiveSubunitResolver(() => window.localStorage.getItem(STORAGE_KEY));
-  }, []);
+    setActiveSubunitResolver(() => activeSubunitId);
+  }, [activeSubunitId]);
 
   useEffect(() => {
     if (activeSubunit) {
@@ -63,6 +63,7 @@ export function SubunitProvider({ children }: { children: React.ReactNode }) {
         }
 
         setActiveSubunitId(String(nextSubunit.id));
+        window.localStorage.setItem(STORAGE_KEY, String(nextSubunit.id));
         queryClient.invalidateQueries();
         toast.success(`Contexto alterado para ${nextSubunit.name}.`);
       },

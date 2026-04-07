@@ -11,13 +11,15 @@ import {
   useCreatePoliceOfficerPublicationMutation,
   useUpdatePoliceOfficerPublicationMutation,
 } from "@/hooks/use-police-officer-publication-mutations";
-import { usePoliceOfficers } from "@/hooks/use-police-officers";
 import { usePublicationTypes } from "@/hooks/use-publication-types";
+import { formatPoliceOfficerOptionLabel } from "@/lib/option-labels";
+import { policeOfficersService } from "@/services/police-officers/service";
 import type {
   CreatePoliceOfficerPublicationDTO,
   PoliceOfficerPublicationItem,
   UpdatePoliceOfficerPublicationDTO,
 } from "@/types/police-officer-publication.type";
+import { AsyncSearchableSelect } from "@/components/ui/async-searchable-select";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -74,7 +76,6 @@ export function PoliceOfficerPublicationForm({
   const router = useRouter();
   const createMutation = useCreatePoliceOfficerPublicationMutation();
   const updateMutation = useUpdatePoliceOfficerPublicationMutation();
-  const policeOfficersQuery = usePoliceOfficers({ per_page: 100 });
   const publicationTypesQuery = usePublicationTypes({ per_page: 100 });
 
   const {
@@ -159,6 +160,15 @@ export function PoliceOfficerPublicationForm({
   }
 
   const isPending = createMutation.isPending || updateMutation.isPending;
+  const selectedPoliceOfficerOption = policeOfficerPublication?.police_officer
+    ? {
+        value: String(policeOfficerPublication.police_officer_id),
+        label: formatPoliceOfficerOptionLabel({
+          ...policeOfficerPublication.police_officer,
+          id: policeOfficerPublication.police_officer_id,
+        }),
+      }
+    : null;
 
   return (
     <Card className="border-slate-200/70 bg-white/80">
@@ -186,29 +196,30 @@ export function PoliceOfficerPublicationForm({
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
                 <Label>Policial</Label>
-                <Select
-                  value={selectedPoliceOfficerId}
+                <AsyncSearchableSelect
+                  value={selectedPoliceOfficerId === "none" ? undefined : selectedPoliceOfficerId}
                   onValueChange={(value) =>
                     setValue("police_officer_id", value, {
                       shouldValidate: true,
                     })
                   }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">Selecione</SelectItem>
-                    {(policeOfficersQuery.data?.data ?? []).map((officer) => (
-                      <SelectItem key={officer.id} value={String(officer.id)}>
-                        {officer.name ??
-                          officer.user?.name ??
-                          officer.war_name ??
-                          `Policial #${officer.id}`}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  queryKey={["police-officer-publications", "police-officers"]}
+                  loadPage={({ page, search }) =>
+                    policeOfficersService.index({
+                      page,
+                      per_page: 20,
+                      search: search || undefined,
+                    })
+                  }
+                  mapOption={(officer) => ({
+                    value: String(officer.id),
+                    label: formatPoliceOfficerOptionLabel(officer),
+                  })}
+                  selectedOption={selectedPoliceOfficerOption}
+                  placeholder="Selecione"
+                  searchPlaceholder="Buscar policial por nome ou matricula"
+                  emptyMessage="Nenhum policial encontrado."
+                />
                 {errors.police_officer_id ? (
                   <p className="text-sm text-destructive">
                     {errors.police_officer_id.message}

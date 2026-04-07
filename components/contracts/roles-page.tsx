@@ -8,9 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Pencil, Plus, ShieldCheck, Trash2 } from "lucide-react";
 
 import { useCreateContractRoleMutation, useDeleteContractRoleMutation, useUpdateContractRoleMutation } from "@/hooks/use-contract-role-mutations";
-import { useContractRolePoliceOfficers, useContractRoles } from "@/hooks/use-contract-roles";
+import { useContractRoles } from "@/hooks/use-contract-roles";
 import { usePermissions } from "@/hooks/use-permissions";
+import { formatPoliceOfficerOptionLabel } from "@/lib/option-labels";
+import { policeOfficersService } from "@/services/police-officers/service";
 import type { ContractRoleItem, CreateContractRoleDTO, UpdateContractRoleDTO } from "@/types/contract-role.type";
+import { AsyncSearchableSelect } from "@/components/ui/async-searchable-select";
 import { contractRoleOptions, getContractRoleLabel } from "@/types/contract-role.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -65,7 +68,6 @@ function RoleDialog({
 }) {
   const createMutation = useCreateContractRoleMutation(contractId);
   const updateMutation = useUpdateContractRoleMutation(contractId);
-  const policeOfficersQuery = useContractRolePoliceOfficers(open);
   const { handleSubmit, register, reset, setValue, control, formState: { errors } } = useForm<RoleFormValues>({
     resolver: zodResolver(roleSchema),
     defaultValues: {
@@ -91,7 +93,15 @@ function RoleDialog({
   const selectedRole = useWatch({ control, name: "role" });
   const selectedStatus = useWatch({ control, name: "is_active" });
   const isPending = createMutation.isPending || updateMutation.isPending;
-  const selectedPoliceOfficer = (policeOfficersQuery.data?.data ?? []).find((item) => String(item.id) === selectedPoliceOfficerId);
+  const selectedPoliceOfficer = role?.police_officer
+    ? {
+        value: String(role.police_officer.id),
+        label: formatPoliceOfficerOptionLabel({
+          ...role.police_officer,
+          id: role.police_officer.id,
+        }),
+      }
+    : null;
 
   async function onSubmit(values: RoleFormValues) {
     const payloadBase = {
@@ -125,21 +135,29 @@ function RoleDialog({
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
             <Label>Policial</Label>
-            <Select value={selectedPoliceOfficerId} onValueChange={(value) => setValue("police_officer_id", value, { shouldValidate: true })}>
-              <SelectTrigger>
-                <SelectValue placeholder="Nao vinculado" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">Nao vinculado</SelectItem>
-                {(policeOfficersQuery.data?.data ?? []).map((policeOfficer) => (
-                  <SelectItem key={policeOfficer.id} value={String(policeOfficer.id)}>
-                    {policeOfficer.war_name} ({policeOfficer.registration_number})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <AsyncSearchableSelect
+              value={selectedPoliceOfficerId === "none" ? undefined : selectedPoliceOfficerId}
+              onValueChange={(value) => setValue("police_officer_id", value, { shouldValidate: true })}
+              queryKey={["contract-roles", "police-officers"]}
+              loadPage={({ page, search }) =>
+                policeOfficersService.index({
+                  page,
+                  per_page: 20,
+                  is_active: true,
+                  search: search || undefined,
+                })
+              }
+              mapOption={(policeOfficer) => ({
+                value: String(policeOfficer.id),
+                label: formatPoliceOfficerOptionLabel(policeOfficer),
+              })}
+              selectedOption={selectedPoliceOfficer}
+              placeholder="Nao vinculado"
+              searchPlaceholder="Buscar policial por nome ou matricula"
+              emptyMessage="Nenhum policial encontrado."
+            />
             <p className="text-xs text-slate-500">
-              {selectedPoliceOfficer ? `Selecionado: ${selectedPoliceOfficer.war_name} (${selectedPoliceOfficer.registration_number}).` : "Opcional, conforme retorno da API."}
+              {selectedPoliceOfficer ? `Selecionado: ${selectedPoliceOfficer.label}.` : "Opcional, conforme retorno da API."}
             </p>
           </div>
 

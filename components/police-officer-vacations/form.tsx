@@ -8,13 +8,14 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useCreatePoliceOfficerVacationMutation, useUpdatePoliceOfficerVacationMutation } from "@/hooks/use-police-officer-vacation-mutations";
-import { usePoliceOfficers } from "@/hooks/use-police-officers";
+import { formatPoliceOfficerOptionLabel } from "@/lib/option-labels";
+import { policeOfficersService } from "@/services/police-officers/service";
 import type { CreatePoliceOfficerVacationDTO, PoliceOfficerVacationItem, UpdatePoliceOfficerVacationDTO } from "@/types/police-officer-vacation.type";
+import { AsyncSearchableSelect } from "@/components/ui/async-searchable-select";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const policeOfficerVacationFormSchema = z.object({
   police_officer_id: z.string().refine((value) => value !== "none", "Selecione o policial."),
@@ -66,7 +67,6 @@ export function PoliceOfficerVacationForm({ mode, policeOfficerVacation }: Polic
   const router = useRouter();
   const createMutation = useCreatePoliceOfficerVacationMutation();
   const updateMutation = useUpdatePoliceOfficerVacationMutation();
-  const policeOfficersQuery = usePoliceOfficers({ per_page: 100 });
   const {
     handleSubmit,
     register,
@@ -137,6 +137,15 @@ export function PoliceOfficerVacationForm({ mode, policeOfficerVacation }: Polic
 
   const availableForPlanning = Math.max(0, Number(totalDays || 0) - Number(soldDays || 0));
   const isPending = createMutation.isPending || updateMutation.isPending;
+  const selectedPoliceOfficerOption = policeOfficerVacation?.police_officer
+    ? {
+        value: String(policeOfficerVacation.police_officer_id),
+        label: formatPoliceOfficerOptionLabel({
+          ...policeOfficerVacation.police_officer,
+          id: policeOfficerVacation.police_officer_id,
+        }),
+      }
+    : null;
 
   return (
     <Card className="border-slate-200/70 bg-white/80">
@@ -157,19 +166,26 @@ export function PoliceOfficerVacationForm({ mode, policeOfficerVacation }: Polic
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               <div className="space-y-2 xl:col-span-3">
                 <Label>Policial</Label>
-                <Select value={selectedPoliceOfficerId} onValueChange={(value) => setValue("police_officer_id", value, { shouldValidate: true })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">Selecione</SelectItem>
-                    {(policeOfficersQuery.data?.data ?? []).map((officer) => (
-                      <SelectItem key={officer.id} value={String(officer.id)}>
-                        {(officer.name ?? officer.user?.name ?? officer.war_name) || `Policial #${officer.id}`}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <AsyncSearchableSelect
+                  value={selectedPoliceOfficerId === "none" ? undefined : selectedPoliceOfficerId}
+                  onValueChange={(value) => setValue("police_officer_id", value, { shouldValidate: true })}
+                  queryKey={["police-officer-vacations", "police-officers"]}
+                  loadPage={({ page, search }) =>
+                    policeOfficersService.index({
+                      page,
+                      per_page: 20,
+                      search: search || undefined,
+                    })
+                  }
+                  mapOption={(officer) => ({
+                    value: String(officer.id),
+                    label: formatPoliceOfficerOptionLabel(officer),
+                  })}
+                  selectedOption={selectedPoliceOfficerOption}
+                  placeholder="Selecione"
+                  searchPlaceholder="Buscar policial por nome ou matricula"
+                  emptyMessage="Nenhum policial encontrado."
+                />
                 {errors.police_officer_id ? <p className="text-sm text-destructive">{errors.police_officer_id.message}</p> : null}
               </div>
 

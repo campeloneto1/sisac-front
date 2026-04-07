@@ -8,7 +8,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useCreatePoliceOfficerRankMutation, useUpdatePoliceOfficerRankMutation } from "@/hooks/use-police-officer-rank-mutations";
+import { formatPoliceOfficerOptionLabel } from "@/lib/option-labels";
+import { policeOfficersService } from "@/services/police-officers/service";
 import type { CreatePoliceOfficerRankDTO, PoliceOfficerRankItem, UpdatePoliceOfficerRankDTO, PromotionType } from "@/types/police-officer-rank.type";
+import { AsyncSearchableSelect } from "@/components/ui/async-searchable-select";
 import { promotionTypeLabels } from "@/types/police-officer-rank.type";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,7 +39,8 @@ const policeOfficerRankFormSchema = z.object({
   path: ["end_date"],
 });
 
-type PoliceOfficerRankFormValues = z.infer<typeof policeOfficerRankFormSchema>;
+type PoliceOfficerRankFormInput = z.input<typeof policeOfficerRankFormSchema>;
+type PoliceOfficerRankFormValues = z.output<typeof policeOfficerRankFormSchema>;
 
 interface PoliceOfficerRankFormProps {
   mode: "create" | "edit";
@@ -45,7 +49,7 @@ interface PoliceOfficerRankFormProps {
   ranks?: Array<{ id: number; name: string; abbreviation?: string | null }>;
 }
 
-export function PoliceOfficerRankForm({ mode, policeOfficerRank, policeOfficers = [], ranks = [] }: PoliceOfficerRankFormProps) {
+export function PoliceOfficerRankForm({ mode, policeOfficerRank, policeOfficers: _policeOfficers = [], ranks = [] }: PoliceOfficerRankFormProps) {
   const router = useRouter();
   const createMutation = useCreatePoliceOfficerRankMutation();
   const updateMutation = useUpdatePoliceOfficerRankMutation();
@@ -56,7 +60,7 @@ export function PoliceOfficerRankForm({ mode, policeOfficerRank, policeOfficers 
     setValue,
     control,
     formState: { errors },
-  } = useForm<PoliceOfficerRankFormValues>({
+  } = useForm<PoliceOfficerRankFormInput, unknown, PoliceOfficerRankFormValues>({
     resolver: zodResolver(policeOfficerRankFormSchema),
     defaultValues: {
       police_officer_id: policeOfficerRank?.police_officer_id ?? 0,
@@ -131,6 +135,15 @@ export function PoliceOfficerRankForm({ mode, policeOfficerRank, policeOfficers 
   }
 
   const isPending = createMutation.isPending || updateMutation.isPending;
+  const selectedPoliceOfficerOption = policeOfficerRank?.police_officer
+    ? {
+        value: String(policeOfficerRank.police_officer_id),
+        label: formatPoliceOfficerOptionLabel({
+          ...policeOfficerRank.police_officer,
+          id: policeOfficerRank.police_officer_id,
+        }),
+      }
+    : null;
 
   return (
     <Card className="border-slate-200/70 bg-white/80">
@@ -142,21 +155,26 @@ export function PoliceOfficerRankForm({ mode, policeOfficerRank, policeOfficers 
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
             <Label htmlFor="police_officer_id">Policial *</Label>
-            <Select
-              value={selectedPoliceOfficerId?.toString() ?? ""}
+            <AsyncSearchableSelect
+              value={selectedPoliceOfficerId ? selectedPoliceOfficerId.toString() : undefined}
               onValueChange={(value) => setValue("police_officer_id", Number(value))}
-            >
-              <SelectTrigger id="police_officer_id">
-                <SelectValue placeholder="Selecione o policial" />
-              </SelectTrigger>
-              <SelectContent>
-                {policeOfficers.map((officer) => (
-                  <SelectItem key={officer.id} value={officer.id.toString()}>
-                    {officer.name} {officer.registration_number ? `(${officer.registration_number})` : ""}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              queryKey={["police-officer-ranks", "police-officers"]}
+              loadPage={({ page, search }) =>
+                policeOfficersService.index({
+                  page,
+                  per_page: 20,
+                  search: search || undefined,
+                })
+              }
+              mapOption={(officer) => ({
+                value: String(officer.id),
+                label: formatPoliceOfficerOptionLabel(officer),
+              })}
+              selectedOption={selectedPoliceOfficerOption}
+              placeholder="Selecione o policial"
+              searchPlaceholder="Buscar policial por nome ou matricula"
+              emptyMessage="Nenhum policial encontrado."
+            />
             {errors.police_officer_id ? <p className="text-sm text-destructive">{errors.police_officer_id.message}</p> : null}
           </div>
 

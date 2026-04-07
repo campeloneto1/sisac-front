@@ -4,13 +4,7 @@ import { Building2 } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { useSubunit } from "@/contexts/subunit-context";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SearchableSelect } from "@/components/ui/searchable-select";
 
 export function SubunitSwitcher() {
   const { isReady } = useAuth();
@@ -51,19 +45,19 @@ export function SubunitSwitcher() {
       </div>
       <div className="min-w-0">
         <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Subunidade</p>
-        <Select value={activeSubunit ? String(activeSubunit.id) : undefined} onValueChange={setActiveSubunit}>
-          <SelectTrigger className="h-auto min-w-[180px] border-0 px-0 py-0 shadow-none focus:ring-0 xl:min-w-[220px]">
-            <SelectValue placeholder="Selecione a subunidade" />
-          </SelectTrigger>
-          <SelectContent>
-            {subunits.map((subunit) => (
-              <SelectItem key={subunit.id} value={String(subunit.id)}>
-                {subunit.name}
-                {subunit.abbreviation ? ` • ${subunit.abbreviation}` : ""}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <SearchableSelect
+          value={activeSubunit ? String(activeSubunit.id) : undefined}
+          onValueChange={setActiveSubunit}
+          placeholder="Selecione a subunidade"
+          searchPlaceholder="Buscar subunidade..."
+          emptyMessage="Nenhuma subunidade encontrada."
+          triggerClassName="h-auto min-w-[180px] border-0 px-0 py-0 shadow-none focus:ring-0 xl:min-w-[220px]"
+          options={subunits.map((subunit) => ({
+            value: String(subunit.id),
+            label: subunit.abbreviation ? `${subunit.name} • ${subunit.abbreviation}` : subunit.name,
+            keywords: [subunit.name, subunit.abbreviation ?? ""],
+          }))}
+        />
       </div>
     </div>
   );

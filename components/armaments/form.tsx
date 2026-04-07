@@ -12,11 +12,11 @@ import {
   useCreateArmamentMutation,
   useUpdateArmamentMutation,
 } from "@/hooks/use-armament-mutations";
+import { useSubunit } from "@/contexts/subunit-context";
 import { useArmamentCalibers } from "@/hooks/use-armament-calibers";
 import { useArmamentSizes } from "@/hooks/use-armament-sizes";
 import { useArmamentTypes } from "@/hooks/use-armament-types";
 import { useGenders } from "@/hooks/use-genders";
-import { useSubunits } from "@/hooks/use-subunits";
 import { useVariants } from "@/hooks/use-variants";
 import type {
   ArmamentItem,
@@ -48,7 +48,6 @@ const specificationRowSchema = z.object({
 });
 
 const armamentFormSchema = z.object({
-  subunit_id: z.string(),
   armament_type_id: z.string().min(1, "Selecione o tipo de armamento."),
   variant_id: z.string().min(1, "Selecione a variante."),
   armament_caliber_id: z.string(),
@@ -96,9 +95,9 @@ function specificationRecordFromRows(rows: { key: string; value: string }[]) {
 
 export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
   const router = useRouter();
+  const { activeSubunit } = useSubunit();
   const createMutation = useCreateArmamentMutation();
   const updateMutation = useUpdateArmamentMutation();
-  const subunitsQuery = useSubunits({ per_page: 100 });
   const typesQuery = useArmamentTypes({ per_page: 100 });
   const variantsQuery = useVariants({ per_page: 100 });
   const calibersQuery = useArmamentCalibers({ per_page: 100 });
@@ -115,7 +114,6 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
   } = useForm<ArmamentFormValues>({
     resolver: zodResolver(armamentFormSchema),
     defaultValues: {
-      subunit_id: armament?.subunit_id ? String(armament.subunit_id) : "none",
       armament_type_id: armament?.armament_type_id
         ? String(armament.armament_type_id)
         : "",
@@ -136,7 +134,6 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
     name: "specifications_rows",
   });
 
-  const selectedSubunitId = useWatch({ control, name: "subunit_id" });
   const selectedTypeId = useWatch({ control, name: "armament_type_id" });
   const selectedVariantId = useWatch({ control, name: "variant_id" });
   const selectedCaliberId = useWatch({ control, name: "armament_caliber_id" });
@@ -149,7 +146,6 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
     }
 
     reset({
-      subunit_id: armament.subunit_id ? String(armament.subunit_id) : "none",
       armament_type_id: String(armament.armament_type_id),
       variant_id: String(armament.variant_id),
       armament_caliber_id: armament.armament_caliber_id
@@ -164,8 +160,11 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
   }, [armament, reset]);
 
   async function onSubmit(values: ArmamentFormValues) {
+    if (!activeSubunit) {
+      return;
+    }
+
     const payload = {
-      subunit_id: values.subunit_id !== "none" ? Number(values.subunit_id) : null,
       armament_type_id: Number(values.armament_type_id),
       variant_id: Number(values.variant_id),
       armament_caliber_id:
@@ -214,33 +213,21 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        <div className="mb-5 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+          Subunidade ativa:{" "}
+          <span className="font-medium text-slate-900">
+            {activeSubunit?.abbreviation || activeSubunit?.name || "Nao selecionada"}
+          </span>
+        </div>
+
+        {!activeSubunit ? (
+          <div className="mb-5 rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-5 text-sm text-slate-500">
+            Selecione uma subunidade ativa antes de cadastrar ou editar armamentos.
+          </div>
+        ) : null}
+
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            <div className="space-y-2">
-              <Label>Subunidade</Label>
-              <Select
-                value={selectedSubunitId || "none"}
-                onValueChange={(value) =>
-                  setValue("subunit_id", value, {
-                    shouldDirty: true,
-                    shouldValidate: true,
-                  })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione a subunidade" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">Sem subunidade especifica</SelectItem>
-                  {(subunitsQuery.data?.data ?? []).map((subunit) => (
-                    <SelectItem key={subunit.id} value={String(subunit.id)}>
-                      {subunit.abbreviation || subunit.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
             <div className="space-y-2">
               <Label>Tipo</Label>
               <Select
@@ -462,7 +449,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
                 Cancelar
               </Link>
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={isPending || !activeSubunit}>
               {isPending
                 ? "Salvando..."
                 : mode === "create"

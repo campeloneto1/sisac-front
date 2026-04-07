@@ -13,9 +13,13 @@ import {
   useCreateVehicleLoanMutation,
   useUpdateVehicleLoanMutation,
 } from "@/hooks/use-vehicle-loan-mutations";
-import { usePoliceOfficers } from "@/hooks/use-police-officers";
-import { useUsers } from "@/hooks/use-users";
-import { useAvailableVehicles, useVehicles } from "@/hooks/use-vehicles";
+import {
+  formatPoliceOfficerOptionLabel,
+  formatVehicleOptionLabel,
+} from "@/lib/option-labels";
+import { policeOfficersService } from "@/services/police-officers/service";
+import { usersService } from "@/services/users/service";
+import { vehiclesService } from "@/services/vehicles/service";
 import type {
   CreateVehicleLoanDTO,
   UpdateVehicleLoanDTO,
@@ -23,6 +27,7 @@ import type {
   VehicleLoanItem,
 } from "@/types/vehicle-loan.type";
 import { vehicleLoanBorrowerTypeOptions } from "@/types/vehicle-loan.type";
+import { AsyncSearchableSelect } from "@/components/ui/async-searchable-select";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -128,16 +133,6 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
   const { activeSubunit } = useSubunit();
   const createMutation = useCreateVehicleLoanMutation();
   const updateMutation = useUpdateVehicleLoanMutation();
-  const vehiclesQuery = useVehicles(
-    { per_page: 100 },
-    { enabled: mode === "edit" },
-  );
-  const availableVehiclesQuery = useAvailableVehicles(
-    { per_page: 100 },
-    { enabled: mode === "create" },
-  );
-  const policeOfficersQuery = usePoliceOfficers({ per_page: 100 });
-  const usersQuery = useUsers({ per_page: 100 });
   const citiesQuery = useCities({ per_page: 100 });
 
   const {
@@ -257,24 +252,21 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
   }
 
   const isPending = createMutation.isPending || updateMutation.isPending;
-  const internalBorrowers =
-    borrowerType === "App\\Models\\PoliceOfficer"
-      ? (policeOfficersQuery.data?.data ?? []).map((officer) => ({
-          value: String(officer.id),
-          label: officer.war_name || officer.name || officer.registration_number,
-          detail: officer.registration_number,
-        }))
-      : borrowerType === "App\\Models\\User"
-        ? (usersQuery.data?.data ?? []).map((user) => ({
-            value: String(user.id),
-            label: user.name,
-            detail: user.email,
-          }))
-        : [];
-  const selectableVehicles =
-    mode === "create"
-      ? (availableVehiclesQuery.data?.data ?? [])
-      : (vehiclesQuery.data?.data ?? []);
+  const selectedVehicleOption = loan?.vehicle
+    ? {
+        value: String(loan.vehicle_id),
+        label: formatVehicleOptionLabel({ ...loan.vehicle, id: loan.vehicle_id }),
+      }
+    : null;
+  const selectedBorrowerOption = loan?.borrower_id && loan?.borrower
+    ? {
+        value: String(loan.borrower_id),
+        label:
+          loan.borrower_type === "App\\Models\\PoliceOfficer"
+            ? formatPoliceOfficerOptionLabel({ ...loan.borrower, id: loan.borrower_id })
+            : [loan.borrower.name, loan.borrower.email].filter(Boolean).join(" • "),
+      }
+    : null;
 
   return (
     <Card className="border-slate-200/70 bg-white/80">
@@ -293,27 +285,31 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
           <section className="grid gap-5 md:grid-cols-[1fr_0.9fr]">
             <div className="space-y-2">
               <Label>Veiculo</Label>
-              <Select
-                value={selectedVehicleId}
+              <AsyncSearchableSelect
+                value={selectedVehicleId === "none" ? undefined : selectedVehicleId}
                 onValueChange={(value) =>
                   setValue("vehicle_id", value, {
                     shouldValidate: true,
                     shouldDirty: true,
                   })
                 }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione um veiculo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">Selecione um veiculo</SelectItem>
-                  {selectableVehicles.map((vehicle) => (
-                    <SelectItem key={vehicle.id} value={String(vehicle.id)}>
-                      {vehicle.license_plate}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                queryKey={["vehicle-loan", "vehicles", mode]}
+                loadPage={({ page, search }) =>
+                  (mode === "create" ? vehiclesService.available : vehiclesService.index)({
+                    page,
+                    per_page: 20,
+                    search: search || undefined,
+                  })
+                }
+                mapOption={(vehicle) => ({
+                  value: String(vehicle.id),
+                  label: formatVehicleOptionLabel(vehicle),
+                })}
+                selectedOption={selectedVehicleOption}
+                placeholder="Selecione um veiculo"
+                searchPlaceholder="Buscar por placa, marca ou variante"
+                emptyMessage="Nenhum veiculo encontrado."
+              />
               {errors.vehicle_id ? (
                 <p className="text-sm text-destructive">
                   {errors.vehicle_id.message}
@@ -414,29 +410,63 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
             {borrowerMode === "internal" ? (
               <div className="space-y-2">
                 <Label>Tomador interno</Label>
-                <Select
-                  value={selectedBorrowerId}
-                  onValueChange={(value) =>
-                    setValue("borrower_id", value, {
-                      shouldValidate: true,
-                      shouldDirty: true,
-                    })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione o tomador" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">Selecione o tomador</SelectItem>
-                    {internalBorrowers.map((borrower) => (
-                      <SelectItem key={borrower.value} value={borrower.value}>
-                        {borrower.detail
-                          ? `${borrower.label} • ${borrower.detail}`
-                          : borrower.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                {borrowerType === "App\\Models\\PoliceOfficer" ? (
+                  <AsyncSearchableSelect
+                    value={selectedBorrowerId === "none" ? undefined : selectedBorrowerId}
+                    onValueChange={(value) =>
+                      setValue("borrower_id", value, {
+                        shouldValidate: true,
+                        shouldDirty: true,
+                      })
+                    }
+                    queryKey={["vehicle-loan", "borrowers", "police-officers"]}
+                    loadPage={({ page, search }) =>
+                      policeOfficersService.index({
+                        page,
+                        per_page: 20,
+                        search: search || undefined,
+                      })
+                    }
+                    mapOption={(borrower) => ({
+                      value: String(borrower.id),
+                      label: formatPoliceOfficerOptionLabel(borrower),
+                    })}
+                    selectedOption={selectedBorrowerOption}
+                    placeholder="Selecione o tomador"
+                    searchPlaceholder="Buscar policial por nome ou matricula"
+                    emptyMessage="Nenhum policial encontrado."
+                  />
+                ) : borrowerType === "App\\Models\\User" ? (
+                  <AsyncSearchableSelect
+                    value={selectedBorrowerId === "none" ? undefined : selectedBorrowerId}
+                    onValueChange={(value) =>
+                      setValue("borrower_id", value, {
+                        shouldValidate: true,
+                        shouldDirty: true,
+                      })
+                    }
+                    queryKey={["vehicle-loan", "borrowers", "users"]}
+                    loadPage={({ page, search }) =>
+                      usersService.index({
+                        page,
+                        per_page: 20,
+                        search: search || undefined,
+                      })
+                    }
+                    mapOption={(borrower) => ({
+                      value: String(borrower.id),
+                      label: [borrower.name, borrower.email].filter(Boolean).join(" • "),
+                    })}
+                    selectedOption={selectedBorrowerOption}
+                    placeholder="Selecione o tomador"
+                    searchPlaceholder="Buscar usuario por nome ou email"
+                    emptyMessage="Nenhum usuario encontrado."
+                  />
+                ) : (
+                  <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-3 text-sm text-slate-500">
+                    Selecione primeiro o tipo do tomador para habilitar a busca.
+                  </div>
+                )}
                 {errors.borrower_id ? (
                   <p className="text-sm text-destructive">
                     {errors.borrower_id.message}

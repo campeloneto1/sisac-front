@@ -12,9 +12,13 @@ import {
   useCreateArmamentLoanMutation,
   useUpdateArmamentLoanMutation,
 } from "@/hooks/use-armament-loan-mutations";
-import { useArmaments } from "@/hooks/use-armaments";
-import { usePoliceOfficers } from "@/hooks/use-police-officers";
-import { useUsers } from "@/hooks/use-users";
+import {
+  formatArmamentOptionLabel,
+  formatPoliceOfficerOptionLabel,
+} from "@/lib/option-labels";
+import { armamentsService } from "@/services/armaments/service";
+import { policeOfficersService } from "@/services/police-officers/service";
+import { usersService } from "@/services/users/service";
 import type {
   ArmamentLoanRecord,
   ArmamentLoanKind,
@@ -31,6 +35,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AsyncSearchableSelect } from "@/components/ui/async-searchable-select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -173,16 +178,13 @@ function formatDateTimeLocal(value?: string | null) {
 }
 
 function getArmamentLabel(armament: ArmamentItem) {
-  return [armament.type?.name, armament.variant?.name].filter(Boolean).join(" ");
+  return formatArmamentOptionLabel(armament);
 }
 
 export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
   const router = useRouter();
   const createMutation = useCreateArmamentLoanMutation();
   const updateMutation = useUpdateArmamentLoanMutation();
-  const officersQuery = usePoliceOfficers({ per_page: 100 });
-  const usersQuery = useUsers({ per_page: 100 });
-  const armamentsQuery = useArmaments({ per_page: 100 });
   const schema = buildArmamentLoanSchema(mode);
 
   const {
@@ -319,6 +321,24 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
   }
 
   const isPending = createMutation.isPending || updateMutation.isPending;
+  const selectedPoliceOfficerId = useWatch({ control, name: "police_officer_id" });
+  const selectedKind = useWatch({ control, name: "kind" });
+  const selectedApprovedBy = useWatch({ control, name: "approved_by" });
+  const selectedPoliceOfficerOption = loan?.police_officer
+    ? {
+        value: String(loan.police_officer_id),
+        label: formatPoliceOfficerOptionLabel({
+          ...loan.police_officer,
+          id: loan.police_officer_id,
+        }),
+      }
+    : null;
+  const selectedApprovedByOption = loan?.approved_by && loan?.approved_by_user
+    ? {
+        value: String(loan.approved_by),
+        label: [loan.approved_by_user.name, loan.approved_by_user.email].filter(Boolean).join(" • "),
+      }
+    : null;
 
   return (
     <Card className="border-slate-200/70 bg-white/80">
@@ -339,28 +359,32 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
               <Label>Policial</Label>
-              <Select
+              <AsyncSearchableSelect
                 disabled={mode === "edit"}
-                value={useWatch({ control, name: "police_officer_id" })}
+                value={selectedPoliceOfficerId === "none" ? undefined : selectedPoliceOfficerId}
                 onValueChange={(value) =>
                   setValue("police_officer_id", value, {
                     shouldDirty: true,
                     shouldValidate: true,
                   })
                 }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione o policial" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">Selecione o policial</SelectItem>
-                  {(officersQuery.data?.data ?? []).map((officer) => (
-                    <SelectItem key={officer.id} value={String(officer.id)}>
-                      {officer.war_name || officer.name || officer.registration_number}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                queryKey={["armament-loan", "police-officers"]}
+                loadPage={({ page, search }) =>
+                  policeOfficersService.index({
+                    page,
+                    per_page: 20,
+                    search: search || undefined,
+                  })
+                }
+                mapOption={(officer) => ({
+                  value: String(officer.id),
+                  label: formatPoliceOfficerOptionLabel(officer),
+                })}
+                selectedOption={selectedPoliceOfficerOption}
+                placeholder="Selecione o policial"
+                searchPlaceholder="Buscar policial por nome ou matricula"
+                emptyMessage="Nenhum policial encontrado."
+              />
               {errors.police_officer_id ? (
                 <p className="text-sm text-destructive">
                   {errors.police_officer_id.message}
@@ -371,7 +395,7 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
             <div className="space-y-2">
               <Label>Tipo</Label>
               <Select
-                value={useWatch({ control, name: "kind" })}
+                value={selectedKind}
                 onValueChange={(value) =>
                   setValue("kind", value as ArmamentLoanKind, {
                     shouldDirty: true,
@@ -421,27 +445,31 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
 
             <div className="space-y-2">
               <Label>Aprovado por</Label>
-              <Select
-                value={useWatch({ control, name: "approved_by" })}
+              <AsyncSearchableSelect
+                value={selectedApprovedBy === "none" ? undefined : selectedApprovedBy}
                 onValueChange={(value) =>
                   setValue("approved_by", value, {
                     shouldDirty: true,
                     shouldValidate: true,
                   })
                 }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione o aprovador" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">Nao informado</SelectItem>
-                  {(usersQuery.data?.data ?? []).map((user) => (
-                    <SelectItem key={user.id} value={String(user.id)}>
-                      {user.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                queryKey={["armament-loan", "approvers"]}
+                loadPage={({ page, search }) =>
+                  usersService.index({
+                    page,
+                    per_page: 20,
+                    search: search || undefined,
+                  })
+                }
+                mapOption={(user) => ({
+                  value: String(user.id),
+                  label: [user.name, user.email].filter(Boolean).join(" • "),
+                })}
+                selectedOption={selectedApprovedByOption}
+                placeholder="Selecione o aprovador"
+                searchPlaceholder="Buscar aprovador por nome ou email"
+                emptyMessage="Nenhum aprovador encontrado."
+              />
             </div>
 
             <div className="space-y-2 md:col-span-2">
@@ -513,9 +541,9 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                 <div className="space-y-4">
                   {fields.map((field, index) => {
                     const item = watchedItems?.[index];
-                    const armament = (armamentsQuery.data?.data ?? []).find(
-                      (entry) => String(entry.id) === item?.armament_id,
-                    );
+                    const armament = loan?.items?.find(
+                      (entry) => String(entry.armament_id) === item?.armament_id,
+                    )?.armament;
 
                     return (
                       <Card
@@ -548,33 +576,38 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                         <CardContent className="grid gap-4 md:grid-cols-2">
                           <div className="space-y-2 md:col-span-2">
                             <Label>Armamento</Label>
-                            <Select
-                              value={item?.armament_id ?? "none"}
+                            <AsyncSearchableSelect
+                              value={item?.armament_id === "none" ? undefined : item?.armament_id}
                               onValueChange={(value) =>
                                 setValue(`items.${index}.armament_id`, value, {
                                   shouldDirty: true,
                                   shouldValidate: true,
                                 })
                               }
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Selecione o armamento" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="none">
-                                  Selecione o armamento
-                                </SelectItem>
-                                {(armamentsQuery.data?.data ?? []).map((entry) => (
-                                  <SelectItem
-                                    key={entry.id}
-                                    value={String(entry.id)}
-                                  >
-                                    {getArmamentLabel(entry) ||
-                                      `Armamento #${entry.id}`}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                              queryKey={["armament-loan", "armaments", index]}
+                              loadPage={({ page, search }) =>
+                                armamentsService.index({
+                                  page,
+                                  per_page: 20,
+                                  search: search || undefined,
+                                })
+                              }
+                              mapOption={(entry) => ({
+                                value: String(entry.id),
+                                label: getArmamentLabel(entry) || `Armamento #${entry.id}`,
+                              })}
+                              selectedOption={
+                                armament
+                                  ? {
+                                      value: String(armament.id),
+                                      label: getArmamentLabel(armament) || `Armamento #${armament.id}`,
+                                    }
+                                  : null
+                              }
+                              placeholder="Selecione o armamento"
+                              searchPlaceholder="Buscar armamento por tipo ou variante"
+                              emptyMessage="Nenhum armamento encontrado."
+                            />
                             {errors.items?.[index]?.armament_id ? (
                               <p className="text-sm text-destructive">
                                 {errors.items[index]?.armament_id?.message}
