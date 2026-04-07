@@ -1,14 +1,56 @@
-import type { ArmamentItem } from "@/types/armament.type";
-import type { PoliceOfficerItem } from "@/types/police-officer.type";
-import type { VehicleItem } from "@/types/vehicle.type";
-
 function compactParts(parts: Array<string | null | undefined>) {
   return parts
     .map((part) => (typeof part === "string" ? part.trim() : part))
     .filter((part): part is string => Boolean(part));
 }
 
-export function formatVehicleOptionLabel(vehicle: Partial<VehicleItem> & { id: number }) {
+interface VehicleOptionShape {
+  id: number;
+  license_plate?: string | null;
+  special_plate?: string | null;
+  variant?: {
+    name?: string | null;
+    brand?: {
+      name?: string | null;
+    } | null;
+  } | null;
+}
+
+interface ArmamentOptionShape {
+  id: number;
+  variant?: {
+    name?: string | null;
+    brand?: {
+      name?: string | null;
+    } | null;
+  } | null;
+  caliber?: {
+    name?: string | null;
+  } | null;
+  size?: {
+    name?: string | null;
+  } | null;
+  gender?: {
+    name?: string | null;
+  } | null;
+}
+
+interface PoliceOfficerOptionShape {
+  id: number;
+  name?: string | null;
+  war_name?: string | null;
+  registration_number?: string | null;
+  badge_number?: string | null;
+  user?: {
+    name?: string | null;
+  } | null;
+  current_rank?: {
+    name?: string | null;
+    abbreviation?: string | null;
+  } | null;
+}
+
+export function formatVehicleOptionLabel(vehicle: VehicleOptionShape) {
   const model = compactParts([
     vehicle.variant?.brand?.name,
     vehicle.variant?.name,
@@ -22,7 +64,7 @@ export function formatVehicleOptionLabel(vehicle: Partial<VehicleItem> & { id: n
   return compactParts([model, plates, !model && !plates ? `Veiculo #${vehicle.id}` : null]).join(" • ");
 }
 
-export function formatArmamentOptionLabel(armament: Partial<ArmamentItem> & { id: number }) {
+export function formatArmamentOptionLabel(armament: ArmamentOptionShape) {
   return compactParts([
     compactParts([armament.variant?.brand?.name, armament.variant?.name]).join(" / "),
     armament.caliber?.name ? `Cal.: ${armament.caliber.name}` : null,
@@ -34,7 +76,7 @@ export function formatArmamentOptionLabel(armament: Partial<ArmamentItem> & { id
   ]).join(" • ");
 }
 
-export function formatPoliceOfficerOptionLabel(officer: Partial<PoliceOfficerItem> & { id: number }) {
+export function formatPoliceOfficerOptionLabel(officer: PoliceOfficerOptionShape) {
   const rankLabel = officer.current_rank?.abbreviation || officer.current_rank?.name;
   const numeralLabel = officer.badge_number ? `Num.: ${officer.badge_number}` : null;
   const warName = officer.war_name || officer.name || officer.user?.name || `Policial #${officer.id}`;

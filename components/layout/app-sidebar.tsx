@@ -197,6 +197,13 @@ const generalItems = [
     visible: false,
     permissionResource: "contracts",
   },
+  {
+    href: "/contract-types",
+    label: "Tipos de contrato",
+    icon: ScrollText,
+    visible: false,
+    permissionResource: "contract-types",
+  },
 ];
 
 const administratorItems: Array<{
@@ -640,6 +647,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "contracts") {
         return can(user, "viewAny", "contracts");
+      }
+
+      if (item.permissionResource === "contract-types") {
+        return can(user, "viewAny", "contract-types");
       }
 
       return item.visible;
