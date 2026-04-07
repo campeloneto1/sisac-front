@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { CalendarDays, Crosshair, FileText, Shapes, Tag } from "lucide-react";
+import {
+  Boxes,
+  CalendarDays,
+  Crosshair,
+  FileText,
+  Shapes,
+  Tag,
+} from "lucide-react";
 
 import { useArmament } from "@/hooks/use-armaments";
 import { usePermissions } from "@/hooks/use-permissions";
@@ -192,6 +199,44 @@ export function ArmamentShowPage() {
                   Nenhuma especificacao tecnica informada.
                 </p>
               )}
+            </CardContent>
+          </Card>
+
+          <Card className="border-slate-200/70 bg-white/80">
+            <CardHeader className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <CardTitle>Unidades</CardTitle>
+                <CardDescription>
+                  Acesse a area dedicada para gerenciar as unidades fisicas
+                  deste armamento.
+                </CardDescription>
+              </div>
+              <Button asChild variant="outline">
+                <Link href={`/armaments/${armament.id}/units`}>
+                  <Boxes className="mr-2 h-4 w-4" />
+                  Gerenciar unidades
+                </Link>
+              </Button>
+            </CardHeader>
+            <CardContent className="grid gap-4 md:grid-cols-3">
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">
+                  Disponiveis
+                </p>
+                <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+              </div>
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">
+                  Vencendo / vencidas
+                </p>
+                <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+              </div>
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">
+                  Indisponiveis
+                </p>
+                <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+              </div>
             </CardContent>
           </Card>
         </div>
