@@ -14,6 +14,7 @@ import {
   Building2,
   CarFront,
   ChevronDown,
+  Crosshair,
   Fuel,
   Palette,
   FileHeart,
@@ -316,6 +317,14 @@ const administratorItems: Array<{
     icon: Shield,
     requirements: [
       { type: "resource", resource: "armament-sizes", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/armament-calibers",
+    label: "Calibres de armamento",
+    icon: Crosshair,
+    requirements: [
+      { type: "resource", resource: "armament-calibers", action: "viewAny" },
     ],
   },
 ];
