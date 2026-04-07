@@ -232,6 +232,14 @@ const administratorItems: Array<{
     ],
   },
   {
+    href: "/contract-features",
+    label: "Caracteristicas contrato",
+    icon: Sparkles,
+    requirements: [
+      { type: "resource", resource: "contract-features", action: "viewAny" },
+    ],
+  },
+  {
     href: "/vehicle-types",
     label: "Tipos de veiculo",
     icon: CarFront,
