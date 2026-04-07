@@ -147,6 +147,13 @@ const generalItems = [
     permissionResource: "vehicle-damages",
   },
   {
+    href: "/armaments",
+    label: "Armamentos",
+    icon: Crosshair,
+    visible: false,
+    permissionResource: "armaments",
+  },
+  {
     href: "/police-officer-retirement-requests",
     label: "Aposentadorias",
     icon: ScrollText,
@@ -546,6 +553,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "vehicle-damages") {
         return can(user, "viewAny", "vehicle-damages");
+      }
+
+      if (item.permissionResource === "armaments") {
+        return can(user, "viewAny", "armaments");
       }
 
       if (item.permissionResource === "police-officer-retirement-requests") {
