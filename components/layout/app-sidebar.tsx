@@ -101,6 +101,13 @@ const generalItems = [
     permissionResource: "vehicles",
   },
   {
+    href: "/vehicle-loans",
+    label: "Emprestimos",
+    icon: CarFront,
+    visible: false,
+    permissionResource: "vehicle-loans",
+  },
+  {
     href: "/police-officer-retirement-requests",
     label: "Aposentadorias",
     icon: ScrollText,

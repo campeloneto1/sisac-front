@@ -11,7 +11,12 @@ import {
 } from "lucide-react";
 
 import { usePermissions } from "@/hooks/use-permissions";
+import { useVehicleLoans } from "@/hooks/use-vehicle-loans";
 import { useVehicle } from "@/hooks/use-vehicles";
+import {
+  getVehicleLoanBorrowerLabel,
+  getVehicleLoanStatusVariant,
+} from "@/types/vehicle-loan.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,10 +45,23 @@ function getOperationalStatusVariant(status?: string | null) {
   }
 }
 
+function formatLoanDateTime(date?: string | null, time?: string | null) {
+  if (!date) {
+    return "-";
+  }
+
+  return `${date.slice(0, 10)}${time ? ` • ${time.slice(0, 5)}` : ""}`;
+}
+
 export function VehicleShowPage() {
   const params = useParams<{ id: string }>();
   const permissions = usePermissions("vehicles");
+  const loanPermissions = usePermissions("vehicle-loans");
   const vehicleQuery = useVehicle(params.id);
+  const loansQuery = useVehicleLoans({
+    vehicle_id: Number(params.id),
+    per_page: 50,
+  });
 
   if (!permissions.canView) {
     return (
@@ -401,6 +419,115 @@ export function VehicleShowPage() {
           </CardContent>
         </Card>
       </div>
+
+      {loanPermissions.canViewAny ? (
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Historico de emprestimos</CardTitle>
+            <CardDescription>
+              Relacao dos emprestimos ja registrados para este veiculo, com
+              dados gerais de tomador, periodo e kilometragem.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loansQuery.isLoading ? (
+              <div className="space-y-3">
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+              </div>
+            ) : loansQuery.isError ? (
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
+                <p className="text-sm text-slate-700">
+                  Nao foi possivel carregar o historico de emprestimos deste
+                  veiculo agora.
+                </p>
+              </div>
+            ) : !loansQuery.data?.data.length ? (
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
+                <p className="text-sm text-slate-700">
+                  Nenhum emprestimo foi registrado para este veiculo ate o
+                  momento.
+                </p>
+              </div>
+            ) : (
+              <div className="overflow-hidden rounded-[24px] border border-slate-200/70 bg-white/80">
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-left text-sm">
+                    <thead className="bg-slate-50 text-slate-500">
+                      <tr>
+                        <th className="px-4 py-3 font-medium">Tomador</th>
+                        <th className="px-4 py-3 font-medium">Saida</th>
+                        <th className="px-4 py-3 font-medium">Devolucao</th>
+                        <th className="px-4 py-3 font-medium">KM</th>
+                        <th className="px-4 py-3 font-medium">Status</th>
+                        <th className="px-4 py-3 font-medium text-right">
+                          Detalhe
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {loansQuery.data.data.map((loan) => (
+                        <tr
+                          key={loan.id}
+                          className="border-t border-slate-200/70"
+                        >
+                          <td className="px-4 py-4">
+                            <div>
+                              <p className="font-medium text-slate-900">
+                                {getVehicleLoanBorrowerLabel(loan)}
+                              </p>
+                              <p className="mt-1 text-slate-500">
+                                {loan.borrower_type ===
+                                "App\\Models\\PoliceOfficer"
+                                  ? "Policial"
+                                  : loan.borrower_type === "App\\Models\\User"
+                                    ? "Usuario"
+                                    : "Externo"}
+                              </p>
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-slate-600">
+                            {formatLoanDateTime(loan.start_date, loan.start_time)}
+                          </td>
+                          <td className="px-4 py-4 text-slate-600">
+                            {formatLoanDateTime(loan.end_date, loan.end_time)}
+                          </td>
+                          <td className="px-4 py-4 text-slate-600">
+                            <p>
+                              Inicio: {loan.start_km.toLocaleString("pt-BR")}
+                            </p>
+                            <p>
+                              Final:{" "}
+                              {loan.end_km !== null &&
+                              loan.end_km !== undefined
+                                ? loan.end_km.toLocaleString("pt-BR")
+                                : "-"}
+                            </p>
+                          </td>
+                          <td className="px-4 py-4">
+                            <Badge
+                              variant={getVehicleLoanStatusVariant(loan.status)}
+                            >
+                              {loan.status_label ?? "Sem status"}
+                            </Badge>
+                          </td>
+                          <td className="px-4 py-4 text-right">
+                            <Button asChild size="sm" variant="outline">
+                              <Link href={`/vehicle-loans/${loan.id}`}>
+                                Ver
+                              </Link>
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : null}
     </div>
   );
 }
