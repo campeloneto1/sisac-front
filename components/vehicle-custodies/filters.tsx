@@ -3,11 +3,9 @@
 import { Search, SlidersHorizontal } from "lucide-react";
 
 import {
-  vehicleCustodyHolderTypeOptions,
+  vehicleCustodyCustodianTypeOptions,
   vehicleCustodyStatusOptions,
 } from "@/types/vehicle-custody.type";
-import type { CityItem } from "@/types/city.type";
-import type { SubunitItem } from "@/types/subunit.type";
 import type { VehicleItem } from "@/types/vehicle.type";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,48 +20,36 @@ import {
 } from "@/components/ui/select";
 
 interface VehicleCustodiesFiltersProps {
+  search: string;
   vehicleId: string;
   status: string;
-  borrowerType: string;
-  externalBorrowerName: string;
-  cityId: string;
-  subunitId: string;
-  startDateFrom: string;
-  startDateTo: string;
+  custodianType: string;
+  startDate: string;
+  endDate: string;
   vehicles: VehicleItem[];
-  cities: CityItem[];
-  subunits: SubunitItem[];
+  onSearchChange: (value: string) => void;
   onVehicleChange: (value: string) => void;
   onStatusChange: (value: string) => void;
-  onBorrowerTypeChange: (value: string) => void;
-  onExternalBorrowerNameChange: (value: string) => void;
-  onCityChange: (value: string) => void;
-  onSubunitChange: (value: string) => void;
-  onStartDateFromChange: (value: string) => void;
-  onStartDateToChange: (value: string) => void;
+  onCustodianTypeChange: (value: string) => void;
+  onStartDateChange: (value: string) => void;
+  onEndDateChange: (value: string) => void;
   onClear: () => void;
 }
 
 export function VehicleCustodiesFilters({
+  search,
   vehicleId,
   status,
-  borrowerType,
-  externalBorrowerName,
-  cityId,
-  subunitId,
-  startDateFrom,
-  startDateTo,
+  custodianType,
+  startDate,
+  endDate,
   vehicles,
-  cities,
-  subunits,
+  onSearchChange,
   onVehicleChange,
   onStatusChange,
-  onBorrowerTypeChange,
-  onExternalBorrowerNameChange,
-  onCityChange,
-  onSubunitChange,
-  onStartDateFromChange,
-  onStartDateToChange,
+  onCustodianTypeChange,
+  onStartDateChange,
+  onEndDateChange,
   onClear,
 }: VehicleCustodiesFiltersProps) {
   return (
@@ -75,6 +61,20 @@ export function VehicleCustodiesFilters({
         </CardTitle>
       </CardHeader>
       <CardContent className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="space-y-2">
+          <Label htmlFor="search">Busca</Label>
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <Input
+              id="search"
+              className="pl-9"
+              placeholder="Documento ou placa"
+              value={search}
+              onChange={(event) => onSearchChange(event.target.value)}
+            />
+          </div>
+        </div>
+
         <div className="space-y-2">
           <Label>Veiculo</Label>
           <Select value={vehicleId} onValueChange={onVehicleChange}>
@@ -110,14 +110,14 @@ export function VehicleCustodiesFilters({
         </div>
 
         <div className="space-y-2">
-          <Label>Tipo de responsavel</Label>
-          <Select value={borrowerType} onValueChange={onBorrowerTypeChange}>
+          <Label>Tipo de custodiante</Label>
+          <Select value={custodianType} onValueChange={onCustodianTypeChange}>
             <SelectTrigger>
               <SelectValue placeholder="Todos os tipos" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Todos os tipos</SelectItem>
-              {vehicleCustodyHolderTypeOptions.map((option) => (
+              {vehicleCustodyCustodianTypeOptions.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
@@ -127,74 +127,22 @@ export function VehicleCustodiesFilters({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="externalBorrowerName">Responsavel externo</Label>
-          <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <Input
-              id="externalBorrowerName"
-              className="pl-9"
-              placeholder="Nome do responsavel externo"
-              value={externalBorrowerName}
-              onChange={(event) =>
-                onExternalBorrowerNameChange(event.target.value)
-              }
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label>Cidade</Label>
-          <Select value={cityId} onValueChange={onCityChange}>
-            <SelectTrigger>
-              <SelectValue placeholder="Todas as cidades" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todas as cidades</SelectItem>
-              {cities.map((city) => (
-                <SelectItem key={city.id} value={String(city.id)}>
-                  {city.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label>Subunidade</Label>
-          <Select value={subunitId} onValueChange={onSubunitChange}>
-            <SelectTrigger>
-              <SelectValue placeholder="Todas as subunidades" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todas as subunidades</SelectItem>
-              {subunits.map((subunit) => (
-                <SelectItem key={subunit.id} value={String(subunit.id)}>
-                  {subunit.abbreviation
-                    ? `${subunit.abbreviation} • ${subunit.name}`
-                    : subunit.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="startDateFrom">Inicio de</Label>
+          <Label htmlFor="startDate">Inicio a partir de</Label>
           <Input
-            id="startDateFrom"
+            id="startDate"
             type="date"
-            value={startDateFrom}
-            onChange={(event) => onStartDateFromChange(event.target.value)}
+            value={startDate}
+            onChange={(event) => onStartDateChange(event.target.value)}
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="startDateTo">Inicio ate</Label>
+          <Label htmlFor="endDate">Fim ate</Label>
           <Input
-            id="startDateTo"
+            id="endDate"
             type="date"
-            value={startDateTo}
-            onChange={(event) => onStartDateToChange(event.target.value)}
+            value={endDate}
+            onChange={(event) => onEndDateChange(event.target.value)}
           />
         </div>
 

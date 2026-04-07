@@ -90,3 +90,31 @@ export function useFinalizeVehicleCustodyMutation() {
     },
   });
 }
+
+export function useCancelVehicleCustodyMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      id,
+      payload,
+    }: {
+      id: number | string;
+      payload: Parameters<typeof vehicleCustodiesService.cancel>[1];
+    }) => vehicleCustodiesService.cancel(id, payload),
+    onSuccess(response, variables) {
+      queryClient.invalidateQueries({ queryKey: ["vehicle-custodies"] });
+      queryClient.invalidateQueries({
+        queryKey: ["vehicle-custodies", variables.id],
+      });
+      queryClient.invalidateQueries({ queryKey: ["vehicles"] });
+      queryClient.invalidateQueries({
+        queryKey: ["vehicles", response.data.vehicle_id],
+      });
+      toast.success(response.message);
+    },
+    onError(error) {
+      toast.error(getApiErrorMessage(error));
+    },
+  });
+}

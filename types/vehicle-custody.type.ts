@@ -1,79 +1,31 @@
 import type { PaginatedMeta } from "@/types/brand.type";
+import type { PoliceOfficerItem } from "@/types/police-officer.type";
+import type { UserListItem } from "@/types/user.type";
+import type { VehicleItem } from "@/types/vehicle.type";
 
-export type VehicleCustodyStatus = "in_use" | "returned";
-export type VehicleCustodyHolderType =
+export type VehicleCustodyStatus = "active" | "ended" | "cancelled";
+export type VehicleCustodyCustodianType =
   | "App\\Models\\PoliceOfficer"
   | "App\\Models\\User";
 
-export interface VehicleCustodyHolder {
-  id: number;
-  name?: string | null;
-  email?: string | null;
-  war_name?: string | null;
-  registration_number?: string | null;
-  badge_number?: string | null;
-  type?: string | null;
-  type_label?: string | null;
-}
+export type VehicleCustodyCustodian = PoliceOfficerItem | UserListItem;
 
 export interface VehicleCustodyItem {
   id: number;
   vehicle_id: number;
-  borrower_id?: number | null;
-  borrower_type?: VehicleCustodyHolderType | null;
-  external_borrower_name?: string | null;
-  external_borrower_document?: string | null;
-  external_borrower_phone?: string | null;
-  city_id?: number | null;
-  subunit_id?: number | null;
-  start_date: string;
-  start_time?: string | null;
+  vehicle?: VehicleItem | null;
+  custodian_type: VehicleCustodyCustodianType;
+  custodian_id: number;
+  custodian?: VehicleCustodyCustodian | null;
+  document_number?: string | null;
+  start_date?: string | null;
   end_date?: string | null;
-  end_time?: string | null;
-  start_km: number;
-  end_km?: number | null;
-  km_traveled?: number | null;
-  start_notes?: string | null;
-  return_notes?: string | null;
+  actual_end_date?: string | null;
+  reason?: string | null;
   status?: VehicleCustodyStatus | null;
   status_label?: string | null;
   status_color?: string | null;
-  is_returned: boolean;
-  is_overdue?: boolean;
-  vehicle?: {
-    id: number;
-    license_plate: string;
-    special_plate?: string | null;
-    operational_status_label?: string | null;
-    vehicle_type?: {
-      id: number;
-      name: string;
-      code?: string | null;
-    } | null;
-    variant?: {
-      id: number;
-      name: string;
-      brand?: {
-        id: number;
-        name: string;
-      } | null;
-    } | null;
-    color?: {
-      id: number;
-      name: string;
-    } | null;
-  } | null;
-  borrower?: VehicleCustodyHolder | null;
-  city?: {
-    id: number;
-    name: string;
-    abbreviation?: string | null;
-  } | null;
-  subunit?: {
-    id: number;
-    name: string;
-    abbreviation?: string | null;
-  } | null;
+  notes?: string | null;
   creator?: {
     id: number;
     name: string;
@@ -86,40 +38,37 @@ export interface VehicleCustodyItem {
   } | null;
   created_at?: string | null;
   updated_at?: string | null;
+  deleted_at?: string | null;
 }
 
 export interface VehicleCustodyFilters {
   page?: number;
   per_page?: number;
+  search?: string;
   vehicle_id?: number | null;
   status?: VehicleCustodyStatus;
-  borrower_type?: VehicleCustodyHolderType | null;
-  borrower_id?: number | null;
-  external_borrower_name?: string;
-  start_date_from?: string;
-  start_date_to?: string;
-  city_id?: number | null;
-  subunit_id?: number | null;
+  custodian_type?: VehicleCustodyCustodianType | null;
+  custodian_id?: number | null;
+  start_date?: string;
+  end_date?: string;
 }
 
 export interface CreateVehicleCustodyDTO {
   vehicle_id: number;
-  borrower_id?: number | null;
-  borrower_type?: VehicleCustodyHolderType | null;
-  external_borrower_name?: string | null;
-  external_borrower_document?: string | null;
-  external_borrower_phone?: string | null;
-  city_id?: number | null;
-  subunit_id?: number | null;
-  start_km: number;
-  start_notes?: string | null;
+  custodian_type: VehicleCustodyCustodianType;
+  custodian_id: number;
+  document_number?: string | null;
+  end_date?: string | null;
+  reason?: string | null;
+  notes?: string | null;
 }
 
-export interface UpdateVehicleCustodyDTO extends Partial<CreateVehicleCustodyDTO> {}
+export interface UpdateVehicleCustodyDTO extends Partial<CreateVehicleCustodyDTO> {
+  start_date?: string | null;
+}
 
 export interface FinalizeVehicleCustodyDTO {
-  end_km: number;
-  return_notes?: string | null;
+  notes?: string | null;
 }
 
 export interface VehicleCustodyResponse {
@@ -142,47 +91,61 @@ export const vehicleCustodyStatusOptions: Array<{
   value: VehicleCustodyStatus;
   label: string;
 }> = [
-  { value: "in_use", label: "Em cautela" },
-  { value: "returned", label: "Finalizado" },
+  { value: "active", label: "Ativa" },
+  { value: "ended", label: "Encerrada" },
+  { value: "cancelled", label: "Cancelada" },
 ];
 
-export const vehicleCustodyHolderTypeOptions: Array<{
-  value: VehicleCustodyHolderType;
+export const vehicleCustodyCustodianTypeOptions: Array<{
+  value: VehicleCustodyCustodianType;
   label: string;
 }> = [
   { value: "App\\Models\\PoliceOfficer", label: "Policial" },
   { value: "App\\Models\\User", label: "Usuario" },
 ];
 
-export function getVehicleCustodyHolderLabel(custody: VehicleCustodyItem) {
-  if (custody.borrower) {
-    const policeOfficerLabel =
-      custody.borrower.war_name ||
-      custody.borrower.name ||
-      custody.borrower.registration_number;
+function isPoliceOfficerCustodian(
+  custodian: VehicleCustodyCustodian | null | undefined,
+): custodian is PoliceOfficerItem {
+  return Boolean(
+    custodian &&
+      ("war_name" in custodian || "registration_number" in custodian),
+  );
+}
 
-    if (custody.borrower_type === "App\\Models\\PoliceOfficer") {
-      return policeOfficerLabel ?? "Policial vinculado";
-    }
+function isUserCustodian(
+  custodian: VehicleCustodyCustodian | null | undefined,
+): custodian is UserListItem {
+  return Boolean(custodian && "email" in custodian);
+}
 
+export function getVehicleCustodyCustodianLabel(custody: VehicleCustodyItem) {
+  if (isPoliceOfficerCustodian(custody.custodian)) {
     return (
-      custody.borrower.name ??
-      custody.borrower.email ??
-      "Usuario vinculado"
+      custody.custodian.war_name ||
+      custody.custodian.name ||
+      custody.custodian.registration_number ||
+      "Policial vinculado"
     );
   }
 
-  return custody.external_borrower_name ?? "Responsavel externo";
+  if (isUserCustodian(custody.custodian)) {
+    return custody.custodian.name || custody.custodian.email || "Usuario vinculado";
+  }
+
+  return `Custodiante #${custody.custodian_id}`;
 }
 
 export function getVehicleCustodyStatusVariant(
   status?: VehicleCustodyStatus | null,
 ) {
   switch (status) {
-    case "in_use":
+    case "active":
       return "secondary";
-    case "returned":
+    case "ended":
       return "success";
+    case "cancelled":
+      return "danger";
     default:
       return "outline";
   }

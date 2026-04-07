@@ -8,7 +8,7 @@ import { useDeleteVehicleCustodyMutation } from "@/hooks/use-vehicle-custody-mut
 import { usePermissions } from "@/hooks/use-permissions";
 import type { VehicleCustodyItem } from "@/types/vehicle-custody.type";
 import {
-  getVehicleCustodyHolderLabel,
+  getVehicleCustodyCustodianLabel,
   getVehicleCustodyStatusVariant,
 } from "@/types/vehicle-custody.type";
 import { Badge } from "@/components/ui/badge";
@@ -26,12 +26,8 @@ interface VehicleCustodiesTableProps {
   custodies: VehicleCustodyItem[];
 }
 
-function formatDateTime(date?: string | null, time?: string | null) {
-  if (!date) {
-    return "-";
-  }
-
-  return `${date.slice(0, 10)}${time ? ` • ${time.slice(0, 5)}` : ""}`;
+function formatDate(date?: string | null) {
+  return date ? date.slice(0, 10) : "-";
 }
 
 export function VehicleCustodiesTable({
@@ -59,9 +55,9 @@ export function VehicleCustodiesTable({
             <thead className="bg-slate-50 text-slate-500">
               <tr>
                 <th className="px-4 py-3 font-medium">Veiculo</th>
-                <th className="px-4 py-3 font-medium">Responsavel</th>
+                <th className="px-4 py-3 font-medium">Custodiante</th>
                 <th className="px-4 py-3 font-medium">Periodo</th>
-                <th className="px-4 py-3 font-medium">KM</th>
+                <th className="px-4 py-3 font-medium">Documento</th>
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium text-right">Acoes</th>
               </tr>
@@ -75,12 +71,10 @@ export function VehicleCustodiesTable({
                   <td className="px-4 py-4">
                     <div>
                       <p className="font-medium text-slate-900">
-                        {custody.vehicle?.license_plate ??
-                          `#${custody.vehicle_id}`}
+                        {custody.vehicle?.license_plate ?? `#${custody.vehicle_id}`}
                       </p>
                       <p className="mt-1 text-slate-500">
-                        {custody.vehicle?.vehicle_type?.name ??
-                          "Tipo nao informado"}
+                        {custody.vehicle?.vehicle_type?.name ?? "Tipo nao informado"}
                         {custody.vehicle?.variant?.name
                           ? ` • ${custody.vehicle.variant.name}`
                           : ""}
@@ -90,35 +84,22 @@ export function VehicleCustodiesTable({
                   <td className="px-4 py-4">
                     <div>
                       <p className="font-medium text-slate-900">
-                        {getVehicleCustodyHolderLabel(custody)}
+                        {getVehicleCustodyCustodianLabel(custody)}
                       </p>
                       <p className="mt-1 text-slate-500">
-                        {custody.borrower_type === "App\\Models\\PoliceOfficer"
+                        {custody.custodian_type === "App\\Models\\PoliceOfficer"
                           ? "Policial"
-                          : custody.borrower_type === "App\\Models\\User"
-                            ? "Usuario"
-                            : "Externo"}
+                          : "Usuario"}
                       </p>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
-                    <p>
-                      Inicio:{" "}
-                      {formatDateTime(custody.start_date, custody.start_time)}
-                    </p>
-                    <p>
-                      Devolucao:{" "}
-                      {formatDateTime(custody.end_date, custody.end_time)}
-                    </p>
+                    <p>Inicio: {formatDate(custody.start_date)}</p>
+                    <p>Previsto: {formatDate(custody.end_date)}</p>
+                    <p>Efetivo: {formatDate(custody.actual_end_date)}</p>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
-                    <p>Inicio: {custody.start_km.toLocaleString("pt-BR")}</p>
-                    <p>
-                      Final:{" "}
-                      {custody.end_km !== null && custody.end_km !== undefined
-                        ? custody.end_km.toLocaleString("pt-BR")
-                        : "-"}
-                    </p>
+                    {custody.document_number ?? "-"}
                   </td>
                   <td className="px-4 py-4">
                     <Badge

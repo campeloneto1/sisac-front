@@ -68,4 +68,15 @@ export const vehicleCustodiesService = {
     );
     return data;
   },
+
+  async cancel(
+    id: number | string,
+    payload: { reason?: string | null },
+  ): Promise<VehicleCustodyResponse> {
+    const { data } = await api.post<VehicleCustodyResponse>(
+      `/vehicle-custodies/${id}/cancel`,
+      payload,
+    );
+    return data;
+  },
 };

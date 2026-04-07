@@ -3,22 +3,19 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import {
-  CalendarDays,
-  CarFront,
-  Gauge,
-  MapPin,
-  UserCircle2,
-} from "lucide-react";
+import { CalendarDays, CarFront, FileText, UserCircle2 } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useFinalizeVehicleCustodyMutation } from "@/hooks/use-vehicle-custody-mutations";
+import {
+  useCancelVehicleCustodyMutation,
+  useFinalizeVehicleCustodyMutation,
+} from "@/hooks/use-vehicle-custody-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useVehicleCustody } from "@/hooks/use-vehicle-custodies";
 import {
-  getVehicleCustodyHolderLabel,
+  getVehicleCustodyCustodianLabel,
   getVehicleCustodyStatusVariant,
 } from "@/types/vehicle-custody.type";
 import { Badge } from "@/components/ui/badge";
@@ -38,26 +35,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 
 const finalizeSchema = z.object({
-  end_km: z.coerce.number().int().min(0, "Informe a quilometragem final."),
-  return_notes: z
-    .string()
-    .max(1000, "As observacoes devem ter no maximo 1000 caracteres."),
+  notes: z.string().max(1000, "As observacoes devem ter no maximo 1000 caracteres."),
 });
 
 type FinalizeValues = z.output<typeof finalizeSchema>;
 
-function formatDateTime(date?: string | null, time?: string | null) {
-  if (!date) {
-    return "Nao informado";
-  }
-
-  return `${date.slice(0, 10)}${time ? ` • ${time.slice(0, 5)}` : ""}`;
+function formatDate(date?: string | null) {
+  return date ? date.slice(0, 10) : "Nao informado";
 }
 
 export function VehicleCustodyShowPage() {
@@ -65,7 +54,8 @@ export function VehicleCustodyShowPage() {
   const permissions = usePermissions("vehicle-custodies");
   const custodyQuery = useVehicleCustody(params.id);
   const finalizeMutation = useFinalizeVehicleCustodyMutation();
-  const [isFinalizeDialogOpen, setIsFinalizeDialogOpen] = useState(false);
+  const cancelMutation = useCancelVehicleCustodyMutation();
+  const [action, setAction] = useState<"finalize" | "cancel" | null>(null);
   const {
     register,
     handleSubmit,
@@ -74,8 +64,7 @@ export function VehicleCustodyShowPage() {
   } = useForm<z.input<typeof finalizeSchema>, unknown, FinalizeValues>({
     resolver: zodResolver(finalizeSchema),
     defaultValues: {
-      end_km: 0,
-      return_notes: "",
+      notes: "",
     },
   });
 
@@ -112,17 +101,30 @@ export function VehicleCustodyShowPage() {
 
   const custody = custodyQuery.data.data;
 
-  async function onSubmitFinalize(values: FinalizeValues) {
-    await finalizeMutation.mutateAsync({
-      id: custody.id,
-      payload: {
-        end_km: values.end_km,
-        return_notes: values.return_notes.trim() || null,
-      },
-    });
-    setIsFinalizeDialogOpen(false);
+  async function onSubmitAction(values: FinalizeValues) {
+    if (action === "finalize") {
+      await finalizeMutation.mutateAsync({
+        id: custody.id,
+        payload: {
+          notes: values.notes.trim() || null,
+        },
+      });
+    }
+
+    if (action === "cancel") {
+      await cancelMutation.mutateAsync({
+        id: custody.id,
+        payload: {
+          reason: values.notes.trim() || null,
+        },
+      });
+    }
+
+    setAction(null);
     reset();
   }
+
+  const isPending = finalizeMutation.isPending || cancelMutation.isPending;
 
   return (
     <>
@@ -138,12 +140,8 @@ export function VehicleCustodyShowPage() {
               </Badge>
             </div>
             <p className="mt-2 text-sm text-slate-500">
-              {getVehicleCustodyHolderLabel(custody)} • Inicio em{" "}
-              {formatDateTime(custody.start_date, custody.start_time)}
-            </p>
-            <p className="mt-3 max-w-3xl text-sm text-slate-600">
-              Acompanhe os dados do responsavel, a movimentacao do veiculo e o
-              fechamento da devolucao.
+              {getVehicleCustodyCustodianLabel(custody)} • Inicio em{" "}
+              {formatDate(custody.start_date)}
             </p>
           </div>
 
@@ -155,10 +153,15 @@ export function VehicleCustodyShowPage() {
                 </Link>
               </Button>
             ) : null}
-            {permissions.canUpdate && custody.status === "in_use" ? (
-              <Button onClick={() => setIsFinalizeDialogOpen(true)}>
-                Finalizar cautela
-              </Button>
+            {permissions.canUpdate && custody.status === "active" ? (
+              <>
+                <Button variant="outline" onClick={() => setAction("cancel")}>
+                  Cancelar
+                </Button>
+                <Button onClick={() => setAction("finalize")}>
+                  Encerrar cautela
+                </Button>
+              </>
             ) : null}
           </div>
         </div>
@@ -166,9 +169,9 @@ export function VehicleCustodyShowPage() {
         <div className="grid gap-6 xl:grid-cols-2">
           <Card className="border-slate-200/70 bg-white/80">
             <CardHeader>
-              <CardTitle>Veiculo e responsavel</CardTitle>
+              <CardTitle>Veiculo e custodiante</CardTitle>
               <CardDescription>
-                Contexto principal da cautela.
+                Dados principais da cautela.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -181,12 +184,6 @@ export function VehicleCustodyShowPage() {
                   <p className="text-sm text-slate-700">
                     {custody.vehicle?.license_plate ?? `#${custody.vehicle_id}`}
                   </p>
-                  <p className="text-sm text-slate-500">
-                    {custody.vehicle?.vehicle_type?.name ?? "Tipo nao informado"}
-                    {custody.vehicle?.variant?.name
-                      ? ` • ${custody.vehicle.variant.name}`
-                      : ""}
-                  </p>
                 </div>
               </div>
 
@@ -194,48 +191,27 @@ export function VehicleCustodyShowPage() {
                 <UserCircle2 className="h-4 w-4 text-primary" />
                 <div>
                   <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                    Responsavel
+                    Custodiante
                   </p>
                   <p className="text-sm text-slate-700">
-                    {getVehicleCustodyHolderLabel(custody)}
+                    {getVehicleCustodyCustodianLabel(custody)}
                   </p>
                   <p className="text-sm text-slate-500">
-                    {custody.borrower_type === "App\\Models\\PoliceOfficer"
+                    {custody.custodian_type === "App\\Models\\PoliceOfficer"
                       ? "Policial"
-                      : custody.borrower_type === "App\\Models\\User"
-                        ? "Usuario"
-                        : "Externo"}
+                      : "Usuario"}
                   </p>
                 </div>
               </div>
 
-              {!custody.borrower ? (
-                <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                    Dados externos
-                  </p>
-                  <p className="mt-1 text-sm text-slate-700">
-                    Documento:{" "}
-                    {custody.external_borrower_document ?? "Nao informado"}
-                  </p>
-                  <p className="text-sm text-slate-700">
-                    Telefone:{" "}
-                    {custody.external_borrower_phone ?? "Nao informado"}
-                  </p>
-                </div>
-              ) : null}
-
               <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                <MapPin className="h-4 w-4 text-primary" />
+                <FileText className="h-4 w-4 text-primary" />
                 <div>
                   <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                    Local de referencia
+                    Documento
                   </p>
                   <p className="text-sm text-slate-700">
-                    {custody.city?.name ?? "Cidade nao informada"}
-                    {custody.subunit?.name
-                      ? ` • ${custody.subunit.abbreviation ?? custody.subunit.name}`
-                      : ""}
+                    {custody.document_number ?? "Nao informado"}
                   </p>
                 </div>
               </div>
@@ -244,13 +220,13 @@ export function VehicleCustodyShowPage() {
 
           <Card className="border-slate-200/70 bg-white/80">
             <CardHeader>
-              <CardTitle>Movimentacao</CardTitle>
+              <CardTitle>Periodo e motivo</CardTitle>
               <CardDescription>
-                Datas, horarios e kilometragem da cautela.
+                Datas e justificativas da cautela.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="grid gap-3 md:grid-cols-2">
+              <div className="grid gap-3 md:grid-cols-3">
                 <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                   <CalendarDays className="h-4 w-4 text-primary" />
                   <div>
@@ -258,7 +234,7 @@ export function VehicleCustodyShowPage() {
                       Inicio
                     </p>
                     <p className="text-sm text-slate-700">
-                      {formatDateTime(custody.start_date, custody.start_time)}
+                      {formatDate(custody.start_date)}
                     </p>
                   </div>
                 </div>
@@ -267,52 +243,42 @@ export function VehicleCustodyShowPage() {
                   <CalendarDays className="h-4 w-4 text-primary" />
                   <div>
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                      Devolucao
+                      Fim previsto
                     </p>
                     <p className="text-sm text-slate-700">
-                      {formatDateTime(custody.end_date, custody.end_time)}
+                      {formatDate(custody.end_date)}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <CalendarDays className="h-4 w-4 text-primary" />
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                      Fim efetivo
+                    </p>
+                    <p className="text-sm text-slate-700">
+                      {formatDate(custody.actual_end_date)}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                <Gauge className="h-4 w-4 text-primary" />
-                <div>
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                    Quilometragem
-                  </p>
-                  <p className="text-sm text-slate-700">
-                    Inicio: {custody.start_km.toLocaleString("pt-BR")} • Final:{" "}
-                    {custody.end_km !== null && custody.end_km !== undefined
-                      ? custody.end_km.toLocaleString("pt-BR")
-                      : "-"}
-                  </p>
-                  <p className="text-sm text-slate-500">
-                    Percorrido:{" "}
-                    {custody.km_traveled !== null &&
-                    custody.km_traveled !== undefined
-                      ? `${custody.km_traveled.toLocaleString("pt-BR")} km`
-                      : "Nao calculado"}
-                  </p>
-                </div>
-              </div>
-
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Observacoes iniciais
+                  Motivo
                 </p>
                 <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">
-                  {custody.start_notes ?? "Nenhuma observacao registrada."}
+                  {custody.reason ?? "Nenhum motivo informado."}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Observacoes de devolucao
+                  Observacoes
                 </p>
                 <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">
-                  {custody.return_notes ?? "Nenhuma observacao registrada."}
+                  {custody.notes ?? "Nenhuma observacao registrada."}
                 </p>
               </div>
             </CardContent>
@@ -348,75 +314,57 @@ export function VehicleCustodyShowPage() {
                   : "Nao informado"}
               </p>
             </div>
-
-            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Timestamps
-              </p>
-              <p className="mt-1 text-sm text-slate-700">
-                Criado em: {custody.created_at ?? "-"}
-              </p>
-              <p className="text-sm text-slate-700">
-                Atualizado em: {custody.updated_at ?? "-"}
-              </p>
-            </div>
           </CardContent>
         </Card>
       </div>
 
-      <Dialog
-        open={isFinalizeDialogOpen}
-        onOpenChange={setIsFinalizeDialogOpen}
-      >
+      <Dialog open={Boolean(action)} onOpenChange={(open) => !open && setAction(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Finalizar cautela</DialogTitle>
+            <DialogTitle>
+              {action === "cancel" ? "Cancelar cautela" : "Encerrar cautela"}
+            </DialogTitle>
             <DialogDescription>
-              Informe os dados finais para encerrar essa cautela e devolver o
-              veiculo ao fluxo operacional.
+              {action === "cancel"
+                ? "Informe o motivo do cancelamento da cautela."
+                : "Informe observacoes finais para encerrar a cautela."}
             </DialogDescription>
           </DialogHeader>
 
           <form
             className="space-y-4"
-            onSubmit={handleSubmit((values) => void onSubmitFinalize(values))}
+            onSubmit={handleSubmit((values) => void onSubmitAction(values))}
           >
             <div className="space-y-2">
-              <Label htmlFor="end_km">KM final</Label>
-              <Input id="end_km" type="number" min={0} {...register("end_km")} />
-              {errors.end_km ? (
-                <p className="text-sm text-destructive">
-                  {errors.end_km.message}
-                </p>
-              ) : null}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="return_notes">Observacoes finais</Label>
+              <Label htmlFor="notes">
+                {action === "cancel" ? "Motivo" : "Observacoes finais"}
+              </Label>
               <Textarea
-                id="return_notes"
-                placeholder="Descreva o retorno do veiculo e observacoes finais."
-                {...register("return_notes")}
+                id="notes"
+                placeholder={
+                  action === "cancel"
+                    ? "Descreva o motivo do cancelamento."
+                    : "Descreva o encerramento da cautela."
+                }
+                {...register("notes")}
               />
-              {errors.return_notes ? (
+              {errors.notes ? (
                 <p className="text-sm text-destructive">
-                  {errors.return_notes.message}
+                  {errors.notes.message}
                 </p>
               ) : null}
             </div>
 
             <DialogFooter>
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => setIsFinalizeDialogOpen(false)}
-              >
+              <Button type="button" variant="ghost" onClick={() => setAction(null)}>
                 Cancelar
               </Button>
-              <Button type="submit" disabled={finalizeMutation.isPending}>
-                {finalizeMutation.isPending
-                  ? "Finalizando..."
-                  : "Confirmar devolucao"}
+              <Button type="submit" disabled={isPending}>
+                {isPending
+                  ? "Salvando..."
+                  : action === "cancel"
+                    ? "Confirmar cancelamento"
+                    : "Confirmar encerramento"}
               </Button>
             </DialogFooter>
           </form>

@@ -4,14 +4,12 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { CarFront, Plus } from "lucide-react";
 
-import { useCities } from "@/hooks/use-cities";
 import { usePermissions } from "@/hooks/use-permissions";
-import { useSubunits } from "@/hooks/use-subunits";
 import { useVehicleCustodies } from "@/hooks/use-vehicle-custodies";
 import { useVehicles } from "@/hooks/use-vehicles";
 import type {
+  VehicleCustodyCustodianType,
   VehicleCustodyFilters,
-  VehicleCustodyHolderType,
   VehicleCustodyStatus,
 } from "@/types/vehicle-custody.type";
 import { Button } from "@/components/ui/button";
@@ -28,50 +26,33 @@ import { VehicleCustodiesTable } from "@/components/vehicle-custodies/table";
 
 export function VehicleCustodiesListPage() {
   const permissions = usePermissions("vehicle-custodies");
+  const [search, setSearch] = useState("");
   const [vehicleId, setVehicleId] = useState("all");
   const [status, setStatus] = useState("all");
-  const [borrowerType, setBorrowerType] = useState("all");
-  const [externalBorrowerName, setExternalBorrowerName] = useState("");
-  const [cityId, setCityId] = useState("all");
-  const [subunitId, setSubunitId] = useState("all");
-  const [startDateFrom, setStartDateFrom] = useState("");
-  const [startDateTo, setStartDateTo] = useState("");
+  const [custodianType, setCustodianType] = useState("all");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [page, setPage] = useState(1);
 
   const filters = useMemo<VehicleCustodyFilters>(
     () => ({
       page,
       per_page: 15,
+      search: search || undefined,
       vehicle_id: vehicleId !== "all" ? Number(vehicleId) : null,
-      status:
-        status !== "all" ? (status as VehicleCustodyStatus) : undefined,
-      borrower_type:
-        borrowerType !== "all"
-          ? (borrowerType as VehicleCustodyHolderType)
+      status: status !== "all" ? (status as VehicleCustodyStatus) : undefined,
+      custodian_type:
+        custodianType !== "all"
+          ? (custodianType as VehicleCustodyCustodianType)
           : undefined,
-      external_borrower_name: externalBorrowerName || undefined,
-      city_id: cityId !== "all" ? Number(cityId) : null,
-      subunit_id: subunitId !== "all" ? Number(subunitId) : null,
-      start_date_from: startDateFrom || undefined,
-      start_date_to: startDateTo || undefined,
+      start_date: startDate || undefined,
+      end_date: endDate || undefined,
     }),
-    [
-      borrowerType,
-      cityId,
-      externalBorrowerName,
-      page,
-      startDateFrom,
-      startDateTo,
-      status,
-      subunitId,
-      vehicleId,
-    ],
+    [custodianType, endDate, page, search, startDate, status, vehicleId],
   );
 
   const custodiesQuery = useVehicleCustodies(filters);
   const vehiclesQuery = useVehicles({ per_page: 100 });
-  const citiesQuery = useCities({ per_page: 100 });
-  const subunitsQuery = useSubunits({ per_page: 100 });
 
   if (!permissions.canViewAny) {
     return (
@@ -99,8 +80,7 @@ export function VehicleCustodiesListPage() {
               Cautelas de veiculos
             </h1>
             <p className="text-sm text-slate-500">
-              Controle as cautelas e devolucoes da frota por veiculo e
-              responsavel.
+              Controle custodias ativas, encerradas ou canceladas da frota.
             </p>
           </div>
         </div>
@@ -116,17 +96,17 @@ export function VehicleCustodiesListPage() {
       </div>
 
       <VehicleCustodiesFilters
+        search={search}
         vehicleId={vehicleId}
         status={status}
-        borrowerType={borrowerType}
-        externalBorrowerName={externalBorrowerName}
-        cityId={cityId}
-        subunitId={subunitId}
-        startDateFrom={startDateFrom}
-        startDateTo={startDateTo}
+        custodianType={custodianType}
+        startDate={startDate}
+        endDate={endDate}
         vehicles={vehiclesQuery.data?.data ?? []}
-        cities={citiesQuery.data?.data ?? []}
-        subunits={subunitsQuery.data?.data ?? []}
+        onSearchChange={(value) => {
+          setSearch(value);
+          setPage(1);
+        }}
         onVehicleChange={(value) => {
           setVehicleId(value);
           setPage(1);
@@ -135,39 +115,25 @@ export function VehicleCustodiesListPage() {
           setStatus(value);
           setPage(1);
         }}
-        onBorrowerTypeChange={(value) => {
-          setBorrowerType(value);
+        onCustodianTypeChange={(value) => {
+          setCustodianType(value);
           setPage(1);
         }}
-        onExternalBorrowerNameChange={(value) => {
-          setExternalBorrowerName(value);
+        onStartDateChange={(value) => {
+          setStartDate(value);
           setPage(1);
         }}
-        onCityChange={(value) => {
-          setCityId(value);
-          setPage(1);
-        }}
-        onSubunitChange={(value) => {
-          setSubunitId(value);
-          setPage(1);
-        }}
-        onStartDateFromChange={(value) => {
-          setStartDateFrom(value);
-          setPage(1);
-        }}
-        onStartDateToChange={(value) => {
-          setStartDateTo(value);
+        onEndDateChange={(value) => {
+          setEndDate(value);
           setPage(1);
         }}
         onClear={() => {
+          setSearch("");
           setVehicleId("all");
           setStatus("all");
-          setBorrowerType("all");
-          setExternalBorrowerName("");
-          setCityId("all");
-          setSubunitId("all");
-          setStartDateFrom("");
-          setStartDateTo("");
+          setCustodianType("all");
+          setStartDate("");
+          setEndDate("");
           setPage(1);
         }}
       />

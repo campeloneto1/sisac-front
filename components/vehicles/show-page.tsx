@@ -15,7 +15,7 @@ import { useVehicleCustodies } from "@/hooks/use-vehicle-custodies";
 import { useVehicleLoans } from "@/hooks/use-vehicle-loans";
 import { useVehicle } from "@/hooks/use-vehicles";
 import {
-  getVehicleCustodyHolderLabel,
+  getVehicleCustodyCustodianLabel,
   getVehicleCustodyStatusVariant,
 } from "@/types/vehicle-custody.type";
 import {
@@ -468,7 +468,7 @@ export function VehicleShowPage() {
                         <th className="px-4 py-3 font-medium">Responsavel</th>
                         <th className="px-4 py-3 font-medium">Inicio</th>
                         <th className="px-4 py-3 font-medium">Devolucao</th>
-                        <th className="px-4 py-3 font-medium">KM</th>
+                        <th className="px-4 py-3 font-medium">Documento</th>
                         <th className="px-4 py-3 font-medium">Status</th>
                         <th className="px-4 py-3 font-medium text-right">
                           Detalhe
@@ -484,41 +484,28 @@ export function VehicleShowPage() {
                           <td className="px-4 py-4">
                             <div>
                               <p className="font-medium text-slate-900">
-                                {getVehicleCustodyHolderLabel(custody)}
+                                {getVehicleCustodyCustodianLabel(custody)}
                               </p>
                               <p className="mt-1 text-slate-500">
-                                {custody.borrower_type ===
+                                {custody.custodian_type ===
                                 "App\\Models\\PoliceOfficer"
                                   ? "Policial"
-                                  : custody.borrower_type === "App\\Models\\User"
+                                  : custody.custodian_type === "App\\Models\\User"
                                     ? "Usuario"
                                     : "Externo"}
                               </p>
                             </div>
                           </td>
                           <td className="px-4 py-4 text-slate-600">
-                            {formatLoanDateTime(
-                              custody.start_date,
-                              custody.start_time,
-                            )}
+                            {formatLoanDateTime(custody.start_date)}
                           </td>
                           <td className="px-4 py-4 text-slate-600">
                             {formatLoanDateTime(
-                              custody.end_date,
-                              custody.end_time,
+                              custody.actual_end_date ?? custody.end_date,
                             )}
                           </td>
                           <td className="px-4 py-4 text-slate-600">
-                            <p>
-                              Inicio: {custody.start_km.toLocaleString("pt-BR")}
-                            </p>
-                            <p>
-                              Final:{" "}
-                              {custody.end_km !== null &&
-                              custody.end_km !== undefined
-                                ? custody.end_km.toLocaleString("pt-BR")
-                                : "-"}
-                            </p>
+                            {custody.document_number ?? "-"}
                           </td>
                           <td className="px-4 py-4">
                             <Badge
