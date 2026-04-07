@@ -12,6 +12,7 @@ import {
   Building2,
   CarFront,
   ChevronDown,
+  Fuel,
   Palette,
   FileHeart,
   Palmtree,
@@ -120,6 +121,13 @@ const generalItems = [
     icon: Wrench,
     visible: false,
     permissionResource: "vehicle-maintenances",
+  },
+  {
+    href: "/vehicle-fuelings",
+    label: "Abastecimentos",
+    icon: Fuel,
+    visible: false,
+    permissionResource: "vehicle-fuelings",
   },
   {
     href: "/police-officer-retirement-requests",
@@ -481,6 +489,14 @@ export function AppSidebar() {
 
       if (item.permissionResource === "vehicle-custodies") {
         return can(user, "viewAny", "vehicle-custodies");
+      }
+
+      if (item.permissionResource === "vehicle-maintenances") {
+        return can(user, "viewAny", "vehicle-maintenances");
+      }
+
+      if (item.permissionResource === "vehicle-fuelings") {
+        return can(user, "viewAny", "vehicle-fuelings");
       }
 
       if (item.permissionResource === "police-officer-retirement-requests") {
