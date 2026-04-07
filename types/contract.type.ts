@@ -88,7 +88,12 @@ export interface ContractAlertSummary {
   id: number;
   contract_id: number;
   type?: string | null;
+  type_label?: string | null;
+  type_color?: string | null;
+  type_priority?: number | null;
   status?: string | null;
+  status_label?: string | null;
+  status_color?: string | null;
   message?: string | null;
   alert_date?: string | null;
 }

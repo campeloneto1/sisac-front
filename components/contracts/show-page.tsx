@@ -8,6 +8,7 @@ import { useSubunit } from "@/contexts/subunit-context";
 import { useContract } from "@/hooks/use-contracts";
 import { usePermissions } from "@/hooks/use-permissions";
 import { cn } from "@/lib/utils";
+import { getContractAlertBadgeVariant, getContractAlertStatusLabel, getContractAlertTypeLabel } from "@/types/contract-alert.type";
 import { getContractStatusBadgeVariant, getContractStatusLabel } from "@/types/contract.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -89,9 +90,11 @@ export function ContractShowPage() {
   const contractSubpages = [
     { href: `/contracts/${contract.id}`, label: "Resumo" },
     { href: `/contracts/${contract.id}/roles`, label: "Papeis" },
+    { href: `/contracts/${contract.id}/status-history`, label: "Status" },
     { href: `/contracts/${contract.id}/extensions`, label: "Prorrogacoes" },
     { href: `/contracts/${contract.id}/amendments`, label: "Aditivos" },
     { href: `/contracts/${contract.id}/transactions`, label: "Transacoes" },
+    { href: `/contracts/${contract.id}/alerts`, label: "Alertas" },
   ];
 
   return (
@@ -216,6 +219,27 @@ export function ContractShowPage() {
       <div className="grid gap-6 xl:grid-cols-3">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
+            <CardTitle>Status e auditoria</CardTitle>
+            <CardDescription>Acompanhe o estado atual e abra a trilha de mudancas formais.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <p className="text-sm font-medium text-slate-900">Status atual</p>
+              <div className="mt-2">
+                <Badge variant={getContractStatusBadgeVariant(contract.status)}>
+                  {contract.status_label ?? getContractStatusLabel(contract.status)}
+                </Badge>
+              </div>
+              <p className="mt-2 text-xs text-slate-500">Use o historico para registrar cada transicao relevante do contrato.</p>
+              <Button asChild className="mt-3 w-full" size="sm" variant="outline">
+                <Link href={`/contracts/${contract.id}/status-history`}>Abrir historico de status</Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
             <CardTitle>Transacoes</CardTitle>
             <CardDescription>{contract.contract_transactions?.length ?? 0} registro(s) carregados.</CardDescription>
           </CardHeader>
@@ -272,7 +296,15 @@ export function ContractShowPage() {
                 <div key={alert.id} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                   <div className="flex items-center gap-2">
                     <AlertTriangle className="h-4 w-4 text-primary" />
-                    <p className="text-sm font-medium text-slate-900">{alert.type ?? "Alerta"}</p>
+                    <p className="text-sm font-medium text-slate-900">{alert.type_label ?? getContractAlertTypeLabel(alert.type)}</p>
+                  </div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <Badge variant={getContractAlertBadgeVariant(alert.type_color)}>
+                      {alert.type_label ?? getContractAlertTypeLabel(alert.type)}
+                    </Badge>
+                    <Badge variant={getContractAlertBadgeVariant(alert.status_color)}>
+                      {alert.status_label ?? getContractAlertStatusLabel(alert.status)}
+                    </Badge>
                   </div>
                   <p className="mt-1 text-xs text-slate-500">{alert.message ?? "Sem mensagem detalhada"}</p>
                 </div>
@@ -280,6 +312,9 @@ export function ContractShowPage() {
             ) : (
               <p className="text-sm text-slate-500">Nenhum alerta retornado para este contrato.</p>
             )}
+            <Button asChild className="w-full" variant="outline">
+              <Link href={`/contracts/${contract.id}/alerts`}>Abrir modulo de alertas</Link>
+            </Button>
           </CardContent>
         </Card>
       </div>
@@ -306,10 +341,16 @@ export function ContractShowPage() {
             <Link href={`/contracts/${contract.id}/roles`}>Abrir papeis</Link>
           </Button>
           <Button asChild variant="outline">
+            <Link href={`/contracts/${contract.id}/status-history`}>Abrir status</Link>
+          </Button>
+          <Button asChild variant="outline">
             <Link href={`/contracts/${contract.id}/extensions`}>Abrir prorrogacoes</Link>
           </Button>
           <Button asChild variant="outline">
             <Link href={`/contracts/${contract.id}/transactions`}>Abrir transacoes</Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href={`/contracts/${contract.id}/alerts`}>Abrir alertas</Link>
           </Button>
         </CardContent>
       </Card>

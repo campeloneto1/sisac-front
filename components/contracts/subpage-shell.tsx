@@ -14,9 +14,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 const subpages = [
   { href: "", label: "Resumo" },
   { href: "/roles", label: "Papeis" },
+  { href: "/status-history", label: "Status" },
   { href: "/extensions", label: "Prorrogacoes" },
   { href: "/amendments", label: "Aditivos" },
   { href: "/transactions", label: "Transacoes" },
+  { href: "/alerts", label: "Alertas" },
 ];
 
 interface ContractSubpageShellProps {
