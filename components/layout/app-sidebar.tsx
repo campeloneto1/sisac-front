@@ -33,6 +33,7 @@ import {
   Shield,
   Shapes,
   Spline,
+  Sparkles,
   Users,
   Workflow,
   ScrollText,
@@ -188,6 +189,13 @@ const generalItems = [
     icon: GraduationCap,
     visible: false,
     permissionResource: "course-classes",
+  },
+  {
+    href: "/contracts",
+    label: "Contratos",
+    icon: BriefcaseBusiness,
+    visible: false,
+    permissionResource: "contracts",
   },
 ];
 
