@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { Wrench } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
@@ -22,7 +23,8 @@ export function WorkshopEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `manager` e `workshops.update` para editar oficinas.
+            Voce precisa de `manager` e `workshops.update` para editar
+            oficinas.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -30,7 +32,7 @@ export function WorkshopEditPage() {
   }
 
   if (workshopQuery.isLoading) {
-    return <Skeleton className="h-[620px] w-full" />;
+    return <Skeleton className="h-[680px] w-full" />;
   }
 
   if (workshopQuery.isError || !workshopQuery.data) {
@@ -39,12 +41,30 @@ export function WorkshopEditPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar oficina</CardTitle>
           <CardDescription>
-            Os dados da oficina nao estao disponiveis no momento.
+            Os dados da oficina nao estao disponiveis para edicao no momento.
           </CardDescription>
         </CardHeader>
       </Card>
     );
   }
 
-  return <WorkshopForm mode="edit" workshop={workshopQuery.data.data} />;
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3">
+        <div className="rounded-2xl border border-slate-200/70 bg-white p-3 text-primary shadow-sm">
+          <Wrench className="h-5 w-5" />
+        </div>
+        <div>
+          <h1 className="font-display text-3xl text-slate-900">
+            Editar oficina
+          </h1>
+          <p className="text-sm text-slate-500">
+            Atualize contatos, localizacao, status e especialidades da oficina.
+          </p>
+        </div>
+      </div>
+
+      <WorkshopForm mode="edit" workshop={workshopQuery.data.data} />
+    </div>
+  );
 }

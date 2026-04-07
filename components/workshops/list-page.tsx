@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useWorkshops } from "@/hooks/use-workshops";
 import { hasPermission } from "@/lib/permissions";
+import type { WorkshopStatus } from "@/types/workshop.type";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,7 +25,7 @@ export function WorkshopsListPage() {
   const { user } = useAuth();
   const permissions = usePermissions("workshops");
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("all");
+  const [status, setStatus] = useState<WorkshopStatus | undefined>(undefined);
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [specialty, setSpecialty] = useState("");
@@ -35,12 +36,12 @@ export function WorkshopsListPage() {
       page,
       per_page: 15,
       search: search || undefined,
-      status: status !== "all" ? status : null,
+      status,
       city: city || undefined,
       state: state || undefined,
       specialty: specialty || undefined,
     }),
-    [city, page, search, specialty, state, status],
+    [page, search, status, city, state, specialty],
   );
 
   const workshopsQuery = useWorkshops(filters);
@@ -62,17 +63,16 @@ export function WorkshopsListPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <div className="flex items-center gap-3">
-            <div className="rounded-2xl border border-slate-200/70 bg-white p-3 text-primary shadow-sm">
-              <Wrench className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="font-display text-3xl text-slate-900">Oficinas</h1>
-              <p className="text-sm text-slate-500">
-                Gerencie oficinas e parceiros de manutencao veicular.
-              </p>
-            </div>
+        <div className="flex items-center gap-3">
+          <div className="rounded-2xl border border-slate-200/70 bg-white p-3 text-primary shadow-sm">
+            <Wrench className="h-5 w-5" />
+          </div>
+          <div>
+            <h1 className="font-display text-3xl text-slate-900">Oficinas</h1>
+            <p className="text-sm text-slate-500">
+              Gerencie oficinas e prestadores de servicos usados na manutencao
+              da frota.
+            </p>
           </div>
         </div>
 
@@ -114,7 +114,7 @@ export function WorkshopsListPage() {
         }}
         onClear={() => {
           setSearch("");
-          setStatus("all");
+          setStatus(undefined);
           setCity("");
           setState("");
           setSpecialty("");
@@ -141,7 +141,7 @@ export function WorkshopsListPage() {
           <CardHeader>
             <CardTitle>Nenhuma oficina encontrada</CardTitle>
             <CardDescription>
-              Cadastre uma nova oficina ou refine os filtros aplicados.
+              Crie uma nova oficina ou refine os filtros aplicados.
             </CardDescription>
           </CardHeader>
         </Card>

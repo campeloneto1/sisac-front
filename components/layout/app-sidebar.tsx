@@ -31,6 +31,7 @@ import {
   Users,
   Workflow,
   ScrollText,
+  Wrench,
 } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";

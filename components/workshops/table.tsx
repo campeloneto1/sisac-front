@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2, Wrench } from "lucide-react";
 
-import { usePermissions } from "@/hooks/use-permissions";
 import { useDeleteWorkshopMutation } from "@/hooks/use-workshop-mutations";
+import { usePermissions } from "@/hooks/use-permissions";
 import type { WorkshopItem } from "@/types/workshop.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,15 +22,8 @@ interface WorkshopsTableProps {
   workshops: WorkshopItem[];
 }
 
-function getStatusVariant(status?: string | null) {
-  switch (status) {
-    case "active":
-      return "success";
-    case "inactive":
-      return "secondary";
-    default:
-      return "outline";
-  }
+function getStatusVariant(workshop: WorkshopItem) {
+  return workshop.status === "active" ? "success" : "secondary";
 }
 
 export function WorkshopsTable({ workshops }: WorkshopsTableProps) {
@@ -68,38 +61,48 @@ export function WorkshopsTable({ workshops }: WorkshopsTableProps) {
               {workshops.map((workshop) => (
                 <tr key={workshop.id} className="border-t border-slate-200/70">
                   <td className="px-4 py-4">
-                    <div>
-                      <p className="font-medium text-slate-900">
-                        {workshop.name}
-                      </p>
-                      <p className="mt-1 text-slate-500">
-                        {workshop.cnpj ?? "CNPJ nao informado"}
-                      </p>
+                    <div className="flex items-start gap-3">
+                      <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-3 text-primary shadow-sm">
+                        <Wrench className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-slate-900">
+                          {workshop.name}
+                        </p>
+                        <p className="mt-1 text-slate-500">
+                          {workshop.cnpj ?? workshop.email ?? "Sem identificador complementar"}
+                        </p>
+                      </div>
                     </div>
                   </td>
-                  <td className="px-4 py-4 text-slate-700">
-                    {workshop.city || workshop.state
-                      ? `${workshop.city ?? "Cidade nao informada"}${
-                          workshop.state ? ` • ${workshop.state}` : ""
-                        }`
-                      : "Nao informada"}
+                  <td className="px-4 py-4 text-slate-600">
+                    {[workshop.city, workshop.state].filter(Boolean).join(" / ") ||
+                      workshop.address ||
+                      "-"}
                   </td>
-                  <td className="px-4 py-4 text-slate-700">
-                    <div>
-                      <p>{workshop.phone ?? "Sem telefone"}</p>
-                      <p className="mt-1 text-slate-500">
-                        {workshop.email ?? "Sem email"}
-                      </p>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4 text-slate-700">
-                    {workshop.specialties?.length
-                      ? workshop.specialties.slice(0, 2).join(", ")
-                      : "Nao informadas"}
+                  <td className="px-4 py-4 text-slate-600">
+                    {workshop.contact_person || workshop.phone || workshop.contact_phone || "-"}
                   </td>
                   <td className="px-4 py-4">
-                    <Badge variant={getStatusVariant(workshop.status)}>
-                      {workshop.status_label ?? "Sem status"}
+                    <div className="flex flex-wrap gap-2">
+                      {(workshop.specialties ?? []).slice(0, 3).map((specialty) => (
+                        <Badge key={`${workshop.id}-${specialty}`} variant="outline">
+                          {specialty}
+                        </Badge>
+                      ))}
+                      {(workshop.specialties?.length ?? 0) > 3 ? (
+                        <Badge variant="secondary">
+                          +{(workshop.specialties?.length ?? 0) - 3}
+                        </Badge>
+                      ) : null}
+                      {!workshop.specialties?.length ? (
+                        <span className="text-slate-500">-</span>
+                      ) : null}
+                    </div>
+                  </td>
+                  <td className="px-4 py-4">
+                    <Badge variant={getStatusVariant(workshop)}>
+                      {workshop.status_label ?? (workshop.is_active ? "Ativa" : "Inativa")}
                     </Badge>
                   </td>
                   <td className="px-4 py-4">

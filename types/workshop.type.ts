@@ -2,6 +2,12 @@ import type { PaginatedMeta } from "@/types/brand.type";
 
 export type WorkshopStatus = "active" | "inactive";
 
+export interface WorkshopUser {
+  id: number;
+  name: string;
+  email: string;
+}
+
 export interface WorkshopItem {
   id: number;
   name: string;
@@ -15,31 +21,22 @@ export interface WorkshopItem {
   specialties?: string[] | null;
   contact_person?: string | null;
   contact_phone?: string | null;
-  status?: WorkshopStatus | null;
+  status: WorkshopStatus;
   status_label?: string | null;
   status_color?: string | null;
   is_active: boolean;
   notes?: string | null;
-  creator?: {
-    id: number;
-    name: string;
-    email: string;
-  } | null;
-  updater?: {
-    id: number;
-    name: string;
-    email: string;
-  } | null;
+  creator?: WorkshopUser | null;
+  updater?: WorkshopUser | null;
   created_at?: string | null;
   updated_at?: string | null;
-  deleted_at?: string | null;
 }
 
 export interface WorkshopFilters {
   page?: number;
   per_page?: number;
   search?: string;
-  status?: WorkshopStatus | null;
+  status?: WorkshopStatus;
   city?: string;
   state?: string;
   specialty?: string;
@@ -57,7 +54,7 @@ export interface CreateWorkshopDTO {
   specialties?: string[] | null;
   contact_person?: string | null;
   contact_phone?: string | null;
-  status?: WorkshopStatus | null;
+  status?: WorkshopStatus;
   notes?: string | null;
 }
 

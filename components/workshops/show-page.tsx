@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { MapPin, Phone, UserCircle2, Wrench } from "lucide-react";
+import { Mail, MapPin, Phone, UserCircle2, Wrench } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
@@ -20,14 +20,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 function getStatusVariant(status?: string | null) {
-  switch (status) {
-    case "active":
-      return "success";
-    case "inactive":
-      return "secondary";
-    default:
-      return "outline";
-  }
+  return status === "Ativa" ? "success" : "secondary";
 }
 
 export function WorkshopShowPage() {
@@ -73,24 +66,25 @@ export function WorkshopShowPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 rounded-[24px] border border-slate-200/70 bg-white/80 p-6 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <h1 className="font-display text-3xl text-slate-900">
-              {workshop.name}
-            </h1>
-            <Badge variant={getStatusVariant(workshop.status)}>
-              {workshop.status_label ?? "Sem status"}
-            </Badge>
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-3 text-primary shadow-sm">
+              <Wrench className="h-5 w-5" />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="font-display text-3xl text-slate-900">
+                {workshop.name}
+              </h1>
+              <Badge variant={getStatusVariant(workshop.status_label)}>
+                {workshop.status_label ?? (workshop.is_active ? "Ativa" : "Inativa")}
+              </Badge>
+            </div>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            {workshop.city || workshop.state
-              ? `${workshop.city ?? "Cidade nao informada"}${
-                  workshop.state ? ` • ${workshop.state}` : ""
-                }`
-              : "Localizacao nao informada"}
+            {workshop.cnpj ? `CNPJ: ${workshop.cnpj}` : "CNPJ nao informado"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Cadastro gerencial da oficina com contatos, localizacao e
-            especialidades atendidas.
+            Cadastro gerencial da oficina com contatos, cobertura geografica,
+            especialidades e trilha de auditoria.
           </p>
         </div>
 
@@ -101,22 +95,46 @@ export function WorkshopShowPage() {
         ) : null}
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-2">
+      <div className="grid gap-6 xl:grid-cols-[1fr_1fr]">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Dados institucionais</CardTitle>
+            <CardTitle>Contato e localizacao</CardTitle>
             <CardDescription>
-              Identificacao e cobertura geografica da oficina.
+              Informacoes para acionamento operacional da oficina.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                CNPJ
-              </p>
-              <p className="mt-1 text-sm text-slate-700">
-                {workshop.cnpj ?? "Nao informado"}
-              </p>
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <Phone className="h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                  Telefone principal
+                </p>
+                <p className="text-sm text-slate-700">{workshop.phone ?? "Nao informado"}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <Mail className="h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                  Email
+                </p>
+                <p className="text-sm text-slate-700">{workshop.email ?? "Nao informado"}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <UserCircle2 className="h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                  Contato responsavel
+                </p>
+                <p className="text-sm text-slate-700">
+                  {workshop.contact_person ?? "Nao informado"}
+                  {workshop.contact_phone ? ` • ${workshop.contact_phone}` : ""}
+                </p>
+              </div>
             </div>
 
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -126,117 +144,69 @@ export function WorkshopShowPage() {
                   Endereco
                 </p>
                 <p className="text-sm text-slate-700">
-                  {workshop.address ?? "Nao informado"}
+                  {workshop.address || "Nao informado"}
                 </p>
-                <p className="text-xs text-slate-500">
-                  {workshop.city ?? "Cidade nao informada"}
-                  {workshop.state ? ` • ${workshop.state}` : ""}
+                <p className="text-sm text-slate-700">
+                  {[workshop.city, workshop.state].filter(Boolean).join(" / ") || "-"}
                   {workshop.zip_code ? ` • CEP ${workshop.zip_code}` : ""}
                 </p>
               </div>
-            </div>
-
-            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <Phone className="h-4 w-4 text-primary" />
-              <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Contato da oficina
-                </p>
-                <p className="text-sm text-slate-700">
-                  {workshop.phone ?? "Nao informado"}
-                </p>
-                <p className="text-xs text-slate-500">
-                  {workshop.email ?? "Email nao informado"}
-                </p>
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Observacoes
-              </p>
-              <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">
-                {workshop.notes || "Nao informadas"}
-              </p>
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Operacao e auditoria</CardTitle>
+            <CardTitle>Especialidades e auditoria</CardTitle>
             <CardDescription>
-              Especialidades, pessoa de contato e historico do cadastro.
+              Areas de atuacao da oficina e usuarios responsaveis pelo cadastro.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+          <CardContent className="space-y-4">
+            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Contato principal
+                Especialidades
               </p>
-              <p className="mt-1 text-sm text-slate-700">
-                {workshop.contact_person ?? "Nao informado"}
-              </p>
-              <p className="text-xs text-slate-500">
-                {workshop.contact_phone ?? "Telefone nao informado"}
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <div className="flex items-center gap-2">
-                <Wrench className="h-4 w-4 text-primary" />
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Especialidades
-                </p>
-              </div>
-              {workshop.specialties?.length ? (
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {workshop.specialties.map((item) => (
-                    <Badge key={item} variant="info">
-                      {item}
+              <div className="mt-3 flex flex-wrap gap-2">
+                {workshop.specialties?.length ? (
+                  workshop.specialties.map((specialty) => (
+                    <Badge key={specialty} variant="outline">
+                      {specialty}
                     </Badge>
-                  ))}
-                </div>
-              ) : (
-                <p className="mt-2 text-sm text-slate-700">
-                  Nenhuma especialidade informada.
-                </p>
-              )}
-            </div>
-
-            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <UserCircle2 className="h-4 w-4 text-primary" />
-              <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Criado por
-                </p>
-                <p className="text-sm text-slate-700">
-                  {workshop.creator
-                    ? `${workshop.creator.name} (${workshop.creator.email})`
-                    : "Nao informado"}
-                </p>
+                  ))
+                ) : (
+                  <p className="text-sm text-slate-700">Nenhuma especialidade informada.</p>
+                )}
               </div>
             </div>
 
-            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <UserCircle2 className="h-4 w-4 text-primary" />
-              <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Atualizado por
-                </p>
-                <p className="text-sm text-slate-700">
-                  {workshop.updater
-                    ? `${workshop.updater.name} (${workshop.updater.email})`
-                    : "Nao informado"}
-                </p>
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Timestamps
+                Observacoes
+              </p>
+              <p className="mt-2 text-sm text-slate-700">
+                {workshop.notes ?? "Nenhuma observacao registrada."}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                Criado por
               </p>
               <p className="mt-1 text-sm text-slate-700">
+                {workshop.creator
+                  ? `${workshop.creator.name} (${workshop.creator.email})`
+                  : "Nao informado"}
+              </p>
+              <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-400">
+                Atualizado por
+              </p>
+              <p className="mt-1 text-sm text-slate-700">
+                {workshop.updater
+                  ? `${workshop.updater.name} (${workshop.updater.email})`
+                  : "Nao informado"}
+              </p>
+              <p className="mt-3 text-sm text-slate-700">
                 Criado em: {workshop.created_at ?? "-"}
               </p>
               <p className="text-sm text-slate-700">
