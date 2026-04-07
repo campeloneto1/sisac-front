@@ -140,6 +140,14 @@ const administratorItems: Array<{
     requirements: [{ type: "resource", resource: "colors", action: "viewAny" }],
   },
   {
+    href: "/vehicle-types",
+    label: "Tipos de veiculo",
+    icon: CarFront,
+    requirements: [
+      { type: "resource", resource: "vehicle-types", action: "viewAny" },
+    ],
+  },
+  {
     href: "/variants",
     label: "Modelos",
     icon: Shapes,

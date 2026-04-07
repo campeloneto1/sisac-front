@@ -1,0 +1,186 @@
+"use client";
+
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { Car, Hash, Tag, UserCircle2 } from "lucide-react";
+
+import { useAuth } from "@/contexts/auth-context";
+import { usePermissions } from "@/hooks/use-permissions";
+import { hasPermission } from "@/lib/permissions";
+import { useVehicleType } from "@/hooks/use-vehicle-types";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export function VehicleTypeShowPage() {
+  const { user } = useAuth();
+  const params = useParams<{ id: string }>();
+  const permissions = usePermissions("vehicle-types");
+  const vehicleTypeQuery = useVehicleType(params.id);
+
+  if (!hasPermission(user, "administrator") || !permissions.canView) {
+    return (
+      <Card className="border-slate-200/70 bg-white/80">
+        <CardHeader>
+          <CardTitle>Acesso negado</CardTitle>
+          <CardDescription>
+            Voce precisa de `administrator` e `vehicle-types.view` para
+            visualizar tipos de veiculo.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
+
+  if (vehicleTypeQuery.isLoading) {
+    return <Skeleton className="h-[460px] w-full" />;
+  }
+
+  if (vehicleTypeQuery.isError || !vehicleTypeQuery.data) {
+    return (
+      <Card className="border-slate-200/70 bg-white/80">
+        <CardHeader>
+          <CardTitle>Erro ao carregar tipo de veiculo</CardTitle>
+          <CardDescription>
+            Os dados do tipo de veiculo nao estao disponiveis no momento.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
+
+  const vehicleType = vehicleTypeQuery.data.data;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4 rounded-[24px] border border-slate-200/70 bg-white/80 p-6 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="font-display text-3xl text-slate-900">
+              {vehicleType.name}
+            </h1>
+            <Badge variant={vehicleType.is_active ? "success" : "danger"}>
+              {vehicleType.is_active ? "Ativo" : "Inativo"}
+            </Badge>
+          </div>
+          <p className="mt-2 text-sm text-slate-500">
+            Slug: {vehicleType.slug}
+          </p>
+          <p className="mt-3 max-w-3xl text-sm text-slate-600">
+            Classificacao administrativa de veiculos com codigo interno, status
+            e auditoria.
+          </p>
+        </div>
+
+        {permissions.canUpdate ? (
+          <Button asChild variant="outline">
+            <Link href={`/vehicle-types/${vehicleType.id}/edit`}>Editar</Link>
+          </Button>
+        ) : null}
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Visao geral</CardTitle>
+            <CardDescription>
+              Dados principais e indicadores do tipo cadastrado.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <Hash className="h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                  Codigo
+                </p>
+                <p className="text-sm text-slate-700">
+                  {vehicleType.code ?? "Nao informado"}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <Car className="h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                  Veiculos vinculados
+                </p>
+                <p className="text-sm text-slate-700">
+                  {vehicleType.vehicles_count ?? 0}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Metadados</CardTitle>
+            <CardDescription>
+              Identificacao tecnica e usuarios responsaveis pelo cadastro.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <Tag className="h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                  Slug
+                </p>
+                <p className="text-sm text-slate-700">{vehicleType.slug}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <UserCircle2 className="h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                  Criado por
+                </p>
+                <p className="text-sm text-slate-700">
+                  {vehicleType.creator
+                    ? `${vehicleType.creator.name} (${vehicleType.creator.email})`
+                    : "Nao informado"}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <UserCircle2 className="h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                  Atualizado por
+                </p>
+                <p className="text-sm text-slate-700">
+                  {vehicleType.updater
+                    ? `${vehicleType.updater.name} (${vehicleType.updater.email})`
+                    : "Nao informado"}
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                Timestamps
+              </p>
+              <p className="mt-1 text-sm text-slate-700">
+                Criado em: {vehicleType.created_at ?? "-"}
+              </p>
+              <p className="text-sm text-slate-700">
+                Atualizado em: {vehicleType.updated_at ?? "-"}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
