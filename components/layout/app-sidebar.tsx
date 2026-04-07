@@ -216,6 +216,14 @@ const administratorItems: Array<{
     requirements: [{ type: "resource", resource: "colors", action: "viewAny" }],
   },
   {
+    href: "/contract-types",
+    label: "Tipos de contrato",
+    icon: ScrollText,
+    requirements: [
+      { type: "resource", resource: "contract-types", action: "viewAny" },
+    ],
+  },
+  {
     href: "/vehicle-types",
     label: "Tipos de veiculo",
     icon: CarFront,
