@@ -108,6 +108,13 @@ const generalItems = [
     permissionResource: "vehicle-loans",
   },
   {
+    href: "/vehicle-custodies",
+    label: "Cautelas",
+    icon: CarFront,
+    visible: false,
+    permissionResource: "vehicle-custodies",
+  },
+  {
     href: "/police-officer-retirement-requests",
     label: "Aposentadorias",
     icon: ScrollText,
@@ -463,6 +470,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "vehicle-loans") {
         return can(user, "viewAny", "vehicle-loans");
+      }
+
+      if (item.permissionResource === "vehicle-custodies") {
+        return can(user, "viewAny", "vehicle-custodies");
       }
 
       if (item.permissionResource === "police-officer-retirement-requests") {

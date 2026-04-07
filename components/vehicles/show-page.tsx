@@ -11,8 +11,13 @@ import {
 } from "lucide-react";
 
 import { usePermissions } from "@/hooks/use-permissions";
+import { useVehicleCustodies } from "@/hooks/use-vehicle-custodies";
 import { useVehicleLoans } from "@/hooks/use-vehicle-loans";
 import { useVehicle } from "@/hooks/use-vehicles";
+import {
+  getVehicleCustodyHolderLabel,
+  getVehicleCustodyStatusVariant,
+} from "@/types/vehicle-custody.type";
 import {
   getVehicleLoanBorrowerLabel,
   getVehicleLoanStatusVariant,
@@ -56,8 +61,13 @@ function formatLoanDateTime(date?: string | null, time?: string | null) {
 export function VehicleShowPage() {
   const params = useParams<{ id: string }>();
   const permissions = usePermissions("vehicles");
+  const custodyPermissions = usePermissions("vehicle-custodies");
   const loanPermissions = usePermissions("vehicle-loans");
   const vehicleQuery = useVehicle(params.id);
+  const custodiesQuery = useVehicleCustodies({
+    vehicle_id: Number(params.id),
+    per_page: 50,
+  });
   const loansQuery = useVehicleLoans({
     vehicle_id: Number(params.id),
     per_page: 50,
@@ -419,6 +429,123 @@ export function VehicleShowPage() {
           </CardContent>
         </Card>
       </div>
+
+      {custodyPermissions.canViewAny ? (
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Historico de cautelas</CardTitle>
+            <CardDescription>
+              Relacao das cautelas registradas para este veiculo, com dados
+              gerais de responsavel, periodo e kilometragem.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {custodiesQuery.isLoading ? (
+              <div className="space-y-3">
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+              </div>
+            ) : custodiesQuery.isError ? (
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
+                <p className="text-sm text-slate-700">
+                  Nao foi possivel carregar o historico de cautelas deste
+                  veiculo agora.
+                </p>
+              </div>
+            ) : !custodiesQuery.data?.data.length ? (
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
+                <p className="text-sm text-slate-700">
+                  Nenhuma cautela foi registrada para este veiculo ate o
+                  momento.
+                </p>
+              </div>
+            ) : (
+              <div className="overflow-hidden rounded-[24px] border border-slate-200/70 bg-white/80">
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-left text-sm">
+                    <thead className="bg-slate-50 text-slate-500">
+                      <tr>
+                        <th className="px-4 py-3 font-medium">Responsavel</th>
+                        <th className="px-4 py-3 font-medium">Inicio</th>
+                        <th className="px-4 py-3 font-medium">Devolucao</th>
+                        <th className="px-4 py-3 font-medium">KM</th>
+                        <th className="px-4 py-3 font-medium">Status</th>
+                        <th className="px-4 py-3 font-medium text-right">
+                          Detalhe
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {custodiesQuery.data.data.map((custody) => (
+                        <tr
+                          key={custody.id}
+                          className="border-t border-slate-200/70"
+                        >
+                          <td className="px-4 py-4">
+                            <div>
+                              <p className="font-medium text-slate-900">
+                                {getVehicleCustodyHolderLabel(custody)}
+                              </p>
+                              <p className="mt-1 text-slate-500">
+                                {custody.borrower_type ===
+                                "App\\Models\\PoliceOfficer"
+                                  ? "Policial"
+                                  : custody.borrower_type === "App\\Models\\User"
+                                    ? "Usuario"
+                                    : "Externo"}
+                              </p>
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-slate-600">
+                            {formatLoanDateTime(
+                              custody.start_date,
+                              custody.start_time,
+                            )}
+                          </td>
+                          <td className="px-4 py-4 text-slate-600">
+                            {formatLoanDateTime(
+                              custody.end_date,
+                              custody.end_time,
+                            )}
+                          </td>
+                          <td className="px-4 py-4 text-slate-600">
+                            <p>
+                              Inicio: {custody.start_km.toLocaleString("pt-BR")}
+                            </p>
+                            <p>
+                              Final:{" "}
+                              {custody.end_km !== null &&
+                              custody.end_km !== undefined
+                                ? custody.end_km.toLocaleString("pt-BR")
+                                : "-"}
+                            </p>
+                          </td>
+                          <td className="px-4 py-4">
+                            <Badge
+                              variant={getVehicleCustodyStatusVariant(
+                                custody.status,
+                              )}
+                            >
+                              {custody.status_label ?? "Sem status"}
+                            </Badge>
+                          </td>
+                          <td className="px-4 py-4 text-right">
+                            <Button asChild size="sm" variant="outline">
+                              <Link href={`/vehicle-custodies/${custody.id}`}>
+                                Ver
+                              </Link>
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : null}
 
       {loanPermissions.canViewAny ? (
         <Card className="border-slate-200/70 bg-white/80">
