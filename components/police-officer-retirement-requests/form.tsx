@@ -75,13 +75,52 @@ const policeOfficerRetirementRequestFormSchema = z
   .refine(
     (data) => {
       if (data.published_at && data.requested_at) {
-        return new Date(data.published_at) >= new Date(data.requested_at);
+        return new Date(data.published_at) >= new Date(data.approved_at || data.requested_at);
       }
       return true;
     },
     {
-      message: "A data de publicacao deve ser igual ou posterior ao requerimento.",
+      message:
+        "A data de publicacao deve ser igual ou posterior a ultima etapa valida do processo.",
       path: ["published_at"],
+    },
+  )
+  .refine(
+    (data) => {
+      if (["approved", "published"].includes(data.status)) {
+        return Boolean(data.approved_at);
+      }
+      return true;
+    },
+    {
+      message:
+        "A data de aprovacao e obrigatoria para processos deferidos ou publicados.",
+      path: ["approved_at"],
+    },
+  )
+  .refine(
+    (data) => {
+      if (data.status === "published") {
+        return Boolean(data.published_at);
+      }
+      return true;
+    },
+    {
+      message: "A data de publicacao e obrigatoria quando o processo estiver publicado.",
+      path: ["published_at"],
+    },
+  )
+  .refine(
+    (data) => {
+      if (data.status === "published") {
+        return Boolean(data.bulletin_publication?.trim());
+      }
+      return true;
+    },
+    {
+      message:
+        "O boletim de publicacao e obrigatorio quando o processo estiver publicado.",
+      path: ["bulletin_publication"],
     },
   );
 
@@ -136,6 +175,9 @@ export function PoliceOfficerRetirementRequestForm({
     control,
     name: "status",
   });
+  const requiresApprovalDate =
+    selectedStatus === "approved" || selectedStatus === "published";
+  const requiresPublicationData = selectedStatus === "published";
 
   useEffect(() => {
     if (!policeOfficerRetirementRequest) {
@@ -320,8 +362,14 @@ export function PoliceOfficerRetirementRequestForm({
                 <Input
                   id="approved_at"
                   type="date"
+                  aria-required={requiresApprovalDate}
                   {...register("approved_at")}
                 />
+                {requiresApprovalDate ? (
+                  <p className="text-xs text-slate-500">
+                    Obrigatoria para processos aprovados ou publicados.
+                  </p>
+                ) : null}
                 {errors.approved_at ? (
                   <p className="text-sm text-destructive">
                     {errors.approved_at.message}
@@ -336,8 +384,14 @@ export function PoliceOfficerRetirementRequestForm({
                 <Input
                   id="bulletin_publication"
                   placeholder="Ex.: BG 456/2024"
+                  aria-required={requiresPublicationData}
                   {...register("bulletin_publication")}
                 />
+                {requiresPublicationData ? (
+                  <p className="text-xs text-slate-500">
+                    Obrigatorio quando o status estiver como publicado.
+                  </p>
+                ) : null}
                 {errors.bulletin_publication ? (
                   <p className="text-sm text-destructive">
                     {errors.bulletin_publication.message}
@@ -350,8 +404,14 @@ export function PoliceOfficerRetirementRequestForm({
                 <Input
                   id="published_at"
                   type="date"
+                  aria-required={requiresPublicationData}
                   {...register("published_at")}
                 />
+                {requiresPublicationData ? (
+                  <p className="text-xs text-slate-500">
+                    Obrigatoria quando o processo estiver publicado.
+                  </p>
+                ) : null}
                 {errors.published_at ? (
                   <p className="text-sm text-destructive">
                     {errors.published_at.message}

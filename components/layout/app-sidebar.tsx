@@ -29,6 +29,7 @@ import {
   Spline,
   Users,
   Workflow,
+  ScrollText,
 } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
@@ -89,6 +90,13 @@ const generalItems = [
     icon: Newspaper,
     visible: false,
     permissionResource: "police-officer-publications",
+  },
+  {
+    href: "/police-officer-retirement-requests",
+    label: "Aposentadorias",
+    icon: ScrollText,
+    visible: false,
+    permissionResource: "police-officer-retirement-requests",
   },
   {
     href: "/courses",
@@ -409,6 +417,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "police-officer-publications") {
         return can(user, "viewAny", "police-officer-publications");
+      }
+
+      if (item.permissionResource === "police-officer-retirement-requests") {
+        return can(user, "viewAny", "police-officer-retirement-requests");
       }
 
       if (item.permissionResource === "courses") {
