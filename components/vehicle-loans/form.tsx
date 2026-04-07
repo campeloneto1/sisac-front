@@ -7,13 +7,13 @@ import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useSubunit } from "@/contexts/subunit-context";
 import { useCities } from "@/hooks/use-cities";
 import {
   useCreateVehicleLoanMutation,
   useUpdateVehicleLoanMutation,
 } from "@/hooks/use-vehicle-loan-mutations";
 import { usePoliceOfficers } from "@/hooks/use-police-officers";
-import { useSubunits } from "@/hooks/use-subunits";
 import { useUsers } from "@/hooks/use-users";
 import { useVehicles } from "@/hooks/use-vehicles";
 import type {
@@ -21,12 +21,8 @@ import type {
   UpdateVehicleLoanDTO,
   VehicleLoanBorrowerType,
   VehicleLoanItem,
-  VehicleLoanStatus,
 } from "@/types/vehicle-loan.type";
-import {
-  vehicleLoanBorrowerTypeOptions,
-  vehicleLoanStatusOptions,
-} from "@/types/vehicle-loan.type";
+import { vehicleLoanBorrowerTypeOptions } from "@/types/vehicle-loan.type";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -67,20 +63,10 @@ const vehicleLoanFormSchema = z
         "Informe um telefone com 10 ou 11 digitos.",
       ),
     city_id: z.string(),
-    subunit_id: z.string(),
-    start_date: z.string().min(1, "Informe a data de saida."),
-    start_time: z.string(),
-    end_date: z.string(),
-    end_time: z.string(),
     start_km: z.coerce.number().int().min(0, "A quilometragem inicial deve ser maior ou igual a 0."),
-    end_km: z.string(),
     start_notes: z
       .string()
       .max(1000, "As observacoes de retirada devem ter no maximo 1000 caracteres."),
-    return_notes: z
-      .string()
-      .max(1000, "As observacoes de devolucao devem ter no maximo 1000 caracteres."),
-    status: z.enum(["in_use", "returned"]),
   })
   .superRefine((values, context) => {
     if (!values.vehicle_id || values.vehicle_id === "none") {
@@ -116,47 +102,6 @@ const vehicleLoanFormSchema = z
         message: "Informe o nome do tomador externo com ao menos 3 caracteres.",
       });
     }
-
-    if (values.end_date && values.start_date && values.end_date < values.start_date) {
-      context.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["end_date"],
-        message: "A data de devolucao deve ser igual ou posterior a data de saida.",
-      });
-    }
-
-    const parsedEndKm =
-      values.end_km.trim() === "" ? undefined : Number(values.end_km);
-
-    if (
-      parsedEndKm !== undefined &&
-      parsedEndKm !== null &&
-      parsedEndKm < values.start_km
-    ) {
-      context.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["end_km"],
-        message: "A quilometragem final deve ser maior ou igual a inicial.",
-      });
-    }
-
-    if (values.status === "returned") {
-      if (!values.end_date) {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["end_date"],
-          message: "Informe a data de devolucao para emprestimos devolvidos.",
-        });
-      }
-
-      if (parsedEndKm === undefined || parsedEndKm === null) {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["end_km"],
-          message: "Informe a quilometragem final para emprestimos devolvidos.",
-        });
-      }
-    }
   });
 
 type VehicleLoanFormValues = z.infer<typeof vehicleLoanFormSchema>;
@@ -180,13 +125,13 @@ function inferBorrowerMode(loan?: VehicleLoanItem) {
 
 export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
   const router = useRouter();
+  const { activeSubunit } = useSubunit();
   const createMutation = useCreateVehicleLoanMutation();
   const updateMutation = useUpdateVehicleLoanMutation();
   const vehiclesQuery = useVehicles({ per_page: 100 });
   const policeOfficersQuery = usePoliceOfficers({ per_page: 100 });
   const usersQuery = useUsers({ per_page: 100 });
   const citiesQuery = useCities({ per_page: 100 });
-  const subunitsQuery = useSubunits({ per_page: 100 });
 
   const {
     register,
@@ -206,19 +151,8 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
       external_borrower_document: loan?.external_borrower_document ?? "",
       external_borrower_phone: loan?.external_borrower_phone ?? "",
       city_id: loan?.city_id ? String(loan.city_id) : "none",
-      subunit_id: loan?.subunit_id ? String(loan.subunit_id) : "none",
-      start_date: loan?.start_date ? loan.start_date.slice(0, 10) : "",
-      start_time: loan?.start_time ?? "",
-      end_date: loan?.end_date ? loan.end_date.slice(0, 10) : "",
-      end_time: loan?.end_time ?? "",
       start_km: loan?.start_km ?? 0,
-      end_km:
-        loan?.end_km !== null && loan?.end_km !== undefined
-          ? String(loan.end_km)
-          : "",
       start_notes: loan?.start_notes ?? "",
-      return_notes: loan?.return_notes ?? "",
-      status: loan?.status ?? "in_use",
     },
   });
 
@@ -229,10 +163,6 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
   const borrowerType = useWatch({
     control,
     name: "borrower_type",
-  });
-  const selectedStatus = useWatch({
-    control,
-    name: "status",
   });
   const selectedVehicleId = useWatch({
     control,
@@ -245,10 +175,6 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
   const selectedCityId = useWatch({
     control,
     name: "city_id",
-  });
-  const selectedSubunitId = useWatch({
-    control,
-    name: "subunit_id",
   });
 
   useEffect(() => {
@@ -265,19 +191,8 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
       external_borrower_document: loan.external_borrower_document ?? "",
       external_borrower_phone: loan.external_borrower_phone ?? "",
       city_id: loan.city_id ? String(loan.city_id) : "none",
-      subunit_id: loan.subunit_id ? String(loan.subunit_id) : "none",
-      start_date: loan.start_date ? loan.start_date.slice(0, 10) : "",
-      start_time: loan.start_time ?? "",
-      end_date: loan.end_date ? loan.end_date.slice(0, 10) : "",
-      end_time: loan.end_time ?? "",
       start_km: loan.start_km,
-      end_km:
-        loan.end_km !== null && loan.end_km !== undefined
-          ? String(loan.end_km)
-          : "",
       start_notes: loan.start_notes ?? "",
-      return_notes: loan.return_notes ?? "",
-      status: loan.status ?? "in_use",
     });
   }, [loan, reset]);
 
@@ -306,17 +221,9 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
           ? sanitizeDigits(values.external_borrower_phone)
           : null,
       city_id: values.city_id !== "none" ? Number(values.city_id) : null,
-      subunit_id:
-        values.subunit_id !== "none" ? Number(values.subunit_id) : null,
-      start_date: values.start_date,
-      start_time: values.start_time || null,
-      end_date: values.end_date || null,
-      end_time: values.end_time || null,
+      subunit_id: activeSubunit ? Number(activeSubunit.id) : null,
       start_km: values.start_km,
-      end_km: values.end_km.trim() === "" ? null : Number(values.end_km),
       start_notes: values.start_notes.trim() || null,
-      return_notes: values.return_notes.trim() || null,
-      status: values.status satisfies VehicleLoanStatus,
     };
 
     if (mode === "create") {
@@ -361,13 +268,14 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
           {mode === "create" ? "Novo emprestimo" : "Editar emprestimo"}
         </CardTitle>
         <CardDescription>
-          Emprestimos acompanham a saida e a devolucao do veiculo sem depender
-          de prazo fixo de retorno.
+          Esta tela gerencial registra a retirada do veiculo. A subunidade,
+          data, hora e status inicial sao assumidos automaticamente pelo
+          sistema.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
-          <section className="grid gap-5 md:grid-cols-2">
+          <section className="grid gap-5 md:grid-cols-[1fr_0.9fr]">
             <div className="space-y-2">
               <Label>Veiculo</Label>
               <Select
@@ -399,32 +307,18 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label>Status</Label>
-              <Select
-                value={selectedStatus}
-                onValueChange={(value) =>
-                  setValue("status", value as VehicleLoanStatus, {
-                    shouldValidate: true,
-                    shouldDirty: true,
-                  })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione um status" />
-                </SelectTrigger>
-                <SelectContent>
-                  {vehicleLoanStatusOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {errors.status ? (
-                <p className="text-sm text-destructive">
-                  {errors.status.message}
+              <Label>Subunidade atual</Label>
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                <p className="text-sm text-slate-700">
+                  {activeSubunit
+                    ? `${activeSubunit.name}${activeSubunit.abbreviation ? ` (${activeSubunit.abbreviation})` : ""}`
+                    : "Nenhuma subunidade ativa selecionada"}
                 </p>
-              ) : null}
+                <p className="mt-1 text-xs text-slate-500">
+                  O emprestimo sera registrado automaticamente nesta
+                  subunidade.
+                </p>
+              </div>
             </div>
           </section>
 
@@ -581,55 +475,13 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
             )}
           </section>
 
-          <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            <div className="space-y-2">
-              <Label htmlFor="start_date">Data de saida</Label>
-              <Input id="start_date" type="date" {...register("start_date")} />
-              {errors.start_date ? (
-                <p className="text-sm text-destructive">
-                  {errors.start_date.message}
-                </p>
-              ) : null}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="start_time">Hora de saida</Label>
-              <Input id="start_time" type="time" {...register("start_time")} />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="end_date">Data de devolucao</Label>
-              <Input id="end_date" type="date" {...register("end_date")} />
-              {errors.end_date ? (
-                <p className="text-sm text-destructive">
-                  {errors.end_date.message}
-                </p>
-              ) : null}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="end_time">Hora de devolucao</Label>
-              <Input id="end_time" type="time" {...register("end_time")} />
-            </div>
-          </section>
-
-          <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <section className="grid gap-5 md:grid-cols-[1fr_1fr_0.9fr]">
             <div className="space-y-2">
               <Label htmlFor="start_km">KM inicial</Label>
               <Input id="start_km" type="number" min={0} {...register("start_km")} />
               {errors.start_km ? (
                 <p className="text-sm text-destructive">
                   {errors.start_km.message}
-                </p>
-              ) : null}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="end_km">KM final</Label>
-              <Input id="end_km" type="number" min={0} {...register("end_km")} />
-              {errors.end_km ? (
-                <p className="text-sm text-destructive">
-                  {errors.end_km.message}
                 </p>
               ) : null}
             </div>
@@ -660,30 +512,13 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label>Subunidade</Label>
-              <Select
-                value={selectedSubunitId}
-                onValueChange={(value) =>
-                  setValue("subunit_id", value, {
-                    shouldValidate: true,
-                    shouldDirty: true,
-                  })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione uma subunidade" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">Sem subunidade vinculada</SelectItem>
-                  {(subunitsQuery.data?.data ?? []).map((subunit) => (
-                    <SelectItem key={subunit.id} value={String(subunit.id)}>
-                      {subunit.abbreviation
-                        ? `${subunit.abbreviation} • ${subunit.name}`
-                        : subunit.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Label>Saida automatica</Label>
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                <p className="text-sm text-slate-700">
+                  A data e hora da retirada serao registradas automaticamente
+                  no momento da criacao.
+                </p>
+              </div>
             </div>
           </section>
 
@@ -706,14 +541,14 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
               <Label htmlFor="return_notes">Observacoes de devolucao</Label>
               <Textarea
                 id="return_notes"
-                placeholder="Anote o estado do veiculo no momento da devolucao."
-                {...register("return_notes")}
+                disabled
+                placeholder="Preenchidas depois, no momento da devolucao."
+                value=""
+                readOnly
               />
-              {errors.return_notes ? (
-                <p className="text-sm text-destructive">
-                  {errors.return_notes.message}
-                </p>
-              ) : null}
+              <p className="text-xs text-slate-500">
+                Esta etapa sera preenchida apenas ao devolver o veiculo.
+              </p>
             </div>
           </section>
 
@@ -723,7 +558,7 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
                 Cancelar
               </Link>
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={isPending || !activeSubunit}>
               {isPending ? "Salvando..." : mode === "create" ? "Criar emprestimo" : "Salvar alteracoes"}
             </Button>
           </div>

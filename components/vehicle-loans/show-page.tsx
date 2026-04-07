@@ -32,14 +32,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 
 const returnSchema = z.object({
-  end_date: z.string().min(1, "Informe a data de devolucao."),
-  end_time: z.string(),
   end_km: z.coerce.number().int().min(0, "Informe a quilometragem final."),
   return_notes: z
     .string()
@@ -70,8 +67,6 @@ export function VehicleLoanShowPage() {
   } = useForm<ReturnValues>({
     resolver: zodResolver(returnSchema),
     defaultValues: {
-      end_date: "",
-      end_time: "",
       end_km: 0,
       return_notes: "",
     },
@@ -114,8 +109,6 @@ export function VehicleLoanShowPage() {
     await returnMutation.mutateAsync({
       id: loan.id,
       payload: {
-        end_date: values.end_date,
-        end_time: values.end_time || null,
         end_km: values.end_km,
         return_notes: values.return_notes.trim() || null,
       },
@@ -369,21 +362,11 @@ export function VehicleLoanShowPage() {
             </DialogDescription>
           </DialogHeader>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmitReturn)}>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="end_date">Data de devolucao</Label>
-                <Input id="end_date" type="date" {...register("end_date")} />
-                {errors.end_date ? (
-                  <p className="text-sm text-destructive">
-                    {errors.end_date.message}
-                  </p>
-                ) : null}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="end_time">Hora de devolucao</Label>
-                <Input id="end_time" type="time" {...register("end_time")} />
-              </div>
+            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <p className="text-sm text-slate-700">
+                A data e a hora da devolucao serao registradas automaticamente
+                no momento da confirmacao.
+              </p>
             </div>
 
             <div className="space-y-2">

@@ -461,6 +461,10 @@ export function AppSidebar() {
         return can(user, "viewAny", "vehicles");
       }
 
+      if (item.permissionResource === "vehicle-loans") {
+        return can(user, "viewAny", "vehicle-loans");
+      }
+
       if (item.permissionResource === "police-officer-retirement-requests") {
         return can(user, "viewAny", "police-officer-retirement-requests");
       }
