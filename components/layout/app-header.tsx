@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Bell, Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { SubunitSwitcher } from "@/components/layout/subunit-switcher";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,9 +37,7 @@ export function AppHeader() {
 
           <SubunitSwitcher />
 
-          <Button size="icon" variant="outline" className="h-10 w-10 rounded-xl">
-            <Bell className="h-4 w-4" />
-          </Button>
+          <NotificationBell />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
