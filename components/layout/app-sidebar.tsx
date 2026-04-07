@@ -93,6 +93,13 @@ const generalItems = [
     permissionResource: "police-officer-publications",
   },
   {
+    href: "/vehicles",
+    label: "Veiculos",
+    icon: CarFront,
+    visible: false,
+    permissionResource: "vehicles",
+  },
+  {
     href: "/police-officer-retirement-requests",
     label: "Aposentadorias",
     icon: ScrollText,
@@ -432,6 +439,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "police-officer-publications") {
         return can(user, "viewAny", "police-officer-publications");
+      }
+
+      if (item.permissionResource === "vehicles") {
+        return can(user, "viewAny", "vehicles");
       }
 
       if (item.permissionResource === "police-officer-retirement-requests") {
