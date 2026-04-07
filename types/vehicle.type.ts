@@ -68,6 +68,8 @@ export interface VehicleFilters {
   page?: number;
   per_page?: number;
   search?: string;
+  start_date?: string;
+  end_date?: string;
   subunit_id?: number | null;
   color_id?: number | null;
   vehicle_type_id?: number | null;
@@ -139,4 +141,3 @@ export const vehicleOwnershipTypeOptions: Array<{
   { value: "owned", label: "Proprio" },
   { value: "rented", label: "Locado" },
 ];
-

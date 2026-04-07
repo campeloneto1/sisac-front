@@ -5,6 +5,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   Award,
+  AlertTriangle,
   BarChart3,
   BookOpen,
   BriefcaseBusiness,
@@ -135,6 +136,13 @@ const generalItems = [
     icon: BriefcaseBusiness,
     visible: false,
     permissionResource: "vehicle-rentals",
+  },
+  {
+    href: "/vehicle-damages",
+    label: "Danos",
+    icon: AlertTriangle,
+    visible: false,
+    permissionResource: "vehicle-damages",
   },
   {
     href: "/police-officer-retirement-requests",
@@ -508,6 +516,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "vehicle-rentals") {
         return can(user, "viewAny", "vehicle-rentals");
+      }
+
+      if (item.permissionResource === "vehicle-damages") {
+        return can(user, "viewAny", "vehicle-damages");
       }
 
       if (item.permissionResource === "police-officer-retirement-requests") {
