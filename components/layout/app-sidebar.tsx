@@ -9,6 +9,7 @@ import {
   BarChart3,
   BookOpen,
   BriefcaseBusiness,
+  ShieldPlus,
   Landmark,
   Building2,
   CarFront,
@@ -299,6 +300,14 @@ const administratorItems: Array<{
     icon: FileHeart,
     requirements: [
       { type: "resource", resource: "publication-types", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/armament-types",
+    label: "Tipos de armamento",
+    icon: ShieldPlus,
+    requirements: [
+      { type: "resource", resource: "armament-types", action: "viewAny" },
     ],
   },
 ];
