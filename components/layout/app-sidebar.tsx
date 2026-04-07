@@ -130,6 +130,13 @@ const generalItems = [
     permissionResource: "vehicle-fuelings",
   },
   {
+    href: "/vehicle-rentals",
+    label: "Locacoes",
+    icon: BriefcaseBusiness,
+    visible: false,
+    permissionResource: "vehicle-rentals",
+  },
+  {
     href: "/police-officer-retirement-requests",
     label: "Aposentadorias",
     icon: ScrollText,
@@ -497,6 +504,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "vehicle-fuelings") {
         return can(user, "viewAny", "vehicle-fuelings");
+      }
+
+      if (item.permissionResource === "vehicle-rentals") {
+        return can(user, "viewAny", "vehicle-rentals");
       }
 
       if (item.permissionResource === "police-officer-retirement-requests") {
