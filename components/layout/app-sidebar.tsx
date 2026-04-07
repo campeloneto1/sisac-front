@@ -12,6 +12,7 @@ import {
   Building2,
   CarFront,
   ChevronDown,
+  Palette,
   FileHeart,
   Palmtree,
   Globe2,
@@ -131,6 +132,12 @@ const administratorItems: Array<{
     label: "Marcas",
     icon: CarFront,
     requirements: [{ type: "resource", resource: "brands", action: "viewAny" }],
+  },
+  {
+    href: "/colors",
+    label: "Cores",
+    icon: Palette,
+    requirements: [{ type: "resource", resource: "colors", action: "viewAny" }],
   },
   {
     href: "/variants",
