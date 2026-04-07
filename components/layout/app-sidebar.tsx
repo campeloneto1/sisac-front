@@ -21,6 +21,7 @@ import {
   MapPinned,
   Medal,
   Network,
+  Newspaper,
   Orbit,
   Settings2,
   Shield,
@@ -81,6 +82,13 @@ const generalItems = [
     icon: Palmtree,
     visible: false,
     permissionResource: "police-officer-vacations",
+  },
+  {
+    href: "/police-officer-publications",
+    label: "Publicacoes",
+    icon: Newspaper,
+    visible: false,
+    permissionResource: "police-officer-publications",
   },
   {
     href: "/courses",
@@ -397,6 +405,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "police-officer-vacations") {
         return can(user, "viewAny", "police-officer-vacations");
+      }
+
+      if (item.permissionResource === "police-officer-publications") {
+        return can(user, "viewAny", "police-officer-publications");
       }
 
       if (item.permissionResource === "courses") {
