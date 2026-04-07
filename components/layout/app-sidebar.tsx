@@ -154,6 +154,13 @@ const generalItems = [
     permissionResource: "armaments",
   },
   {
+    href: "/armament-loans",
+    label: "Emprestimos de armamentos",
+    icon: Crosshair,
+    visible: false,
+    permissionResource: "armament-loans",
+  },
+  {
     href: "/police-officer-retirement-requests",
     label: "Aposentadorias",
     icon: ScrollText,
@@ -557,6 +564,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "armaments") {
         return can(user, "viewAny", "armaments");
+      }
+
+      if (item.permissionResource === "armament-loans") {
+        return can(user, "viewAny", "armament-loans");
       }
 
       if (item.permissionResource === "police-officer-retirement-requests") {
