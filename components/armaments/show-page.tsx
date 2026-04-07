@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
   Archive,
+  ArrowRightLeft,
   Boxes,
   CalendarDays,
   Crosshair,
@@ -273,6 +274,40 @@ export function ArmamentShowPage() {
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
                 <p className="text-sm font-medium text-slate-600">
                   Vencendo / vencidos
+                </p>
+                <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-slate-200/70 bg-white/80">
+            <CardHeader className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <CardTitle>Movimentacoes</CardTitle>
+                <CardDescription>
+                  Consulte o historico operacional e os eventos de estoque deste
+                  armamento.
+                </CardDescription>
+              </div>
+              <Button asChild variant="outline">
+                <Link href={`/armaments/${armament.id}/movements`}>
+                  <ArrowRightLeft className="mr-2 h-4 w-4" />
+                  Ver movimentacoes
+                </Link>
+              </Button>
+            </CardHeader>
+            <CardContent className="grid gap-4 md:grid-cols-3">
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">Entradas</p>
+                <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+              </div>
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">Saidas</p>
+                <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+              </div>
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">
+                  Ajustes / eventos
                 </p>
                 <p className="mt-2 text-3xl font-display text-slate-900">--</p>
               </div>
