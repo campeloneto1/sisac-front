@@ -13,6 +13,7 @@ import {
 import { usePermissions } from "@/hooks/use-permissions";
 import { useVehicleCustodies } from "@/hooks/use-vehicle-custodies";
 import { useVehicleLoans } from "@/hooks/use-vehicle-loans";
+import { useVehicleMaintenances } from "@/hooks/use-vehicle-maintenances";
 import { useVehicle } from "@/hooks/use-vehicles";
 import {
   getVehicleCustodyCustodianLabel,
@@ -22,6 +23,7 @@ import {
   getVehicleLoanBorrowerLabel,
   getVehicleLoanStatusVariant,
 } from "@/types/vehicle-loan.type";
+import { getVehicleMaintenanceStatusVariant } from "@/types/vehicle-maintenance.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -63,12 +65,17 @@ export function VehicleShowPage() {
   const permissions = usePermissions("vehicles");
   const custodyPermissions = usePermissions("vehicle-custodies");
   const loanPermissions = usePermissions("vehicle-loans");
+  const maintenancePermissions = usePermissions("vehicle-maintenances");
   const vehicleQuery = useVehicle(params.id);
   const custodiesQuery = useVehicleCustodies({
     vehicle_id: Number(params.id),
     per_page: 50,
   });
   const loansQuery = useVehicleLoans({
+    vehicle_id: Number(params.id),
+    per_page: 50,
+  });
+  const maintenancesQuery = useVehicleMaintenances({
     vehicle_id: Number(params.id),
     per_page: 50,
   });
@@ -519,6 +526,111 @@ export function VehicleShowPage() {
                           <td className="px-4 py-4 text-right">
                             <Button asChild size="sm" variant="outline">
                               <Link href={`/vehicle-custodies/${custody.id}`}>
+                                Ver
+                              </Link>
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : null}
+
+      {maintenancePermissions.canViewAny ? (
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Historico de manutencoes</CardTitle>
+            <CardDescription>
+              Relacao das manutencoes registradas para este veiculo, com
+              oficina, periodo, custos e status.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {maintenancesQuery.isLoading ? (
+              <div className="space-y-3">
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+              </div>
+            ) : maintenancesQuery.isError ? (
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
+                <p className="text-sm text-slate-700">
+                  Nao foi possivel carregar o historico de manutencoes deste
+                  veiculo agora.
+                </p>
+              </div>
+            ) : !maintenancesQuery.data?.data.length ? (
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
+                <p className="text-sm text-slate-700">
+                  Nenhuma manutencao foi registrada para este veiculo ate o
+                  momento.
+                </p>
+              </div>
+            ) : (
+              <div className="overflow-hidden rounded-[24px] border border-slate-200/70 bg-white/80">
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-left text-sm">
+                    <thead className="bg-slate-50 text-slate-500">
+                      <tr>
+                        <th className="px-4 py-3 font-medium">Tipo</th>
+                        <th className="px-4 py-3 font-medium">Entrada</th>
+                        <th className="px-4 py-3 font-medium">Saida</th>
+                        <th className="px-4 py-3 font-medium">Oficina</th>
+                        <th className="px-4 py-3 font-medium">Status</th>
+                        <th className="px-4 py-3 font-medium text-right">
+                          Detalhe
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {maintenancesQuery.data.data.map((maintenance) => (
+                        <tr
+                          key={maintenance.id}
+                          className="border-t border-slate-200/70"
+                        >
+                          <td className="px-4 py-4">
+                            <div>
+                              <p className="font-medium text-slate-900">
+                                {maintenance.maintenance_type_label ?? "-"}
+                              </p>
+                              <p className="mt-1 text-slate-500">
+                                {maintenance.description}
+                              </p>
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-slate-600">
+                            {formatLoanDateTime(
+                              maintenance.entry_date,
+                              maintenance.entry_time,
+                            )}
+                          </td>
+                          <td className="px-4 py-4 text-slate-600">
+                            {formatLoanDateTime(
+                              maintenance.exit_date,
+                              maintenance.exit_time,
+                            )}
+                          </td>
+                          <td className="px-4 py-4 text-slate-600">
+                            {maintenance.workshop?.name ?? "Nao informada"}
+                          </td>
+                          <td className="px-4 py-4">
+                            <Badge
+                              variant={getVehicleMaintenanceStatusVariant(
+                                maintenance.status,
+                              )}
+                            >
+                              {maintenance.status_label ?? "Sem status"}
+                            </Badge>
+                          </td>
+                          <td className="px-4 py-4 text-right">
+                            <Button asChild size="sm" variant="outline">
+                              <Link
+                                href={`/vehicle-maintenances/${maintenance.id}`}
+                              >
                                 Ver
                               </Link>
                             </Button>

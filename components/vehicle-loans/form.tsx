@@ -15,7 +15,7 @@ import {
 } from "@/hooks/use-vehicle-loan-mutations";
 import { usePoliceOfficers } from "@/hooks/use-police-officers";
 import { useUsers } from "@/hooks/use-users";
-import { useVehicles } from "@/hooks/use-vehicles";
+import { useAvailableVehicles, useVehicles } from "@/hooks/use-vehicles";
 import type {
   CreateVehicleLoanDTO,
   UpdateVehicleLoanDTO,
@@ -104,7 +104,7 @@ const vehicleLoanFormSchema = z
     }
   });
 
-type VehicleLoanFormValues = z.infer<typeof vehicleLoanFormSchema>;
+type VehicleLoanFormValues = z.output<typeof vehicleLoanFormSchema>;
 
 interface VehicleLoanFormProps {
   mode: "create" | "edit";
@@ -128,7 +128,14 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
   const { activeSubunit } = useSubunit();
   const createMutation = useCreateVehicleLoanMutation();
   const updateMutation = useUpdateVehicleLoanMutation();
-  const vehiclesQuery = useVehicles({ per_page: 100 });
+  const vehiclesQuery = useVehicles(
+    { per_page: 100 },
+    { enabled: mode === "edit" },
+  );
+  const availableVehiclesQuery = useAvailableVehicles(
+    { per_page: 100 },
+    { enabled: mode === "create" },
+  );
   const policeOfficersQuery = usePoliceOfficers({ per_page: 100 });
   const usersQuery = useUsers({ per_page: 100 });
   const citiesQuery = useCities({ per_page: 100 });
@@ -140,7 +147,11 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
     control,
     setValue,
     formState: { errors },
-  } = useForm<VehicleLoanFormValues>({
+  } = useForm<
+    z.input<typeof vehicleLoanFormSchema>,
+    unknown,
+    VehicleLoanFormValues
+  >({
     resolver: zodResolver(vehicleLoanFormSchema),
     defaultValues: {
       vehicle_id: loan?.vehicle_id ? String(loan.vehicle_id) : "none",
@@ -260,6 +271,10 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
             detail: user.email,
           }))
         : [];
+  const selectableVehicles =
+    mode === "create"
+      ? (availableVehiclesQuery.data?.data ?? [])
+      : (vehiclesQuery.data?.data ?? []);
 
   return (
     <Card className="border-slate-200/70 bg-white/80">
@@ -292,7 +307,7 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">Selecione um veiculo</SelectItem>
-                  {(vehiclesQuery.data?.data ?? []).map((vehicle) => (
+                  {selectableVehicles.map((vehicle) => (
                     <SelectItem key={vehicle.id} value={String(vehicle.id)}>
                       {vehicle.license_plate}
                     </SelectItem>

@@ -115,6 +115,13 @@ const generalItems = [
     permissionResource: "vehicle-custodies",
   },
   {
+    href: "/vehicle-maintenances",
+    label: "Manutencoes",
+    icon: Wrench,
+    visible: false,
+    permissionResource: "vehicle-maintenances",
+  },
+  {
     href: "/police-officer-retirement-requests",
     label: "Aposentadorias",
     icon: ScrollText,

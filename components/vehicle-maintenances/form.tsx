@@ -1,0 +1,537 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useFieldArray, useForm, useWatch } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import {
+  useCreateVehicleMaintenanceMutation,
+  useUpdateVehicleMaintenanceMutation,
+} from "@/hooks/use-vehicle-maintenance-mutations";
+import { useAvailableVehicles, useVehicles } from "@/hooks/use-vehicles";
+import { useWorkshops } from "@/hooks/use-workshops";
+import type {
+  CreateVehicleMaintenanceDTO,
+  UpdateVehicleMaintenanceDTO,
+  VehicleMaintenanceItem,
+} from "@/types/vehicle-maintenance.type";
+import {
+  vehicleMaintenanceStatusOptions,
+  vehicleMaintenanceTypeOptions,
+} from "@/types/vehicle-maintenance.type";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+
+const replacedPartSchema = z.object({
+  part: z.string().min(1, "Informe a peca."),
+  quantity: z.coerce.number().int().min(1, "A quantidade deve ser ao menos 1."),
+  cost: z.union([z.coerce.number().min(0), z.literal("")]).optional(),
+});
+
+const vehicleMaintenanceFormSchema = z.object({
+  vehicle_id: z.string().min(1, "Selecione um veiculo."),
+  workshop_id: z.string(),
+  maintenance_type: z.string().min(1, "Selecione o tipo."),
+  description: z
+    .string()
+    .min(3, "A descricao deve ter ao menos 3 caracteres.")
+    .max(1000, "A descricao deve ter no maximo 1000 caracteres."),
+  entry_date: z.string().min(1, "Informe a data de entrada."),
+  entry_time: z.string(),
+  entry_km: z.coerce.number().int().min(0, "Informe uma quilometragem valida."),
+  exit_date: z.string(),
+  exit_time: z.string(),
+  exit_km: z.union([z.coerce.number().int().min(0), z.literal("")]),
+  expected_completion_date: z.string(),
+  cost: z.union([z.coerce.number().min(0), z.literal("")]),
+  parts_cost: z.union([z.coerce.number().min(0), z.literal("")]),
+  labor_cost: z.union([z.coerce.number().min(0), z.literal("")]),
+  status: z.string(),
+  notes: z.string().max(2000, "As observacoes devem ter no maximo 2000 caracteres."),
+  replaced_parts: z.array(replacedPartSchema),
+});
+
+type VehicleMaintenanceFormValues = z.output<
+  typeof vehicleMaintenanceFormSchema
+>;
+
+interface VehicleMaintenanceFormProps {
+  mode: "create" | "edit";
+  maintenance?: VehicleMaintenanceItem;
+}
+
+function parseNumberField(value: number | "" | undefined) {
+  return value === "" || value === undefined ? null : Number(value);
+}
+
+export function VehicleMaintenanceForm({
+  mode,
+  maintenance,
+}: VehicleMaintenanceFormProps) {
+  const router = useRouter();
+  const createMutation = useCreateVehicleMaintenanceMutation();
+  const updateMutation = useUpdateVehicleMaintenanceMutation();
+  const vehiclesQuery = useVehicles(
+    { per_page: 100 },
+    { enabled: mode === "edit" },
+  );
+  const availableVehiclesQuery = useAvailableVehicles(
+    { per_page: 100 },
+    { enabled: mode === "create" },
+  );
+  const workshopsQuery = useWorkshops({ per_page: 100 });
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<
+    z.input<typeof vehicleMaintenanceFormSchema>,
+    unknown,
+    VehicleMaintenanceFormValues
+  >({
+    resolver: zodResolver(vehicleMaintenanceFormSchema),
+    defaultValues: {
+      vehicle_id: maintenance?.vehicle_id ? String(maintenance.vehicle_id) : "",
+      workshop_id: maintenance?.workshop_id ? String(maintenance.workshop_id) : "none",
+      maintenance_type: maintenance?.maintenance_type ?? "",
+      description: maintenance?.description ?? "",
+      entry_date: maintenance?.entry_date ?? "",
+      entry_time: maintenance?.entry_time ?? "",
+      entry_km: maintenance?.entry_km ?? 0,
+      exit_date: maintenance?.exit_date ?? "",
+      exit_time: maintenance?.exit_time ?? "",
+      exit_km: maintenance?.exit_km ?? "",
+      expected_completion_date: maintenance?.expected_completion_date ?? "",
+      cost: maintenance?.cost ? Number(maintenance.cost) : "",
+      parts_cost: maintenance?.parts_cost ? Number(maintenance.parts_cost) : "",
+      labor_cost: maintenance?.labor_cost ? Number(maintenance.labor_cost) : "",
+      status: maintenance?.status ?? "in_progress",
+      notes: maintenance?.notes ?? "",
+      replaced_parts:
+        maintenance?.replaced_parts?.map((part) => ({
+          part: part.part,
+          quantity: part.quantity,
+          cost: part.cost ? Number(part.cost) : "",
+        })) ?? [],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "replaced_parts",
+  });
+
+  const selectedVehicleId = useWatch({ control, name: "vehicle_id" });
+  const selectedWorkshopId = useWatch({ control, name: "workshop_id" });
+  const selectedMaintenanceType = useWatch({
+    control,
+    name: "maintenance_type",
+  });
+  const selectedStatus = useWatch({ control, name: "status" });
+
+  useEffect(() => {
+    if (!maintenance) {
+      return;
+    }
+
+    reset({
+      vehicle_id: String(maintenance.vehicle_id),
+      workshop_id: maintenance.workshop_id
+        ? String(maintenance.workshop_id)
+        : "none",
+      maintenance_type: maintenance.maintenance_type ?? "",
+      description: maintenance.description ?? "",
+      entry_date: maintenance.entry_date ?? "",
+      entry_time: maintenance.entry_time ?? "",
+      entry_km: maintenance.entry_km ?? 0,
+      exit_date: maintenance.exit_date ?? "",
+      exit_time: maintenance.exit_time ?? "",
+      exit_km: maintenance.exit_km ?? "",
+      expected_completion_date: maintenance.expected_completion_date ?? "",
+      cost: maintenance.cost ? Number(maintenance.cost) : "",
+      parts_cost: maintenance.parts_cost ? Number(maintenance.parts_cost) : "",
+      labor_cost: maintenance.labor_cost ? Number(maintenance.labor_cost) : "",
+      status: maintenance.status ?? "in_progress",
+      notes: maintenance.notes ?? "",
+      replaced_parts:
+        maintenance.replaced_parts?.map((part) => ({
+          part: part.part,
+          quantity: part.quantity,
+          cost: part.cost ? Number(part.cost) : "",
+        })) ?? [],
+    });
+  }, [maintenance, reset]);
+
+  async function onSubmit(values: VehicleMaintenanceFormValues) {
+    const payload = {
+      vehicle_id: Number(values.vehicle_id),
+      workshop_id:
+        values.workshop_id && values.workshop_id !== "none"
+          ? Number(values.workshop_id)
+          : null,
+      maintenance_type: values.maintenance_type as CreateVehicleMaintenanceDTO["maintenance_type"],
+      description: values.description.trim(),
+      entry_date: values.entry_date,
+      entry_time: values.entry_time || null,
+      entry_km: Number(values.entry_km),
+      exit_date: values.exit_date || null,
+      exit_time: values.exit_time || null,
+      exit_km: parseNumberField(values.exit_km),
+      expected_completion_date: values.expected_completion_date || null,
+      cost: parseNumberField(values.cost),
+      parts_cost: parseNumberField(values.parts_cost),
+      labor_cost: parseNumberField(values.labor_cost),
+      status: values.status
+        ? (values.status as CreateVehicleMaintenanceDTO["status"])
+        : undefined,
+      notes: values.notes.trim() || null,
+      replaced_parts: values.replaced_parts.length
+        ? values.replaced_parts.map((part) => ({
+            part: part.part.trim(),
+            quantity: Number(part.quantity),
+            cost: parseNumberField(part.cost),
+          }))
+        : null,
+    };
+
+    if (mode === "create") {
+      const response = await createMutation.mutateAsync(
+        payload satisfies CreateVehicleMaintenanceDTO,
+      );
+      router.push(`/vehicle-maintenances/${response.data.id}`);
+      return;
+    }
+
+    if (!maintenance) {
+      return;
+    }
+
+    const response = await updateMutation.mutateAsync({
+      id: maintenance.id,
+      payload: payload satisfies UpdateVehicleMaintenanceDTO,
+    });
+    router.push(`/vehicle-maintenances/${response.data.id}`);
+  }
+
+  const isPending = createMutation.isPending || updateMutation.isPending;
+  const selectableVehicles =
+    mode === "create"
+      ? (availableVehiclesQuery.data?.data ?? [])
+      : (vehiclesQuery.data?.data ?? []);
+
+  return (
+    <Card className="border-slate-200/70 bg-white/80">
+      <CardHeader>
+        <CardTitle>
+          {mode === "create" ? "Nova manutencao" : "Editar manutencao"}
+        </CardTitle>
+        <CardDescription>
+          Veiculos indisponiveis por emprestimo, cautela ou manutencao ativa
+          nao aparecem na criacao.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+          <section className="grid gap-5 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label>Veiculo</Label>
+              <Select
+                value={selectedVehicleId || "none"}
+                onValueChange={(value) =>
+                  setValue("vehicle_id", value === "none" ? "" : value, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione um veiculo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Selecione um veiculo</SelectItem>
+                  {selectableVehicles.map((vehicle) => (
+                    <SelectItem key={vehicle.id} value={String(vehicle.id)}>
+                      {vehicle.license_plate}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.vehicle_id ? (
+                <p className="text-sm text-destructive">
+                  {errors.vehicle_id.message}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2">
+              <Label>Oficina</Label>
+              <Select
+                value={selectedWorkshopId || "none"}
+                onValueChange={(value) =>
+                  setValue("workshop_id", value, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione uma oficina" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Nao informar oficina</SelectItem>
+                  {(workshopsQuery.data?.data ?? []).map((workshop) => (
+                    <SelectItem key={workshop.id} value={String(workshop.id)}>
+                      {workshop.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </section>
+
+          <section className="grid gap-5 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label>Tipo de manutencao</Label>
+              <Select
+                value={selectedMaintenanceType || "none"}
+                onValueChange={(value) =>
+                  setValue("maintenance_type", value === "none" ? "" : value, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione o tipo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Selecione o tipo</SelectItem>
+                  {vehicleMaintenanceTypeOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.maintenance_type ? (
+                <p className="text-sm text-destructive">
+                  {errors.maintenance_type.message}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2">
+              <Label>Status</Label>
+              <Select
+                value={selectedStatus || "in_progress"}
+                onValueChange={(value) =>
+                  setValue("status", value, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione o status" />
+                </SelectTrigger>
+                <SelectContent>
+                  {vehicleMaintenanceStatusOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </section>
+
+          <section className="space-y-2">
+            <Label htmlFor="description">Descricao</Label>
+            <Textarea
+              id="description"
+              rows={4}
+              {...register("description")}
+            />
+            {errors.description ? (
+              <p className="text-sm text-destructive">
+                {errors.description.message}
+              </p>
+            ) : null}
+          </section>
+
+          <section className="grid gap-5 md:grid-cols-3">
+            <div className="space-y-2">
+              <Label htmlFor="entry_date">Data de entrada</Label>
+              <Input id="entry_date" type="date" {...register("entry_date")} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="entry_time">Hora de entrada</Label>
+              <Input id="entry_time" type="time" {...register("entry_time")} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="entry_km">KM de entrada</Label>
+              <Input id="entry_km" type="number" min={0} {...register("entry_km")} />
+            </div>
+          </section>
+
+          <section className="grid gap-5 md:grid-cols-4">
+            <div className="space-y-2">
+              <Label htmlFor="exit_date">Data de saida</Label>
+              <Input id="exit_date" type="date" {...register("exit_date")} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="exit_time">Hora de saida</Label>
+              <Input id="exit_time" type="time" {...register("exit_time")} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="exit_km">KM de saida</Label>
+              <Input id="exit_km" type="number" min={0} {...register("exit_km")} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="expected_completion_date">Previsao de conclusao</Label>
+              <Input
+                id="expected_completion_date"
+                type="date"
+                {...register("expected_completion_date")}
+              />
+            </div>
+          </section>
+
+          <section className="grid gap-5 md:grid-cols-3">
+            <div className="space-y-2">
+              <Label htmlFor="cost">Custo total</Label>
+              <Input id="cost" type="number" step="0.01" min={0} {...register("cost")} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="parts_cost">Custo de pecas</Label>
+              <Input
+                id="parts_cost"
+                type="number"
+                step="0.01"
+                min={0}
+                {...register("parts_cost")}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="labor_cost">Custo de mao de obra</Label>
+              <Input
+                id="labor_cost"
+                type="number"
+                step="0.01"
+                min={0}
+                {...register("labor_cost")}
+              />
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <Label>Pecas substituidas</Label>
+                <p className="text-sm text-slate-500">
+                  Adicione somente se houver controle detalhado de pecas.
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => append({ part: "", quantity: 1, cost: "" })}
+              >
+                Adicionar peca
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              {fields.length ? (
+                fields.map((field, index) => (
+                  <div
+                    key={field.id}
+                    className="grid gap-4 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-[1.6fr_0.7fr_0.9fr_auto]"
+                  >
+                    <Input
+                      placeholder="Nome da peca"
+                      {...register(`replaced_parts.${index}.part`)}
+                    />
+                    <Input
+                      type="number"
+                      min={1}
+                      placeholder="Qtd."
+                      {...register(`replaced_parts.${index}.quantity`)}
+                    />
+                    <Input
+                      type="number"
+                      min={0}
+                      step="0.01"
+                      placeholder="Custo"
+                      {...register(`replaced_parts.${index}.cost`)}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={() => remove(index)}
+                    >
+                      Remover
+                    </Button>
+                  </div>
+                ))
+              ) : (
+                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-5 text-sm text-slate-500">
+                  Nenhuma peca adicionada.
+                </div>
+              )}
+            </div>
+          </section>
+
+          <section className="space-y-2">
+            <Label htmlFor="notes">Observacoes</Label>
+            <Textarea id="notes" rows={5} {...register("notes")} />
+          </section>
+
+          <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+            <Button asChild type="button" variant="ghost">
+              <Link
+                href={
+                  maintenance
+                    ? `/vehicle-maintenances/${maintenance.id}`
+                    : "/vehicle-maintenances"
+                }
+              >
+                Cancelar
+              </Link>
+            </Button>
+            <Button disabled={isPending} type="submit">
+              {isPending
+                ? "Salvando..."
+                : mode === "create"
+                  ? "Criar manutencao"
+                  : "Salvar alteracoes"}
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
+  );
+}

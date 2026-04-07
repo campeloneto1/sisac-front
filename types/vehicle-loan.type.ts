@@ -111,7 +111,7 @@ export interface CreateVehicleLoanDTO {
   external_borrower_phone?: string | null;
   city_id?: number | null;
   subunit_id?: number | null;
-  start_date: string;
+  start_date?: string | null;
   start_time?: string | null;
   end_date?: string | null;
   end_time?: string | null;

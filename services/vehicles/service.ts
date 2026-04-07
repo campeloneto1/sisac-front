@@ -17,6 +17,19 @@ export const vehiclesService = {
     return data;
   },
 
+  async available(
+    filters: VehicleFilters = {},
+  ): Promise<PaginatedVehiclesResponse> {
+    const { data } = await api.get<PaginatedVehiclesResponse>(
+      "/vehicles/available",
+      {
+        params: filters,
+      },
+    );
+
+    return data;
+  },
+
   async show(id: number | string): Promise<VehicleResponse> {
     const { data } = await api.get<VehicleResponse>(`/vehicles/${id}`);
     return data;

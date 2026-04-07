@@ -13,7 +13,7 @@ import {
 } from "@/hooks/use-vehicle-custody-mutations";
 import { usePoliceOfficers } from "@/hooks/use-police-officers";
 import { useUsers } from "@/hooks/use-users";
-import { useVehicles } from "@/hooks/use-vehicles";
+import { useAvailableVehicles, useVehicles } from "@/hooks/use-vehicles";
 import type {
   CreateVehicleCustodyDTO,
   UpdateVehicleCustodyDTO,
@@ -69,7 +69,14 @@ export function VehicleCustodyForm({
   const router = useRouter();
   const createMutation = useCreateVehicleCustodyMutation();
   const updateMutation = useUpdateVehicleCustodyMutation();
-  const vehiclesQuery = useVehicles({ per_page: 100 });
+  const vehiclesQuery = useVehicles(
+    { per_page: 100 },
+    { enabled: mode === "edit" },
+  );
+  const availableVehiclesQuery = useAvailableVehicles(
+    { per_page: 100 },
+    { enabled: mode === "create" },
+  );
   const policeOfficersQuery = usePoliceOfficers({ per_page: 100 });
   const usersQuery = useUsers({ per_page: 100 });
 
@@ -134,6 +141,10 @@ export function VehicleCustodyForm({
             detail: user.email,
           }))
         : [];
+  const selectableVehicles =
+    mode === "create"
+      ? (availableVehiclesQuery.data?.data ?? [])
+      : (vehiclesQuery.data?.data ?? []);
 
   async function onSubmit(values: VehicleCustodyFormValues) {
     const payloadBase = {
@@ -201,7 +212,7 @@ export function VehicleCustodyForm({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">Selecione um veiculo</SelectItem>
-                  {(vehiclesQuery.data?.data ?? []).map((vehicle) => (
+                  {selectableVehicles.map((vehicle) => (
                     <SelectItem key={vehicle.id} value={String(vehicle.id)}>
                       {vehicle.license_plate}
                     </SelectItem>
