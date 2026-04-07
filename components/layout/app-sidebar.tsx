@@ -310,6 +310,14 @@ const administratorItems: Array<{
       { type: "resource", resource: "armament-types", action: "viewAny" },
     ],
   },
+  {
+    href: "/armament-sizes",
+    label: "Tamanhos de armamento",
+    icon: Shield,
+    requirements: [
+      { type: "resource", resource: "armament-sizes", action: "viewAny" },
+    ],
+  },
 ];
 
 const managerItems: Array<{
