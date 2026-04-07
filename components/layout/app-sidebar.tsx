@@ -280,6 +280,14 @@ const managerItems: Array<{
       { type: "resource", resource: "assignments", action: "viewAny" },
     ],
   },
+  {
+    href: "/workshops",
+    label: "Oficinas",
+    icon: Wrench,
+    requirements: [
+      { type: "resource", resource: "workshops", action: "viewAny" },
+    ],
+  },
 ];
 
 const reportsItems: Array<{
