@@ -7,6 +7,7 @@ import { AlertTriangle, BriefcaseBusiness, CalendarClock, Landmark, ShieldCheck,
 import { useSubunit } from "@/contexts/subunit-context";
 import { useContract } from "@/hooks/use-contracts";
 import { usePermissions } from "@/hooks/use-permissions";
+import { cn } from "@/lib/utils";
 import { getContractStatusBadgeVariant, getContractStatusLabel } from "@/types/contract.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -85,6 +86,13 @@ export function ContractShowPage() {
   }
 
   const contract = contractQuery.data.data;
+  const contractSubpages = [
+    { href: `/contracts/${contract.id}`, label: "Resumo" },
+    { href: `/contracts/${contract.id}/roles`, label: "Papeis" },
+    { href: `/contracts/${contract.id}/extensions`, label: "Prorrogacoes" },
+    { href: `/contracts/${contract.id}/amendments`, label: "Aditivos" },
+    { href: `/contracts/${contract.id}/transactions`, label: "Transacoes" },
+  ];
 
   return (
     <div className="space-y-6">
@@ -107,6 +115,23 @@ export function ContractShowPage() {
             <Link href={`/contracts/${contract.id}/edit`}>Editar</Link>
           </Button>
         ) : null}
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {contractSubpages.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              "rounded-full border px-4 py-2 text-sm font-medium transition",
+              item.href === `/contracts/${contract.id}`
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-slate-900",
+            )}
+          >
+            {item.label}
+          </Link>
+        ))}
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
@@ -205,6 +230,9 @@ export function ContractShowPage() {
             ) : (
               <p className="text-sm text-slate-500">Nenhuma transacao vinculada no retorno atual.</p>
             )}
+            <Button asChild className="w-full" variant="outline">
+              <Link href={`/contracts/${contract.id}/transactions`}>Abrir modulo de transacoes</Link>
+            </Button>
           </CardContent>
         </Card>
 
@@ -219,10 +247,16 @@ export function ContractShowPage() {
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-sm font-medium text-slate-900">Aditivos</p>
               <p className="mt-1 text-xs text-slate-500">{contract.contract_amendments?.length ?? 0} registro(s)</p>
+              <Button asChild className="mt-3 w-full" size="sm" variant="outline">
+                <Link href={`/contracts/${contract.id}/amendments`}>Gerenciar aditivos</Link>
+              </Button>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-sm font-medium text-slate-900">Prorrogacoes</p>
               <p className="mt-1 text-xs text-slate-500">{contract.contract_extensions?.length ?? 0} registro(s)</p>
+              <Button asChild className="mt-3 w-full" size="sm" variant="outline">
+                <Link href={`/contracts/${contract.id}/extensions`}>Gerenciar prorrogacoes</Link>
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -259,6 +293,24 @@ export function ContractShowPage() {
           <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
             <p className="whitespace-pre-wrap text-sm text-slate-600">{contract.notes?.trim() || "Sem observacoes cadastradas."}</p>
           </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-slate-200/70 bg-white/80">
+        <CardHeader>
+          <CardTitle>Gestao detalhada</CardTitle>
+          <CardDescription>Submodulos dedicados para operacao do contrato, com filtros e acoes especializadas.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-3 md:grid-cols-3">
+          <Button asChild variant="outline">
+            <Link href={`/contracts/${contract.id}/roles`}>Abrir papeis</Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href={`/contracts/${contract.id}/extensions`}>Abrir prorrogacoes</Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href={`/contracts/${contract.id}/transactions`}>Abrir transacoes</Link>
+          </Button>
         </CardContent>
       </Card>
     </div>

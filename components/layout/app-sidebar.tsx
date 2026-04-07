@@ -638,6 +638,10 @@ export function AppSidebar() {
         return can(user, "viewAny", "course-classes");
       }
 
+      if (item.permissionResource === "contracts") {
+        return can(user, "viewAny", "contracts");
+      }
+
       return item.visible;
     })
     .map(({ href, label, icon }) => ({ href, label, icon }));
