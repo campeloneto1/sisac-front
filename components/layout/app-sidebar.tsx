@@ -7,6 +7,7 @@ import {
   Award,
   AlertTriangle,
   BarChart3,
+  BellRing,
   BookOpen,
   BriefcaseBusiness,
   ShieldPlus,
@@ -314,6 +315,18 @@ const administratorItems: Array<{
     icon: Shield,
     requirements: [
       { type: "resource", resource: "permissions", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/notification-responsibilities",
+    label: "Respons. notificacoes",
+    icon: BellRing,
+    requirements: [
+      {
+        type: "resource",
+        resource: "notification-responsibilities",
+        action: "viewAny",
+      },
     ],
   },
   {
