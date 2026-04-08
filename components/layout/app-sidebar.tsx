@@ -286,6 +286,14 @@ const administratorItems: Array<{
     ],
   },
   {
+    href: "/service-types",
+    label: "Tipos de servico",
+    icon: Wrench,
+    requirements: [
+      { type: "resource", resource: "service-types", action: "viewAny" },
+    ],
+  },
+  {
     href: "/variants",
     label: "Modelos",
     icon: Shapes,
