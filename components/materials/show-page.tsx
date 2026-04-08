@@ -175,6 +175,21 @@ export function MaterialShowPage() {
 
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
+          <CardTitle>Movimentacoes</CardTitle>
+          <CardDescription>Area preparada para a trilha operacional de entradas, saidas, emprestimos e ajustes.</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <p className="text-sm text-slate-600">
+            O backend ainda nao expoe `MaterialMovement` como recurso REST, mas a navegacao do modulo ja esta pronta para receber esse historico.
+          </p>
+          <Button asChild variant="outline">
+            <Link href={`/materials/${material.id}/movements`}>Abrir modulo de movimentacoes</Link>
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card className="border-slate-200/70 bg-white/80">
+        <CardHeader>
           <CardTitle>Unidades</CardTitle>
           <CardDescription>Unidades individualizadas vinculadas a este material.</CardDescription>
         </CardHeader>
