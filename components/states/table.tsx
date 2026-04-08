@@ -45,8 +45,8 @@ export function StatesTable({ states }: StatesTableProps) {
               <tr>
                 <th className="px-4 py-3 font-medium">Estado</th>
                 <th className="px-4 py-3 font-medium">Sigla</th>
-                <th className="px-4 py-3 font-medium">Pais</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">País</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -55,14 +55,14 @@ export function StatesTable({ states }: StatesTableProps) {
                   <td className="px-4 py-4">
                     <div>
                       <p className="font-medium text-slate-900">{state.name}</p>
-                      <p className="mt-1 text-slate-500">Cadastro administrativo territorial vinculado a um pais.</p>
+                      <p className="mt-1 text-slate-500">Cadastro administrativo territorial vinculado a um país.</p>
                     </div>
                   </td>
                   <td className="px-4 py-4">
                     <Badge variant="outline">{state.abbreviation}</Badge>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
-                    {state.country ? `${state.country.name} (${state.country.abbreviation})` : "Sem pais vinculado"}
+                    {state.country ? `${state.country.name} (${state.country.abbreviation})` : "Sem país vinculado"}
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex justify-end gap-2">
@@ -101,7 +101,7 @@ export function StatesTable({ states }: StatesTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir estado</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {stateToDelete?.name}? Essa acao remove o estado do cadastro administrativo.
+              Tem certeza que deseja excluir {stateToDelete?.name}? Essa ação remove o estado do cadastro administrativo.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -109,7 +109,7 @@ export function StatesTable({ states }: StatesTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

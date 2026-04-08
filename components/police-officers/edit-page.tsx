@@ -18,7 +18,7 @@ export function PoliceOfficerEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `update` para editar policiais.</CardDescription>
+          <CardDescription>Você precisa da permissão `update` para editar policiais.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -33,7 +33,7 @@ export function PoliceOfficerEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar policial</CardTitle>
-          <CardDescription>O policial nao pode ser editado agora.</CardDescription>
+          <CardDescription>O policial não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

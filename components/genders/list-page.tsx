@@ -35,7 +35,7 @@ export function GendersListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `genders.viewAny` para visualizar generos.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `genders.viewAny` para visualizar gêneros.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -45,15 +45,15 @@ export function GendersListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Generos</h1>
-          <p className="text-sm text-slate-500">Gerencie o cadastro administrativo de generos utilizado por outros modulos.</p>
+          <h1 className="font-display text-3xl text-slate-900">Gêneros</h1>
+          <p className="text-sm text-slate-500">Gerencie o cadastro administrativo de gêneros utilizado por outros módulos.</p>
         </div>
 
         {permissions.canCreate ? (
           <Button asChild>
             <Link href="/genders/create">
               <Plus className="mr-2 h-4 w-4" />
-              Novo genero
+              Novo gênero
             </Link>
           </Button>
         ) : null}
@@ -79,15 +79,15 @@ export function GendersListPage() {
       ) : gendersQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar generos</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardTitle>Erro ao carregar gêneros</CardTitle>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !gendersQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhum genero encontrado</CardTitle>
-            <CardDescription>Crie um novo genero ou refine a busca.</CardDescription>
+            <CardTitle>Nenhum gênero encontrado</CardTitle>
+            <CardDescription>Crie um novo gênero ou refine a busca.</CardDescription>
           </CardHeader>
         </Card>
       ) : (

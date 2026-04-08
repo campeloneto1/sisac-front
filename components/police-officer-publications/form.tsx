@@ -44,18 +44,18 @@ const policeOfficerPublicationFormSchema = z.object({
     .string()
     .refine((value) => value !== "none", "Selecione o policial."),
   publication_type_id: z.string(),
-  content: z.string().min(1, "Informe o conteudo da publicacao."),
+  content: z.string().min(1, "Informe o conteudo da publicação."),
   bulletin: z
     .string()
     .min(1, "Informe o boletim.")
-    .max(100, "O boletim deve ter no maximo 100 caracteres."),
-  publication_date: z.string().min(1, "Informe a data da publicacao."),
+    .max(100, "O boletim deve ter no máximo 100 caracteres."),
+  publication_date: z.string().min(1, "Informe a data da publicação."),
   external_link: z
     .string()
-    .max(2048, "O link deve ter no maximo 2048 caracteres.")
+    .max(2048, "O link deve ter no máximo 2048 caracteres.")
     .refine(
       (value) => !value || value.startsWith("http://") || value.startsWith("https://"),
-      "O link deve ser uma URL valida (http:// ou https://).",
+      "O link deve ser uma URL válida (http:// ou https://).",
     )
     .optional(),
 });
@@ -174,10 +174,10 @@ export function PoliceOfficerPublicationForm({
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>
-          {mode === "create" ? "Nova publicacao" : "Editar publicacao"}
+          {mode === "create" ? "Nova publicação" : "Editar publicação"}
         </CardTitle>
         <CardDescription>
-          Registro de publicacao em boletim para o policial, com tipo, conteudo
+          Registro de publicação em boletim para o policial, com tipo, conteudo
           e link externo opcional.
         </CardDescription>
       </CardHeader>
@@ -189,7 +189,7 @@ export function PoliceOfficerPublicationForm({
                 Dados principais
               </h3>
               <p className="text-sm text-slate-500">
-                Selecione o policial, o tipo de publicacao e informe os dados do
+                Selecione o policial, o tipo de publicação e informe os dados do
                 boletim.
               </p>
             </div>
@@ -217,7 +217,7 @@ export function PoliceOfficerPublicationForm({
                   })}
                   selectedOption={selectedPoliceOfficerOption}
                   placeholder="Selecione"
-                  searchPlaceholder="Buscar policial por nome ou matricula"
+                  searchPlaceholder="Buscar policial por nome ou matrícula"
                   emptyMessage="Nenhum policial encontrado."
                 />
                 {errors.police_officer_id ? (
@@ -228,7 +228,7 @@ export function PoliceOfficerPublicationForm({
               </div>
 
               <div className="space-y-2">
-                <Label>Tipo de publicacao</Label>
+                <Label>Tipo de publicação</Label>
                 <Select
                   value={selectedPublicationTypeId}
                   onValueChange={(value) =>
@@ -276,7 +276,7 @@ export function PoliceOfficerPublicationForm({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="publication_date">Data da publicacao</Label>
+                <Label htmlFor="publication_date">Data da publicação</Label>
                 <Input
                   id="publication_date"
                   type="date"
@@ -293,7 +293,7 @@ export function PoliceOfficerPublicationForm({
                 <Label htmlFor="content">Conteudo</Label>
                 <Textarea
                   id="content"
-                  placeholder="Descreva o conteudo da publicacao..."
+                  placeholder="Descreva o conteudo da publicação..."
                   rows={4}
                   {...register("content")}
                 />
@@ -337,8 +337,8 @@ export function PoliceOfficerPublicationForm({
               {isPending
                 ? "Salvando..."
                 : mode === "create"
-                  ? "Criar publicacao"
-                  : "Salvar alteracoes"}
+                  ? "Criar publicação"
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

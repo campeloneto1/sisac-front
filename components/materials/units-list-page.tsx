@@ -33,7 +33,7 @@ export function MaterialUnitsListPage() {
 
   return (
     <MaterialUnitsPageShell
-      title="Gestao de unidades"
+      title="Gestão de unidades"
       description="Acompanhe e organize as unidades fisicas vinculadas a este material."
       requiredPermission="view"
       showIntegrationNotice
@@ -52,7 +52,7 @@ export function MaterialUnitsListPage() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Disponiveis</CardTitle>
+            <CardTitle>Disponíveis</CardTitle>
             <CardDescription>Quantidade de unidades aptas para uso operacional.</CardDescription>
           </CardHeader>
           <CardContent>
@@ -73,7 +73,7 @@ export function MaterialUnitsListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Indisponiveis</CardTitle>
-            <CardDescription>Emprestadas, cedidas, em manutencao, baixadas ou extraviadas.</CardDescription>
+            <CardDescription>Emprestadas, cedidas, em manutenção, baixadas ou extraviadas.</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-display text-slate-900">{unavailableUnits}</p>
@@ -92,11 +92,11 @@ export function MaterialUnitsListPage() {
               <table className="min-w-full text-left text-sm">
                 <thead className="bg-slate-50 text-slate-500">
                   <tr>
-                    <th className="px-4 py-3 font-medium">Patrimonio 1</th>
-                    <th className="px-4 py-3 font-medium">Patrimonio 2</th>
+                    <th className="px-4 py-3 font-medium">Patrimônio 1</th>
+                    <th className="px-4 py-3 font-medium">Patrimônio 2</th>
                     <th className="px-4 py-3 font-medium">Status</th>
                     <th className="px-4 py-3 font-medium">Vencimento</th>
-                    <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                    <th className="px-4 py-3 font-medium text-right">Ações</th>
                   </tr>
                 </thead>
                 <tbody>

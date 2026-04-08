@@ -24,7 +24,7 @@ export function ContractObjectShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `contract-objects.view` para visualizar objetos de contrato.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `contract-objects.view` para visualizar objetos de contrato.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -39,7 +39,7 @@ export function ContractObjectShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar objeto de contrato</CardTitle>
-          <CardDescription>Os dados do objeto de contrato nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do objeto de contrato não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -86,7 +86,7 @@ export function ContractObjectShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                 <p className="text-sm text-slate-700">
-                  {contractObject.creator ? `${contractObject.creator.name} (${contractObject.creator.email})` : "Nao informado"}
+                  {contractObject.creator ? `${contractObject.creator.name} (${contractObject.creator.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -95,7 +95,7 @@ export function ContractObjectShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
                 <p className="text-sm text-slate-700">
-                  {contractObject.updater ? `${contractObject.updater.name} (${contractObject.updater.email})` : "Nao informado"}
+                  {contractObject.updater ? `${contractObject.updater.name} (${contractObject.updater.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -104,23 +104,23 @@ export function ContractObjectShowPage() {
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Descricao e uso</CardTitle>
+            <CardTitle>Descrição e uso</CardTitle>
             <CardDescription>Dados retornados pelo `ContractObjectResource`.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <div className="flex items-center gap-2">
                 <ScrollText className="h-4 w-4 text-primary" />
-                <p className="text-sm font-medium text-slate-900">Descricao</p>
+                <p className="text-sm font-medium text-slate-900">Descrição</p>
               </div>
               <p className="mt-2 whitespace-pre-wrap text-sm text-slate-600">
-                {contractObject.description?.trim() || "Sem descricao cadastrada."}
+                {contractObject.description?.trim() || "Sem descrição cadastrada."}
               </p>
             </div>
 
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3">
               <p className="text-sm text-slate-600">
-                Se este objeto ja estiver sendo usado em contratos, a exclusao pode ser recusada ou controlada pela API mesmo com `soft delete`.
+                Se este objeto já estiver sendo usado em contratos, a exclusão pode ser recusada ou controlada pela API mesmo com `soft delete`.
               </p>
             </div>
           </CardContent>

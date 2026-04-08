@@ -101,7 +101,7 @@ export const vehicleCustodyCustodianTypeOptions: Array<{
   label: string;
 }> = [
   { value: "App\\Models\\PoliceOfficer", label: "Policial" },
-  { value: "App\\Models\\User", label: "Usuario" },
+  { value: "App\\Models\\User", label: "Usuário" },
 ];
 
 function isPoliceOfficerCustodian(
@@ -130,7 +130,7 @@ export function getVehicleCustodyCustodianLabel(custody: VehicleCustodyItem) {
   }
 
   if (isUserCustodian(custody.custodian)) {
-    return custody.custodian.name || custody.custodian.email || "Usuario vinculado";
+    return custody.custodian.name || custody.custodian.email || "Usuário vinculado";
   }
 
   return `Custodiante #${custody.custodian_id}`;

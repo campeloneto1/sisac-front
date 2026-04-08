@@ -13,7 +13,7 @@ export function useCreateArmamentMutation() {
       queryClient.invalidateQueries({ queryKey: ["armaments"] });
     },
     onError: () => {
-      toast.error("Nao foi possivel criar o armamento.");
+      toast.error("Não foi possível criar o armamento.");
     },
   });
 }
@@ -35,7 +35,7 @@ export function useUpdateArmamentMutation() {
       queryClient.invalidateQueries({ queryKey: ["armaments", variables.id] });
     },
     onError: () => {
-      toast.error("Nao foi possivel atualizar o armamento.");
+      toast.error("Não foi possível atualizar o armamento.");
     },
   });
 }
@@ -50,7 +50,7 @@ export function useDeleteArmamentMutation() {
       queryClient.invalidateQueries({ queryKey: ["armaments"] });
     },
     onError: () => {
-      toast.error("Nao foi possivel remover o armamento.");
+      toast.error("Não foi possível remover o armamento.");
     },
   });
 }

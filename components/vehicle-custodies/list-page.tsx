@@ -60,8 +60,8 @@ export function VehicleCustodiesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar cautelas de
-            veiculos.
+            Você precisa da permissão `viewAny` para visualizar cautelas de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -77,7 +77,7 @@ export function VehicleCustodiesListPage() {
           </div>
           <div>
             <h1 className="font-display text-3xl text-slate-900">
-              Cautelas de veiculos
+              Cautelas de veículos
             </h1>
             <p className="text-sm text-slate-500">
               Controle custodias ativas, encerradas ou canceladas da frota.
@@ -148,7 +148,7 @@ export function VehicleCustodiesListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar cautelas</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario
+              Verifique a API, a subunidade ativa e as permissões do usuário
               autenticado.
             </CardDescription>
           </CardHeader>

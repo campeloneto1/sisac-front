@@ -60,10 +60,10 @@ function buildArmamentLoanSchema(mode: "create" | "edit") {
       approved_by: z.string(),
       purpose: z
         .string()
-        .max(1000, "A finalidade deve ter no maximo 1000 caracteres."),
+        .max(1000, "A finalidade deve ter no máximo 1000 caracteres."),
       return_notes: z
         .string()
-        .max(1000, "As observacoes devem ter no maximo 1000 caracteres."),
+        .max(1000, "As observações devem ter no máximo 1000 caracteres."),
       items: z.array(
         z.object({
           armament_id: z.string(),
@@ -91,7 +91,7 @@ function buildArmamentLoanSchema(mode: "create" | "edit") {
           context.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["loaned_at"],
-            message: "Informe a data e hora do emprestimo.",
+            message: "Informe a data e hora do empréstimo.",
           });
         }
 
@@ -99,7 +99,7 @@ function buildArmamentLoanSchema(mode: "create" | "edit") {
           context.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["items"],
-            message: "Adicione ao menos um item ao emprestimo.",
+            message: "Adicione ao menos um item ao empréstimo.",
           });
         }
       }
@@ -113,7 +113,7 @@ function buildArmamentLoanSchema(mode: "create" | "edit") {
           code: z.ZodIssueCode.custom,
           path: ["expected_return_at"],
           message:
-            "A previsao de devolucao deve ser igual ou posterior ao emprestimo.",
+            "A previsao de devolução deve ser igual ou posterior ao empréstimo.",
         });
       }
 
@@ -345,13 +345,13 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
       <CardHeader>
         <CardTitle>
           {mode === "create"
-            ? "Novo emprestimo de armamento"
-            : "Editar emprestimo de armamento"}
+            ? "Novo empréstimo de armamento"
+            : "Editar empréstimo de armamento"}
         </CardTitle>
         <CardDescription>
           {mode === "create"
-            ? "Cadastre o policial, o contexto do emprestimo e os itens emprestados."
-            : "Atualize apenas os dados do cabecalho. Itens e devolucoes seguem fluxo proprio."}
+            ? "Cadastre o policial, o contexto do empréstimo e os itens emprestados."
+            : "Atualize apenas os dados do cabecalho. Itens e devolucoes seguem fluxo próprio."}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -382,7 +382,7 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                 })}
                 selectedOption={selectedPoliceOfficerOption}
                 placeholder="Selecione o policial"
-                searchPlaceholder="Buscar policial por nome ou matricula"
+                searchPlaceholder="Buscar policial por nome ou matrícula"
                 emptyMessage="Nenhum policial encontrado."
               />
               {errors.police_officer_id ? (
@@ -431,7 +431,7 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label>Previsao de devolucao</Label>
+              <Label>Previsao de devolução</Label>
               <Input
                 type="datetime-local"
                 {...register("expected_return_at")}
@@ -476,7 +476,7 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
               <Label>Finalidade</Label>
               <Textarea
                 rows={3}
-                placeholder="Descreva a finalidade do emprestimo."
+                placeholder="Descreva a finalidade do empréstimo."
                 {...register("purpose")}
               />
               {errors.purpose ? (
@@ -488,10 +488,10 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
 
             {mode === "edit" ? (
               <div className="space-y-2 md:col-span-2">
-                <Label>Observacoes de retorno</Label>
+                <Label>Observações de retorno</Label>
                 <Textarea
                   rows={3}
-                  placeholder="Campo opcional para observacoes administrativas."
+                  placeholder="Campo opcional para observações administrativas."
                   {...register("return_notes")}
                 />
               </div>
@@ -506,11 +506,11 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-lg font-semibold text-slate-900">
-                      Itens do emprestimo
+                      Itens do empréstimo
                     </h2>
                     <p className="text-sm text-slate-500">
-                      Informe uma unidade ou um lote por item. A API valida se a
-                      unidade ja esta emprestada ou se o lote ainda tem saldo.
+                      Informe uma unidade ou um lote por item. A API válida se a
+                      unidade já esta emprestada ou se o lote ainda tem saldo.
                     </p>
                   </div>
                   <Button
@@ -532,8 +532,8 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                 </div>
 
                 <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-                  Ainda nao existe endpoint no backend para listar unidades e
-                  lotes disponiveis no formulario. Por isso, nesta primeira
+                  Ainda não existe endpoint no backend para listar unidades e
+                  lotes disponíveis no formulario. Por isso, nesta primeira
                   versao o preenchimento usa o ID da unidade ou do lote, e a API
                   confirma disponibilidade, vencimento e subunidade.
                 </div>
@@ -670,7 +670,7 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                                 {...register(`items.${index}.armament_unit_id`)}
                               />
                               <p className="text-xs text-slate-500">
-                                A API bloqueia unidade ja emprestada, vencida ou
+                                A API bloqueia unidade já emprestada, vencida ou
                                 vinculada a outro armamento.
                               </p>
                               {errors.items?.[index]?.armament_unit_id ? (
@@ -688,8 +688,8 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                                 {...register(`items.${index}.armament_batch_id`)}
                               />
                               <p className="text-xs text-slate-500">
-                                Para lotes, o backend verifica saldo disponivel
-                                antes de confirmar o emprestimo.
+                                Para lotes, o backend verifica saldo disponível
+                                antes de confirmar o empréstimo.
                               </p>
                               {errors.items?.[index]?.armament_batch_id ? (
                                 <p className="text-sm text-destructive">
@@ -711,15 +711,15 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                 Itens emprestados
               </h2>
               <p className="mt-1 text-sm text-slate-500">
-                Os itens existentes nao sao alterados aqui. Para registrar
-                devolucao total ou parcial, use o fluxo dedicado de retorno.
+                Os itens existentes não sao alterados aqui. Para registrar
+                devolução total ou parcial, use o fluxo dedicado de retorno.
               </p>
               <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200/70 bg-white">
                 <table className="min-w-full text-left text-sm">
                   <thead className="bg-slate-50 text-slate-500">
                     <tr>
                       <th className="px-4 py-3 font-medium">Armamento</th>
-                      <th className="px-4 py-3 font-medium">Referencia</th>
+                      <th className="px-4 py-3 font-medium">Referência</th>
                       <th className="px-4 py-3 font-medium">Quantidade</th>
                     </tr>
                   </thead>
@@ -748,7 +748,7 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                 <div className="mt-4">
                   <Button asChild variant="outline">
                     <Link href={`/armament-loans/${loan.id}/return`}>
-                      Ir para devolucao parcial
+                      Ir para devolução parcial
                     </Link>
                   </Button>
                 </div>
@@ -766,8 +766,8 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
               {isPending
                 ? "Salvando..."
                 : mode === "create"
-                  ? "Criar emprestimo"
-                  : "Salvar alteracoes"}
+                  ? "Criar empréstimo"
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

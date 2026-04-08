@@ -20,7 +20,7 @@ export function ArmamentSizeCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar tamanhos de
+            Você precisa da permissão `create` para cadastrar tamanhos de
             armamento.
           </CardDescription>
         </CardHeader>
@@ -39,7 +39,7 @@ export function ArmamentSizeCreatePage() {
             Novo tamanho de armamento
           </h1>
           <p className="text-sm text-slate-500">
-            Cadastre um novo tamanho administrativo para uso no modulo de
+            Cadastre um novo tamanho administrativo para uso no módulo de
             armamentos.
           </p>
         </div>

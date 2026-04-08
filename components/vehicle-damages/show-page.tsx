@@ -30,12 +30,12 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "Nao informado";
+  return date ? date.slice(0, 10) : "Não informado";
 }
 
 function formatCurrency(value?: number | null) {
   if (value === null || value === undefined) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.NumberFormat("pt-BR", {
@@ -55,7 +55,7 @@ export function VehicleDamageShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar danos de veiculos.
+            Você precisa da permissão `view` para visualizar danos de veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -72,7 +72,7 @@ export function VehicleDamageShowPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar dano</CardTitle>
           <CardDescription>
-            Os dados do dano nao estao disponiveis no momento.
+            Os dados do dano não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -112,9 +112,9 @@ export function VehicleDamageShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Veiculo e contexto</CardTitle>
+            <CardTitle>Veículo e contexto</CardTitle>
             <CardDescription>
-              Identificacao do veiculo e do evento operacional associado.
+              Identificação do veículo e do evento operacional associado.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -122,7 +122,7 @@ export function VehicleDamageShowPage() {
               <CarFront className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Veiculo
+                  Veículo
                 </p>
                 <p className="text-sm text-slate-700">
                   {damage.vehicle?.license_plate ?? `#${damage.vehicle_id}`}
@@ -175,13 +175,13 @@ export function VehicleDamageShowPage() {
                   Momento
                 </p>
                 <p className="text-sm text-slate-700">
-                  {damage.detection_moment_label ?? "Nao informado"}
+                  {damage.detection_moment_label ?? "Não informado"}
                 </p>
               </div>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Descricao
+                Descrição
               </p>
               <p className="mt-1 text-sm text-slate-700">{damage.description}</p>
             </div>
@@ -192,7 +192,7 @@ export function VehicleDamageShowPage() {
           <CardHeader>
             <CardTitle>Responsabilidade e reparo</CardTitle>
             <CardDescription>
-              Responsavel identificado e andamento do reparo.
+              Responsável identificado e andamento do reparo.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -200,19 +200,19 @@ export function VehicleDamageShowPage() {
               <User2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Responsavel interno
+                  Responsável interno
                 </p>
                 <p className="text-sm text-slate-700">
-                  {damage.responsible_user?.name ?? "Nao informado"}
+                  {damage.responsible_user?.name ?? "Não informado"}
                 </p>
               </div>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Responsavel externo
+                Responsável externo
               </p>
               <p className="text-sm text-slate-700">
-                {damage.responsible_external_name ?? "Nao informado"}
+                {damage.responsible_external_name ?? "Não informado"}
               </p>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -301,10 +301,10 @@ export function VehicleDamageShowPage() {
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Observacoes
+                Observações
               </p>
               <p className="mt-1 text-sm text-slate-700">
-                {damage.notes ?? "Nenhuma observacao informada."}
+                {damage.notes ?? "Nenhuma observação informada."}
               </p>
             </div>
           </CardContent>

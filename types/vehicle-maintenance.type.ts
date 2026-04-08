@@ -111,7 +111,7 @@ export const vehicleMaintenanceTypeOptions: Array<{
 }> = [
   { value: "preventive", label: "Preventiva" },
   { value: "corrective", label: "Corretiva" },
-  { value: "inspection", label: "Inspecao" },
+  { value: "inspection", label: "Inspeção" },
   { value: "other", label: "Outro" },
 ];
 
@@ -120,7 +120,7 @@ export const vehicleMaintenanceStatusOptions: Array<{
   label: string;
 }> = [
   { value: "in_progress", label: "Em andamento" },
-  { value: "completed", label: "Concluida" },
+  { value: "completed", label: "Concluída" },
   { value: "cancelled", label: "Cancelada" },
 ];
 

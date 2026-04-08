@@ -18,7 +18,7 @@ export function NotificationResponsibilityCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `notification-responsibilities.create` para cadastrar responsabilidades de notificacao.
+            Você precisa de `administrator` e `notification-responsibilities.create` para cadastrar responsabilidades de notificação.
           </CardDescription>
         </CardHeader>
       </Card>

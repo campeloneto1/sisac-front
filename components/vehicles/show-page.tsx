@@ -86,7 +86,7 @@ export function VehicleShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar veiculos.
+            Você precisa da permissão `view` para visualizar veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -101,9 +101,9 @@ export function VehicleShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar veiculo</CardTitle>
+          <CardTitle>Erro ao carregar veículo</CardTitle>
           <CardDescription>
-            Os dados do veiculo nao estao disponiveis no momento.
+            Os dados do veículo não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -126,19 +126,19 @@ export function VehicleShowPage() {
               {vehicle.operational_status_label ?? "Sem status"}
             </Badge>
             <Badge variant={vehicle.is_available ? "success" : "warning"}>
-              {vehicle.is_available ? "Disponivel" : "Indisponivel"}
+              {vehicle.is_available ? "Disponível" : "Indisponivel"}
             </Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            {vehicle.vehicle_type?.name ?? "Tipo nao informado"} •{" "}
-            {vehicle.variant?.name ?? "Modelo nao informado"} •{" "}
+            {vehicle.vehicle_type?.name ?? "Tipo não informado"} •{" "}
+            {vehicle.variant?.name ?? "Modelo não informado"} •{" "}
             {vehicle.subunit?.abbreviation ??
               vehicle.subunit?.name ??
               "Sem subunidade"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             Visao consolidada do cadastro operacional, identificadores, estado
-            atual e vinculos administrativos do veiculo.
+            atual e vínculos administrativos do veículo.
           </p>
         </div>
 
@@ -152,9 +152,9 @@ export function VehicleShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Identificacao e operacao</CardTitle>
+            <CardTitle>Identificação e operação</CardTitle>
             <CardDescription>
-              Dados essenciais do veiculo e contexto de uso.
+              Dados essenciais do veículo e contexto de uso.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -173,7 +173,7 @@ export function VehicleShowPage() {
                   Placa especial
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
-                  {vehicle.special_plate ?? "Nao informada"}
+                  {vehicle.special_plate ?? "Não informada"}
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -181,7 +181,7 @@ export function VehicleShowPage() {
                   RENAVAM
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
-                  {vehicle.renavam ?? "Nao informado"}
+                  {vehicle.renavam ?? "Não informado"}
                 </p>
               </div>
             </div>
@@ -192,7 +192,7 @@ export function VehicleShowPage() {
                   Chassis
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
-                  {vehicle.chassis ?? "Nao informado"}
+                  {vehicle.chassis ?? "Não informado"}
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -200,7 +200,7 @@ export function VehicleShowPage() {
                   Posse
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
-                  {vehicle.ownership_type_label ?? "Nao informada"}
+                  {vehicle.ownership_type_label ?? "Não informada"}
                 </p>
               </div>
             </div>
@@ -209,14 +209,14 @@ export function VehicleShowPage() {
               <Car className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Classificacao
+                  Classificação
                 </p>
                 <p className="text-sm text-slate-700">
-                  {vehicle.vehicle_type?.name ?? "Tipo nao informado"} •{" "}
+                  {vehicle.vehicle_type?.name ?? "Tipo não informado"} •{" "}
                   {vehicle.variant?.brand?.name
                     ? `${vehicle.variant.brand.name} • `
                     : ""}
-                  {vehicle.variant?.name ?? "Modelo nao informado"}
+                  {vehicle.variant?.name ?? "Modelo não informado"}
                 </p>
               </div>
             </div>
@@ -227,7 +227,7 @@ export function VehicleShowPage() {
           <CardHeader>
             <CardTitle>Quilometragem e controle</CardTitle>
             <CardDescription>
-              Indicadores de uso, manutencao e disponibilidade.
+              Indicadores de uso, manutenção e disponibilidade.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -250,7 +250,7 @@ export function VehicleShowPage() {
                   Troca de oleo
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
-                  {vehicle.oil_change_km?.toLocaleString("pt-BR") ?? "Nao informada"}
+                  {vehicle.oil_change_km?.toLocaleString("pt-BR") ?? "Não informada"}
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -258,7 +258,7 @@ export function VehicleShowPage() {
                   Revisao por KM
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
-                  {vehicle.revision_km?.toLocaleString("pt-BR") ?? "Nao informada"}
+                  {vehicle.revision_km?.toLocaleString("pt-BR") ?? "Não informada"}
                 </p>
               </div>
             </div>
@@ -273,7 +273,7 @@ export function VehicleShowPage() {
                   <p className="text-sm text-slate-700">
                     {vehicle.revision_date
                       ? vehicle.revision_date.slice(0, 10)
-                      : "Nao informada"}
+                      : "Não informada"}
                   </p>
                 </div>
               </div>
@@ -286,7 +286,7 @@ export function VehicleShowPage() {
                   <p className="text-sm text-slate-700">
                     {vehicle.decommission_date
                       ? vehicle.decommission_date.slice(0, 10)
-                      : "Nao informada"}
+                      : "Não informada"}
                   </p>
                 </div>
               </div>
@@ -298,7 +298,7 @@ export function VehicleShowPage() {
                   Blindado
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
-                  {vehicle.is_armored ? "Sim" : "Nao"}
+                  {vehicle.is_armored ? "Sim" : "Não"}
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -306,15 +306,15 @@ export function VehicleShowPage() {
                   Organico
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
-                  {vehicle.is_organic ? "Sim" : "Nao"}
+                  {vehicle.is_organic ? "Sim" : "Não"}
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Disponivel para viagem
+                  Disponível para viagem
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
-                  {vehicle.is_available_for_trip ? "Sim" : "Nao"}
+                  {vehicle.is_available_for_trip ? "Sim" : "Não"}
                 </p>
               </div>
             </div>
@@ -327,7 +327,7 @@ export function VehicleShowPage() {
           <CardHeader>
             <CardTitle>Contexto atual</CardTitle>
             <CardDescription>
-              Responsavel, subunidade e vinculacoes administrativas.
+              Responsável, subunidade e vinculacoes administrativas.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -338,7 +338,7 @@ export function VehicleShowPage() {
               <p className="mt-1 text-sm text-slate-700">
                 {vehicle.subunit?.abbreviation
                   ? `${vehicle.subunit.abbreviation} • ${vehicle.subunit.name}`
-                  : vehicle.subunit?.name ?? "Nao informada"}
+                  : vehicle.subunit?.name ?? "Não informada"}
               </p>
             </div>
 
@@ -347,27 +347,27 @@ export function VehicleShowPage() {
                 Cor
               </p>
               <p className="mt-1 text-sm text-slate-700">
-                {vehicle.color?.name ?? "Nao informada"}
+                {vehicle.color?.name ?? "Não informada"}
               </p>
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Responsavel atual
+                Responsável atual
               </p>
               <p className="mt-1 text-sm text-slate-700">
                 {vehicle.assigned_to
                   ? `${vehicle.assigned_to.name} (${vehicle.assigned_to.email})`
-                  : "Nao atribuido"}
+                  : "Não atribuido"}
               </p>
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Observacoes
+                Observações
               </p>
               <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">
-                {vehicle.notes || "Nao informadas"}
+                {vehicle.notes || "Não informadas"}
               </p>
             </div>
           </CardContent>
@@ -377,7 +377,7 @@ export function VehicleShowPage() {
           <CardHeader>
             <CardTitle>Auditoria</CardTitle>
             <CardDescription>
-              Historico basico de criacao e ultima atualizacao.
+              Histórico básico de criação e última atualização.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -390,7 +390,7 @@ export function VehicleShowPage() {
                 <p className="text-sm text-slate-700">
                   {vehicle.creator
                     ? `${vehicle.creator.name} (${vehicle.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -404,7 +404,7 @@ export function VehicleShowPage() {
                 <p className="text-sm text-slate-700">
                   {vehicle.updater
                     ? `${vehicle.updater.name} (${vehicle.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -416,8 +416,8 @@ export function VehicleShowPage() {
                   Flags derivadas
                 </p>
                 <p className="text-sm text-slate-700">
-                  {vehicle.is_assigned ? "Atribuido" : "Nao atribuido"} •{" "}
-                  {vehicle.is_available ? "Disponivel" : "Indisponivel"}
+                  {vehicle.is_assigned ? "Atribuido" : "Não atribuido"} •{" "}
+                  {vehicle.is_available ? "Disponível" : "Indisponivel"}
                 </p>
               </div>
             </div>
@@ -440,10 +440,10 @@ export function VehicleShowPage() {
       {custodyPermissions.canViewAny ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Historico de cautelas</CardTitle>
+            <CardTitle>Histórico de cautelas</CardTitle>
             <CardDescription>
-              Relacao das cautelas registradas para este veiculo, com dados
-              gerais de responsavel, periodo e kilometragem.
+              Relacao das cautelas registradas para este veículo, com dados
+              gerais de responsável, período e kilometragem.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -455,14 +455,14 @@ export function VehicleShowPage() {
             ) : custodiesQuery.isError ? (
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
                 <p className="text-sm text-slate-700">
-                  Nao foi possivel carregar o historico de cautelas deste
-                  veiculo agora.
+                  Não foi possível carregar o histórico de cautelas deste
+                  veículo agora.
                 </p>
               </div>
             ) : !custodiesQuery.data?.data.length ? (
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
                 <p className="text-sm text-slate-700">
-                  Nenhuma cautela foi registrada para este veiculo ate o
+                  Nenhuma cautela foi registrada para este veículo ate o
                   momento.
                 </p>
               </div>
@@ -472,9 +472,9 @@ export function VehicleShowPage() {
                   <table className="min-w-full text-left text-sm">
                     <thead className="bg-slate-50 text-slate-500">
                       <tr>
-                        <th className="px-4 py-3 font-medium">Responsavel</th>
-                        <th className="px-4 py-3 font-medium">Inicio</th>
-                        <th className="px-4 py-3 font-medium">Devolucao</th>
+                        <th className="px-4 py-3 font-medium">Responsável</th>
+                        <th className="px-4 py-3 font-medium">Início</th>
+                        <th className="px-4 py-3 font-medium">Devolução</th>
                         <th className="px-4 py-3 font-medium">Documento</th>
                         <th className="px-4 py-3 font-medium">Status</th>
                         <th className="px-4 py-3 font-medium text-right">
@@ -498,7 +498,7 @@ export function VehicleShowPage() {
                                 "App\\Models\\PoliceOfficer"
                                   ? "Policial"
                                   : custody.custodian_type === "App\\Models\\User"
-                                    ? "Usuario"
+                                    ? "Usuário"
                                     : "Externo"}
                               </p>
                             </div>
@@ -544,10 +544,10 @@ export function VehicleShowPage() {
       {maintenancePermissions.canViewAny ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Historico de manutencoes</CardTitle>
+            <CardTitle>Histórico de manutencoes</CardTitle>
             <CardDescription>
-              Relacao das manutencoes registradas para este veiculo, com
-              oficina, periodo, custos e status.
+              Relacao das manutencoes registradas para este veículo, com
+              oficina, período, custos e status.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -559,14 +559,14 @@ export function VehicleShowPage() {
             ) : maintenancesQuery.isError ? (
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
                 <p className="text-sm text-slate-700">
-                  Nao foi possivel carregar o historico de manutencoes deste
-                  veiculo agora.
+                  Não foi possível carregar o histórico de manutencoes deste
+                  veículo agora.
                 </p>
               </div>
             ) : !maintenancesQuery.data?.data.length ? (
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
                 <p className="text-sm text-slate-700">
-                  Nenhuma manutencao foi registrada para este veiculo ate o
+                  Nenhuma manutenção foi registrada para este veículo ate o
                   momento.
                 </p>
               </div>
@@ -615,7 +615,7 @@ export function VehicleShowPage() {
                             )}
                           </td>
                           <td className="px-4 py-4 text-slate-600">
-                            {maintenance.workshop?.name ?? "Nao informada"}
+                            {maintenance.workshop?.name ?? "Não informada"}
                           </td>
                           <td className="px-4 py-4">
                             <Badge
@@ -649,10 +649,10 @@ export function VehicleShowPage() {
       {loanPermissions.canViewAny ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Historico de emprestimos</CardTitle>
+            <CardTitle>Histórico de empréstimos</CardTitle>
             <CardDescription>
-              Relacao dos emprestimos ja registrados para este veiculo, com
-              dados gerais de tomador, periodo e kilometragem.
+              Relacao dos empréstimos já registrados para este veículo, com
+              dados gerais de tomador, período e kilometragem.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -664,14 +664,14 @@ export function VehicleShowPage() {
             ) : loansQuery.isError ? (
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
                 <p className="text-sm text-slate-700">
-                  Nao foi possivel carregar o historico de emprestimos deste
-                  veiculo agora.
+                  Não foi possível carregar o histórico de empréstimos deste
+                  veículo agora.
                 </p>
               </div>
             ) : !loansQuery.data?.data.length ? (
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
                 <p className="text-sm text-slate-700">
-                  Nenhum emprestimo foi registrado para este veiculo ate o
+                  Nenhum empréstimo foi registrado para este veículo ate o
                   momento.
                 </p>
               </div>
@@ -683,7 +683,7 @@ export function VehicleShowPage() {
                       <tr>
                         <th className="px-4 py-3 font-medium">Tomador</th>
                         <th className="px-4 py-3 font-medium">Saida</th>
-                        <th className="px-4 py-3 font-medium">Devolucao</th>
+                        <th className="px-4 py-3 font-medium">Devolução</th>
                         <th className="px-4 py-3 font-medium">KM</th>
                         <th className="px-4 py-3 font-medium">Status</th>
                         <th className="px-4 py-3 font-medium text-right">
@@ -707,7 +707,7 @@ export function VehicleShowPage() {
                                 "App\\Models\\PoliceOfficer"
                                   ? "Policial"
                                   : loan.borrower_type === "App\\Models\\User"
-                                    ? "Usuario"
+                                    ? "Usuário"
                                     : "Externo"}
                               </p>
                             </div>
@@ -720,7 +720,7 @@ export function VehicleShowPage() {
                           </td>
                           <td className="px-4 py-4 text-slate-600">
                             <p>
-                              Inicio: {loan.start_km.toLocaleString("pt-BR")}
+                              Início: {loan.start_km.toLocaleString("pt-BR")}
                             </p>
                             <p>
                               Final:{" "}

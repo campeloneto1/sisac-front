@@ -63,13 +63,13 @@ export function VehicleRentalsTable({ rentals }: VehicleRentalsTableProps) {
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Veiculo</th>
+                <th className="px-4 py-3 font-medium">Veículo</th>
                 <th className="px-4 py-3 font-medium">Locadora</th>
                 <th className="px-4 py-3 font-medium">Contrato</th>
-                <th className="px-4 py-3 font-medium">Periodo</th>
+                <th className="px-4 py-3 font-medium">Período</th>
                 <th className="px-4 py-3 font-medium">Custos</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -89,7 +89,7 @@ export function VehicleRentalsTable({ rentals }: VehicleRentalsTableProps) {
                     {rental.company?.trade_name || rental.company?.name || "-"}
                   </td>
                   <td className="px-4 py-4 text-slate-600">
-                    {rental.contract_number ?? "Sem numero"}
+                    {rental.contract_number ?? "Sem número"}
                   </td>
                   <td className="px-4 py-4 text-slate-600">
                     <p>{formatDate(rental.contract_start_date)}</p>
@@ -144,12 +144,12 @@ export function VehicleRentalsTable({ rentals }: VehicleRentalsTableProps) {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir locacao</DialogTitle>
+            <DialogTitle>Excluir locação</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir a locacao do veiculo{" "}
+              Tem certeza que deseja excluir a locação do veículo{" "}
               {rentalToDelete?.vehicle?.license_plate ??
                 `#${rentalToDelete?.vehicle_id}`}
-              ? Essa acao nao podera ser desfeita.
+              ? Essa ação não podera ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -168,7 +168,7 @@ export function VehicleRentalsTable({ rentals }: VehicleRentalsTableProps) {
             >
               {deleteMutation.isPending
                 ? "Excluindo..."
-                : "Confirmar exclusao"}
+                : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

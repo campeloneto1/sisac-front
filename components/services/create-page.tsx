@@ -17,7 +17,7 @@ export function ServiceCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar servicos.
+            Você precisa da permissão `create` para cadastrar serviços.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -30,7 +30,7 @@ export function ServiceCreatePage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O cadastro de servicos depende da subunidade ativa.
+            O cadastro de serviços depende da subunidade ativa.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -45,10 +45,10 @@ export function ServiceCreatePage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Novo servico
+            Novo serviço
           </h1>
           <p className="text-sm text-slate-500">
-            Registre a solicitacao inicial do servico para a subunidade ativa.
+            Registre a solicitação inicial do serviço para a subunidade ativa.
           </p>
         </div>
       </div>

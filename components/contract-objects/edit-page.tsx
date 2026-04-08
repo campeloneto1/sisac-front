@@ -21,7 +21,7 @@ export function ContractObjectEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `contract-objects.update` para editar objetos de contrato.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `contract-objects.update` para editar objetos de contrato.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function ContractObjectEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar objeto de contrato</CardTitle>
-          <CardDescription>O objeto de contrato nao pode ser editado agora.</CardDescription>
+          <CardDescription>O objeto de contrato não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

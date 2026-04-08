@@ -52,7 +52,7 @@ export function WorkshopsListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `manager` e `workshops.viewAny` para visualizar
+            Você precisa de `manager` e `workshops.viewAny` para visualizar
             oficinas.
           </CardDescription>
         </CardHeader>
@@ -70,7 +70,7 @@ export function WorkshopsListPage() {
           <div>
             <h1 className="font-display text-3xl text-slate-900">Oficinas</h1>
             <p className="text-sm text-slate-500">
-              Gerencie oficinas e prestadores de servicos usados na manutencao
+              Gerencie oficinas e prestadores de serviços usados na manutenção
               da frota.
             </p>
           </div>
@@ -132,7 +132,7 @@ export function WorkshopsListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar oficinas</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

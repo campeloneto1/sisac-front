@@ -44,7 +44,7 @@ export function VariantsListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `variants.viewAny` para visualizar
+            Você precisa de `administrator` e `variants.viewAny` para visualizar
             modelos.
           </CardDescription>
         </CardHeader>
@@ -102,7 +102,7 @@ export function VariantsListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar modelos</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

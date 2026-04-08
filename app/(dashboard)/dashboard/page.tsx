@@ -5,16 +5,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 const highlights = [
   {
     title: "Area autenticada pronta",
-    description: "Shell com sidebar, header global, menu do usuario e area para CRUDs.",
+    description: "Shell com sidebar, header global, menu do usuário e area para CRUDs.",
     icon: ShieldCheck,
   },
   {
     title: "Subunidade ativa",
-    description: "Troca global com invalidacao de cache e preparacao para header obrigatorio.",
+    description: "Troca global com invalidação de cache e preparação para header obrigatório.",
     icon: Building2,
   },
   {
-    title: "Permissoes centralizadas",
+    title: "Permissões centralizadas",
     description: "Base pronta para `can(user, action, resource)` e protecao reativa da interface.",
     icon: Workflow,
   },
@@ -39,8 +39,8 @@ export default function DashboardPage() {
                 Estrutura pronta para login, dashboard autenticado e crescimento por entidades.
               </h1>
               <p className="max-w-2xl text-sm text-slate-300 md:text-base">
-                O projeto ja nasce com shell administrativo, permissao centralizada, contexto de subunidade
-                e uma experiencia visual consistente para evoluirmos os CRUDs com seguranca.
+                O projeto já nasce com shell administrativo, permissão centralizada, contexto de subunidade
+                e uma experiencia visual consistente para evoluirmos os CRUDs com segurança.
               </p>
             </div>
           </div>
@@ -48,7 +48,7 @@ export default function DashboardPage() {
             <p className="text-sm text-slate-300">Proximos passos naturais</p>
             <ul className="mt-4 space-y-3 text-sm text-slate-100">
               <li>Conectar login ao backend Laravel.</li>
-              <li>Popular permissoes reais via Policies/RBAC.</li>
+              <li>Popular permissões reais via Policies/RBAC.</li>
               <li>Criar o primeiro recurso dentro de `/app/(dashboard)`.</li>
               <li>Substituir dados mockados por services reais.</li>
             </ul>
@@ -77,14 +77,14 @@ export default function DashboardPage() {
           <CardHeader>
             <CardTitle>Estrutura pensada para o seu fluxo</CardTitle>
             <CardDescription>
-              Login e area autenticada ja estao separadas para facilitar middleware, layouts e componentes de
+              Login e area autenticada já estão separadas para facilitar middleware, layouts e componentes de
               dominio.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3 text-sm text-slate-600">
             <p>Use `/login` para a area publica e `/dashboard` como casca autenticada principal.</p>
             <p>
-              O contexto global de subunidade e o helper de permissao ja ficam disponiveis para qualquer CRUD
+              O contexto global de subunidade e o helper de permissão já ficam disponíveis para qualquer CRUD
               que criarmos em seguida.
             </p>
           </CardContent>
@@ -94,12 +94,12 @@ export default function DashboardPage() {
           <CardHeader>
             <CardTitle>Pronto para ShadCN</CardTitle>
             <CardDescription>
-              Os componentes base seguem o estilo do ecossistema ShadCN e o `components.json` ja foi adicionado.
+              Os componentes base seguem o estilo do ecossistema ShadCN e o `components.json` já foi adicionado.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3 text-sm text-slate-700">
             <p>Podemos continuar adicionando componentes com a mesma base visual sem retrabalho estrutural.</p>
-            <p>A proxima entidade ja pode nascer em cima de hooks, services e tipagem forte.</p>
+            <p>A proxima entidade já pode nascer em cima de hooks, services e tipagem forte.</p>
           </CardContent>
         </Card>
       </section>

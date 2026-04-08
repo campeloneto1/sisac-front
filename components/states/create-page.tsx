@@ -15,7 +15,7 @@ export function StateCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `states.create` para cadastrar estados.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `states.create` para cadastrar estados.</CardDescription>
         </CardHeader>
       </Card>
     );

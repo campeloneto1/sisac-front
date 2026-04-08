@@ -18,7 +18,7 @@ export function PoliceOfficerPublicationCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar publicacoes.
+            Você precisa da permissão `create` para cadastrar publicações.
           </CardDescription>
         </CardHeader>
       </Card>

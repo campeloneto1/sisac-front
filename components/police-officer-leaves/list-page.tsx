@@ -48,7 +48,7 @@ export function PoliceOfficerLeavesListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `viewAny` para visualizar afastamentos.</CardDescription>
+          <CardDescription>Você precisa da permissão `viewAny` para visualizar afastamentos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -59,7 +59,7 @@ export function PoliceOfficerLeavesListPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="font-display text-3xl text-slate-900">Afastamentos</h1>
-          <p className="text-sm text-slate-500">Gerencie os afastamentos dos policiais com acompanhamento de tipo, periodo, status e COPEM.</p>
+          <p className="text-sm text-slate-500">Gerencie os afastamentos dos policiais com acompanhamento de tipo, período, status e COPEM.</p>
         </div>
 
         {permissions.canCreate ? (
@@ -125,7 +125,7 @@ export function PoliceOfficerLeavesListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar afastamentos</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !policeOfficerLeavesQuery.data?.data.length ? (

@@ -38,13 +38,13 @@ export function PublicationTypesTable({ publicationTypes }: PublicationTypesTabl
                   {publicationType.nature?.label ?? "Neutra"}
                 </Badge>
                 <Badge variant={publicationType.generates_points ? "info" : "secondary"}>
-                  {publicationType.generates_points ? "Gera pontos" : "Nao gera pontos"}
+                  {publicationType.generates_points ? "Gera pontos" : "Não gera pontos"}
                 </Badge>
               </div>
 
               <div className="space-y-1 text-sm text-slate-600">
                 <p>Slug: {publicationType.slug}</p>
-                <p>{publicationType.description || "Sem descricao cadastrada."}</p>
+                <p>{publicationType.description || "Sem descrição cadastrada."}</p>
               </div>
             </div>
 

@@ -49,37 +49,37 @@ import { Textarea } from "@/components/ui/textarea";
 
 const vehicleFuelingFormSchema = z
   .object({
-    vehicle_id: z.string().min(1, "Selecione um veiculo."),
+    vehicle_id: z.string().min(1, "Selecione um veículo."),
     context_type: z.string().min(1, "Selecione o contexto do abastecimento."),
     context_id: z.string().min(1, "Selecione o registro relacionado."),
     fueling_date: z.string().min(1, "Informe a data do abastecimento."),
     fueling_time: z.string(),
-    km: z.coerce.number().int().min(0, "Informe uma quilometragem valida."),
+    km: z.coerce.number().int().min(0, "Informe uma quilometragem válida."),
     fuel_type: z.string().min(1, "Selecione o combustivel."),
     liters: z.coerce.number().min(0.01, "Informe a quantidade de litros."),
     price_per_liter: z.union([z.coerce.number().min(0), z.literal("")]),
     total_cost: z.union([z.coerce.number().min(0), z.literal("")]),
     gas_station: z
       .string()
-      .max(100, "O posto deve ter no maximo 100 caracteres."),
+      .max(100, "O posto deve ter no máximo 100 caracteres."),
     gas_station_city: z
       .string()
-      .max(100, "A cidade do posto deve ter no maximo 100 caracteres."),
+      .max(100, "A cidade do posto deve ter no máximo 100 caracteres."),
     fueled_by_user_id: z.string(),
     invoice_number: z
       .string()
-      .max(50, "O numero do cupom deve ter no maximo 50 caracteres."),
+      .max(50, "O número do cupom deve ter no máximo 50 caracteres."),
     is_full_tank: z.boolean(),
     notes: z
       .string()
-      .max(1000, "As observacoes devem ter no maximo 1000 caracteres."),
+      .max(1000, "As observações devem ter no máximo 1000 caracteres."),
   })
   .superRefine((values, ctx) => {
     if (values.fueling_date && values.fueling_date > new Date().toISOString().slice(0, 10)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["fueling_date"],
-        message: "A data do abastecimento nao pode ser futura.",
+        message: "A data do abastecimento não pode ser futura.",
       });
     }
   });
@@ -235,7 +235,7 @@ export function VehicleFuelingForm({
         )
         .map((loan) => ({
           value: String(loan.id),
-          label: `${loan.vehicle?.license_plate ?? `#${loan.vehicle_id}`} • ${loan.status_label ?? "Emprestimo"}`,
+          label: `${loan.vehicle?.license_plate ?? `#${loan.vehicle_id}`} • ${loan.status_label ?? "Empréstimo"}`,
         }));
     }
 
@@ -261,7 +261,7 @@ export function VehicleFuelingForm({
         )
         .map((maintenance) => ({
           value: String(maintenance.id),
-          label: `${maintenance.vehicle?.license_plate ?? `#${maintenance.vehicle_id}`} • ${maintenance.maintenance_type_label ?? "Manutencao"}`,
+          label: `${maintenance.vehicle?.license_plate ?? `#${maintenance.vehicle_id}`} • ${maintenance.maintenance_type_label ?? "Manutenção"}`,
         }));
     }
 
@@ -330,7 +330,7 @@ export function VehicleFuelingForm({
           {mode === "create" ? "Novo abastecimento" : "Editar abastecimento"}
         </CardTitle>
         <CardDescription>
-          Registre abastecimentos vinculados a emprestimos, cautelas ou
+          Registre abastecimentos vinculados a empréstimos, cautelas ou
           manutencoes da frota.
         </CardDescription>
       </CardHeader>
@@ -338,7 +338,7 @@ export function VehicleFuelingForm({
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label>Veiculo</Label>
+              <Label>Veículo</Label>
               <Select
                 value={selectedVehicleId || "none"}
                 onValueChange={(value) => {
@@ -353,10 +353,10 @@ export function VehicleFuelingForm({
                 }}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione um veiculo" />
+                  <SelectValue placeholder="Selecione um veículo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Selecione um veiculo</SelectItem>
+                  <SelectItem value="none">Selecione um veículo</SelectItem>
                   {(vehiclesQuery.data?.data ?? []).map((vehicle) => (
                     <SelectItem key={vehicle.id} value={String(vehicle.id)}>
                       {vehicle.license_plate}
@@ -440,7 +440,7 @@ export function VehicleFuelingForm({
             </div>
 
             <div className="space-y-2">
-              <Label>Responsavel pelo abastecimento</Label>
+              <Label>Responsável pelo abastecimento</Label>
               <Select
                 value={selectedFueledByUserId || "none"}
                 onValueChange={(value) =>
@@ -454,10 +454,10 @@ export function VehicleFuelingForm({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione o usuario" />
+                  <SelectValue placeholder="Selecione o usuário" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Nao informado</SelectItem>
+                  <SelectItem value="none">Não informado</SelectItem>
                   {(usersQuery.data?.data ?? []).map((user) => (
                     <SelectItem key={user.id} value={String(user.id)}>
                       {user.name}
@@ -577,7 +577,7 @@ export function VehicleFuelingForm({
 
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="invoice_number">Numero do cupom/nota</Label>
+              <Label htmlFor="invoice_number">Número do cupom/nota</Label>
               <Input id="invoice_number" {...register("invoice_number")} />
             </div>
 
@@ -602,11 +602,11 @@ export function VehicleFuelingForm({
           </section>
 
           <section className="space-y-2">
-            <Label htmlFor="notes">Observacoes</Label>
+            <Label htmlFor="notes">Observações</Label>
             <Textarea
               id="notes"
               rows={5}
-              placeholder="Informacoes adicionais sobre o abastecimento"
+              placeholder="Informações adicionais sobre o abastecimento"
               {...register("notes")}
             />
           </section>
@@ -626,7 +626,7 @@ export function VehicleFuelingForm({
                 ? "Salvando..."
                 : mode === "create"
                   ? "Registrar abastecimento"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

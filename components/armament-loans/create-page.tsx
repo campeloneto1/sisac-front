@@ -20,7 +20,7 @@ export function ArmamentLoanCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar emprestimos de
+            Você precisa da permissão `create` para cadastrar empréstimos de
             armamentos.
           </CardDescription>
         </CardHeader>
@@ -36,10 +36,10 @@ export function ArmamentLoanCreatePage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Novo emprestimo de armamento
+            Novo empréstimo de armamento
           </h1>
           <p className="text-sm text-slate-500">
-            Registre cautela ou emprestimo temporario com itens por unidade ou
+            Registre cautela ou empréstimo temporário com itens por unidade ou
             lote.
           </p>
         </div>

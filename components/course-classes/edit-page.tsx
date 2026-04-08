@@ -18,7 +18,7 @@ export function CourseClassEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `update` para editar turmas.</CardDescription>
+          <CardDescription>Você precisa da permissão `update` para editar turmas.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -33,7 +33,7 @@ export function CourseClassEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar turma</CardTitle>
-          <CardDescription>Os dados da turma nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados da turma não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );

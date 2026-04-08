@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 
 const profileSchema = z.object({
   name: z.string().min(3, "O nome precisa ter ao menos 3 caracteres."),
-  email: z.string().email("Informe um e-mail valido."),
+  email: z.string().email("Informe um e-mail válido."),
   phone: z.string().optional(),
 });
 
@@ -118,7 +118,7 @@ export function ProfileForm() {
 
           <div className="md:col-span-2 flex justify-end">
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Salvando..." : "Salvar alteracoes"}
+              {isSubmitting ? "Salvando..." : "Salvar alterações"}
             </Button>
           </div>
         </form>

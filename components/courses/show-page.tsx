@@ -36,7 +36,7 @@ export function CourseShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `view` para visualizar cursos.</CardDescription>
+          <CardDescription>Você precisa da permissão `view` para visualizar cursos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -51,7 +51,7 @@ export function CourseShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar curso</CardTitle>
-          <CardDescription>Os dados do curso nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do curso não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -68,7 +68,7 @@ export function CourseShowPage() {
             <Badge variant="secondary">{course.abbreviation}</Badge>
           </div>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Curso cadastrado na area geral para organizar turmas, disciplinas e historicos formativos dos policiais.
+            Curso cadastrado na area geral para organizar turmas, disciplinas e históricos formativos dos policiais.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export function CourseShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Informacoes gerais</CardTitle>
+            <CardTitle>Informações gerais</CardTitle>
             <CardDescription>Dados basicos do curso.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -107,7 +107,7 @@ export function CourseShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Auditoria</CardTitle>
-            <CardDescription>Informacoes de criacao e atualizacao do registro.</CardDescription>
+            <CardDescription>Informações de criação e atualização do registro.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -115,7 +115,7 @@ export function CourseShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                 <p className="text-sm text-slate-700">
-                  {course.creator ? `${course.creator.name} (${course.creator.email})` : "Nao informado"}
+                  {course.creator ? `${course.creator.name} (${course.creator.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -125,7 +125,7 @@ export function CourseShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
                 <p className="text-sm text-slate-700">
-                  {course.updater ? `${course.updater.name} (${course.updater.email})` : "Nao informado"}
+                  {course.updater ? `${course.updater.name} (${course.updater.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -140,7 +140,7 @@ export function CourseShowPage() {
           <CardHeader>
             <CardTitle>Turmas do curso</CardTitle>
             <CardDescription>
-              Turmas vinculadas a este curso, exibidas no mesmo padrao em tabela dos outros modulos.
+              Turmas vinculadas a este curso, exibidas no mesmo padrao em tabela dos outros módulos.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -152,7 +152,7 @@ export function CourseShowPage() {
               <Skeleton className="h-24 w-full" />
             ) : courseClassesQuery.isError ? (
               <p className="text-sm text-slate-500">
-                Nao foi possivel carregar as turmas vinculadas a este curso.
+                Não foi possível carregar as turmas vinculadas a este curso.
               </p>
             ) : !courseClassesQuery.data?.data.length ? (
               <p className="text-sm text-slate-500">
@@ -165,7 +165,7 @@ export function CourseShowPage() {
             <div className="flex justify-end">
               <Button asChild variant="outline">
                 <Link href={`/course-classes?course_id=${course.id}`}>
-                  Abrir modulo de turmas
+                  Abrir módulo de turmas
                 </Link>
               </Button>
             </div>

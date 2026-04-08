@@ -15,7 +15,7 @@ export function ContractTypeCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `contract-types.create` para cadastrar tipos de contrato.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `contract-types.create` para cadastrar tipos de contrato.</CardDescription>
         </CardHeader>
       </Card>
     );

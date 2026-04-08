@@ -50,7 +50,7 @@ export function PatrimoniesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar patrimonios.
+            Você precisa da permissão `viewAny` para visualizar patrimônios.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -63,7 +63,7 @@ export function PatrimoniesListPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O modulo de patrimonios depende da subunidade ativa para enviar `X-Active-Subunit`.
+            O módulo de patrimônios depende da subunidade ativa para enviar `X-Active-Subunit`.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -78,9 +78,9 @@ export function PatrimoniesListPage() {
             <Landmark className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="font-display text-3xl text-slate-900">Patrimonios</h1>
+            <h1 className="font-display text-3xl text-slate-900">Patrimônios</h1>
             <p className="text-sm text-slate-500">
-              Gerencie os bens patrimoniais da subunidade ativa, com historico setorial e baixa controlada.
+              Gerencie os bens patrimoniais da subunidade ativa, com histórico setorial e baixa controlada.
             </p>
             <p className="mt-1 text-xs uppercase tracking-[0.2em] text-slate-400">
               Contexto ativo: {activeSubunit.name}
@@ -92,7 +92,7 @@ export function PatrimoniesListPage() {
           <Button asChild>
             <Link href="/patrimonies/create">
               <Plus className="mr-2 h-4 w-4" />
-              Novo patrimonio
+              Novo patrimônio
             </Link>
           </Button>
         ) : null}
@@ -138,18 +138,18 @@ export function PatrimoniesListPage() {
       ) : patrimoniesQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar patrimonios</CardTitle>
+            <CardTitle>Erro ao carregar patrimônios</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario autenticado.
+              Verifique a API, a subunidade ativa e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>
       ) : !patrimoniesQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhum patrimonio encontrado</CardTitle>
+            <CardTitle>Nenhum patrimônio encontrado</CardTitle>
             <CardDescription>
-              Cadastre um novo patrimonio ou refine os filtros aplicados.
+              Cadastre um novo patrimônio ou refine os filtros aplicados.
             </CardDescription>
           </CardHeader>
         </Card>

@@ -50,11 +50,11 @@ export function WorkshopsTable({ workshops }: WorkshopsTableProps) {
             <thead className="bg-slate-50 text-slate-500">
               <tr>
                 <th className="px-4 py-3 font-medium">Oficina</th>
-                <th className="px-4 py-3 font-medium">Localizacao</th>
+                <th className="px-4 py-3 font-medium">Localização</th>
                 <th className="px-4 py-3 font-medium">Contato</th>
                 <th className="px-4 py-3 font-medium">Especialidades</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -149,8 +149,8 @@ export function WorkshopsTable({ workshops }: WorkshopsTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir oficina</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {workshopToDelete?.name}? Essa acao
-              nao podera ser desfeita.
+              Tem certeza que deseja excluir {workshopToDelete?.name}? Essa ação
+              não podera ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -162,7 +162,7 @@ export function WorkshopsTable({ workshops }: WorkshopsTableProps) {
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

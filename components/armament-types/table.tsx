@@ -48,8 +48,8 @@ export function ArmamentTypesTable({
               <tr>
                 <th className="px-4 py-3 font-medium">Nome</th>
                 <th className="px-4 py-3 font-medium">Slug</th>
-                <th className="px-4 py-3 font-medium">Descricao</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">Descrição</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -67,7 +67,7 @@ export function ArmamentTypesTable({
                     {armamentType.slug}
                   </td>
                   <td className="px-4 py-4 text-slate-600">
-                    {armamentType.description ?? "Sem descricao"}
+                    {armamentType.description ?? "Sem descrição"}
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex justify-end gap-2">
@@ -114,7 +114,7 @@ export function ArmamentTypesTable({
             <DialogTitle>Excluir tipo de armamento</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja excluir o tipo{" "}
-              {typeToDelete?.name ?? "selecionado"}? Essa acao nao podera ser
+              {typeToDelete?.name ?? "selecionado"}? Essa ação não podera ser
               desfeita.
             </DialogDescription>
           </DialogHeader>
@@ -134,7 +134,7 @@ export function ArmamentTypesTable({
             >
               {deleteMutation.isPending
                 ? "Excluindo..."
-                : "Confirmar exclusao"}
+                : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

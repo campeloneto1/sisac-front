@@ -16,8 +16,8 @@ export function VehicleTypeCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `vehicle-types.create` para
-            cadastrar tipos de veiculo.
+            Você precisa de `administrator` e `vehicle-types.create` para
+            cadastrar tipos de veículo.
           </CardDescription>
         </CardHeader>
       </Card>

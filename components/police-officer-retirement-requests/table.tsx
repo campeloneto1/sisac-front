@@ -70,7 +70,7 @@ export function PoliceOfficerRetirementRequestsTable({
                 <th className="px-4 py-3 font-medium">Data requerimento</th>
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">Boletim req.</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -87,9 +87,9 @@ export function PoliceOfficerRetirementRequestsTable({
                           `Policial #${request.police_officer_id}`}
                       </p>
                       <p className="mt-1 text-slate-500">
-                        Matricula:{" "}
+                        Matrícula:{" "}
                         {request.police_officer?.registration_number ??
-                          "Nao informada"}
+                          "Não informada"}
                       </p>
                     </div>
                   </td>
@@ -173,7 +173,7 @@ export function PoliceOfficerRetirementRequestsTable({
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

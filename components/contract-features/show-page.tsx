@@ -23,7 +23,7 @@ export function ContractFeatureShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `contract-features.view` para visualizar caracteristicas.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `contract-features.view` para visualizar características.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -37,8 +37,8 @@ export function ContractFeatureShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar caracteristica</CardTitle>
-          <CardDescription>Os dados da caracteristica nao estao disponiveis no momento.</CardDescription>
+          <CardTitle>Erro ao carregar característica</CardTitle>
+          <CardDescription>Os dados da característica não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -54,7 +54,7 @@ export function ContractFeatureShowPage() {
             <h1 className="font-display text-3xl text-slate-900">{contractFeature.name}</h1>
           </div>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Caracteristica administrativa global que pode ser associada a tipos de contrato para indicar capacidades ou regras extras.
+            Característica administrativa global que pode ser associada a tipos de contrato para indicar capacidades ou regras extras.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export function ContractFeatureShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Visao geral</CardTitle>
-            <CardDescription>Indicadores rapidos da caracteristica.</CardDescription>
+            <CardDescription>Indicadores rapidos da característica.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -84,7 +84,7 @@ export function ContractFeatureShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                 <p className="text-sm text-slate-700">
-                  {contractFeature.creator ? `${contractFeature.creator.name} (${contractFeature.creator.email})` : "Nao informado"}
+                  {contractFeature.creator ? `${contractFeature.creator.name} (${contractFeature.creator.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -93,7 +93,7 @@ export function ContractFeatureShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
                 <p className="text-sm text-slate-700">
-                  {contractFeature.updater ? `${contractFeature.updater.name} (${contractFeature.updater.email})` : "Nao informado"}
+                  {contractFeature.updater ? `${contractFeature.updater.name} (${contractFeature.updater.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -112,14 +112,14 @@ export function ContractFeatureShowPage() {
                 <p className="text-sm font-medium text-slate-900">Uso esperado</p>
               </div>
               <p className="mt-2 text-sm text-slate-600">
-                Essa caracteristica pode ser vinculada a tipos de contrato para habilitar classificacoes extras, regras funcionais ou agrupamentos
+                Essa característica pode ser vinculada a tipos de contrato para habilitar classificações extras, regras funcionais ou agrupamentos
                 administrativos no dominio de contratos.
               </p>
             </div>
 
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3">
               <p className="text-sm text-slate-600">
-                A API atual nao retorna a contagem de tipos vinculados. Ainda assim, a exclusao pode ser recusada caso exista relacionamento ativo
+                A API atual não retorna a contagem de tipos vinculados. Ainda assim, a exclusão pode ser recusada caso exista relacionamento ativo
                 pela pivot `contract_type_feature`.
               </p>
             </div>

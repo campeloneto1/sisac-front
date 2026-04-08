@@ -15,8 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const countryFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
-  abbreviation: z.string().min(2, "A sigla precisa ter ao menos 2 caracteres.").max(5, "A sigla deve ter no maximo 5 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
+  abbreviation: z.string().min(2, "A sigla precisa ter ao menos 2 caracteres.").max(5, "A sigla deve ter no máximo 5 caracteres."),
 });
 
 type CountryFormValues = z.infer<typeof countryFormSchema>;
@@ -82,8 +82,8 @@ export function CountryForm({ mode, country }: CountryFormProps) {
   return (
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Novo pais" : "Editar pais"}</CardTitle>
-        <CardDescription>Paises ficam dentro de Administrador e servem como base para cadastros territoriais.</CardDescription>
+        <CardTitle>{mode === "create" ? "Novo país" : "Editar país"}</CardTitle>
+        <CardDescription>Países ficam dentro de Administrador e servem como base para cadastros territoriais.</CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
@@ -96,7 +96,7 @@ export function CountryForm({ mode, country }: CountryFormProps) {
           <div className="space-y-2">
             <Label htmlFor="abbreviation">Sigla</Label>
             <Input id="abbreviation" maxLength={5} placeholder="Ex.: BR" {...register("abbreviation")} />
-            <p className="text-xs text-slate-500">Obrigatoria. O backend salva automaticamente em caixa alta.</p>
+            <p className="text-xs text-slate-500">Obrigatória. O backend salva automaticamente em caixa alta.</p>
             {errors.abbreviation ? <p className="text-sm text-destructive">{errors.abbreviation.message}</p> : null}
           </div>
 
@@ -105,7 +105,7 @@ export function CountryForm({ mode, country }: CountryFormProps) {
               <Link href={mode === "create" ? "/countries" : `/countries/${country?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar pais" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar país" : "Salvar alterações"}
             </Button>
           </div>
         </form>

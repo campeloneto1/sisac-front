@@ -21,7 +21,7 @@ export function ContractFeatureEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `contract-features.update` para editar caracteristicas.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `contract-features.update` para editar características.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -35,8 +35,8 @@ export function ContractFeatureEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar caracteristica</CardTitle>
-          <CardDescription>A caracteristica nao pode ser editada agora.</CardDescription>
+          <CardTitle>Erro ao carregar característica</CardTitle>
+          <CardDescription>A característica não pode ser editada agora.</CardDescription>
         </CardHeader>
       </Card>
     );

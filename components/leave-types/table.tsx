@@ -45,7 +45,7 @@ export function LeaveTypesTable({ leaveTypes }: LeaveTypesTableProps) {
               <tr>
                 <th className="px-4 py-3 font-medium">Tipo de afastamento</th>
                 <th className="px-4 py-3 font-medium">Regras</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -63,10 +63,10 @@ export function LeaveTypesTable({ leaveTypes }: LeaveTypesTableProps) {
                         {leaveType.requires_medical_report ? "Exige laudo" : "Sem laudo"}
                       </Badge>
                       <Badge variant={leaveType.affects_salary ? "destructive" : "secondary"}>
-                        {leaveType.affects_salary ? "Afeta salario" : "Nao afeta salario"}
+                        {leaveType.affects_salary ? "Afeta salario" : "Não afeta salario"}
                       </Badge>
                       {leaveType.max_days ? (
-                        <Badge variant="outline">Maximo de {leaveType.max_days} dias</Badge>
+                        <Badge variant="outline">Máximo de {leaveType.max_days} dias</Badge>
                       ) : null}
                     </div>
                   </td>
@@ -107,7 +107,7 @@ export function LeaveTypesTable({ leaveTypes }: LeaveTypesTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir tipo de afastamento</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {leaveTypeToDelete?.name}? Se ja existirem afastamentos vinculados, a API pode bloquear a exclusao.
+              Tem certeza que deseja excluir {leaveTypeToDelete?.name}? Se já existirem afastamentos vinculados, a API pode bloquear a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -115,7 +115,7 @@ export function LeaveTypesTable({ leaveTypes }: LeaveTypesTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

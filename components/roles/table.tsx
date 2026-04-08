@@ -49,9 +49,9 @@ export function RolesTable({ roles }: RolesTableProps) {
               <tr>
                 <th className="px-4 py-3 font-medium">Perfil</th>
                 <th className="px-4 py-3 font-medium">Slug</th>
-                <th className="px-4 py-3 font-medium">Permissoes</th>
-                <th className="px-4 py-3 font-medium">Usuarios</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">Permissões</th>
+                <th className="px-4 py-3 font-medium">Usuários</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -63,7 +63,7 @@ export function RolesTable({ roles }: RolesTableProps) {
                     <td className="px-4 py-4">
                       <div>
                         <p className="font-medium text-slate-900">{role.name}</p>
-                        <p className="mt-1 text-slate-500">{role.description || "Sem descricao"}</p>
+                        <p className="mt-1 text-slate-500">{role.description || "Sem descrição"}</p>
                       </div>
                     </td>
                     <td className="px-4 py-4">
@@ -109,7 +109,7 @@ export function RolesTable({ roles }: RolesTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir perfil</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir o perfil {roleToDelete?.name}? Roles com usuarios vinculados nao podem ser
+              Tem certeza que deseja excluir o perfil {roleToDelete?.name}? Roles com usuários vinculados não podem ser
               removidas pela policy.
             </DialogDescription>
           </DialogHeader>
@@ -118,7 +118,7 @@ export function RolesTable({ roles }: RolesTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

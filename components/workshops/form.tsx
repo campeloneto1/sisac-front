@@ -42,33 +42,33 @@ const workshopFormSchema = z.object({
   name: z
     .string()
     .min(2, "O nome precisa ter ao menos 2 caracteres.")
-    .max(100, "O nome deve ter no maximo 100 caracteres."),
+    .max(100, "O nome deve ter no máximo 100 caracteres."),
   cnpj: z
     .string()
     .refine(
       (value) => value.trim() === "" || value.replace(/\D/g, "").length === 14,
-      "Informe um CNPJ com 14 digitos.",
+      "Informe um CNPJ com 14 dígitos.",
     ),
   phone: z
     .string()
     .refine(
       (value) => value.trim() === "" || value.replace(/\D/g, "").length >= 10,
-      "Informe um telefone com 10 ou 11 digitos.",
+      "Informe um telefone com 10 ou 11 dígitos.",
     ),
   email: z
     .string()
     .refine(
       (value) =>
         value.trim() === "" || z.email().safeParse(value.trim()).success,
-      "Informe um email valido.",
+      "Informe um email válido.",
     ),
   address: z
     .string()
-    .max(255, "O endereco deve ter no maximo 255 caracteres."),
-  city: z.string().max(100, "A cidade deve ter no maximo 100 caracteres."),
+    .max(255, "O endereco deve ter no máximo 255 caracteres."),
+  city: z.string().max(100, "A cidade deve ter no máximo 100 caracteres."),
   state: z
     .string()
-    .max(2, "A UF deve ter no maximo 2 caracteres.")
+    .max(2, "A UF deve ter no máximo 2 caracteres.")
     .refine(
       (value) => value.trim() === "" || value.trim().length === 2,
       "Informe uma UF com 2 caracteres.",
@@ -77,24 +77,24 @@ const workshopFormSchema = z.object({
     .string()
     .refine(
       (value) => value.trim() === "" || value.replace(/\D/g, "").length === 8,
-      "Informe um CEP com 8 digitos.",
+      "Informe um CEP com 8 dígitos.",
     ),
   contact_person: z
     .string()
-    .max(100, "O nome do contato deve ter no maximo 100 caracteres."),
+    .max(100, "O nome do contato deve ter no máximo 100 caracteres."),
   contact_phone: z
     .string()
     .refine(
       (value) => value.trim() === "" || value.replace(/\D/g, "").length >= 10,
-      "Informe um telefone com 10 ou 11 digitos.",
+      "Informe um telefone com 10 ou 11 dígitos.",
     ),
   status: z.enum(["active", "inactive"]),
-  notes: z.string().max(5000, "As observacoes devem ter no maximo 5000 caracteres."),
+  notes: z.string().max(5000, "As observações devem ter no máximo 5000 caracteres."),
   specialties: z.array(
     z.object({
       value: z
         .string()
-        .max(100, "A especialidade deve ter no maximo 100 caracteres."),
+        .max(100, "A especialidade deve ter no máximo 100 caracteres."),
     }),
   ),
 });
@@ -235,7 +235,7 @@ export function WorkshopForm({ mode, workshop }: WorkshopFormProps) {
         </CardTitle>
         <CardDescription>
           Oficinas ficam no painel Gestor e centralizam fornecedores de
-          manutencao e servicos veiculares.
+          manutenção e serviços veiculares.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -303,7 +303,7 @@ export function WorkshopForm({ mode, workshop }: WorkshopFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="contact_person">Contato responsavel</Label>
+              <Label htmlFor="contact_person">Contato responsável</Label>
               <Input
                 id="contact_person"
                 placeholder="Ex.: Maria Pereira"
@@ -387,7 +387,7 @@ export function WorkshopForm({ mode, workshop }: WorkshopFormProps) {
                   Especialidades
                 </h2>
                 <p className="text-sm text-slate-500">
-                  Adicione as frentes de servico que essa oficina atende.
+                  Adicione as frentes de serviço que essa oficina atende.
                 </p>
               </div>
               <Button
@@ -430,10 +430,10 @@ export function WorkshopForm({ mode, workshop }: WorkshopFormProps) {
           </section>
 
           <section className="space-y-2">
-            <Label htmlFor="notes">Observacoes</Label>
+            <Label htmlFor="notes">Observações</Label>
             <Textarea
               id="notes"
-              placeholder="Registre combinados, especialidades complementares ou observacoes operacionais."
+              placeholder="Registre combinados, especialidades complementares ou observações operacionais."
               {...register("notes")}
             />
             {errors.notes ? (
@@ -448,7 +448,7 @@ export function WorkshopForm({ mode, workshop }: WorkshopFormProps) {
               </Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar oficina" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar oficina" : "Salvar alterações"}
             </Button>
           </div>
         </form>

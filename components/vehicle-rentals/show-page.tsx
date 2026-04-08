@@ -26,12 +26,12 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "Nao informado";
+  return date ? date.slice(0, 10) : "Não informado";
 }
 
 function formatCurrency(value?: number | null) {
   if (value === null || value === undefined) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.NumberFormat("pt-BR", {
@@ -51,8 +51,8 @@ export function VehicleRentalShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar locacoes de
-            veiculos.
+            Você precisa da permissão `view` para visualizar locações de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -67,9 +67,9 @@ export function VehicleRentalShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar locacao</CardTitle>
+          <CardTitle>Erro ao carregar locação</CardTitle>
           <CardDescription>
-            Os dados da locacao nao estao disponiveis no momento.
+            Os dados da locação não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -84,7 +84,7 @@ export function VehicleRentalShowPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="font-display text-3xl text-slate-900">
-              {rental.vehicle?.license_plate ?? `Locacao #${rental.id}`}
+              {rental.vehicle?.license_plate ?? `Locação #${rental.id}`}
             </h1>
             <Badge variant={getVehicleRentalStatusVariant(rental.status)}>
               {rental.status_label ?? "Sem status"}
@@ -92,7 +92,7 @@ export function VehicleRentalShowPage() {
           </div>
           <p className="mt-2 text-sm text-slate-500">
             {rental.company?.trade_name || rental.company?.name || "Locadora"} •
-            Contrato {rental.contract_number ?? " sem numero"}
+            Contrato {rental.contract_number ?? " sem número"}
           </p>
         </div>
 
@@ -106,9 +106,9 @@ export function VehicleRentalShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Veiculo e locadora</CardTitle>
+            <CardTitle>Veículo e locadora</CardTitle>
             <CardDescription>
-              Dados principais do vinculo contratual.
+              Dados principais do vínculo contratual.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -116,7 +116,7 @@ export function VehicleRentalShowPage() {
               <CarFront className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Veiculo
+                  Veículo
                 </p>
                 <p className="text-sm text-slate-700">
                   {rental.vehicle?.license_plate ?? `#${rental.vehicle_id}`}
@@ -141,7 +141,7 @@ export function VehicleRentalShowPage() {
                   Contrato
                 </p>
                 <p className="text-sm text-slate-700">
-                  {rental.contract_number ?? "Sem numero informado"}
+                  {rental.contract_number ?? "Sem número informado"}
                 </p>
               </div>
             </div>
@@ -152,7 +152,7 @@ export function VehicleRentalShowPage() {
           <CardHeader>
             <CardTitle>Datas</CardTitle>
             <CardDescription>
-              Periodo contratual e periodo real da locacao.
+              Período contratual e período real da locação.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -161,7 +161,7 @@ export function VehicleRentalShowPage() {
                 <CalendarDays className="h-4 w-4 text-primary" />
                 <div>
                   <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                    Inicio do contrato
+                    Início do contrato
                   </p>
                   <p className="text-sm text-slate-700">
                     {formatDate(rental.contract_start_date)}
@@ -183,7 +183,7 @@ export function VehicleRentalShowPage() {
             <div className="grid gap-3 md:grid-cols-2">
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Inicio real
+                  Início real
                 </p>
                 <p className="text-sm text-slate-700">
                   {formatDate(rental.actual_start_date)}
@@ -205,7 +205,7 @@ export function VehicleRentalShowPage() {
           <CardHeader>
             <CardTitle>Custos</CardTitle>
             <CardDescription>
-              Valores da locacao por periodo de cobranca.
+              Valores da locação por período de cobranca.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3 md:grid-cols-2">
@@ -233,7 +233,7 @@ export function VehicleRentalShowPage() {
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Quilometragem e observacoes</CardTitle>
+            <CardTitle>Quilometragem e observações</CardTitle>
             <CardDescription>
               Controle da entrada, saida e movimentacao com a locadora.
             </CardDescription>
@@ -247,7 +247,7 @@ export function VehicleRentalShowPage() {
                     KM entrada
                   </p>
                   <p className="text-sm text-slate-700">
-                    {rental.entry_km ?? "Nao informado"}
+                    {rental.entry_km ?? "Não informado"}
                   </p>
                 </div>
               </div>
@@ -256,7 +256,7 @@ export function VehicleRentalShowPage() {
                   KM saida
                 </p>
                 <p className="text-sm text-slate-700">
-                  {rental.exit_km ?? "Nao informado"}
+                  {rental.exit_km ?? "Não informado"}
                 </p>
               </div>
             </div>
@@ -280,10 +280,10 @@ export function VehicleRentalShowPage() {
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Observacoes
+                Observações
               </p>
               <p className="mt-1 text-sm text-slate-700">
-                {rental.notes ?? "Nenhuma observacao informada."}
+                {rental.notes ?? "Nenhuma observação informada."}
               </p>
             </div>
           </CardContent>

@@ -115,7 +115,7 @@ export function VehiclesFilters({
 
       <Select value={assignedToUserId} onValueChange={onAssignedToUserChange}>
         <SelectTrigger>
-          <SelectValue placeholder="Responsavel" />
+          <SelectValue placeholder="Responsável" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todos</SelectItem>
@@ -133,7 +133,7 @@ export function VehiclesFilters({
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todas</SelectItem>
-          <SelectItem value="available">Disponiveis</SelectItem>
+          <SelectItem value="available">Disponíveis</SelectItem>
           <SelectItem value="unavailable">Indisponiveis</SelectItem>
         </SelectContent>
       </Select>

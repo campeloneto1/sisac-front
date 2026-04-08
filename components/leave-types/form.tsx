@@ -18,8 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 
 const leaveTypeFormSchema = z
   .object({
-    name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
-    slug: z.string().max(120, "O slug deve ter no maximo 120 caracteres.").optional(),
+    name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
+    slug: z.string().max(120, "O slug deve ter no máximo 120 caracteres.").optional(),
     description: z.string().optional(),
     requires_medical_report: z.boolean(),
     affects_salary: z.boolean(),
@@ -32,7 +32,7 @@ const leaveTypeFormSchema = z
       context.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["max_days"],
-        message: "Informe a quantidade maxima de dias quando o tipo exige laudo medico.",
+        message: "Informe a quantidade máxima de dias quando o tipo exige laudo médico.",
       });
     }
 
@@ -40,7 +40,7 @@ const leaveTypeFormSchema = z
       context.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["max_days"],
-        message: "A quantidade maxima de dias deve ser um numero inteiro entre 1 e 3650.",
+        message: "A quantidade máxima de dias deve ser um número inteiro entre 1 e 3650.",
       });
     }
   });
@@ -132,14 +132,14 @@ export function LeaveTypeForm({ mode, leaveType }: LeaveTypeFormProps) {
       <CardHeader>
         <CardTitle>{mode === "create" ? "Novo tipo de afastamento" : "Editar tipo de afastamento"}</CardTitle>
         <CardDescription>
-          Tipos de afastamento ficam dentro de Administrador e definem regras basicas dos afastamentos dos policiais.
+          Tipos de afastamento ficam dentro de Administrador e definem regras básicas dos afastamentos dos policiais.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="name">Nome</Label>
-            <Input id="name" placeholder="Ex.: Licenca medica, ferias, dispensa" {...register("name")} />
+            <Input id="name" placeholder="Ex.: Licenca médica, férias, dispensa" {...register("name")} />
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
 
@@ -150,18 +150,18 @@ export function LeaveTypeForm({ mode, leaveType }: LeaveTypeFormProps) {
           </div>
 
           <div className={`space-y-2 ${requiresMedicalReport ? "rounded-2xl border border-primary/20 bg-primary/5 p-4" : ""}`}>
-            <Label htmlFor="max_days">Quantidade maxima de dias</Label>
+            <Label htmlFor="max_days">Quantidade máxima de dias</Label>
             <Input id="max_days" inputMode="numeric" placeholder="Ex.: 30" {...register("max_days")} />
             <p className="text-xs text-slate-500">
               {requiresMedicalReport
-                ? "Obrigatorio quando o tipo exige laudo medico."
-                : "Opcional. Use para limitar a duracao maxima deste afastamento."}
+                ? "Obrigatório quando o tipo exige laudo médico."
+                : "Opcional. Use para limitar a duracao máxima deste afastamento."}
             </p>
             {errors.max_days ? <p className="text-sm text-destructive">{errors.max_days.message}</p> : null}
           </div>
 
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="description">Descricao</Label>
+            <Label htmlFor="description">Descrição</Label>
             <Textarea id="description" placeholder="Descreva quando este tipo de afastamento deve ser utilizado." {...register("description")} />
             {errors.description ? <p className="text-sm text-destructive">{errors.description.message}</p> : null}
           </div>
@@ -174,8 +174,8 @@ export function LeaveTypeForm({ mode, leaveType }: LeaveTypeFormProps) {
                 onCheckedChange={(checked) => setValue("requires_medical_report", checked === true, { shouldDirty: true, shouldValidate: true })}
               />
               <div className="space-y-1">
-                <Label htmlFor="requires_medical_report">Exige laudo medico</Label>
-                <p className="text-sm text-slate-500">Ative quando o afastamento precisar de comprovacao medica e controle mais rigido de dias.</p>
+                <Label htmlFor="requires_medical_report">Exige laudo médico</Label>
+                <p className="text-sm text-slate-500">Ative quando o afastamento precisar de comprovação médica e controle mais rigido de dias.</p>
               </div>
             </div>
 
@@ -201,7 +201,7 @@ export function LeaveTypeForm({ mode, leaveType }: LeaveTypeFormProps) {
               <Link href={mode === "create" ? "/leave-types" : `/leave-types/${leaveType?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar tipo" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar tipo" : "Salvar alterações"}
             </Button>
           </div>
         </form>

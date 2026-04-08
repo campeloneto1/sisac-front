@@ -40,14 +40,14 @@ const brandFormSchema = z.object({
   name: z
     .string()
     .min(2, "O nome precisa ter ao menos 2 caracteres.")
-    .max(100, "O nome deve ter no maximo 100 caracteres."),
+    .max(100, "O nome deve ter no máximo 100 caracteres."),
   abbreviation: z
     .string()
-    .max(5, "A sigla deve ter no maximo 5 caracteres.")
+    .max(5, "A sigla deve ter no máximo 5 caracteres.")
     .optional()
     .or(z.literal("")),
   type: z.enum(["weapon", "logistics", "transport"], {
-    message: "Selecione um tipo valido.",
+    message: "Selecione um tipo válido.",
   }),
 });
 
@@ -138,7 +138,7 @@ export function BrandForm({ mode, brand }: BrandFormProps) {
       <CardContent>
         {mode === "edit" && (brand?.variants_count ?? 0) > 0 ? (
           <div className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-            Esta marca possui modelos vinculadas. A exclusao fica bloqueada pela
+            Esta marca possui modelos vinculadas. A exclusão fica bloqueada pela
             policy, entao altere com cuidado.
           </div>
         ) : null}
@@ -217,7 +217,7 @@ export function BrandForm({ mode, brand }: BrandFormProps) {
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar marca"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

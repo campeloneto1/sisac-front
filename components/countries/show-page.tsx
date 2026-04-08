@@ -24,7 +24,7 @@ export function CountryShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `countries.view` para visualizar paises.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `countries.view` para visualizar países.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -38,8 +38,8 @@ export function CountryShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar pais</CardTitle>
-          <CardDescription>Os dados do pais nao estao disponiveis no momento.</CardDescription>
+          <CardTitle>Erro ao carregar país</CardTitle>
+          <CardDescription>Os dados do país não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -56,7 +56,7 @@ export function CountryShowPage() {
             <Badge variant="outline">{country.abbreviation}</Badge>
           </div>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Pais cadastrado no modulo administrativo para uso em estruturas territoriais do sistema.
+            País cadastrado no módulo administrativo para uso em estruturas territoriais do sistema.
           </p>
         </div>
 
@@ -71,7 +71,7 @@ export function CountryShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Visao geral</CardTitle>
-            <CardDescription>Indicadores rapidos do pais.</CardDescription>
+            <CardDescription>Indicadores rapidos do país.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -86,7 +86,7 @@ export function CountryShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                 <p className="text-sm text-slate-700">
-                  {country.creator ? `${country.creator.name} (${country.creator.email})` : "Nao informado"}
+                  {country.creator ? `${country.creator.name} (${country.creator.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -95,7 +95,7 @@ export function CountryShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
                 <p className="text-sm text-slate-700">
-                  {country.updater ? `${country.updater.name} (${country.updater.email})` : "Nao informado"}
+                  {country.updater ? `${country.updater.name} (${country.updater.email})` : "Não informado"}
                 </p>
               </div>
             </div>

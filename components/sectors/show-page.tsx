@@ -16,7 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function getOfficerLabel(officer: { id: number; name?: string | null; registration_number?: string | null } | null | undefined) {
   if (!officer) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   if (officer.name && officer.registration_number) {
@@ -38,7 +38,7 @@ export function SectorShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `sectors.view` para visualizar setores.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `sectors.view` para visualizar setores.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -64,7 +64,7 @@ export function SectorShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar setor</CardTitle>
-          <CardDescription>Os dados do setor nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do setor não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -97,35 +97,35 @@ export function SectorShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Visao geral</CardTitle>
-            <CardDescription>Resumo rapido do setor.</CardDescription>
+            <CardDescription>Resumo rápido do setor.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Phone className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Telefone</p>
-                <p className="text-sm text-slate-700">{sector.phone || "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{sector.phone || "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Mail className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Email</p>
-                <p className="text-sm text-slate-700">{sector.email || "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{sector.email || "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{sector.creator ? `${sector.creator.name} (${sector.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{sector.creator ? `${sector.creator.name} (${sector.creator.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{sector.updater ? `${sector.updater.name} (${sector.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{sector.updater ? `${sector.updater.name} (${sector.updater.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>
@@ -158,7 +158,7 @@ export function SectorShowPage() {
 
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3">
               <p className="text-sm text-slate-600">
-                Mudancas neste setor podem afetar alocacoes, responsabilidades de notificacao e outros fluxos internos da subunidade.
+                Mudancas neste setor podem afetar alocações, responsabilidades de notificação e outros fluxos internos da subunidade.
               </p>
             </div>
           </CardContent>

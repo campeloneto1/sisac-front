@@ -25,7 +25,7 @@ export function PatrimonyEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar patrimonios.
+            Você precisa da permissão `update` para editar patrimônios.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -38,7 +38,7 @@ export function PatrimonyEditPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O modulo depende da subunidade ativa para carregar o patrimonio.
+            O módulo depende da subunidade ativa para carregar o patrimônio.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -58,9 +58,9 @@ export function PatrimonyEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o patrimonio</CardTitle>
+          <CardTitle>Não foi possível carregar o patrimônio</CardTitle>
           <CardDescription>
-            Verifique se o registro existe e se voce possui acesso a ele.
+            Verifique se o registro existe e se você possui acesso a ele.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -75,7 +75,7 @@ export function PatrimonyEditPage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Editar patrimonio
+            Editar patrimônio
           </h1>
           <p className="text-sm text-slate-500">
             Atualize os dados cadastrais do bem patrimonial.

@@ -21,7 +21,7 @@ export function GenderEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `genders.update` para editar generos.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `genders.update` para editar gêneros.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -35,8 +35,8 @@ export function GenderEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar genero</CardTitle>
-          <CardDescription>O genero nao pode ser editado agora.</CardDescription>
+          <CardTitle>Erro ao carregar gênero</CardTitle>
+          <CardDescription>O gênero não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

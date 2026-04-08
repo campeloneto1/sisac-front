@@ -44,15 +44,15 @@ const policeOfficerRetirementRequestFormSchema = z
       .refine((value) => value !== "none", "Selecione o policial."),
     nup: z
       .string()
-      .max(50, "O NUP deve ter no maximo 50 caracteres.")
+      .max(50, "O NUP deve ter no máximo 50 caracteres.")
       .optional(),
     bulletin_request: z
       .string()
-      .max(100, "O boletim de requerimento deve ter no maximo 100 caracteres.")
+      .max(100, "O boletim de requerimento deve ter no máximo 100 caracteres.")
       .optional(),
     bulletin_publication: z
       .string()
-      .max(100, "O boletim de publicacao deve ter no maximo 100 caracteres.")
+      .max(100, "O boletim de publicação deve ter no máximo 100 caracteres.")
       .optional(),
     requested_at: z.string().min(1, "Informe a data do requerimento."),
     approved_at: z.string().optional(),
@@ -81,7 +81,7 @@ const policeOfficerRetirementRequestFormSchema = z
     },
     {
       message:
-        "A data de publicacao deve ser igual ou posterior a ultima etapa valida do processo.",
+        "A data de publicação deve ser igual ou posterior a última etapa válida do processo.",
       path: ["published_at"],
     },
   )
@@ -94,7 +94,7 @@ const policeOfficerRetirementRequestFormSchema = z
     },
     {
       message:
-        "A data de aprovacao e obrigatoria para processos deferidos ou publicados.",
+        "A data de aprovacao e obrigatória para processos deferidos ou publicados.",
       path: ["approved_at"],
     },
   )
@@ -106,7 +106,7 @@ const policeOfficerRetirementRequestFormSchema = z
       return true;
     },
     {
-      message: "A data de publicacao e obrigatoria quando o processo estiver publicado.",
+      message: "A data de publicação e obrigatória quando o processo estiver publicado.",
       path: ["published_at"],
     },
   )
@@ -119,7 +119,7 @@ const policeOfficerRetirementRequestFormSchema = z
     },
     {
       message:
-        "O boletim de publicacao e obrigatorio quando o processo estiver publicado.",
+        "O boletim de publicação e obrigatório quando o processo estiver publicado.",
       path: ["bulletin_publication"],
     },
   );
@@ -241,7 +241,7 @@ export function PoliceOfficerRetirementRequestForm({
             : "Editar requerimento de aposentadoria"}
         </CardTitle>
         <CardDescription>
-          Registro de solicitacao de aposentadoria do policial, com NUP, boletins
+          Registro de solicitação de aposentadoria do policial, com NUP, boletins
           e datas relevantes.
         </CardDescription>
       </CardHeader>
@@ -367,7 +367,7 @@ export function PoliceOfficerRetirementRequestForm({
                 />
                 {requiresApprovalDate ? (
                   <p className="text-xs text-slate-500">
-                    Obrigatoria para processos aprovados ou publicados.
+                    Obrigatória para processos aprovados ou publicados.
                   </p>
                 ) : null}
                 {errors.approved_at ? (
@@ -379,7 +379,7 @@ export function PoliceOfficerRetirementRequestForm({
 
               <div className="space-y-2">
                 <Label htmlFor="bulletin_publication">
-                  Boletim de publicacao
+                  Boletim de publicação
                 </Label>
                 <Input
                   id="bulletin_publication"
@@ -389,7 +389,7 @@ export function PoliceOfficerRetirementRequestForm({
                 />
                 {requiresPublicationData ? (
                   <p className="text-xs text-slate-500">
-                    Obrigatorio quando o status estiver como publicado.
+                    Obrigatório quando o status estiver como publicado.
                   </p>
                 ) : null}
                 {errors.bulletin_publication ? (
@@ -400,7 +400,7 @@ export function PoliceOfficerRetirementRequestForm({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="published_at">Data de publicacao</Label>
+                <Label htmlFor="published_at">Data de publicação</Label>
                 <Input
                   id="published_at"
                   type="date"
@@ -409,7 +409,7 @@ export function PoliceOfficerRetirementRequestForm({
                 />
                 {requiresPublicationData ? (
                   <p className="text-xs text-slate-500">
-                    Obrigatoria quando o processo estiver publicado.
+                    Obrigatória quando o processo estiver publicado.
                   </p>
                 ) : null}
                 {errors.published_at ? (
@@ -420,10 +420,10 @@ export function PoliceOfficerRetirementRequestForm({
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="notes">Observacoes</Label>
+                <Label htmlFor="notes">Observações</Label>
                 <Textarea
                   id="notes"
-                  placeholder="Observacoes adicionais sobre o requerimento..."
+                  placeholder="Observações adicionais sobre o requerimento..."
                   rows={4}
                   {...register("notes")}
                 />
@@ -453,7 +453,7 @@ export function PoliceOfficerRetirementRequestForm({
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar requerimento"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

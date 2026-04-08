@@ -18,17 +18,17 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const companyFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
-  trade_name: z.string().max(100, "O nome fantasia deve ter no maximo 100 caracteres."),
-  cnpj: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length === 14, "Informe um CNPJ com 14 digitos."),
-  manager_name: z.string().max(100, "O nome do gerente deve ter no maximo 100 caracteres."),
-  phone: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length >= 10, "Informe um telefone com 10 ou 11 digitos."),
-  phone2: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length >= 10, "Informe um telefone com 10 ou 11 digitos."),
-  email: z.string().refine((value) => value.trim() === "" || z.email().safeParse(value.trim()).success, "Informe um email valido."),
-  street: z.string().max(100, "A rua deve ter no maximo 100 caracteres."),
-  number: z.string().max(20, "O numero deve ter no maximo 20 caracteres."),
-  neighborhood: z.string().max(100, "O bairro deve ter no maximo 100 caracteres."),
-  postal_code: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length === 8, "Informe um CEP com 8 digitos."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
+  trade_name: z.string().max(100, "O nome fantasia deve ter no máximo 100 caracteres."),
+  cnpj: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length === 14, "Informe um CNPJ com 14 dígitos."),
+  manager_name: z.string().max(100, "O nome do gerente deve ter no máximo 100 caracteres."),
+  phone: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length >= 10, "Informe um telefone com 10 ou 11 dígitos."),
+  phone2: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length >= 10, "Informe um telefone com 10 ou 11 dígitos."),
+  email: z.string().refine((value) => value.trim() === "" || z.email().safeParse(value.trim()).success, "Informe um email válido."),
+  street: z.string().max(100, "A rua deve ter no máximo 100 caracteres."),
+  number: z.string().max(20, "O número deve ter no máximo 20 caracteres."),
+  neighborhood: z.string().max(100, "O bairro deve ter no máximo 100 caracteres."),
+  postal_code: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length === 8, "Informe um CEP com 8 dígitos."),
   city_id: z.string(),
   subunit_id: z.string(),
 });
@@ -193,7 +193,7 @@ export function CompanyForm({ mode, company }: CompanyFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="number">Numero</Label>
+            <Label htmlFor="number">Número</Label>
             <Input id="number" placeholder="Ex.: 120" {...register("number")} />
             {errors.number ? <p className="text-sm text-destructive">{errors.number.message}</p> : null}
           </div>
@@ -257,7 +257,7 @@ export function CompanyForm({ mode, company }: CompanyFormProps) {
               <Link href={mode === "create" ? "/companies" : `/companies/${company?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar empresa" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar empresa" : "Salvar alterações"}
             </Button>
           </div>
         </form>

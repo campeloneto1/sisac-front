@@ -18,8 +18,8 @@ import { Label } from "@/components/ui/label";
 
 const resetPasswordSchema = z
   .object({
-    token: z.string().min(1, "Token obrigatorio."),
-    email: z.string().email("Informe um e-mail valido."),
+    token: z.string().min(1, "Token obrigatório."),
+    email: z.string().email("Informe um e-mail válido."),
     password: z.string().min(8, "A senha precisa ter ao menos 8 caracteres."),
     password_confirmation: z.string().min(8, "Confirme a nova senha."),
   })
@@ -89,7 +89,7 @@ export function ResetPasswordForm() {
 
           <div className="space-y-2">
             <Label htmlFor="email">E-mail</Label>
-            <Input id="email" placeholder="voce@empresa.com" {...register("email")} />
+            <Input id="email" placeholder="você@empresa.com" {...register("email")} />
             {errors.email ? <p className="text-sm text-destructive">{errors.email.message}</p> : null}
           </div>
 

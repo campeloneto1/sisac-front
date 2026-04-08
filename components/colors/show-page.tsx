@@ -37,7 +37,7 @@ export function ColorShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `colors.view` para visualizar
+            Você precisa de `administrator` e `colors.view` para visualizar
             cores.
           </CardDescription>
         </CardHeader>
@@ -55,7 +55,7 @@ export function ColorShowPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar cor</CardTitle>
           <CardDescription>
-            Os dados da cor nao estao disponiveis no momento.
+            Os dados da cor não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -100,7 +100,7 @@ export function ColorShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Visual</CardTitle>
-            <CardDescription>Preview rapido da cor cadastrada.</CardDescription>
+            <CardDescription>Preview rápido da cor cadastrada.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div
@@ -112,7 +112,7 @@ export function ColorShowPage() {
                 HEX
               </p>
               <p className="mt-1 text-sm font-medium text-slate-900">
-                {color.hex ?? "Nao informado"}
+                {color.hex ?? "Não informado"}
               </p>
             </div>
           </CardContent>
@@ -122,7 +122,7 @@ export function ColorShowPage() {
           <CardHeader>
             <CardTitle>Metadados</CardTitle>
             <CardDescription>
-              Identificacao tecnica e usuarios responsaveis pelo cadastro.
+              Identificação técnica e usuários responsáveis pelo cadastro.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -157,7 +157,7 @@ export function ColorShowPage() {
                 <p className="text-sm text-slate-700">
                   {color.creator
                     ? `${color.creator.name} (${color.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -171,7 +171,7 @@ export function ColorShowPage() {
                 <p className="text-sm text-slate-700">
                   {color.updater
                     ? `${color.updater.name} (${color.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>

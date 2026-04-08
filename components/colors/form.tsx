@@ -32,14 +32,14 @@ const colorFormSchema = z.object({
   name: z
     .string()
     .min(2, "O nome precisa ter ao menos 2 caracteres.")
-    .max(50, "O nome deve ter no maximo 50 caracteres."),
+    .max(50, "O nome deve ter no máximo 50 caracteres."),
   slug: z
     .string()
     .min(2, "O slug precisa ter ao menos 2 caracteres.")
-    .max(50, "O slug deve ter no maximo 50 caracteres."),
+    .max(50, "O slug deve ter no máximo 50 caracteres."),
   hex: z
     .string()
-    .regex(/^#[0-9A-Fa-f]{6}$/, "Informe um HEX valido no formato #RRGGBB.")
+    .regex(/^#[0-9A-Fa-f]{6}$/, "Informe um HEX válido no formato #RRGGBB.")
     .optional()
     .or(z.literal("")),
   is_active: z.boolean(),
@@ -269,7 +269,7 @@ export function ColorForm({ mode, color }: ColorFormProps) {
                   HEX atual
                 </p>
                 <p className="mt-1 text-sm font-medium text-slate-900">
-                  {watchedHex?.trim() || "Nao informado"}
+                  {watchedHex?.trim() || "Não informado"}
                 </p>
               </div>
             </div>
@@ -286,7 +286,7 @@ export function ColorForm({ mode, color }: ColorFormProps) {
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar cor"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

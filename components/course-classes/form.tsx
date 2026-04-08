@@ -19,7 +19,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const courseClassSchema = z.object({
   course_id: z.string().refine((value) => value !== "none", "Selecione o curso."),
-  name: z.string().max(100, "O nome deve ter no maximo 100 caracteres.").optional(),
+  name: z.string().max(100, "O nome deve ter no máximo 100 caracteres.").optional(),
   planned_start_date: z.string().optional(),
   planned_end_date: z.string().optional(),
   start_date: z.string().optional(),
@@ -33,7 +33,7 @@ const courseClassSchema = z.object({
     context.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["planned_end_date"],
-      message: "O termino planejado deve ser igual ou posterior ao inicio planejado.",
+      message: "O término planejado deve ser igual ou posterior ao início planejado.",
     });
   }
 
@@ -41,7 +41,7 @@ const courseClassSchema = z.object({
     context.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["end_date"],
-      message: "O termino real deve ser igual ou posterior ao inicio real.",
+      message: "O término real deve ser igual ou posterior ao início real.",
     });
   }
 
@@ -49,7 +49,7 @@ const courseClassSchema = z.object({
     context.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["start_date"],
-      message: "Informe a data de inicio real para turmas em andamento ou concluidas.",
+      message: "Informe a data de início real para turmas em andamento ou concluidas.",
     });
   }
 
@@ -57,7 +57,7 @@ const courseClassSchema = z.object({
     context.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["end_date"],
-      message: "Informe a data de termino real para turmas concluidas.",
+      message: "Informe a data de término real para turmas concluidas.",
     });
   }
 });
@@ -168,7 +168,7 @@ export function CourseClassForm({ mode, courseClass }: CourseClassFormProps) {
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="space-y-4">
             <div>
-              <h3 className="text-base font-semibold text-slate-900">Identificacao</h3>
+              <h3 className="text-base font-semibold text-slate-900">Identificação</h3>
               <p className="text-sm text-slate-500">Selecione o curso e defina o nome operacional da turma.</p>
             </div>
             <div className="grid gap-5 md:grid-cols-2">
@@ -200,17 +200,17 @@ export function CourseClassForm({ mode, courseClass }: CourseClassFormProps) {
 
           <section className="space-y-4">
             <div>
-              <h3 className="text-base font-semibold text-slate-900">Planejamento e execucao</h3>
+              <h3 className="text-base font-semibold text-slate-900">Planejamento e execução</h3>
               <p className="text-sm text-slate-500">Datas planejadas, datas reais e status atual da turma.</p>
             </div>
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="planned_start_date">Inicio planejado</Label>
+                <Label htmlFor="planned_start_date">Início planejado</Label>
                 <Input id="planned_start_date" type="date" {...register("planned_start_date")} />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="planned_end_date">Termino planejado</Label>
+                <Label htmlFor="planned_end_date">Término planejado</Label>
                 <Input id="planned_end_date" type="date" {...register("planned_end_date")} />
                 {errors.planned_end_date ? <p className="text-sm text-destructive">{errors.planned_end_date.message}</p> : null}
               </div>
@@ -232,13 +232,13 @@ export function CourseClassForm({ mode, courseClass }: CourseClassFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="start_date">Inicio real</Label>
+                <Label htmlFor="start_date">Início real</Label>
                 <Input id="start_date" type="date" {...register("start_date")} />
                 {errors.start_date ? <p className="text-sm text-destructive">{errors.start_date.message}</p> : null}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="end_date">Termino real</Label>
+                <Label htmlFor="end_date">Término real</Label>
                 <Input id="end_date" type="date" {...register("end_date")} />
                 {errors.end_date ? <p className="text-sm text-destructive">{errors.end_date.message}</p> : null}
               </div>
@@ -247,18 +247,18 @@ export function CourseClassForm({ mode, courseClass }: CourseClassFormProps) {
 
           <section className="space-y-4">
             <div>
-              <h3 className="text-base font-semibold text-slate-900">Responsaveis</h3>
-              <p className="text-sm text-slate-500">Defina os usuarios relacionados a autorizacao e acompanhamento da turma.</p>
+              <h3 className="text-base font-semibold text-slate-900">Responsáveis</h3>
+              <p className="text-sm text-slate-500">Defina os usuários relacionados a autorização e acompanhamento da turma.</p>
             </div>
             <div className="grid gap-5 md:grid-cols-3">
               <div className="space-y-2">
                 <Label>Autorizado por</Label>
                 <Select value={selectedAuthorizedBy} onValueChange={(value) => setValue("authorized_by", value, { shouldValidate: true })}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Nao informado" />
+                    <SelectValue placeholder="Não informado" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Nao informado</SelectItem>
+                    <SelectItem value="none">Não informado</SelectItem>
                     {(usersQuery.data?.data ?? []).map((user) => (
                       <SelectItem key={user.id} value={String(user.id)}>
                         {user.name}
@@ -272,10 +272,10 @@ export function CourseClassForm({ mode, courseClass }: CourseClassFormProps) {
                 <Label>Coordenador</Label>
                 <Select value={selectedCoordinatorId} onValueChange={(value) => setValue("coordinator_id", value, { shouldValidate: true })}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Nao informado" />
+                    <SelectValue placeholder="Não informado" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Nao informado</SelectItem>
+                    <SelectItem value="none">Não informado</SelectItem>
                     {(usersQuery.data?.data ?? []).map((user) => (
                       <SelectItem key={user.id} value={String(user.id)}>
                         {user.name}
@@ -289,10 +289,10 @@ export function CourseClassForm({ mode, courseClass }: CourseClassFormProps) {
                 <Label>Monitor</Label>
                 <Select value={selectedMonitorId} onValueChange={(value) => setValue("monitor_id", value, { shouldValidate: true })}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Nao informado" />
+                    <SelectValue placeholder="Não informado" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Nao informado</SelectItem>
+                    <SelectItem value="none">Não informado</SelectItem>
                     {(usersQuery.data?.data ?? []).map((user) => (
                       <SelectItem key={user.id} value={String(user.id)}>
                         {user.name}
@@ -313,7 +313,7 @@ export function CourseClassForm({ mode, courseClass }: CourseClassFormProps) {
               <Link href={mode === "create" ? "/course-classes" : `/course-classes/${courseClass?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar turma" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar turma" : "Salvar alterações"}
             </Button>
           </div>
         </form>

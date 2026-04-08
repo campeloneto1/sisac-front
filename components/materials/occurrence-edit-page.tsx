@@ -11,20 +11,20 @@ export function MaterialOccurrenceEditPage() {
   return (
     <MaterialOccurrencesPageShell
       title="Editar ocorrencia"
-      description="Atualize status, descricao e dados de apuracao quando a API do recurso estiver pronta."
+      description="Atualize status, descrição e dados de apuracao quando a API do recurso estiver pronta."
       requiredPermission="update"
       materialId={params.id}
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Edicao da ocorrencia #{params.occurrenceId}</CardTitle>
+          <CardTitle>Edição da ocorrencia #{params.occurrenceId}</CardTitle>
           <CardDescription>
-            Esta rota fica pronta para receber o formulario de edicao.
+            Esta rota fica pronta para receber o formulario de edição.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
-          <p>Campos mais provaveis para edicao:</p>
-          <p>status, numero do BO, descricao, reportante e data/hora do evento.</p>
+          <p>Campos mais provaveis para edição:</p>
+          <p>status, número do BO, descrição, reportante e data/hora do evento.</p>
           <p>
             Uma boa validacao no backend deve exigir `report_number` para
             extravio e furto/roubo.

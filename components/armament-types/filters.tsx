@@ -17,7 +17,7 @@ export function ArmamentTypesFilters({
   return (
     <div className="grid gap-4 rounded-[24px] border border-slate-200/70 bg-white/80 p-5 md:grid-cols-[1fr_auto]">
       <Input
-        placeholder="Buscar por nome, slug ou descricao"
+        placeholder="Buscar por nome, slug ou descrição"
         value={search}
         onChange={(event) => onSearchChange(event.target.value)}
       />

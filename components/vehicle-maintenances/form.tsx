@@ -50,16 +50,16 @@ const replacedPartSchema = z.object({
 });
 
 const vehicleMaintenanceFormSchema = z.object({
-  vehicle_id: z.string().min(1, "Selecione um veiculo."),
+  vehicle_id: z.string().min(1, "Selecione um veículo."),
   workshop_id: z.string(),
   maintenance_type: z.string().min(1, "Selecione o tipo."),
   description: z
     .string()
-    .min(3, "A descricao deve ter ao menos 3 caracteres.")
-    .max(1000, "A descricao deve ter no maximo 1000 caracteres."),
+    .min(3, "A descrição deve ter ao menos 3 caracteres.")
+    .max(1000, "A descrição deve ter no máximo 1000 caracteres."),
   entry_date: z.string().min(1, "Informe a data de entrada."),
   entry_time: z.string(),
-  entry_km: z.coerce.number().int().min(0, "Informe uma quilometragem valida."),
+  entry_km: z.coerce.number().int().min(0, "Informe uma quilometragem válida."),
   exit_date: z.string(),
   exit_time: z.string(),
   exit_km: z.union([z.coerce.number().int().min(0), z.literal("")]),
@@ -68,7 +68,7 @@ const vehicleMaintenanceFormSchema = z.object({
   parts_cost: z.union([z.coerce.number().min(0), z.literal("")]),
   labor_cost: z.union([z.coerce.number().min(0), z.literal("")]),
   status: z.string(),
-  notes: z.string().max(2000, "As observacoes devem ter no maximo 2000 caracteres."),
+  notes: z.string().max(2000, "As observações devem ter no máximo 2000 caracteres."),
   replaced_parts: z.array(replacedPartSchema),
 });
 
@@ -242,18 +242,18 @@ export function VehicleMaintenanceForm({
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>
-          {mode === "create" ? "Nova manutencao" : "Editar manutencao"}
+          {mode === "create" ? "Nova manutenção" : "Editar manutenção"}
         </CardTitle>
         <CardDescription>
-          Veiculos indisponiveis por emprestimo, cautela ou manutencao ativa
-          nao aparecem na criacao.
+          Veículos indisponiveis por empréstimo, cautela ou manutenção ativa
+          não aparecem na criação.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label>Veiculo</Label>
+              <Label>Veículo</Label>
               <AsyncSearchableSelect
                 value={selectedVehicleId || undefined}
                 onValueChange={(value) =>
@@ -275,9 +275,9 @@ export function VehicleMaintenanceForm({
                   label: formatVehicleOptionLabel(vehicle),
                 })}
                 selectedOption={selectedVehicleOption}
-                placeholder="Selecione um veiculo"
+                placeholder="Selecione um veículo"
                 searchPlaceholder="Buscar por placa, marca ou variante"
-                emptyMessage="Nenhum veiculo encontrado."
+                emptyMessage="Nenhum veículo encontrado."
               />
               {errors.vehicle_id ? (
                 <p className="text-sm text-destructive">
@@ -301,7 +301,7 @@ export function VehicleMaintenanceForm({
                   <SelectValue placeholder="Selecione uma oficina" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Nao informar oficina</SelectItem>
+                  <SelectItem value="none">Não informar oficina</SelectItem>
                   {(workshopsQuery.data?.data ?? []).map((workshop) => (
                     <SelectItem key={workshop.id} value={String(workshop.id)}>
                       {workshop.name}
@@ -314,7 +314,7 @@ export function VehicleMaintenanceForm({
 
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label>Tipo de manutencao</Label>
+              <Label>Tipo de manutenção</Label>
               <Select
                 value={selectedMaintenanceType || "none"}
                 onValueChange={(value) =>
@@ -369,7 +369,7 @@ export function VehicleMaintenanceForm({
           </section>
 
           <section className="space-y-2">
-            <Label htmlFor="description">Descricao</Label>
+            <Label htmlFor="description">Descrição</Label>
             <Textarea
               id="description"
               rows={4}
@@ -411,7 +411,7 @@ export function VehicleMaintenanceForm({
               <Input id="exit_km" type="number" min={0} {...register("exit_km")} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="expected_completion_date">Previsao de conclusao</Label>
+              <Label htmlFor="expected_completion_date">Previsao de conclusão</Label>
               <Input
                 id="expected_completion_date"
                 type="date"
@@ -506,7 +506,7 @@ export function VehicleMaintenanceForm({
           </section>
 
           <section className="space-y-2">
-            <Label htmlFor="notes">Observacoes</Label>
+            <Label htmlFor="notes">Observações</Label>
             <Textarea id="notes" rows={5} {...register("notes")} />
           </section>
 
@@ -526,8 +526,8 @@ export function VehicleMaintenanceForm({
               {isPending
                 ? "Salvando..."
                 : mode === "create"
-                  ? "Criar manutencao"
-                  : "Salvar alteracoes"}
+                  ? "Criar manutenção"
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

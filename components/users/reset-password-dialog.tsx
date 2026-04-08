@@ -80,14 +80,14 @@ export function ResetPasswordDialog({ userId, userName }: ResetPasswordDialogPro
         <DialogHeader>
           <DialogTitle>Resetar senha</DialogTitle>
           <DialogDescription>
-            Voce pode definir manualmente uma nova senha para {userName} ou deixar os campos vazios para a API gerar
+            Você pode definir manualmente uma nova senha para {userName} ou deixar os campos vazios para a API gerar
             uma senha aleatoria e enviar por e-mail.
           </DialogDescription>
         </DialogHeader>
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="rounded-2xl bg-secondary p-4 text-sm text-slate-700">
-            A acao depende da permissao `resetPassword` no frontend. No backend atual, o endpoint ainda usa a policy
+            A ação depende da permissão `resetPassword` no frontend. No backend atual, o endpoint ainda usa a policy
             de `update`.
           </div>
 

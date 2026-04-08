@@ -46,9 +46,9 @@ export function ServiceTypesTable({ serviceTypes }: ServiceTypesTableProps) {
               <tr>
                 <th className="px-4 py-3 font-medium">Tipo</th>
                 <th className="px-4 py-3 font-medium">Codigo</th>
-                <th className="px-4 py-3 font-medium">Configuracao</th>
-                <th className="px-4 py-3 font-medium">Descricao</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">Configuração</th>
+                <th className="px-4 py-3 font-medium">Descrição</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -85,13 +85,13 @@ export function ServiceTypesTable({ serviceTypes }: ServiceTypesTableProps) {
                         ) : (
                           <XCircle className="h-4 w-4 text-slate-400" />
                         )}
-                        <span>{serviceType.active ? "Disponivel" : "Bloqueado"}</span>
+                        <span>{serviceType.active ? "Disponível" : "Bloqueado"}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <ShieldCheck className="h-4 w-4 text-primary" />
                         <span>
                           {serviceType.requires_approval
-                            ? "Aprovacao obrigatoria"
+                            ? "Aprovacao obrigatória"
                             : "Aprovacao opcional"}
                         </span>
                       </div>
@@ -150,10 +150,10 @@ export function ServiceTypesTable({ serviceTypes }: ServiceTypesTableProps) {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir tipo de servico</DialogTitle>
+            <DialogTitle>Excluir tipo de serviço</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja excluir {serviceTypeToDelete?.name}? Se
-              houver servicos vinculados, a API podera recusar a exclusao.
+              houver serviços vinculados, a API podera recusar a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -170,7 +170,7 @@ export function ServiceTypesTable({ serviceTypes }: ServiceTypesTableProps) {
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

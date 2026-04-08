@@ -4,10 +4,10 @@ import type { SubunitItem } from "@/types/subunit.type";
 import type { VariantItem } from "@/types/variant.type";
 
 export const materialUnitStatusOptions = [
-  { value: "available", label: "Disponivel", color: "green" },
+  { value: "available", label: "Disponível", color: "green" },
   { value: "loaned", label: "Emprestado", color: "blue" },
   { value: "assigned", label: "Cedido", color: "purple" },
-  { value: "maintenance", label: "Em manutencao", color: "yellow" },
+  { value: "maintenance", label: "Em manutenção", color: "yellow" },
   { value: "discharged", label: "Baixado", color: "gray" },
   { value: "lost", label: "Extraviado", color: "red" },
 ] as const;
@@ -124,7 +124,7 @@ export interface PaginatedMaterialsResponse {
 }
 
 export function getMaterialUnitStatusLabel(value?: string | null) {
-  return materialUnitStatusOptions.find((option) => option.value === value)?.label ?? "Nao informado";
+  return materialUnitStatusOptions.find((option) => option.value === value)?.label ?? "Não informado";
 }
 
 export function getMaterialUnitBadgeVariant(color?: string | null): "danger" | "warning" | "info" | "success" | "outline" {

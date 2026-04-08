@@ -13,7 +13,7 @@ export function useCreateArmamentSizeMutation() {
       queryClient.invalidateQueries({ queryKey: ["armament-sizes"] });
     },
     onError: () => {
-      toast.error("Nao foi possivel criar o tamanho de armamento.");
+      toast.error("Não foi possível criar o tamanho de armamento.");
     },
   });
 }
@@ -37,7 +37,7 @@ export function useUpdateArmamentSizeMutation() {
       });
     },
     onError: () => {
-      toast.error("Nao foi possivel atualizar o tamanho de armamento.");
+      toast.error("Não foi possível atualizar o tamanho de armamento.");
     },
   });
 }
@@ -52,7 +52,7 @@ export function useDeleteArmamentSizeMutation() {
       queryClient.invalidateQueries({ queryKey: ["armament-sizes"] });
     },
     onError: () => {
-      toast.error("Nao foi possivel remover o tamanho de armamento.");
+      toast.error("Não foi possível remover o tamanho de armamento.");
     },
   });
 }

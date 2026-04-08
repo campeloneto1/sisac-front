@@ -22,7 +22,7 @@ export function MaterialTypeEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `material-types.update` para
+            Você precisa de `administrator` e `material-types.update` para
             editar tipos de material.
           </CardDescription>
         </CardHeader>
@@ -40,7 +40,7 @@ export function MaterialTypeEditPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar tipo de material</CardTitle>
           <CardDescription>
-            O tipo de material nao pode ser editado agora.
+            O tipo de material não pode ser editado agora.
           </CardDescription>
         </CardHeader>
       </Card>

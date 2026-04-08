@@ -51,13 +51,13 @@ export function VehicleMaintenancesTable({
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Veiculo</th>
+                <th className="px-4 py-3 font-medium">Veículo</th>
                 <th className="px-4 py-3 font-medium">Oficina</th>
                 <th className="px-4 py-3 font-medium">Tipo</th>
                 <th className="px-4 py-3 font-medium">Entrada</th>
                 <th className="px-4 py-3 font-medium">Saida</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -78,7 +78,7 @@ export function VehicleMaintenancesTable({
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
-                    {maintenance.workshop?.name ?? "Nao informada"}
+                    {maintenance.workshop?.name ?? "Não informada"}
                   </td>
                   <td className="px-4 py-4 text-slate-600">
                     {maintenance.maintenance_type_label ?? "-"}
@@ -149,12 +149,12 @@ export function VehicleMaintenancesTable({
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir manutencao</DialogTitle>
+            <DialogTitle>Excluir manutenção</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir a manutencao do veiculo{" "}
+              Tem certeza que deseja excluir a manutenção do veículo{" "}
               {maintenanceToDelete?.vehicle?.license_plate ??
                 `#${maintenanceToDelete?.vehicle_id}`}
-              ? Essa acao nao podera ser desfeita.
+              ? Essa ação não podera ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -173,7 +173,7 @@ export function VehicleMaintenancesTable({
             >
               {deleteMutation.isPending
                 ? "Excluindo..."
-                : "Confirmar exclusao"}
+                : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -17,10 +17,10 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const cityFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
   abbreviation: z
     .string()
-    .max(5, "A sigla deve ter no maximo 5 caracteres.")
+    .max(5, "A sigla deve ter no máximo 5 caracteres.")
     .refine((value) => value.trim() === "" || value.trim().length >= 2, "A sigla precisa ter ao menos 2 caracteres."),
   state_id: z.string(),
 });
@@ -110,7 +110,7 @@ export function CityForm({ mode, city }: CityFormProps) {
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="name">Nome</Label>
             <Input id="name" placeholder="Ex.: Fortaleza" {...register("name")} />
-            <p className="text-xs text-slate-500">Obrigatorio. O backend aplica trim e valida unicidade dentro do mesmo estado.</p>
+            <p className="text-xs text-slate-500">Obrigatório. O backend aplica trim e válida unicidade dentro do mesmo estado.</p>
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
 
@@ -139,7 +139,7 @@ export function CityForm({ mode, city }: CityFormProps) {
             <p className="text-xs text-slate-500">
               {selectedState
                 ? `Estado selecionado: ${selectedState.name} (${selectedState.abbreviation}).`
-                : "Selecione um estado ou mantenha sem vinculo para refletir a regra atual da API."}
+                : "Selecione um estado ou mantenha sem vínculo para refletir a regra atual da API."}
             </p>
             {errors.state_id ? <p className="text-sm text-destructive">{errors.state_id.message}</p> : null}
           </div>
@@ -149,7 +149,7 @@ export function CityForm({ mode, city }: CityFormProps) {
               <Link href={mode === "create" ? "/cities" : `/cities/${city?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar cidade" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar cidade" : "Salvar alterações"}
             </Button>
           </div>
         </form>

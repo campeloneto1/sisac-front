@@ -119,9 +119,9 @@ export const vehicleFuelingContextOptions: Array<{
   value: VehicleFuelingContextType;
   label: string;
 }> = [
-  { value: "vehicle_loan", label: "Emprestimo" },
+  { value: "vehicle_loan", label: "Empréstimo" },
   { value: "vehicle_custody", label: "Cautela" },
-  { value: "vehicle_maintenance", label: "Manutencao" },
+  { value: "vehicle_maintenance", label: "Manutenção" },
 ];
 
 export function getVehicleFuelingContextType(

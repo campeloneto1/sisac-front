@@ -18,7 +18,7 @@ export function PublicationTypeEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `update` para editar tipos de publicacao.</CardDescription>
+          <CardDescription>Você precisa da permissão `update` para editar tipos de publicação.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -32,8 +32,8 @@ export function PublicationTypeEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar tipo de publicacao</CardTitle>
-          <CardDescription>Os dados nao estao disponiveis no momento.</CardDescription>
+          <CardTitle>Erro ao carregar tipo de publicação</CardTitle>
+          <CardDescription>Os dados não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );

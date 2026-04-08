@@ -76,13 +76,13 @@ export function VehicleCustodiesFilters({
         </div>
 
         <div className="space-y-2">
-          <Label>Veiculo</Label>
+          <Label>Veículo</Label>
           <Select value={vehicleId} onValueChange={onVehicleChange}>
             <SelectTrigger>
-              <SelectValue placeholder="Todos os veiculos" />
+              <SelectValue placeholder="Todos os veículos" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Todos os veiculos</SelectItem>
+              <SelectItem value="all">Todos os veículos</SelectItem>
               {vehicles.map((vehicle) => (
                 <SelectItem key={vehicle.id} value={String(vehicle.id)}>
                   {vehicle.license_plate}
@@ -127,7 +127,7 @@ export function VehicleCustodiesFilters({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="startDate">Inicio a partir de</Label>
+          <Label htmlFor="startDate">Início a partir de</Label>
           <Input
             id="startDate"
             type="date"

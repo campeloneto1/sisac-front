@@ -220,7 +220,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
           {mode === "create" ? "Novo armamento" : "Editar armamento"}
         </CardTitle>
         <CardDescription>
-          Cadastre o armamento base e suas classificacoes tecnicas para uso
+          Cadastre o armamento base e suas classificações técnicas para uso
           operacional.
         </CardDescription>
       </CardHeader>
@@ -228,7 +228,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
         <div className="mb-5 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
           Subunidade ativa:{" "}
           <span className="font-medium text-slate-900">
-            {activeSubunit?.abbreviation || activeSubunit?.name || "Nao selecionada"}
+            {activeSubunit?.abbreviation || activeSubunit?.name || "Não selecionada"}
           </span>
         </div>
 
@@ -390,7 +390,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label>Genero</Label>
+              <Label>Gênero</Label>
               <Select
                 value={selectedGenderId || "none"}
                 onValueChange={(value) =>
@@ -401,10 +401,10 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione o genero" />
+                  <SelectValue placeholder="Selecione o gênero" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Sem genero</SelectItem>
+                  <SelectItem value="none">Sem gênero</SelectItem>
                   {(gendersQuery.data?.data ?? []).map((gender) => (
                     <SelectItem key={gender.id} value={String(gender.id)}>
                       {gender.name}
@@ -419,10 +419,10 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-base font-semibold text-slate-900">
-                  Especificacoes tecnicas
+                  Especificacoes técnicas
                 </h3>
                 <p className="text-sm text-slate-500">
-                  Adicione pares de chave e valor para caracteristicas extras.
+                  Adicione pares de chave e valor para características extras.
                 </p>
               </div>
 
@@ -501,7 +501,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar armamento"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

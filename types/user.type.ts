@@ -128,7 +128,7 @@ export const userTypeOptions = [
 export const userStatusOptions = [
   { value: "active", label: "Ativo" },
   { value: "inactive", label: "Inativo" },
-  { value: "pending_authorization", label: "Aguardando Autorizacao" },
+  { value: "pending_authorization", label: "Aguardando Autorização" },
   { value: "temporarily_authorized", label: "Temporariamente Autorizado" },
 ] as const;
 

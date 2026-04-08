@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const genderFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
 });
 
 type GenderFormValues = z.infer<typeof genderFormSchema>;
@@ -78,8 +78,8 @@ export function GenderForm({ mode, gender }: GenderFormProps) {
   return (
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Novo genero" : "Editar genero"}</CardTitle>
-        <CardDescription>Generos ficam dentro de Administrador e servem de apoio para cadastros mestres do sistema.</CardDescription>
+        <CardTitle>{mode === "create" ? "Novo gênero" : "Editar gênero"}</CardTitle>
+        <CardDescription>Gêneros ficam dentro de Administrador e servem de apoio para cadastros mestres do sistema.</CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
@@ -94,7 +94,7 @@ export function GenderForm({ mode, gender }: GenderFormProps) {
               <Link href={mode === "create" ? "/genders" : `/genders/${gender?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar genero" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar gênero" : "Salvar alterações"}
             </Button>
           </div>
         </form>

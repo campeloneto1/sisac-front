@@ -161,7 +161,7 @@ export function RoleForm({ mode, role }: RoleFormProps) {
       <CardContent>
         {mode === "edit" && isProtectedRole(role) ? (
           <div className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-            Esta role e protegida pela policy. Alteracoes em `admin` ou `super-admin` dependem tambem da permissao global
+            Esta role e protegida pela policy. Alteracoes em `admin` ou `super-admin` dependem também da permissão global
             `administrator`.
           </div>
         ) : null}
@@ -181,7 +181,7 @@ export function RoleForm({ mode, role }: RoleFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Descricao</Label>
+              <Label htmlFor="description">Descrição</Label>
               <Textarea id="description" placeholder="Descreva a finalidade do perfil" {...register("description")} />
               {errors.description ? <p className="text-sm text-destructive">{errors.description.message}</p> : null}
             </div>
@@ -189,9 +189,9 @@ export function RoleForm({ mode, role }: RoleFormProps) {
 
           <div className="space-y-4 rounded-[24px] border border-slate-200/70 bg-slate-50/80 p-4">
             <div className="space-y-1">
-              <Label>Permissoes</Label>
+              <Label>Permissões</Label>
               <p className="text-sm text-slate-500">
-                Selecione as permissoes que serao sincronizadas com a role.
+                Selecione as permissões que serao sincronizadas com a role.
               </p>
             </div>
 
@@ -199,7 +199,7 @@ export function RoleForm({ mode, role }: RoleFormProps) {
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
               <Input
                 className="pl-9"
-                placeholder="Buscar permissao por nome ou slug"
+                placeholder="Buscar permissão por nome ou slug"
                 value={permissionSearch}
                 onChange={(event) => setPermissionSearch(event.target.value)}
               />
@@ -208,12 +208,12 @@ export function RoleForm({ mode, role }: RoleFormProps) {
             <div className="grid gap-3 lg:grid-cols-[1fr_auto_1fr]">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-slate-700">Disponiveis</p>
+                  <p className="text-sm font-medium text-slate-700">Disponíveis</p>
                   <span className="text-xs text-slate-500">{availablePermissions.length}</span>
                 </div>
                 <div className="max-h-[420px] space-y-2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-3">
                   {permissionsQuery.isLoading ? (
-                    <p className="text-sm text-slate-500">Carregando permissoes...</p>
+                    <p className="text-sm text-slate-500">Carregando permissões...</p>
                   ) : availablePermissions.length ? (
                     availablePermissions.map((permission) => {
                       const active = highlightedAvailableIds.includes(permission.id);
@@ -235,7 +235,7 @@ export function RoleForm({ mode, role }: RoleFormProps) {
                       );
                     })
                   ) : (
-                    <p className="text-sm text-slate-500">Nenhuma permissao disponivel.</p>
+                    <p className="text-sm text-slate-500">Nenhuma permissão disponível.</p>
                   )}
                 </div>
               </div>
@@ -276,7 +276,7 @@ export function RoleForm({ mode, role }: RoleFormProps) {
                       );
                     })
                   ) : (
-                    <p className="text-sm text-slate-500">Nenhuma permissao selecionada.</p>
+                    <p className="text-sm text-slate-500">Nenhuma permissão selecionada.</p>
                   )}
                 </div>
               </div>
@@ -288,7 +288,7 @@ export function RoleForm({ mode, role }: RoleFormProps) {
               <Link href={mode === "create" ? "/roles" : `/roles/${role?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar perfil" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar perfil" : "Salvar alterações"}
             </Button>
           </div>
         </form>

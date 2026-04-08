@@ -20,7 +20,7 @@ export function MaterialBatchCreatePage() {
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
           <p>Campos previstos:</p>
-          <p>numero do lote;</p>
+          <p>número do lote;</p>
           <p>quantidade total;</p>
           <p>data de expiracao.</p>
         </CardContent>

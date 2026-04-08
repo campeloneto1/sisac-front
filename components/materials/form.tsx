@@ -27,15 +27,15 @@ const specificationRowSchema = z.object({
 });
 
 const unitRowSchema = z.object({
-  patrimony_number_1: z.string().max(100, "O patrimonio 1 deve ter no maximo 100 caracteres.").optional().or(z.literal("")),
-  patrimony_number_2: z.string().max(100, "O patrimonio 2 deve ter no maximo 100 caracteres.").optional().or(z.literal("")),
+  patrimony_number_1: z.string().max(100, "O patrimônio 1 deve ter no máximo 100 caracteres.").optional().or(z.literal("")),
+  patrimony_number_2: z.string().max(100, "O patrimônio 2 deve ter no máximo 100 caracteres.").optional().or(z.literal("")),
   acquisition_date: z.string().optional().or(z.literal("")),
   expiration_date: z.string().optional().or(z.literal("")),
   status: z.enum(materialUnitStatusOptions.map((option) => option.value) as [MaterialUnitStatus, ...MaterialUnitStatus[]]),
 });
 
 const batchRowSchema = z.object({
-  batch_number: z.string().min(1, "Informe o numero do lote.").max(100, "O numero do lote deve ter no maximo 100 caracteres."),
+  batch_number: z.string().min(1, "Informe o número do lote.").max(100, "O número do lote deve ter no máximo 100 caracteres."),
   quantity: z.coerce.number().int().min(1, "A quantidade deve ser maior que zero."),
   expiration_date: z.string().optional().or(z.literal("")),
 });
@@ -210,7 +210,7 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
       </CardHeader>
       <CardContent>
         <div className="mb-5 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-          Subunidade ativa: <span className="font-medium text-slate-900">{activeSubunit?.abbreviation || activeSubunit?.name || "Nao selecionada"}</span>
+          Subunidade ativa: <span className="font-medium text-slate-900">{activeSubunit?.abbreviation || activeSubunit?.name || "Não selecionada"}</span>
         </div>
 
         {!activeSubunit ? (
@@ -315,7 +315,7 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
               </div>
               <Button type="button" variant="outline" onClick={() => specificationsArray.append({ key: "", value: "" })}>
                 <Plus className="mr-2 h-4 w-4" />
-                Adicionar especificacao
+                Adicionar especificação
               </Button>
             </div>
 
@@ -354,8 +354,8 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
                   <div className="space-y-3">
                     {unitsArray.fields.map((field, index) => (
                       <div key={field.id} className="grid gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_0.9fr_0.9fr_0.9fr_auto]">
-                        <Input placeholder="Patrimonio 1" {...register(`units.${index}.patrimony_number_1` as const)} />
-                        <Input placeholder="Patrimonio 2" {...register(`units.${index}.patrimony_number_2` as const)} />
+                        <Input placeholder="Patrimônio 1" {...register(`units.${index}.patrimony_number_1` as const)} />
+                        <Input placeholder="Patrimônio 2" {...register(`units.${index}.patrimony_number_2` as const)} />
                         <Input type="date" {...register(`units.${index}.acquisition_date` as const)} />
                         <Input type="date" {...register(`units.${index}.expiration_date` as const)} />
                         <Select
@@ -407,7 +407,7 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
                     {batchesArray.fields.map((field, index) => (
                       <div key={field.id} className="grid gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-[1.2fr_0.8fr_1fr_auto]">
                         <div className="space-y-2">
-                          <Input placeholder="Numero do lote" {...register(`batches.${index}.batch_number` as const)} />
+                          <Input placeholder="Número do lote" {...register(`batches.${index}.batch_number` as const)} />
                           {errors.batches?.[index]?.batch_number ? <p className="text-sm text-destructive">{errors.batches[index]?.batch_number?.message}</p> : null}
                         </div>
                         <div className="space-y-2">
@@ -430,7 +430,7 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
             </>
           ) : (
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4 text-sm text-slate-600">
-              A edicao deste formulario atualiza apenas os dados-base do material. Unidades e lotes permanecem somente para consulta neste fluxo.
+              A edição deste formulario atualiza apenas os dados-base do material. Unidades e lotes permanecem somente para consulta neste fluxo.
             </div>
           )}
 
@@ -439,7 +439,7 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
               <Link href={mode === "create" ? "/materials" : `/materials/${material?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending || !activeSubunit}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar material" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar material" : "Salvar alterações"}
             </Button>
           </div>
         </form>

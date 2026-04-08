@@ -43,8 +43,8 @@ export function VehicleTypesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `vehicle-types.viewAny` para
-            visualizar tipos de veiculo.
+            Você precisa de `administrator` e `vehicle-types.viewAny` para
+            visualizar tipos de veículo.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -61,10 +61,10 @@ export function VehicleTypesListPage() {
             </div>
             <div>
               <h1 className="font-display text-3xl text-slate-900">
-                Tipos de veiculo
+                Tipos de veículo
               </h1>
               <p className="text-sm text-slate-500">
-                Gerencie a classificacao administrativa usada pelos veiculos do
+                Gerencie a classificação administrativa usada pelos veículos do
                 sistema.
               </p>
             </div>
@@ -101,9 +101,9 @@ export function VehicleTypesListPage() {
       ) : vehicleTypesQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar tipos de veiculo</CardTitle>
+            <CardTitle>Erro ao carregar tipos de veículo</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

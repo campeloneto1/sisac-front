@@ -15,7 +15,7 @@ export function GenderCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `genders.create` para cadastrar generos.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `genders.create` para cadastrar gêneros.</CardDescription>
         </CardHeader>
       </Card>
     );

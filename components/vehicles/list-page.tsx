@@ -71,7 +71,7 @@ export function VehiclesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar veiculos.
+            Você precisa da permissão `viewAny` para visualizar veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -82,9 +82,9 @@ export function VehiclesListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Veiculos</h1>
+          <h1 className="font-display text-3xl text-slate-900">Veículos</h1>
           <p className="text-sm text-slate-500">
-            Gestao operacional da frota com classificacao, disponibilidade e
+            Gestão operacional da frota com classificação, disponibilidade e
             kilometragem.
           </p>
         </div>
@@ -93,7 +93,7 @@ export function VehiclesListPage() {
           <Button asChild>
             <Link href="/vehicles/create">
               <Plus className="mr-2 h-4 w-4" />
-              Novo veiculo
+              Novo veículo
             </Link>
           </Button>
         ) : null}
@@ -159,9 +159,9 @@ export function VehiclesListPage() {
       ) : vehiclesQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar veiculos</CardTitle>
+            <CardTitle>Erro ao carregar veículos</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario
+              Verifique a API, a subunidade ativa e as permissões do usuário
               autenticado.
             </CardDescription>
           </CardHeader>
@@ -169,9 +169,9 @@ export function VehiclesListPage() {
       ) : !vehiclesQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhum veiculo encontrado</CardTitle>
+            <CardTitle>Nenhum veículo encontrado</CardTitle>
             <CardDescription>
-              Cadastre um veiculo novo ou refine os filtros aplicados.
+              Cadastre um veículo novo ou refine os filtros aplicados.
             </CardDescription>
           </CardHeader>
         </Card>

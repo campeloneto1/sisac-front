@@ -47,15 +47,15 @@ function formatDateTimeLocal(value?: string | null) {
 
 const serviceCreateSchema = z.object({
   company_id: z.string().min(1, "Selecione a empresa."),
-  service_type_id: z.string().min(1, "Selecione o tipo de servico."),
+  service_type_id: z.string().min(1, "Selecione o tipo de serviço."),
   contract_id: z.string(),
   requested_by: z.string().min(1, "Selecione o solicitante."),
   request_description: z
     .string()
-    .min(10, "A descricao deve ter ao menos 10 caracteres.")
-    .max(5000, "A descricao deve ter no maximo 5000 caracteres."),
+    .min(10, "A descrição deve ter ao menos 10 caracteres.")
+    .max(5000, "A descrição deve ter no máximo 5000 caracteres."),
   sector_id: z.string(),
-  location: z.string().max(255, "A localizacao deve ter no maximo 255 caracteres.").optional().or(z.literal("")),
+  location: z.string().max(255, "A localização deve ter no máximo 255 caracteres.").optional().or(z.literal("")),
   scheduled_date: z.string().optional().or(z.literal("")),
   priority: z.string(),
   estimated_cost: z.string().optional().or(z.literal("")),
@@ -65,12 +65,12 @@ const serviceEditSchema = serviceCreateSchema.extend({
   status: z.string(),
   started_at: z.string().optional().or(z.literal("")),
   finished_at: z.string().optional().or(z.literal("")),
-  start_observations: z.string().max(2000, "As observacoes de inicio devem ter no maximo 2000 caracteres.").optional().or(z.literal("")),
-  finish_observations: z.string().max(2000, "As observacoes de termino devem ter no maximo 2000 caracteres.").optional().or(z.literal("")),
-  cancellation_reason: z.string().max(2000, "O motivo de cancelamento deve ter no maximo 2000 caracteres.").optional().or(z.literal("")),
+  start_observations: z.string().max(2000, "As observações de início devem ter no máximo 2000 caracteres.").optional().or(z.literal("")),
+  finish_observations: z.string().max(2000, "As observações de término devem ter no máximo 2000 caracteres.").optional().or(z.literal("")),
+  cancellation_reason: z.string().max(2000, "O motivo de cancelamento deve ter no máximo 2000 caracteres.").optional().or(z.literal("")),
   actual_cost: z.string().optional().or(z.literal("")),
   rating: z.string().optional().or(z.literal("")),
-  rating_comment: z.string().max(1000, "O comentario da avaliacao deve ter no maximo 1000 caracteres.").optional().or(z.literal("")),
+  rating_comment: z.string().max(1000, "O comentario da avaliação deve ter no máximo 1000 caracteres.").optional().or(z.literal("")),
 });
 
 type ServiceCreateFormValues = z.infer<typeof serviceCreateSchema>;
@@ -280,18 +280,18 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>
-          {mode === "create" ? "Novo servico" : "Editar servico"}
+          {mode === "create" ? "Novo serviço" : "Editar serviço"}
         </CardTitle>
         <CardDescription>
           {mode === "create"
-            ? "Registre a solicitacao inicial do servico. A data de solicitacao e assumida pela API se nao for enviada."
-            : "Atualize os dados operacionais, custos e andamento da execucao do servico."}
+            ? "Registre a solicitação inicial do serviço. A data de solicitação e assumida pela API se não for enviada."
+            : "Atualize os dados operacionais, custos e andamento da execução do serviço."}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {!activeSubunit ? (
           <div className="mb-5 rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-5 text-sm text-slate-500">
-            Selecione uma subunidade ativa antes de cadastrar ou editar servicos.
+            Selecione uma subunidade ativa antes de cadastrar ou editar serviços.
           </div>
         ) : null}
 
@@ -330,7 +330,7 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label>Tipo de servico</Label>
+              <Label>Tipo de serviço</Label>
               <Select
                 value={selectedServiceTypeId || "none"}
                 onValueChange={(value) =>
@@ -466,7 +466,7 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
             </div>
 
             <div className="space-y-2 xl:col-span-2">
-              <Label>Localizacao</Label>
+              <Label>Localização</Label>
               <Input
                 placeholder="Ex.: Almoxarifado central, Sala 12, Patio externo"
                 {...register("location")}
@@ -513,12 +513,12 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Inicio</Label>
+                  <Label>Início</Label>
                   <Input type="datetime-local" {...register("started_at" as never)} />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Termino</Label>
+                  <Label>Término</Label>
                   <Input type="datetime-local" {...register("finished_at" as never)} />
                 </div>
 
@@ -528,7 +528,7 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Avaliacao</Label>
+                  <Label>Avaliação</Label>
                   <Input type="number" min={1} max={5} {...register("rating" as never)} />
                 </div>
               </>
@@ -537,10 +537,10 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
 
           <section className="space-y-5">
             <div className="space-y-2">
-              <Label>Descricao da solicitacao</Label>
+              <Label>Descrição da solicitação</Label>
               <Textarea
                 rows={5}
-                placeholder="Descreva a necessidade, o contexto e os detalhes do servico solicitado."
+                placeholder="Descreva a necessidade, o contexto e os detalhes do serviço solicitado."
                 {...register("request_description")}
               />
               {"request_description" in errors && errors.request_description ? (
@@ -554,12 +554,12 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
               <>
                 <div className="grid gap-5 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>Observacoes de inicio</Label>
+                    <Label>Observações de início</Label>
                     <Textarea rows={4} {...register("start_observations" as never)} />
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Observacoes de termino</Label>
+                    <Label>Observações de término</Label>
                     <Textarea rows={4} {...register("finish_observations" as never)} />
                   </div>
 
@@ -569,7 +569,7 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Comentario da avaliacao</Label>
+                    <Label>Comentario da avaliação</Label>
                     <Textarea rows={4} {...register("rating_comment" as never)} />
                   </div>
                 </div>
@@ -587,8 +587,8 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
               {isPending
                 ? "Salvando..."
                 : mode === "create"
-                  ? "Criar servico"
-                  : "Salvar alteracoes"}
+                  ? "Criar serviço"
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

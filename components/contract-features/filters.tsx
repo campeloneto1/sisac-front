@@ -18,7 +18,7 @@ export function ContractFeaturesFilters({ search, onSearchChange, onClear }: Con
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
         <Input
           className="pl-9"
-          placeholder="Buscar por nome da caracteristica"
+          placeholder="Buscar por nome da característica"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
         />

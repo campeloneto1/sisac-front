@@ -31,7 +31,7 @@ export function MaterialBatchesListPage() {
 
   return (
     <MaterialBatchesPageShell
-      title="Gestao de lotes"
+      title="Gestão de lotes"
       description="Acompanhe os lotes vinculados a este material e sua disponibilidade."
       requiredPermission="view"
       showIntegrationNotice
@@ -60,8 +60,8 @@ export function MaterialBatchesListPage() {
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Disponivel</CardTitle>
-            <CardDescription>Quantidade ainda apta para emprestimo ou consumo.</CardDescription>
+            <CardTitle>Disponível</CardTitle>
+            <CardDescription>Quantidade ainda apta para empréstimo ou consumo.</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-display text-slate-900">{totalAvailable}</p>
@@ -92,10 +92,10 @@ export function MaterialBatchesListPage() {
                   <tr>
                     <th className="px-4 py-3 font-medium">Lote</th>
                     <th className="px-4 py-3 font-medium">Quantidade</th>
-                    <th className="px-4 py-3 font-medium">Disponivel</th>
+                    <th className="px-4 py-3 font-medium">Disponível</th>
                     <th className="px-4 py-3 font-medium">Em uso</th>
                     <th className="px-4 py-3 font-medium">Vencimento</th>
-                    <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                    <th className="px-4 py-3 font-medium text-right">Ações</th>
                   </tr>
                 </thead>
                 <tbody>

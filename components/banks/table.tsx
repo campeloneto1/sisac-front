@@ -45,7 +45,7 @@ export function BanksTable({ banks }: BanksTableProps) {
               <tr>
                 <th className="px-4 py-3 font-medium">Banco</th>
                 <th className="px-4 py-3 font-medium">Codigo</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -54,7 +54,7 @@ export function BanksTable({ banks }: BanksTableProps) {
                   <td className="px-4 py-4">
                     <div>
                       <p className="font-medium text-slate-900">{bank.name}</p>
-                      <p className="mt-1 text-slate-500">Cadastro administrativo global de bancos utilizados por outros modulos.</p>
+                      <p className="mt-1 text-slate-500">Cadastro administrativo global de bancos utilizados por outros módulos.</p>
                     </div>
                   </td>
                   <td className="px-4 py-4">
@@ -95,7 +95,7 @@ export function BanksTable({ banks }: BanksTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir banco</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {bankToDelete?.name}? Se houver policiais vinculados a este banco, a API pode bloquear a exclusao.
+              Tem certeza que deseja excluir {bankToDelete?.name}? Se houver policiais vinculados a este banco, a API pode bloquear a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -103,7 +103,7 @@ export function BanksTable({ banks }: BanksTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

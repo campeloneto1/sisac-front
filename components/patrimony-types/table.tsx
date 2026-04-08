@@ -57,9 +57,9 @@ export function PatrimonyTypesTable({
             <thead className="bg-slate-50 text-slate-500">
               <tr>
                 <th className="px-4 py-3 font-medium">Tipo</th>
-                <th className="px-4 py-3 font-medium">Descricao</th>
-                <th className="px-4 py-3 font-medium">Atualizacao</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">Descrição</th>
+                <th className="px-4 py-3 font-medium">Atualização</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -74,7 +74,7 @@ export function PatrimonyTypesTable({
                         {patrimonyType.name}
                       </p>
                       <p className="mt-1 text-slate-500">
-                        Classificacao administrativa global para patrimonios.
+                        Classificação administrativa global para patrimônios.
                       </p>
                     </div>
                   </td>
@@ -128,10 +128,10 @@ export function PatrimonyTypesTable({
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir tipo de patrimonio</DialogTitle>
+            <DialogTitle>Excluir tipo de patrimônio</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja excluir {patrimonyTypeToDelete?.name}? Se
-              houver patrimonios vinculados, a API podera recusar a exclusao.
+              houver patrimônios vinculados, a API podera recusar a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -148,7 +148,7 @@ export function PatrimonyTypesTable({
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

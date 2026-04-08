@@ -15,7 +15,7 @@ export function CompanyCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `companies.create` para cadastrar empresas.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `companies.create` para cadastrar empresas.</CardDescription>
         </CardHeader>
       </Card>
     );

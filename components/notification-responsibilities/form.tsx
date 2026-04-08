@@ -26,9 +26,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const notificationResponsibilityFormSchema = z.object({
   domain: z.enum(notificationResponsibilityDomains, {
-    message: "Selecione um dominio valido.",
+    message: "Selecione um dominio válido.",
   }),
-  sector_id: z.string().min(1, "Selecione um setor responsavel."),
+  sector_id: z.string().min(1, "Selecione um setor responsável."),
 });
 
 type NotificationResponsibilityFormValues = z.infer<typeof notificationResponsibilityFormSchema>;
@@ -110,14 +110,14 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
   return (
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Nova responsabilidade de notificacao" : "Editar responsabilidade de notificacao"}</CardTitle>
+        <CardTitle>{mode === "create" ? "Nova responsabilidade de notificação" : "Editar responsabilidade de notificação"}</CardTitle>
         <CardDescription>
-          Defina qual setor da subunidade ativa recebera notificacoes automaticas para cada dominio do sistema.
+          Defina qual setor da subunidade ativa recebera notificações automaticas para cada dominio do sistema.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="mb-5 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-          Subunidade ativa: <span className="font-medium text-slate-900">{activeSubunit?.name ?? "Nao selecionada"}</span>
+          Subunidade ativa: <span className="font-medium text-slate-900">{activeSubunit?.name ?? "Não selecionada"}</span>
         </div>
 
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
@@ -143,13 +143,13 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
               </SelectContent>
             </Select>
             <p className="text-xs text-slate-500">
-              Cada subunidade pode ter apenas um setor responsavel por dominio. O backend bloqueia duplicidade.
+              Cada subunidade pode ter apenas um setor responsável por dominio. O backend bloqueia duplicidade.
             </p>
             {errors.domain ? <p className="text-sm text-destructive">{errors.domain.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label>Setor responsavel</Label>
+            <Label>Setor responsável</Label>
             <Select value={selectedSectorId} onValueChange={(value) => setValue("sector_id", value, { shouldValidate: true })}>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione um setor" />
@@ -171,7 +171,7 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
           </div>
 
           <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3 text-sm text-slate-600 md:col-span-2">
-            Ao trocar a subunidade global, os setores disponiveis e as queries em cache sao atualizados automaticamente. Para editar
+            Ao trocar a subunidade global, os setores disponíveis e as queries em cache sao atualizados automaticamente. Para editar
             uma regra de outra subunidade, troque primeiro o contexto ativo no header do sistema.
           </div>
 
@@ -180,7 +180,7 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
               <Link href={mode === "create" ? "/notification-responsibilities" : `/notification-responsibilities/${item?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending || !activeSubunit}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar regra" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar regra" : "Salvar alterações"}
             </Button>
           </div>
         </form>

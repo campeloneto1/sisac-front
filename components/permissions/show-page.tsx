@@ -28,7 +28,7 @@ export function PermissionShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `permissions.view` para visualizar permissoes.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `permissions.view` para visualizar permissões.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -42,8 +42,8 @@ export function PermissionShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar permissao</CardTitle>
-          <CardDescription>Os dados da permissao nao estao disponiveis no momento.</CardDescription>
+          <CardTitle>Erro ao carregar permissão</CardTitle>
+          <CardDescription>Os dados da permissão não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -57,10 +57,10 @@ export function PermissionShowPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="font-display text-3xl text-slate-900">{permission.name}</h1>
-            {isProtectedPermission(permission.slug) ? <Badge variant="warning">Permissao protegida</Badge> : null}
+            {isProtectedPermission(permission.slug) ? <Badge variant="warning">Permissão protegida</Badge> : null}
           </div>
           <p className="mt-2 text-sm text-slate-500">{permission.slug}</p>
-          <p className="mt-3 max-w-3xl text-sm text-slate-600">{permission.description || "Sem descricao cadastrada."}</p>
+          <p className="mt-3 max-w-3xl text-sm text-slate-600">{permission.description || "Sem descrição cadastrada."}</p>
         </div>
 
         {permissions.canUpdate ? (
@@ -74,7 +74,7 @@ export function PermissionShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Visao geral</CardTitle>
-            <CardDescription>Indicadores rapidos da permissao.</CardDescription>
+            <CardDescription>Indicadores rapidos da permissão.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -89,7 +89,7 @@ export function PermissionShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                 <p className="text-sm text-slate-700">
-                  {permission.creator ? `${permission.creator.name} (${permission.creator.email})` : "Nao informado"}
+                  {permission.creator ? `${permission.creator.name} (${permission.creator.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -98,7 +98,7 @@ export function PermissionShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
                 <p className="text-sm text-slate-700">
-                  {permission.updater ? `${permission.updater.name} (${permission.updater.email})` : "Nao informado"}
+                  {permission.updater ? `${permission.updater.name} (${permission.updater.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -123,7 +123,7 @@ export function PermissionShowPage() {
             ) : (
               <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <KeyRound className="h-4 w-4 text-primary" />
-                <p className="text-sm text-slate-500">Esta permissao ainda nao esta vinculada a nenhuma role.</p>
+                <p className="text-sm text-slate-500">Esta permissão ainda não esta vinculada a nenhuma role.</p>
               </div>
             )}
           </CardContent>

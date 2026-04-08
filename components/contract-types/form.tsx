@@ -21,9 +21,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const contractTypeFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
   billing_model: z.enum(contractBillingModels, {
-    message: "Selecione um modelo de faturamento valido.",
+    message: "Selecione um modelo de faturamento válido.",
   }),
 });
 
@@ -94,13 +94,13 @@ export function ContractTypeForm({ mode, contractType }: ContractTypeFormProps) 
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>{mode === "create" ? "Novo tipo de contrato" : "Editar tipo de contrato"}</CardTitle>
-        <CardDescription>Tipos de contrato ficam em Administrador e definem a classificacao base e o modelo de faturamento dos contratos.</CardDescription>
+        <CardDescription>Tipos de contrato ficam em Administrador e definem a classificação base e o modelo de faturamento dos contratos.</CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="name">Nome</Label>
-            <Input id="name" placeholder="Ex.: Locacao de viaturas, Manutencao predial" {...register("name")} />
+            <Input id="name" placeholder="Ex.: Locação de viaturas, Manutenção predial" {...register("name")} />
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
 
@@ -128,14 +128,14 @@ export function ContractTypeForm({ mode, contractType }: ContractTypeFormProps) 
             <p className="text-xs text-slate-500">
               {selectedBillingModel
                 ? getContractBillingModelDescription(selectedBillingModel)
-                : "Escolha como esse tipo de contrato e faturado na operacao."}
+                : "Escolha como esse tipo de contrato e faturado na operação."}
             </p>
             {errors.billing_model ? <p className="text-sm text-destructive">{errors.billing_model.message}</p> : null}
           </div>
 
           <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3 text-sm text-slate-600 md:col-span-2">
-            As features associadas a este tipo ja sao exibidas no detalhe. Se voce quiser, depois podemos adicionar o gerenciamento de
-            `attach`, `detach` e `sync` diretamente na tela de edicao.
+            As features associadas a este tipo já sao exibidas no detalhe. Se você quiser, depois podemos adicionar o gerenciamento de
+            `attach`, `detach` e `sync` diretamente na tela de edição.
           </div>
 
           <div className="flex justify-end gap-3 md:col-span-2">
@@ -143,7 +143,7 @@ export function ContractTypeForm({ mode, contractType }: ContractTypeFormProps) 
               <Link href={mode === "create" ? "/contract-types" : `/contract-types/${contractType?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar tipo" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar tipo" : "Salvar alterações"}
             </Button>
           </div>
         </form>

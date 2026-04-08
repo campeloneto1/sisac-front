@@ -27,7 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const disciplineSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(150, "O nome deve ter no maximo 150 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(150, "O nome deve ter no máximo 150 caracteres."),
   workload_hours: z.string().optional(),
   order: z.string().optional(),
 });

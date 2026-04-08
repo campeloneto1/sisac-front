@@ -18,7 +18,7 @@ export function PermissionsFilters({ search, onSearchChange, onClear }: Permissi
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
         <Input
           className="pl-9"
-          placeholder="Buscar por nome, slug ou descricao"
+          placeholder="Buscar por nome, slug ou descrição"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
         />

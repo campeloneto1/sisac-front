@@ -17,7 +17,7 @@ export function PatrimonyCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar patrimonios.
+            Você precisa da permissão `create` para cadastrar patrimônios.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -30,7 +30,7 @@ export function PatrimonyCreatePage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O cadastro de patrimonios depende da subunidade ativa.
+            O cadastro de patrimônios depende da subunidade ativa.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -45,7 +45,7 @@ export function PatrimonyCreatePage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Novo patrimonio
+            Novo patrimônio
           </h1>
           <p className="text-sm text-slate-500">
             Registre um novo bem patrimonial para a subunidade ativa.

@@ -46,7 +46,7 @@ export function CompaniesTable({ companies }: CompaniesTableProps) {
                 <th className="px-4 py-3 font-medium">CNPJ</th>
                 <th className="px-4 py-3 font-medium">Cidade</th>
                 <th className="px-4 py-3 font-medium">Subunidade</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -104,7 +104,7 @@ export function CompaniesTable({ companies }: CompaniesTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir empresa</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {companyToDelete?.name}? Se houver registros vinculados, a API pode bloquear a exclusao.
+              Tem certeza que deseja excluir {companyToDelete?.name}? Se houver registros vinculados, a API pode bloquear a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -112,7 +112,7 @@ export function CompaniesTable({ companies }: CompaniesTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

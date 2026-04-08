@@ -45,7 +45,7 @@ export function BrandShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `brands.view` para visualizar
+            Você precisa de `administrator` e `brands.view` para visualizar
             marcas.
           </CardDescription>
         </CardHeader>
@@ -63,7 +63,7 @@ export function BrandShowPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar marca</CardTitle>
           <CardDescription>
-            Os dados da marca nao estao disponiveis no momento.
+            Os dados da marca não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -85,7 +85,7 @@ export function BrandShowPage() {
             </Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            Sigla: {brand.abbreviation ?? "Nao informada"}
+            Sigla: {brand.abbreviation ?? "Não informada"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             Esta marca pode alimentar modelos e outros catalogos relacionados ao
@@ -138,7 +138,7 @@ export function BrandShowPage() {
                 <p className="text-sm text-slate-700">
                   {brand.creator
                     ? `${brand.creator.name} (${brand.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -151,7 +151,7 @@ export function BrandShowPage() {
                 <p className="text-sm text-slate-700">
                   {brand.updater
                     ? `${brand.updater.name} (${brand.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -177,7 +177,7 @@ export function BrandShowPage() {
                       {variant.name}
                     </p>
                     <p className="mt-1 text-xs text-slate-500">
-                      Sigla: {variant.abbreviation ?? "Nao informada"}
+                      Sigla: {variant.abbreviation ?? "Não informada"}
                     </p>
                   </div>
                 ))}
@@ -186,7 +186,7 @@ export function BrandShowPage() {
               <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <ShieldCheck className="h-4 w-4 text-primary" />
                 <p className="text-sm text-slate-500">
-                  Esta marca ainda nao possui modelos vinculados.
+                  Esta marca ainda não possui modelos vinculados.
                 </p>
               </div>
             )}

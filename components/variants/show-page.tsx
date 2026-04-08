@@ -45,7 +45,7 @@ export function VariantShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `variants.view` para visualizar
+            Você precisa de `administrator` e `variants.view` para visualizar
             modelos.
           </CardDescription>
         </CardHeader>
@@ -63,7 +63,7 @@ export function VariantShowPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar variante</CardTitle>
           <CardDescription>
-            Os dados da variante nao estao disponiveis no momento.
+            Os dados da variante não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -85,11 +85,11 @@ export function VariantShowPage() {
             </Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            Sigla: {variant.abbreviation ?? "Nao informada"}
+            Sigla: {variant.abbreviation ?? "Não informada"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             Variante associada a uma marca administrativa para reaproveitamento
-            em outros modulos.
+            em outros módulos.
           </p>
         </div>
 
@@ -138,7 +138,7 @@ export function VariantShowPage() {
                 <p className="text-sm text-slate-700">
                   {variant.creator
                     ? `${variant.creator.name} (${variant.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -151,7 +151,7 @@ export function VariantShowPage() {
                 <p className="text-sm text-slate-700">
                   {variant.updater
                     ? `${variant.updater.name} (${variant.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -172,7 +172,7 @@ export function VariantShowPage() {
                   {variant.brand.name}
                 </p>
                 <p className="mt-1 text-xs text-slate-500">
-                  Sigla: {variant.brand.abbreviation ?? "Nao informada"}
+                  Sigla: {variant.brand.abbreviation ?? "Não informada"}
                 </p>
                 <p className="mt-2 text-xs text-slate-500">
                   Tipo: {getBrandTypeLabel(variant.brand.type)}
@@ -180,7 +180,7 @@ export function VariantShowPage() {
               </div>
             ) : (
               <p className="text-sm text-slate-500">
-                Esta variante ainda nao possui marca vinculada.
+                Esta variante ainda não possui marca vinculada.
               </p>
             )}
           </CardContent>

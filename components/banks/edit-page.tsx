@@ -21,7 +21,7 @@ export function BankEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `banks.update` para editar bancos.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `banks.update` para editar bancos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function BankEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar banco</CardTitle>
-          <CardDescription>O banco nao pode ser editado agora.</CardDescription>
+          <CardDescription>O banco não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

@@ -38,7 +38,7 @@ export function CourseClassesListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `viewAny` para visualizar turmas.</CardDescription>
+          <CardDescription>Você precisa da permissão `viewAny` para visualizar turmas.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -49,7 +49,7 @@ export function CourseClassesListPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="font-display text-3xl text-slate-900">Turmas de curso</h1>
-          <p className="text-sm text-slate-500">Gerencie as turmas da sua subunidade, com planejamento, execucao e snapshot das disciplinas.</p>
+          <p className="text-sm text-slate-500">Gerencie as turmas da sua subunidade, com planejamento, execução e snapshot das disciplinas.</p>
         </div>
 
         {permissions.canCreate ? (
@@ -96,7 +96,7 @@ export function CourseClassesListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar turmas</CardTitle>
-            <CardDescription>Verifique a API, a subunidade ativa e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API, a subunidade ativa e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !courseClassesQuery.data?.data.length ? (

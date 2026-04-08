@@ -22,8 +22,8 @@ export function MaterialUnitShowPage() {
       {!unit ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Unidade nao encontrada</CardTitle>
-            <CardDescription>Esta unidade nao foi retornada pelo payload atual do material.</CardDescription>
+            <CardTitle>Unidade não encontrada</CardTitle>
+            <CardDescription>Esta unidade não foi retornada pelo payload atual do material.</CardDescription>
           </CardHeader>
         </Card>
       ) : (
@@ -34,11 +34,11 @@ export function MaterialUnitShowPage() {
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-2">
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Patrimonio 1</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Patrimônio 1</p>
               <p className="mt-1 text-sm text-slate-700">{unit.patrimony_number_1 ?? "-"}</p>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Patrimonio 2</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Patrimônio 2</p>
               <p className="mt-1 text-sm text-slate-700">{unit.patrimony_number_2 ?? "-"}</p>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">

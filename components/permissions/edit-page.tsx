@@ -21,7 +21,7 @@ export function PermissionEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `permissions.update` para editar permissoes.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `permissions.update` para editar permissões.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -35,8 +35,8 @@ export function PermissionEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar permissao</CardTitle>
-          <CardDescription>A permissao nao pode ser editada agora.</CardDescription>
+          <CardTitle>Erro ao carregar permissão</CardTitle>
+          <CardDescription>A permissão não pode ser editada agora.</CardDescription>
         </CardHeader>
       </Card>
     );

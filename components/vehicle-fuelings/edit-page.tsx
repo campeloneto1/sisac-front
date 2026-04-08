@@ -25,8 +25,8 @@ export function VehicleFuelingEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar abastecimentos de
-            veiculos.
+            Você precisa da permissão `update` para editar abastecimentos de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -43,7 +43,7 @@ export function VehicleFuelingEditPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar abastecimento</CardTitle>
           <CardDescription>
-            Os dados do abastecimento nao estao disponiveis para edicao no
+            Os dados do abastecimento não estão disponíveis para edição no
             momento.
           </CardDescription>
         </CardHeader>
@@ -62,7 +62,7 @@ export function VehicleFuelingEditPage() {
             Editar abastecimento
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize litros, valores, posto, responsavel e contexto
+            Atualize litros, valores, posto, responsável e contexto
             operacional.
           </p>
         </div>

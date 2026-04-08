@@ -13,7 +13,7 @@ export function useCreateArmamentCaliberMutation() {
       queryClient.invalidateQueries({ queryKey: ["armament-calibers"] });
     },
     onError: () => {
-      toast.error("Nao foi possivel criar o calibre de armamento.");
+      toast.error("Não foi possível criar o calibre de armamento.");
     },
   });
 }
@@ -37,7 +37,7 @@ export function useUpdateArmamentCaliberMutation() {
       });
     },
     onError: () => {
-      toast.error("Nao foi possivel atualizar o calibre de armamento.");
+      toast.error("Não foi possível atualizar o calibre de armamento.");
     },
   });
 }
@@ -52,7 +52,7 @@ export function useDeleteArmamentCaliberMutation() {
       queryClient.invalidateQueries({ queryKey: ["armament-calibers"] });
     },
     onError: () => {
-      toast.error("Nao foi possivel remover o calibre de armamento.");
+      toast.error("Não foi possível remover o calibre de armamento.");
     },
   });
 }

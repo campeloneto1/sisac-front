@@ -37,7 +37,7 @@ export function SectorsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `sectors.viewAny` para visualizar setores.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `sectors.viewAny` para visualizar setores.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -94,7 +94,7 @@ export function SectorsListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar setores</CardTitle>
-            <CardDescription>Verifique a API, as permissoes do usuario e o resource de `Sector`.</CardDescription>
+            <CardDescription>Verifique a API, as permissões do usuário e o resource de `Sector`.</CardDescription>
           </CardHeader>
         </Card>
       ) : !sectorsQuery.data?.data.length ? (

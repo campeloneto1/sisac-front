@@ -32,7 +32,7 @@ export function SubunitSwitcher() {
         </div>
         <div className="min-w-0">
           <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Subunidade</p>
-          <p className="text-sm text-slate-500">Nenhuma subunidade disponivel</p>
+          <p className="text-sm text-slate-500">Nenhuma subunidade disponível</p>
         </div>
       </div>
     );

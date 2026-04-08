@@ -28,7 +28,7 @@ export function RoleShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `roles.view` para visualizar perfis.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `roles.view` para visualizar perfis.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -43,7 +43,7 @@ export function RoleShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar perfil</CardTitle>
-          <CardDescription>Os dados do perfil nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do perfil não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -60,7 +60,7 @@ export function RoleShowPage() {
             {isProtectedRole(role.slug) ? <Badge variant="warning">Role protegida</Badge> : null}
           </div>
           <p className="mt-2 text-sm text-slate-500">{role.slug}</p>
-          <p className="mt-3 max-w-3xl text-sm text-slate-600">{role.description || "Sem descricao cadastrada."}</p>
+          <p className="mt-3 max-w-3xl text-sm text-slate-600">{role.description || "Sem descrição cadastrada."}</p>
         </div>
 
         {permissions.canUpdate ? (
@@ -80,14 +80,14 @@ export function RoleShowPage() {
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Users className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Usuarios vinculados</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Usuários vinculados</p>
                 <p className="text-sm text-slate-700">{role.users_count ?? 0}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <LockKeyhole className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Permissoes</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Permissões</p>
                 <p className="text-sm text-slate-700">{role.permissions_count ?? role.permissions?.length ?? 0}</p>
               </div>
             </div>
@@ -96,7 +96,7 @@ export function RoleShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                 <p className="text-sm text-slate-700">
-                  {role.creator ? `${role.creator.name} (${role.creator.email})` : "Nao informado"}
+                  {role.creator ? `${role.creator.name} (${role.creator.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -105,7 +105,7 @@ export function RoleShowPage() {
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Permissoes vinculadas</CardTitle>
+            <CardTitle>Permissões vinculadas</CardTitle>
             <CardDescription>Lista carregada pelo `RoleResource`.</CardDescription>
           </CardHeader>
           <CardContent>
@@ -119,7 +119,7 @@ export function RoleShowPage() {
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-slate-500">Este perfil nao possui permissoes vinculadas.</p>
+              <p className="text-sm text-slate-500">Este perfil não possui permissões vinculadas.</p>
             )}
           </CardContent>
         </Card>

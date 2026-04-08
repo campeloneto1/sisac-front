@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function getOfficerLabel(officer: { id: number; name?: string | null; registration_number?: string | null } | null | undefined) {
   if (!officer) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   if (officer.name && officer.registration_number) {
@@ -38,7 +38,7 @@ function getAddressSummary(unit: {
     return `${address} • CEP ${unit.postal_code}`;
   }
 
-  return address || (unit.postal_code ? `CEP ${unit.postal_code}` : "Nao informado");
+  return address || (unit.postal_code ? `CEP ${unit.postal_code}` : "Não informado");
 }
 
 export function UnitShowPage() {
@@ -52,7 +52,7 @@ export function UnitShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `units.view` para visualizar unidades.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `units.view` para visualizar unidades.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -67,7 +67,7 @@ export function UnitShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar unidade</CardTitle>
-          <CardDescription>Os dados da unidade nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados da unidade não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -84,7 +84,7 @@ export function UnitShowPage() {
             <Badge variant="outline">{unit.abbreviation}</Badge>
           </div>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Unidade administrativa estruturada para organizacao institucional, localizacao territorial e definicao de comando.
+            Unidade administrativa estruturada para organizacao institucional, localização territorial e definicao de comando.
           </p>
         </div>
 
@@ -99,42 +99,42 @@ export function UnitShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Visao geral</CardTitle>
-            <CardDescription>Resumo rapido da unidade.</CardDescription>
+            <CardDescription>Resumo rápido da unidade.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Phone className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Telefone</p>
-                <p className="text-sm text-slate-700">{unit.phone || "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{unit.phone || "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Mail className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Email</p>
-                <p className="text-sm text-slate-700">{unit.email || "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{unit.email || "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <MapPinned className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Cidade</p>
-                <p className="text-sm text-slate-700">{unit.city ? `${unit.city.name} (${unit.city.abbreviation})` : "Nao informada"}</p>
+                <p className="text-sm text-slate-700">{unit.city ? `${unit.city.name} (${unit.city.abbreviation})` : "Não informada"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{unit.creator ? `${unit.creator.name} (${unit.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{unit.creator ? `${unit.creator.name} (${unit.creator.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{unit.updater ? `${unit.updater.name} (${unit.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{unit.updater ? `${unit.updater.name} (${unit.updater.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>
@@ -162,7 +162,7 @@ export function UnitShowPage() {
 
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3">
               <p className="text-sm text-slate-600">
-                A exclusao pode ser bloqueada pela policy do backend quando a unidade possui subunidades vinculadas.
+                A exclusão pode ser bloqueada pela policy do backend quando a unidade possui subunidades vinculadas.
               </p>
             </div>
           </CardContent>

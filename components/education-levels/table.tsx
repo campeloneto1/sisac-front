@@ -43,7 +43,7 @@ export function EducationLevelsTable({ educationLevels }: EducationLevelsTablePr
             <thead className="bg-slate-50 text-slate-500">
               <tr>
                 <th className="px-4 py-3 font-medium">Nivel de escolaridade</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -95,7 +95,7 @@ export function EducationLevelsTable({ educationLevels }: EducationLevelsTablePr
             <DialogTitle>Excluir nivel de escolaridade</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja excluir {educationLevelToDelete?.name}? Se houver policiais ou outros registros vinculados,
-              a API pode bloquear a exclusao.
+              a API pode bloquear a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -103,7 +103,7 @@ export function EducationLevelsTable({ educationLevels }: EducationLevelsTablePr
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

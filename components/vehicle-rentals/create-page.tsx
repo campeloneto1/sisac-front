@@ -20,8 +20,8 @@ export function VehicleRentalCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar locacoes de
-            veiculos.
+            Você precisa da permissão `create` para cadastrar locações de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -36,10 +36,10 @@ export function VehicleRentalCreatePage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Nova locacao de veiculo
+            Nova locação de veículo
           </h1>
           <p className="text-sm text-slate-500">
-            Registre o contrato, os custos e o ciclo operacional do veiculo
+            Registre o contrato, os custos e o ciclo operacional do veículo
             alugado.
           </p>
         </div>

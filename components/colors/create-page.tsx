@@ -16,7 +16,7 @@ export function ColorCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `colors.create` para cadastrar
+            Você precisa de `administrator` e `colors.create` para cadastrar
             cores.
           </CardDescription>
         </CardHeader>

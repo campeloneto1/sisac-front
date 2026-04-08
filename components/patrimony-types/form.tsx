@@ -32,10 +32,10 @@ const patrimonyTypeFormSchema = z.object({
   name: z
     .string()
     .min(2, "O nome precisa ter ao menos 2 caracteres.")
-    .max(100, "O nome deve ter no maximo 100 caracteres."),
+    .max(100, "O nome deve ter no máximo 100 caracteres."),
   description: z
     .string()
-    .max(1000, "A descricao deve ter no maximo 1000 caracteres.")
+    .max(1000, "A descrição deve ter no máximo 1000 caracteres.")
     .optional()
     .or(z.literal("")),
 });
@@ -111,12 +111,12 @@ export function PatrimonyTypeForm({
       <CardHeader>
         <CardTitle>
           {mode === "create"
-            ? "Novo tipo de patrimonio"
-            : "Editar tipo de patrimonio"}
+            ? "Novo tipo de patrimônio"
+            : "Editar tipo de patrimônio"}
         </CardTitle>
         <CardDescription>
-          Tipos de patrimonio ficam em Administrador e sustentam a
-          classificacao mestre usada pelo modulo de patrimonio.
+          Tipos de patrimônio ficam em Administrador e sustentam a
+          classificação mestre usada pelo módulo de patrimônio.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -135,16 +135,16 @@ export function PatrimonyTypeForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Descricao</Label>
+              <Label htmlFor="description">Descrição</Label>
               <Textarea
                 id="description"
                 rows={5}
-                placeholder="Descreva como esse tipo deve ser usado na classificacao administrativa dos patrimonios."
+                placeholder="Descreva como esse tipo deve ser usado na classificação administrativa dos patrimônios."
                 {...register("description")}
               />
               <p className="text-xs text-slate-500">
                 Campo opcional para orientar o uso do cadastro no dominio de
-                patrimonio.
+                patrimônio.
               </p>
               {errors.description ? (
                 <p className="text-sm text-destructive">
@@ -171,7 +171,7 @@ export function PatrimonyTypeForm({
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar tipo"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

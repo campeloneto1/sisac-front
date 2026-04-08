@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const loginSchema = z.object({
-  email: z.string().email("Informe um e-mail valido."),
+  email: z.string().email("Informe um e-mail válido."),
   password: z.string().min(6, "A senha precisa ter ao menos 6 caracteres."),
   device_name: z.string().max(255).optional(),
 });
@@ -60,7 +60,7 @@ export function LoginForm() {
                 Controle institucional com uma base moderna e preparada para escalar.
               </h1>
               <p className="max-w-xl text-base text-slate-300">
-                A area publica de login e a area autenticada ja nascem separadas para acomodar RBAC, contexto
+                A area publica de login e a area autenticada já nascem separadas para acomodar RBAC, contexto
                 de subunidade e os proximos CRUDs do sistema.
               </p>
             </div>
@@ -69,7 +69,7 @@ export function LoginForm() {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
               <ShieldCheck className="h-5 w-5 text-orange-300" />
-              <p className="mt-4 text-sm text-slate-200">Permissoes reativas prontas para integrar com Policies.</p>
+              <p className="mt-4 text-sm text-slate-200">Permissões reativas prontas para integrar com Policies.</p>
             </div>
             <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
               <LockKeyhole className="h-5 w-5 text-teal-300" />
@@ -95,7 +95,7 @@ export function LoginForm() {
           <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-2">
               <Label htmlFor="email">E-mail</Label>
-              <Input id="email" placeholder="voce@empresa.com" {...register("email")} />
+              <Input id="email" placeholder="você@empresa.com" {...register("email")} />
               {errors.email ? <p className="text-sm text-destructive">{errors.email.message}</p> : null}
             </div>
 

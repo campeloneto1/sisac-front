@@ -23,12 +23,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { ContractSubpageShell } from "@/components/contracts/subpage-shell";
 
 const amendmentSchema = z.object({
-  amendment_number: z.string().max(100, "Numero muito longo.").optional(),
+  amendment_number: z.string().max(100, "Número muito longo.").optional(),
   type: z.string().max(100, "Tipo muito longo.").optional(),
   value: z.string().optional(),
   percentage: z.string().optional(),
   date: z.string().optional(),
-  notes: z.string().max(5000, "As observacoes devem ter no maximo 5000 caracteres.").optional(),
+  notes: z.string().max(5000, "As observações devem ter no máximo 5000 caracteres.").optional(),
 });
 
 type AmendmentFormValues = z.infer<typeof amendmentSchema>;
@@ -43,7 +43,7 @@ function formatCurrency(value?: string | number | null) {
 }
 
 function formatDate(value?: string | null) {
-  return value ? new Date(`${value}T00:00:00`).toLocaleDateString("pt-BR") : "Nao informado";
+  return value ? new Date(`${value}T00:00:00`).toLocaleDateString("pt-BR") : "Não informado";
 }
 
 function AmendmentDialog({
@@ -109,13 +109,13 @@ function AmendmentDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{amendment ? "Editar aditivo" : "Novo aditivo"}</DialogTitle>
-          <DialogDescription>Cadastre alteracoes contratuais com rastreabilidade de tipo, data e impacto financeiro.</DialogDescription>
+          <DialogDescription>Cadastre alterações contratuais com rastreabilidade de tipo, data e impacto financeiro.</DialogDescription>
         </DialogHeader>
 
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="contract-amendment-number">Numero</Label>
+              <Label htmlFor="contract-amendment-number">Número</Label>
               <Input id="contract-amendment-number" placeholder="Ex.: AD-2026-01" {...register("amendment_number")} />
             </div>
             <div className="space-y-2">
@@ -140,7 +140,7 @@ function AmendmentDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="contract-amendment-notes">Observacoes</Label>
+            <Label htmlFor="contract-amendment-notes">Observações</Label>
             <Textarea id="contract-amendment-notes" rows={4} placeholder="Contexto do aditivo" {...register("notes")} />
             {errors.notes ? <p className="text-sm text-destructive">{errors.notes.message}</p> : null}
           </div>
@@ -187,16 +187,16 @@ export function ContractAmendmentsPage() {
   return (
     <ContractSubpageShell
       title="Aditivos do contrato"
-      description="Centralize alteracoes de escopo, valor e percentual em uma trilha auditavel."
+      description="Centralize alterações de escopo, valor e percentual em uma trilha auditavel."
       canView={permissions.canViewAny}
       permissionDeniedTitle="Acesso negado"
-      permissionDeniedDescription="Voce precisa da permissao `viewAny` para visualizar os aditivos do contrato."
+      permissionDeniedDescription="Você precisa da permissão `viewAny` para visualizar os aditivos do contrato."
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <CardTitle>Historico de aditivos</CardTitle>
-            <CardDescription>Acompanhe alteracoes financeiras e administrativas com contexto suficiente para analise.</CardDescription>
+            <CardTitle>Histórico de aditivos</CardTitle>
+            <CardDescription>Acompanhe alterações financeiras e administrativas com contexto suficiente para analise.</CardDescription>
           </div>
           {permissions.canCreate ? (
             <Button onClick={() => { setEditingAmendment(null); setIsDialogOpen(true); }}>
@@ -210,7 +210,7 @@ export function ContractAmendmentsPage() {
       <div className="grid gap-4 rounded-[24px] border border-slate-200/70 bg-white/80 p-4 md:grid-cols-3">
         <div className="space-y-2 md:col-span-2">
           <Label htmlFor="contract-amendment-search">Busca</Label>
-          <Input id="contract-amendment-search" placeholder="Busque por numero ou observacoes" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} />
+          <Input id="contract-amendment-search" placeholder="Busque por número ou observações" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} />
         </div>
         <div className="space-y-2">
           <Label htmlFor="contract-amendment-type-filter">Tipo</Label>
@@ -227,7 +227,7 @@ export function ContractAmendmentsPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar aditivos</CardTitle>
-            <CardDescription>Verifique se o endpoint de aditivos do contrato ja esta publicado.</CardDescription>
+            <CardDescription>Verifique se o endpoint de aditivos do contrato já esta publicado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !amendmentsQuery.data?.data.length ? (
@@ -244,11 +244,11 @@ export function ContractAmendmentsPage() {
               <table className="min-w-full text-left text-sm">
                 <thead className="bg-slate-50 text-slate-500">
                   <tr>
-                    <th className="px-4 py-3 font-medium">Numero / tipo</th>
+                    <th className="px-4 py-3 font-medium">Número / tipo</th>
                     <th className="px-4 py-3 font-medium">Impacto</th>
                     <th className="px-4 py-3 font-medium">Data</th>
                     <th className="px-4 py-3 font-medium">Resumo</th>
-                    <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                    <th className="px-4 py-3 font-medium text-right">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -257,7 +257,7 @@ export function ContractAmendmentsPage() {
                       <td className="px-4 py-4">
                         <div>
                           <Badge variant="warning">{amendment.amendment_number ?? `Aditivo #${amendment.id}`}</Badge>
-                          <p className="mt-2 text-sm text-slate-600">{amendment.type ?? "Tipo nao informado"}</p>
+                          <p className="mt-2 text-sm text-slate-600">{amendment.type ?? "Tipo não informado"}</p>
                         </div>
                       </td>
                       <td className="px-4 py-4 text-slate-600">
@@ -273,7 +273,7 @@ export function ContractAmendmentsPage() {
                         </div>
                       </td>
                       <td className="px-4 py-4 text-slate-600">{formatDate(amendment.date)}</td>
-                      <td className="px-4 py-4 text-slate-600">{amendment.notes?.trim() || "Sem observacoes informadas."}</td>
+                      <td className="px-4 py-4 text-slate-600">{amendment.notes?.trim() || "Sem observações informadas."}</td>
                       <td className="px-4 py-4">
                         <div className="flex justify-end gap-2">
                           {permissions.canUpdate ? (
@@ -318,7 +318,7 @@ export function ContractAmendmentsPage() {
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={() => setAmendmentToDelete(null)}>Cancelar</Button>
             <Button type="button" variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -17,16 +17,16 @@ export function MaterialUnitEditPage() {
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Edicao da unidade #{params.unitId}</CardTitle>
+          <CardTitle>Edição da unidade #{params.unitId}</CardTitle>
           <CardDescription>
-            Esta tela fica reservada para o formulario de edicao quando o recurso estiver disponivel na API.
+            Esta tela fica reservada para o formulario de edição quando o recurso estiver disponível na API.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
           <p>Atualizacoes previstas:</p>
-          <p>patrimonios;</p>
+          <p>patrimônios;</p>
           <p>datas de aquisicao e expiracao;</p>
-          <p>mudanca controlada de status.</p>
+          <p>mudança controlada de status.</p>
         </CardContent>
       </Card>
     </MaterialUnitsPageShell>

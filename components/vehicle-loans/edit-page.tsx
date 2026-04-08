@@ -20,8 +20,8 @@ export function VehicleLoanEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar emprestimos de
-            veiculos.
+            Você precisa da permissão `update` para editar empréstimos de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -36,9 +36,9 @@ export function VehicleLoanEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar emprestimo</CardTitle>
+          <CardTitle>Erro ao carregar empréstimo</CardTitle>
           <CardDescription>
-            Os dados do emprestimo nao estao disponiveis para edicao no
+            Os dados do empréstimo não estão disponíveis para edição no
             momento.
           </CardDescription>
         </CardHeader>
@@ -54,10 +54,10 @@ export function VehicleLoanEditPage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Editar emprestimo
+            Editar empréstimo
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize o tomador, observacoes e os dados de saida ou devolucao.
+            Atualize o tomador, observações e os dados de saida ou devolução.
           </p>
         </div>
       </div>

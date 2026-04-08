@@ -16,8 +16,8 @@ export function ServiceTypeCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `service-types.create` para
-            cadastrar tipos de servico.
+            Você precisa de `administrator` e `service-types.create` para
+            cadastrar tipos de serviço.
           </CardDescription>
         </CardHeader>
       </Card>

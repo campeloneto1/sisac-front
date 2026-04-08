@@ -30,7 +30,7 @@ export function MaterialTypeShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `material-types.view` para
+            Você precisa de `administrator` e `material-types.view` para
             visualizar tipos de material.
           </CardDescription>
         </CardHeader>
@@ -48,7 +48,7 @@ export function MaterialTypeShowPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar tipo de material</CardTitle>
           <CardDescription>
-            Os dados do tipo de material nao estao disponiveis no momento.
+            Os dados do tipo de material não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -115,10 +115,10 @@ export function MaterialTypeShowPage() {
               <FileText className="mt-0.5 h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Descricao
+                  Descrição
                 </p>
                 <p className="text-sm text-slate-700">
-                  {materialType.description?.trim() || "Nao informada"}
+                  {materialType.description?.trim() || "Não informada"}
                 </p>
               </div>
             </div>
@@ -129,7 +129,7 @@ export function MaterialTypeShowPage() {
           <CardHeader>
             <CardTitle>Metadados</CardTitle>
             <CardDescription>
-              Usuarios responsaveis pelo cadastro e auditoria.
+              Usuários responsáveis pelo cadastro e auditoria.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -142,7 +142,7 @@ export function MaterialTypeShowPage() {
                 <p className="text-sm text-slate-700">
                   {materialType.creator
                     ? `${materialType.creator.name} (${materialType.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -156,7 +156,7 @@ export function MaterialTypeShowPage() {
                 <p className="text-sm text-slate-700">
                   {materialType.updater
                     ? `${materialType.updater.name} (${materialType.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>

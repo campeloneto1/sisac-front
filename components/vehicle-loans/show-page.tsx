@@ -40,14 +40,14 @@ const returnSchema = z.object({
   end_km: z.coerce.number().int().min(0, "Informe a quilometragem final."),
   return_notes: z
     .string()
-    .max(1000, "As observacoes devem ter no maximo 1000 caracteres."),
+    .max(1000, "As observações devem ter no máximo 1000 caracteres."),
 });
 
 type ReturnValues = z.infer<typeof returnSchema>;
 
 function formatDateTime(date?: string | null, time?: string | null) {
   if (!date) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return `${date.slice(0, 10)}${time ? ` • ${time.slice(0, 5)}` : ""}`;
@@ -78,8 +78,8 @@ export function VehicleLoanShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar emprestimos de
-            veiculos.
+            Você precisa da permissão `view` para visualizar empréstimos de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -94,9 +94,9 @@ export function VehicleLoanShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar emprestimo</CardTitle>
+          <CardTitle>Erro ao carregar empréstimo</CardTitle>
           <CardDescription>
-            Os dados do emprestimo nao estao disponiveis no momento.
+            Os dados do empréstimo não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -124,7 +124,7 @@ export function VehicleLoanShowPage() {
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <h1 className="font-display text-3xl text-slate-900">
-                {loan.vehicle?.license_plate ?? `Emprestimo #${loan.id}`}
+                {loan.vehicle?.license_plate ?? `Empréstimo #${loan.id}`}
               </h1>
               <Badge variant={getVehicleLoanStatusVariant(loan.status)}>
                 {loan.status_label ?? "Sem status"}
@@ -135,8 +135,8 @@ export function VehicleLoanShowPage() {
               {formatDateTime(loan.start_date, loan.start_time)}
             </p>
             <p className="mt-3 max-w-3xl text-sm text-slate-600">
-              Acompanhe os dados do tomador, a movimentacao do veiculo e o
-              fechamento da devolucao.
+              Acompanhe os dados do tomador, a movimentacao do veículo e o
+              fechamento da devolução.
             </p>
           </div>
 
@@ -148,7 +148,7 @@ export function VehicleLoanShowPage() {
             ) : null}
             {permissions.canUpdate && loan.status === "in_use" ? (
               <Button onClick={() => setIsReturnDialogOpen(true)}>
-                Marcar devolucao
+                Marcar devolução
               </Button>
             ) : null}
           </div>
@@ -157,9 +157,9 @@ export function VehicleLoanShowPage() {
         <div className="grid gap-6 xl:grid-cols-2">
           <Card className="border-slate-200/70 bg-white/80">
             <CardHeader>
-              <CardTitle>Veiculo e tomador</CardTitle>
+              <CardTitle>Veículo e tomador</CardTitle>
               <CardDescription>
-                Contexto principal do emprestimo.
+                Contexto principal do empréstimo.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -167,13 +167,13 @@ export function VehicleLoanShowPage() {
                 <CarFront className="h-4 w-4 text-primary" />
                 <div>
                   <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                    Veiculo
+                    Veículo
                   </p>
                   <p className="text-sm text-slate-700">
                     {loan.vehicle?.license_plate ?? `#${loan.vehicle_id}`}
                   </p>
                   <p className="text-sm text-slate-500">
-                    {loan.vehicle?.vehicle_type?.name ?? "Tipo nao informado"}
+                    {loan.vehicle?.vehicle_type?.name ?? "Tipo não informado"}
                     {loan.vehicle?.variant?.name
                       ? ` • ${loan.vehicle.variant.name}`
                       : ""}
@@ -194,7 +194,7 @@ export function VehicleLoanShowPage() {
                     {loan.borrower_type === "App\\Models\\PoliceOfficer"
                       ? "Policial"
                       : loan.borrower_type === "App\\Models\\User"
-                        ? "Usuario"
+                        ? "Usuário"
                         : "Externo"}
                   </p>
                 </div>
@@ -206,10 +206,10 @@ export function VehicleLoanShowPage() {
                     Dados externos
                   </p>
                   <p className="mt-1 text-sm text-slate-700">
-                    Documento: {loan.external_borrower_document ?? "Nao informado"}
+                    Documento: {loan.external_borrower_document ?? "Não informado"}
                   </p>
                   <p className="text-sm text-slate-700">
-                    Telefone: {loan.external_borrower_phone ?? "Nao informado"}
+                    Telefone: {loan.external_borrower_phone ?? "Não informado"}
                   </p>
                 </div>
               ) : null}
@@ -218,10 +218,10 @@ export function VehicleLoanShowPage() {
                 <MapPin className="h-4 w-4 text-primary" />
                 <div>
                   <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                    Local de referencia
+                    Local de referência
                   </p>
                   <p className="text-sm text-slate-700">
-                    {loan.city?.name ?? "Cidade nao informada"}
+                    {loan.city?.name ?? "Cidade não informada"}
                     {loan.subunit?.name
                       ? ` • ${loan.subunit.abbreviation ?? loan.subunit.name}`
                       : ""}
@@ -235,7 +235,7 @@ export function VehicleLoanShowPage() {
             <CardHeader>
               <CardTitle>Movimentacao</CardTitle>
               <CardDescription>
-                Datas, horarios e kilometragem do emprestimo.
+                Datas, horarios e kilometragem do empréstimo.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -256,7 +256,7 @@ export function VehicleLoanShowPage() {
                   <CalendarDays className="h-4 w-4 text-primary" />
                   <div>
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                      Devolucao
+                      Devolução
                     </p>
                     <p className="text-sm text-slate-700">
                       {formatDateTime(loan.end_date, loan.end_time)}
@@ -272,7 +272,7 @@ export function VehicleLoanShowPage() {
                     Quilometragem
                   </p>
                   <p className="text-sm text-slate-700">
-                    Inicio: {loan.start_km.toLocaleString("pt-BR")} • Final:{" "}
+                    Início: {loan.start_km.toLocaleString("pt-BR")} • Final:{" "}
                     {loan.end_km !== null && loan.end_km !== undefined
                       ? loan.end_km.toLocaleString("pt-BR")
                       : "-"}
@@ -281,26 +281,26 @@ export function VehicleLoanShowPage() {
                     Percorrido:{" "}
                     {loan.km_traveled !== null && loan.km_traveled !== undefined
                       ? `${loan.km_traveled.toLocaleString("pt-BR")} km`
-                      : "Nao calculado"}
+                      : "Não calculado"}
                   </p>
                 </div>
               </div>
 
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Observacoes de retirada
+                  Observações de retirada
                 </p>
                 <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">
-                  {loan.start_notes ?? "Nenhuma observacao registrada."}
+                  {loan.start_notes ?? "Nenhuma observação registrada."}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Observacoes de devolucao
+                  Observações de devolução
                 </p>
                 <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">
-                  {loan.return_notes ?? "Nenhuma observacao registrada."}
+                  {loan.return_notes ?? "Nenhuma observação registrada."}
                 </p>
               </div>
             </CardContent>
@@ -311,7 +311,7 @@ export function VehicleLoanShowPage() {
           <CardHeader>
             <CardTitle>Auditoria</CardTitle>
             <CardDescription>
-              Historico basico de criacao e ultima atualizacao.
+              Histórico básico de criação e última atualização.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -322,7 +322,7 @@ export function VehicleLoanShowPage() {
               <p className="mt-1 text-sm text-slate-700">
                 {loan.creator
                   ? `${loan.creator.name} (${loan.creator.email})`
-                  : "Nao informado"}
+                  : "Não informado"}
               </p>
             </div>
 
@@ -333,7 +333,7 @@ export function VehicleLoanShowPage() {
               <p className="mt-1 text-sm text-slate-700">
                 {loan.updater
                   ? `${loan.updater.name} (${loan.updater.email})`
-                  : "Nao informado"}
+                  : "Não informado"}
               </p>
             </div>
 
@@ -355,16 +355,16 @@ export function VehicleLoanShowPage() {
       <Dialog open={isReturnDialogOpen} onOpenChange={setIsReturnDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Marcar devolucao</DialogTitle>
+            <DialogTitle>Marcar devolução</DialogTitle>
             <DialogDescription>
-              Informe os dados finais para encerrar esse emprestimo e devolver o
-              veiculo ao status operacional correspondente.
+              Informe os dados finais para encerrar esse empréstimo e devolver o
+              veículo ao status operacional correspondente.
             </DialogDescription>
           </DialogHeader>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmitReturn)}>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-sm text-slate-700">
-                A data e a hora da devolucao serao registradas automaticamente
+                A data e a hora da devolução serao registradas automaticamente
                 no momento da confirmacao.
               </p>
             </div>
@@ -380,10 +380,10 @@ export function VehicleLoanShowPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="return_notes">Observacoes</Label>
+              <Label htmlFor="return_notes">Observações</Label>
               <Textarea
                 id="return_notes"
-                placeholder="Descreva as condicoes do veiculo na devolucao."
+                placeholder="Descreva as condicoes do veículo na devolução."
                 {...register("return_notes")}
               />
               {errors.return_notes ? (
@@ -402,7 +402,7 @@ export function VehicleLoanShowPage() {
                 Cancelar
               </Button>
               <Button type="submit" disabled={returnMutation.isPending}>
-                {returnMutation.isPending ? "Salvando..." : "Confirmar devolucao"}
+                {returnMutation.isPending ? "Salvando..." : "Confirmar devolução"}
               </Button>
             </DialogFooter>
           </form>

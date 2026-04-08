@@ -18,7 +18,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDate(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -38,7 +38,7 @@ export function ArmamentSizeShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar tamanhos de
+            Você precisa da permissão `view` para visualizar tamanhos de
             armamento.
           </CardDescription>
         </CardHeader>
@@ -60,9 +60,9 @@ export function ArmamentSizeShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o tamanho</CardTitle>
+          <CardTitle>Não foi possível carregar o tamanho</CardTitle>
           <CardDescription>
-            Verifique se o registro existe e se voce possui acesso a ele.
+            Verifique se o registro existe e se você possui acesso a ele.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -100,9 +100,9 @@ export function ArmamentSizeShowPage() {
       <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Identificacao</CardTitle>
+            <CardTitle>Identificação</CardTitle>
             <CardDescription>
-              Informacoes principais usadas no cadastro do tamanho.
+              Informações principais usadas no cadastro do tamanho.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -131,10 +131,10 @@ export function ArmamentSizeShowPage() {
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
               <div className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-600">
                 <FileText className="h-4 w-4 text-primary" />
-                Descricao
+                Descrição
               </div>
               <p className="whitespace-pre-wrap text-sm text-slate-700">
-                {armamentSize.description || "Nenhuma descricao informada."}
+                {armamentSize.description || "Nenhuma descrição informada."}
               </p>
             </div>
           </CardContent>
@@ -144,7 +144,7 @@ export function ArmamentSizeShowPage() {
           <CardHeader>
             <CardTitle>Auditoria</CardTitle>
             <CardDescription>
-              Dados de criacao e ultima atualizacao do cadastro.
+              Dados de criação e última atualização do cadastro.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -157,7 +157,7 @@ export function ArmamentSizeShowPage() {
                 {formatDate(armamentSize.created_at)}
               </p>
               <p className="mt-1 text-xs text-slate-500">
-                {armamentSize.creator?.name || "Usuario nao informado"}
+                {armamentSize.creator?.name || "Usuário não informado"}
               </p>
             </div>
 
@@ -170,7 +170,7 @@ export function ArmamentSizeShowPage() {
                 {formatDate(armamentSize.updated_at)}
               </p>
               <p className="mt-1 text-xs text-slate-500">
-                {armamentSize.updater?.name || "Usuario nao informado"}
+                {armamentSize.updater?.name || "Usuário não informado"}
               </p>
             </div>
           </CardContent>

@@ -21,7 +21,7 @@ export function LeaveTypeShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `view` para visualizar tipos de afastamento.</CardDescription>
+          <CardDescription>Você precisa da permissão `view` para visualizar tipos de afastamento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function LeaveTypeShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar tipo de afastamento</CardTitle>
-          <CardDescription>Os dados do tipo de afastamento nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do tipo de afastamento não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -53,7 +53,7 @@ export function LeaveTypeShowPage() {
             <Badge variant="secondary">{leaveType.slug}</Badge>
           </div>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Tipo administrativo usado para padronizar afastamentos, regras medicas e impacto financeiro dentro do sistema.
+            Tipo administrativo usado para padronizar afastamentos, regras médicas e impacto financeiro dentro do sistema.
           </p>
         </div>
 
@@ -68,19 +68,19 @@ export function LeaveTypeShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Regras do afastamento</CardTitle>
-            <CardDescription>Configuracoes que orientam o uso do tipo de afastamento.</CardDescription>
+            <CardDescription>Configurações que orientam o uso do tipo de afastamento.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Descricao</p>
-              <p className="mt-1 text-sm text-slate-700">{leaveType.description || "Nao informada"}</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Descrição</p>
+              <p className="mt-1 text-sm text-slate-700">{leaveType.description || "Não informada"}</p>
             </div>
 
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <ShieldAlert className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Laudo medico</p>
-                <p className="text-sm text-slate-700">{leaveType.requires_medical_report ? "Obrigatorio" : "Nao obrigatorio"}</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Laudo médico</p>
+                <p className="text-sm text-slate-700">{leaveType.requires_medical_report ? "Obrigatório" : "Não obrigatório"}</p>
               </div>
             </div>
 
@@ -88,7 +88,7 @@ export function LeaveTypeShowPage() {
               <FileText className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Impacto salarial</p>
-                <p className="text-sm text-slate-700">{leaveType.affects_salary ? "Afeta salario" : "Nao afeta salario"}</p>
+                <p className="text-sm text-slate-700">{leaveType.affects_salary ? "Afeta salario" : "Não afeta salario"}</p>
               </div>
             </div>
 
@@ -96,7 +96,7 @@ export function LeaveTypeShowPage() {
               <CalendarRange className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Limite de dias</p>
-                <p className="text-sm text-slate-700">{leaveType.max_days ? `${leaveType.max_days} dias` : "Nao definido"}</p>
+                <p className="text-sm text-slate-700">{leaveType.max_days ? `${leaveType.max_days} dias` : "Não definido"}</p>
               </div>
             </div>
           </CardContent>
@@ -105,7 +105,7 @@ export function LeaveTypeShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Auditoria</CardTitle>
-            <CardDescription>Informacoes de criacao e atualizacao do registro.</CardDescription>
+            <CardDescription>Informações de criação e atualização do registro.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -113,7 +113,7 @@ export function LeaveTypeShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                 <p className="text-sm text-slate-700">
-                  {leaveType.creator ? `${leaveType.creator.name} (${leaveType.creator.email})` : "Nao informado"}
+                  {leaveType.creator ? `${leaveType.creator.name} (${leaveType.creator.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -123,7 +123,7 @@ export function LeaveTypeShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
                 <p className="text-sm text-slate-700">
-                  {leaveType.updater ? `${leaveType.updater.name} (${leaveType.updater.email})` : "Nao informado"}
+                  {leaveType.updater ? `${leaveType.updater.name} (${leaveType.updater.email})` : "Não informado"}
                 </p>
               </div>
             </div>

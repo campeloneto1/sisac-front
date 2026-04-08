@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const contractFeatureFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(50, "O nome deve ter no maximo 50 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(50, "O nome deve ter no máximo 50 caracteres."),
 });
 
 type ContractFeatureFormValues = z.infer<typeof contractFeatureFormSchema>;
@@ -78,8 +78,8 @@ export function ContractFeatureForm({ mode, contractFeature }: ContractFeatureFo
   return (
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Nova caracteristica" : "Editar caracteristica"}</CardTitle>
-        <CardDescription>Caracteristicas ficam em Administrador e podem ser vinculadas aos tipos de contrato para sinalizar capacidades extras.</CardDescription>
+        <CardTitle>{mode === "create" ? "Nova característica" : "Editar característica"}</CardTitle>
+        <CardDescription>Características ficam em Administrador e podem ser vinculadas aos tipos de contrato para sinalizar capacidades extras.</CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
@@ -90,7 +90,7 @@ export function ContractFeatureForm({ mode, contractFeature }: ContractFeatureFo
           </div>
 
           <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3 text-sm text-slate-600 md:col-span-2">
-            O uso dessa caracteristica em `contract-types` ainda nao aparece com contagem na API, mas ela pode impactar a configuracao funcional dos contratos.
+            O uso dessa característica em `contract-types` ainda não aparece com contagem na API, mas ela pode impactar a configuração funcional dos contratos.
           </div>
 
           <div className="flex justify-end gap-3 md:col-span-2">
@@ -98,7 +98,7 @@ export function ContractFeatureForm({ mode, contractFeature }: ContractFeatureFo
               <Link href={mode === "create" ? "/contract-features" : `/contract-features/${contractFeature?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar caracteristica" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar característica" : "Salvar alterações"}
             </Button>
           </div>
         </form>

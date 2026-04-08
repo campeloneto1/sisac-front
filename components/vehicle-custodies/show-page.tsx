@@ -40,13 +40,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 
 const finalizeSchema = z.object({
-  notes: z.string().max(1000, "As observacoes devem ter no maximo 1000 caracteres."),
+  notes: z.string().max(1000, "As observações devem ter no máximo 1000 caracteres."),
 });
 
 type FinalizeValues = z.output<typeof finalizeSchema>;
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "Nao informado";
+  return date ? date.slice(0, 10) : "Não informado";
 }
 
 export function VehicleCustodyShowPage() {
@@ -74,8 +74,8 @@ export function VehicleCustodyShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar cautelas de
-            veiculos.
+            Você precisa da permissão `view` para visualizar cautelas de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -92,7 +92,7 @@ export function VehicleCustodyShowPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar cautela</CardTitle>
           <CardDescription>
-            Os dados da cautela nao estao disponiveis no momento.
+            Os dados da cautela não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -140,7 +140,7 @@ export function VehicleCustodyShowPage() {
               </Badge>
             </div>
             <p className="mt-2 text-sm text-slate-500">
-              {getVehicleCustodyCustodianLabel(custody)} • Inicio em{" "}
+              {getVehicleCustodyCustodianLabel(custody)} • Início em{" "}
               {formatDate(custody.start_date)}
             </p>
           </div>
@@ -169,7 +169,7 @@ export function VehicleCustodyShowPage() {
         <div className="grid gap-6 xl:grid-cols-2">
           <Card className="border-slate-200/70 bg-white/80">
             <CardHeader>
-              <CardTitle>Veiculo e custodiante</CardTitle>
+              <CardTitle>Veículo e custodiante</CardTitle>
               <CardDescription>
                 Dados principais da cautela.
               </CardDescription>
@@ -179,7 +179,7 @@ export function VehicleCustodyShowPage() {
                 <CarFront className="h-4 w-4 text-primary" />
                 <div>
                   <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                    Veiculo
+                    Veículo
                   </p>
                   <p className="text-sm text-slate-700">
                     {custody.vehicle?.license_plate ?? `#${custody.vehicle_id}`}
@@ -199,7 +199,7 @@ export function VehicleCustodyShowPage() {
                   <p className="text-sm text-slate-500">
                     {custody.custodian_type === "App\\Models\\PoliceOfficer"
                       ? "Policial"
-                      : "Usuario"}
+                      : "Usuário"}
                   </p>
                 </div>
               </div>
@@ -211,7 +211,7 @@ export function VehicleCustodyShowPage() {
                     Documento
                   </p>
                   <p className="text-sm text-slate-700">
-                    {custody.document_number ?? "Nao informado"}
+                    {custody.document_number ?? "Não informado"}
                   </p>
                 </div>
               </div>
@@ -220,7 +220,7 @@ export function VehicleCustodyShowPage() {
 
           <Card className="border-slate-200/70 bg-white/80">
             <CardHeader>
-              <CardTitle>Periodo e motivo</CardTitle>
+              <CardTitle>Período e motivo</CardTitle>
               <CardDescription>
                 Datas e justificativas da cautela.
               </CardDescription>
@@ -231,7 +231,7 @@ export function VehicleCustodyShowPage() {
                   <CalendarDays className="h-4 w-4 text-primary" />
                   <div>
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                      Inicio
+                      Início
                     </p>
                     <p className="text-sm text-slate-700">
                       {formatDate(custody.start_date)}
@@ -275,10 +275,10 @@ export function VehicleCustodyShowPage() {
 
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Observacoes
+                  Observações
                 </p>
                 <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">
-                  {custody.notes ?? "Nenhuma observacao registrada."}
+                  {custody.notes ?? "Nenhuma observação registrada."}
                 </p>
               </div>
             </CardContent>
@@ -289,7 +289,7 @@ export function VehicleCustodyShowPage() {
           <CardHeader>
             <CardTitle>Auditoria</CardTitle>
             <CardDescription>
-              Historico basico de criacao e ultima atualizacao.
+              Histórico básico de criação e última atualização.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -300,7 +300,7 @@ export function VehicleCustodyShowPage() {
               <p className="mt-1 text-sm text-slate-700">
                 {custody.creator
                   ? `${custody.creator.name} (${custody.creator.email})`
-                  : "Nao informado"}
+                  : "Não informado"}
               </p>
             </div>
 
@@ -311,7 +311,7 @@ export function VehicleCustodyShowPage() {
               <p className="mt-1 text-sm text-slate-700">
                 {custody.updater
                   ? `${custody.updater.name} (${custody.updater.email})`
-                  : "Nao informado"}
+                  : "Não informado"}
               </p>
             </div>
           </CardContent>
@@ -327,7 +327,7 @@ export function VehicleCustodyShowPage() {
             <DialogDescription>
               {action === "cancel"
                 ? "Informe o motivo do cancelamento da cautela."
-                : "Informe observacoes finais para encerrar a cautela."}
+                : "Informe observações finais para encerrar a cautela."}
             </DialogDescription>
           </DialogHeader>
 
@@ -337,7 +337,7 @@ export function VehicleCustodyShowPage() {
           >
             <div className="space-y-2">
               <Label htmlFor="notes">
-                {action === "cancel" ? "Motivo" : "Observacoes finais"}
+                {action === "cancel" ? "Motivo" : "Observações finais"}
               </Label>
               <Textarea
                 id="notes"

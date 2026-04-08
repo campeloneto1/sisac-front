@@ -49,9 +49,9 @@ export function VehicleTypesTable({
                 <th className="px-4 py-3 font-medium">Tipo</th>
                 <th className="px-4 py-3 font-medium">Slug</th>
                 <th className="px-4 py-3 font-medium">Codigo</th>
-                <th className="px-4 py-3 font-medium">Veiculos</th>
+                <th className="px-4 py-3 font-medium">Veículos</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -66,7 +66,7 @@ export function VehicleTypesTable({
                         {vehicleType.name}
                       </p>
                       <p className="mt-1 text-slate-500">
-                        Cadastro mestre para classificacao de veiculos.
+                        Cadastro mestre para classificação de veículos.
                       </p>
                     </div>
                   </td>
@@ -128,10 +128,10 @@ export function VehicleTypesTable({
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir tipo de veiculo</DialogTitle>
+            <DialogTitle>Excluir tipo de veículo</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja excluir {vehicleTypeToDelete?.name}? Essa
-              acao nao podera ser desfeita.
+              ação não podera ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -146,7 +146,7 @@ export function VehicleTypesTable({
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

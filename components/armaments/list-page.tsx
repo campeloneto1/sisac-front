@@ -65,7 +65,7 @@ export function ArmamentsListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar armamentos.
+            Você precisa da permissão `viewAny` para visualizar armamentos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -84,8 +84,8 @@ export function ArmamentsListPage() {
               Armamentos
             </h1>
             <p className="text-sm text-slate-500">
-              Gerencie o cadastro base de armamentos e suas classificacoes
-              tecnicas.
+              Gerencie o cadastro base de armamentos e suas classificações
+              técnicas.
             </p>
           </div>
         </div>
@@ -164,7 +164,7 @@ export function ArmamentsListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar armamentos</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario
+              Verifique a API, a subunidade ativa e as permissões do usuário
               autenticado.
             </CardDescription>
           </CardHeader>

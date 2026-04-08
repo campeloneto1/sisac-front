@@ -20,7 +20,7 @@ export function ContractEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `update` para editar contratos.</CardDescription>
+          <CardDescription>Você precisa da permissão `update` para editar contratos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -31,7 +31,7 @@ export function ContractEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>A edicao do contrato depende do contexto ativo da subunidade.</CardDescription>
+          <CardDescription>A edição do contrato depende do contexto ativo da subunidade.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -46,7 +46,7 @@ export function ContractEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar contrato</CardTitle>
-          <CardDescription>O contrato nao pode ser editado agora.</CardDescription>
+          <CardDescription>O contrato não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

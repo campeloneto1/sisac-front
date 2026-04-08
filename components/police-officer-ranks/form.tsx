@@ -172,7 +172,7 @@ export function PoliceOfficerRankForm({ mode, policeOfficerRank, policeOfficers:
               })}
               selectedOption={selectedPoliceOfficerOption}
               placeholder="Selecione o policial"
-              searchPlaceholder="Buscar policial por nome ou matricula"
+              searchPlaceholder="Buscar policial por nome ou matrícula"
               emptyMessage="Nenhum policial encontrado."
             />
             {errors.police_officer_id ? <p className="text-sm text-destructive">{errors.police_officer_id.message}</p> : null}

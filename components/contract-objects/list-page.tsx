@@ -35,7 +35,7 @@ export function ContractObjectsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `contract-objects.viewAny` para visualizar objetos de contrato.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `contract-objects.viewAny` para visualizar objetos de contrato.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -80,7 +80,7 @@ export function ContractObjectsListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar objetos de contrato</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !contractObjectsQuery.data?.data.length ? (

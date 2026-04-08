@@ -22,7 +22,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDateTime(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -56,9 +56,9 @@ export function NotificationDetailPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar notificacao</CardTitle>
+          <CardTitle>Erro ao carregar notificação</CardTitle>
           <CardDescription>
-            Essa notificacao nao esta disponivel para o usuario autenticado.
+            Essa notificação não esta disponível para o usuário autenticado.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -83,11 +83,11 @@ export function NotificationDetailPage() {
             {notification.is_read ? (
               <Badge variant="secondary">Lida</Badge>
             ) : (
-              <Badge variant="info">Nao lida</Badge>
+              <Badge variant="info">Não lida</Badge>
             )}
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            Tipo: {notification.type || "Nao informado"} • Criada em{" "}
+            Tipo: {notification.type || "Não informado"} • Criada em{" "}
             {formatDateTime(notification.created_at)}
           </p>
         </div>
@@ -108,7 +108,7 @@ export function NotificationDetailPage() {
         <CardHeader>
           <CardTitle>Mensagem</CardTitle>
           <CardDescription>
-            Conteudo principal enviado pelo backend para esta notificacao.
+            Conteudo principal enviado pelo backend para esta notificação.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -132,18 +132,18 @@ export function NotificationDetailPage() {
                 Leitura
               </p>
               <p className="mt-1 text-sm text-slate-700">
-                {notification.is_read ? "Lida" : "Nao lida"}
+                {notification.is_read ? "Lida" : "Não lida"}
               </p>
               <p className="text-sm text-slate-500">
                 {notification.read_at
                   ? `Marcada em ${formatDateTime(notification.read_at)}`
-                  : "Ainda nao foi marcada como lida."}
+                  : "Ainda não foi marcada como lida."}
               </p>
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Atualizacao
+                Atualização
               </p>
               <p className="mt-1 text-sm text-slate-700">
                 {formatDateTime(notification.updated_at)}
@@ -162,24 +162,24 @@ export function NotificationDetailPage() {
                 Link de origem
               </p>
               <p className="mt-1 break-all text-sm text-slate-700">
-                {notification.action_url || "Nao informado"}
+                {notification.action_url || "Não informado"}
               </p>
               <p className="text-sm text-slate-500">
                 {originHref
                   ? `Rota resolvida no frontend: ${originHref}`
-                  : "Sem rota conhecida para navegacao automatica."}
+                  : "Sem rota conhecida para navegação automática."}
               </p>
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Slug / modulo
+                Slug / módulo
               </p>
               <p className="mt-1 text-sm text-slate-700">
-                {String(notification.data?.slug || "Nao informado")}
+                {String(notification.data?.slug || "Não informado")}
               </p>
               <p className="text-sm text-slate-500">
-                {String(notification.data?.module || "Modulo nao informado")}
+                {String(notification.data?.module || "Módulo não informado")}
               </p>
             </div>
           </CardContent>
@@ -191,7 +191,7 @@ export function NotificationDetailPage() {
           <CardHeader>
             <CardTitle>Metadados</CardTitle>
             <CardDescription>
-              Contexto complementar enviado no payload da notificacao.
+              Contexto complementar enviado no payload da notificação.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -206,7 +206,7 @@ export function NotificationDetailPage() {
         <Card className="border-sky-200 bg-sky-50/70">
           <CardContent className="flex items-center gap-3 py-4 text-sm text-sky-900">
             <CheckCheck className="h-4 w-4" />
-            Esta notificacao sera marcada como lida automaticamente ao abrir.
+            Esta notificação será marcada como lida automaticamente ao abrir.
           </CardContent>
         </Card>
       ) : null}

@@ -40,8 +40,8 @@ export function MaterialsTable({ materials }: MaterialsTableProps) {
                 <th className="px-4 py-3 font-medium">Marca</th>
                 <th className="px-4 py-3 font-medium">Unidades</th>
                 <th className="px-4 py-3 font-medium">Lotes</th>
-                <th className="px-4 py-3 font-medium">Atualizacao</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">Atualização</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -49,7 +49,7 @@ export function MaterialsTable({ materials }: MaterialsTableProps) {
                 <tr key={material.id} className="border-t border-slate-200/70 align-top">
                   <td className="px-4 py-4">
                     <div>
-                      <p className="font-medium text-slate-900">{material.type?.name ?? "Tipo nao informado"}</p>
+                      <p className="font-medium text-slate-900">{material.type?.name ?? "Tipo não informado"}</p>
                       <p className="mt-1 text-slate-500">{material.type?.slug ?? "-"}</p>
                     </div>
                   </td>
@@ -93,13 +93,13 @@ export function MaterialsTable({ materials }: MaterialsTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir material</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir este material? Se houver vinculos operacionais, a API pode recusar a remocao.
+              Tem certeza que deseja excluir este material? Se houver vínculos operacionais, a API pode recusar a remoção.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={() => setMaterialToDelete(null)}>Cancelar</Button>
             <Button type="button" variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

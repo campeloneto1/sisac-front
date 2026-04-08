@@ -31,15 +31,15 @@ const contractFormSchema = z
     contract_type_id: z.string(),
     contract_object_id: z.string(),
     renewed_from_contract_id: z.string(),
-    contract_number: z.string().min(2, "Informe o numero do contrato.").max(50, "O numero do contrato deve ter no maximo 50 caracteres."),
-    sacc_number: z.string().min(2, "Informe o numero SACC.").max(50, "O numero SACC deve ter no maximo 50 caracteres."),
-    total_value: z.coerce.number().min(0, "O valor total nao pode ser negativo."),
+    contract_number: z.string().min(2, "Informe o número do contrato.").max(50, "O número do contrato deve ter no máximo 50 caracteres."),
+    sacc_number: z.string().min(2, "Informe o número SACC.").max(50, "O número SACC deve ter no máximo 50 caracteres."),
+    total_value: z.coerce.number().min(0, "O valor total não pode ser negativo."),
     start_date: z.string().min(1, "Informe a data inicial."),
     end_date: z.string().min(1, "Informe a data final."),
     status: z.string().min(1, "Selecione um status."),
     is_extendable: z.boolean(),
     is_active: z.boolean(),
-    notes: z.string().max(5000, "As observacoes devem ter no maximo 5000 caracteres."),
+    notes: z.string().max(5000, "As observações devem ter no máximo 5000 caracteres."),
   })
   .refine((values) => values.end_date >= values.start_date, {
     message: "A data final precisa ser posterior a data inicial.",
@@ -177,24 +177,24 @@ export function ContractForm({ mode, contract }: ContractFormProps) {
       <CardHeader>
         <CardTitle>{mode === "create" ? "Novo contrato" : "Editar contrato"}</CardTitle>
         <CardDescription>
-          Cadastre o contrato principal da subunidade ativa com empresa, tipo, objeto, vigencia, situacao operacional e observacoes.
+          Cadastre o contrato principal da subunidade ativa com empresa, tipo, objeto, vigência, situacao operacional e observações.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="mb-5 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-          Subunidade ativa: <span className="font-medium text-slate-900">{activeSubunit?.name ?? "Nao selecionada"}</span>
+          Subunidade ativa: <span className="font-medium text-slate-900">{activeSubunit?.name ?? "Não selecionada"}</span>
         </div>
 
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="contract_number">Numero do contrato</Label>
+              <Label htmlFor="contract_number">Número do contrato</Label>
               <Input id="contract_number" placeholder="Ex.: CTR-2026-001" {...register("contract_number")} />
               {errors.contract_number ? <p className="text-sm text-destructive">{errors.contract_number.message}</p> : null}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="sacc_number">Numero SACC</Label>
+              <Label htmlFor="sacc_number">Número SACC</Label>
               <Input id="sacc_number" placeholder="Ex.: SACC-2026-0001" {...register("sacc_number")} />
               {errors.sacc_number ? <p className="text-sm text-destructive">{errors.sacc_number.message}</p> : null}
             </div>
@@ -276,7 +276,7 @@ export function ContractForm({ mode, contract }: ContractFormProps) {
                   <SelectValue placeholder="Selecione um contrato anterior" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Nao se aplica</SelectItem>
+                  <SelectItem value="none">Não se aplica</SelectItem>
                   {renewalOptions.map((item) => (
                     <SelectItem key={item.id} value={String(item.id)}>
                       {item.contract_number}
@@ -285,7 +285,7 @@ export function ContractForm({ mode, contract }: ContractFormProps) {
                 </SelectContent>
               </Select>
               <p className="text-xs text-slate-500">
-                {selectedRenewedFromContract ? `Contrato de origem: ${selectedRenewedFromContract.contract_number}.` : "Use quando este contrato for uma renovacao de outro."}
+                {selectedRenewedFromContract ? `Contrato de origem: ${selectedRenewedFromContract.contract_number}.` : "Use quando este contrato for uma renovação de outro."}
               </p>
               {errors.renewed_from_contract_id ? <p className="text-sm text-destructive">{errors.renewed_from_contract_id.message}</p> : null}
             </div>
@@ -342,18 +342,18 @@ export function ContractForm({ mode, contract }: ContractFormProps) {
           </section>
 
           <section className="space-y-2">
-            <Label htmlFor="notes">Observacoes</Label>
+            <Label htmlFor="notes">Observações</Label>
             <Textarea
               id="notes"
               rows={6}
-              placeholder="Descreva clausulas relevantes, contexto operacional ou observacoes administrativas."
+              placeholder="Descreva clausulas relevantes, contexto operacional ou observações administrativas."
               {...register("notes")}
             />
             {errors.notes ? <p className="text-sm text-destructive">{errors.notes.message}</p> : null}
           </section>
 
           <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3 text-sm text-slate-600">
-            Alertas, papeis, transacoes, aditivos e prorrogacoes ja aparecem no detalhe quando existirem. Podemos evoluir depois para edicao dedicada desses submodulos.
+            Alertas, papeis, transacoes, aditivos e prorrogacoes já aparecem no detalhe quando existirem. Podemos evoluir depois para edição dedicada desses submodulos.
           </div>
 
           <div className="flex justify-end gap-3">
@@ -361,7 +361,7 @@ export function ContractForm({ mode, contract }: ContractFormProps) {
               <Link href={mode === "create" ? "/contracts" : `/contracts/${contract?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending || !activeSubunit}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar contrato" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar contrato" : "Salvar alterações"}
             </Button>
           </div>
         </form>

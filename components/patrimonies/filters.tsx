@@ -56,7 +56,7 @@ export function PatrimoniesFilters({
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
         <Input
           className="pl-9"
-          placeholder="Buscar por codigo, serie ou descricao"
+          placeholder="Buscar por codigo, serie ou descrição"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
         />
@@ -64,7 +64,7 @@ export function PatrimoniesFilters({
 
       <Select value={patrimonyTypeId} onValueChange={onPatrimonyTypeChange}>
         <SelectTrigger>
-          <SelectValue placeholder="Tipo de patrimonio" />
+          <SelectValue placeholder="Tipo de patrimônio" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todos os tipos</SelectItem>

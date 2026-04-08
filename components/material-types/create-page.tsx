@@ -16,7 +16,7 @@ export function MaterialTypeCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `material-types.create` para
+            Você precisa de `administrator` e `material-types.create` para
             cadastrar tipos de material.
           </CardDescription>
         </CardHeader>

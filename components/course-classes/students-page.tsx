@@ -90,7 +90,7 @@ export function CourseClassStudentsPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `viewAny` ou `view` para administrar os alunos da turma.</CardDescription>
+          <CardDescription>Você precisa da permissão `viewAny` ou `view` para administrar os alunos da turma.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -105,7 +105,7 @@ export function CourseClassStudentsPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar turma</CardTitle>
-          <CardDescription>Os dados da turma nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados da turma não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -123,7 +123,7 @@ export function CourseClassStudentsPage() {
             <h1 className="font-display text-3xl text-slate-900">Alunos da turma</h1>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            {courseClass.name ?? `Turma #${courseClass.id}`} • {courseClass.course ? `${courseClass.course.name} (${courseClass.course.abbreviation})` : "Curso nao informado"}
+            {courseClass.name ?? `Turma #${courseClass.id}`} • {courseClass.course ? `${courseClass.course.name} (${courseClass.course.abbreviation})` : "Curso não informado"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             Gerencie matriculas, status e andamento dos policiais vinculados a esta turma.
@@ -154,7 +154,7 @@ export function CourseClassStudentsPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Matriculas</CardTitle>
-          <CardDescription>Lista de policiais inscritos ou que ja passaram por esta turma.</CardDescription>
+          <CardDescription>Lista de policiais inscritos ou que já passaram por esta turma.</CardDescription>
         </CardHeader>
         <CardContent>
           {studentsQuery.isLoading ? (
@@ -163,7 +163,7 @@ export function CourseClassStudentsPage() {
               <Skeleton className="h-24 w-full" />
             </div>
           ) : studentsQuery.isError ? (
-            <p className="text-sm text-slate-500">Nao foi possivel carregar os alunos desta turma.</p>
+            <p className="text-sm text-slate-500">Não foi possível carregar os alunos desta turma.</p>
           ) : students.length ? (
             <div className="space-y-3">
               {students.map((student) => (
@@ -181,16 +181,16 @@ export function CourseClassStudentsPage() {
                       <div className="grid gap-3 md:grid-cols-2">
                         <div className="flex items-center gap-2 text-sm text-slate-600">
                           <GraduationCap className="h-4 w-4 text-primary" />
-                          <span>Matricula: {student.police_officer?.registration_number ?? "Nao informada"}</span>
+                          <span>Matrícula: {student.police_officer?.registration_number ?? "Não informada"}</span>
                         </div>
                         <div className="text-sm text-slate-600">
-                          Inicio: {student.start_date ?? "-"} • Termino: {student.end_date ?? "-"}
+                          Início: {student.start_date ?? "-"} • Término: {student.end_date ?? "-"}
                         </div>
                         <div className="text-sm text-slate-600">
                           Carga horaria: {student.workload_hours ?? 0}h
                         </div>
                         <div className="text-sm text-slate-600">
-                          Boletim: {student.bulletin ?? "Nao informado"}
+                          Boletim: {student.bulletin ?? "Não informado"}
                         </div>
                       </div>
                     </div>
@@ -236,9 +236,9 @@ export function CourseClassStudentsPage() {
       <Dialog open={Boolean(enrollmentToDelete)} onOpenChange={(open) => !open && setEnrollmentToDelete(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Remover matricula</DialogTitle>
+            <DialogTitle>Remover matrícula</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja remover a matricula de{" "}
+              Tem certeza que deseja remover a matrícula de{" "}
               {enrollmentToDelete?.police_officer?.name ?? enrollmentToDelete?.police_officer?.user?.name ?? enrollmentToDelete?.police_officer?.war_name}
               {" "}desta turma?
             </DialogDescription>
@@ -248,7 +248,7 @@ export function CourseClassStudentsPage() {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

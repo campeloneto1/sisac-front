@@ -35,7 +35,7 @@ export function ContractTypesListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `contract-types.viewAny` para visualizar tipos de contrato.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `contract-types.viewAny` para visualizar tipos de contrato.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -46,7 +46,7 @@ export function ContractTypesListPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="font-display text-3xl text-slate-900">Tipos de contrato</h1>
-          <p className="text-sm text-slate-500">Gerencie a classificacao administrativa e o modelo de faturamento padrao dos contratos.</p>
+          <p className="text-sm text-slate-500">Gerencie a classificação administrativa e o modelo de faturamento padrao dos contratos.</p>
         </div>
 
         {permissions.canCreate ? (
@@ -80,7 +80,7 @@ export function ContractTypesListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar tipos de contrato</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !contractTypesQuery.data?.data.length ? (

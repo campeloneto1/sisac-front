@@ -25,7 +25,7 @@ export function VehicleDamageEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar danos de veiculos.
+            Você precisa da permissão `update` para editar danos de veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -42,7 +42,7 @@ export function VehicleDamageEditPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar dano</CardTitle>
           <CardDescription>
-            Os dados do dano nao estao disponiveis para edicao no momento.
+            Os dados do dano não estão disponíveis para edição no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -58,7 +58,7 @@ export function VehicleDamageEditPage() {
         <div>
           <h1 className="font-display text-3xl text-slate-900">Editar dano</h1>
           <p className="text-sm text-slate-500">
-            Atualize gravidade, custos, reparo e informacoes do dano.
+            Atualize gravidade, custos, reparo e informações do dano.
           </p>
         </div>
       </div>

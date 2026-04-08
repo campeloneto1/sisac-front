@@ -13,7 +13,7 @@ export function VehicleCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar veiculos.
+            Você precisa da permissão `create` para cadastrar veículos.
           </CardDescription>
         </CardHeader>
       </Card>

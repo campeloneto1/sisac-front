@@ -74,7 +74,7 @@ export function ServicesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar servicos.
+            Você precisa da permissão `viewAny` para visualizar serviços.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -87,7 +87,7 @@ export function ServicesListPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O modulo de servicos depende da subunidade ativa para enviar `X-Active-Subunit`.
+            O módulo de serviços depende da subunidade ativa para enviar `X-Active-Subunit`.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -102,9 +102,9 @@ export function ServicesListPage() {
             <BriefcaseBusiness className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="font-display text-3xl text-slate-900">Servicos</h1>
+            <h1 className="font-display text-3xl text-slate-900">Serviços</h1>
             <p className="text-sm text-slate-500">
-              Gerencie solicitacoes, agendamentos e execucao de servicos da subunidade ativa.
+              Gerencie solicitacoes, agendamentos e execução de serviços da subunidade ativa.
             </p>
             <p className="mt-1 text-xs uppercase tracking-[0.2em] text-slate-400">
               Contexto ativo: {activeSubunit.name}
@@ -116,7 +116,7 @@ export function ServicesListPage() {
           <Button asChild>
             <Link href="/services/create">
               <Plus className="mr-2 h-4 w-4" />
-              Novo servico
+              Novo serviço
             </Link>
           </Button>
         ) : null}
@@ -194,18 +194,18 @@ export function ServicesListPage() {
       ) : servicesQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar servicos</CardTitle>
+            <CardTitle>Erro ao carregar serviços</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario autenticado.
+              Verifique a API, a subunidade ativa e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>
       ) : !servicesQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhum servico encontrado</CardTitle>
+            <CardTitle>Nenhum serviço encontrado</CardTitle>
             <CardDescription>
-              Crie um novo servico ou refine os filtros aplicados.
+              Crie um novo serviço ou refine os filtros aplicados.
             </CardDescription>
           </CardHeader>
         </Card>

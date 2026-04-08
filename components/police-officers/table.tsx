@@ -44,12 +44,12 @@ export function PoliceOfficersTable({ policeOfficers }: PoliceOfficersTableProps
             <thead className="bg-slate-50 text-slate-500">
               <tr>
                 <th className="px-4 py-3 font-medium">Policial</th>
-                <th className="px-4 py-3 font-medium">Matricula</th>
+                <th className="px-4 py-3 font-medium">Matrícula</th>
                 <th className="px-4 py-3 font-medium">Contato</th>
                 <th className="px-4 py-3 font-medium">Escolaridade</th>
-                <th className="px-4 py-3 font-medium">Graduacao atual</th>
+                <th className="px-4 py-3 font-medium">Graduação atual</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -64,7 +64,7 @@ export function PoliceOfficersTable({ policeOfficers }: PoliceOfficersTableProps
                   <td className="px-4 py-4 text-slate-700">
                     <div>
                       <p>{officer.registration_number}</p>
-                      <p className="mt-1 text-slate-500">Numeral: {officer.badge_number ?? "Nao informado"}</p>
+                      <p className="mt-1 text-slate-500">Numeral: {officer.badge_number ?? "Não informado"}</p>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-700">
@@ -73,9 +73,9 @@ export function PoliceOfficersTable({ policeOfficers }: PoliceOfficersTableProps
                       <p className="mt-1 text-slate-500">{officer.phone ?? "Sem telefone"}</p>
                     </div>
                   </td>
-                  <td className="px-4 py-4 text-slate-700">{officer.education_level?.name ?? "Nao informada"}</td>
+                  <td className="px-4 py-4 text-slate-700">{officer.education_level?.name ?? "Não informada"}</td>
                   <td className="px-4 py-4 text-slate-700">
-                    {officer.current_rank ? `${officer.current_rank.name} (${officer.current_rank.abbreviation ?? "-"})` : "Nao informada"}
+                    {officer.current_rank ? `${officer.current_rank.name} (${officer.current_rank.abbreviation ?? "-"})` : "Não informada"}
                   </td>
                   <td className="px-4 py-4">
                     <Badge variant={officer.is_active ? "success" : "danger"}>{officer.is_active ? "Ativo" : "Inativo"}</Badge>
@@ -117,8 +117,8 @@ export function PoliceOfficersTable({ policeOfficers }: PoliceOfficersTableProps
           <DialogHeader>
             <DialogTitle>Excluir policial</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {policeOfficerToDelete?.name ?? policeOfficerToDelete?.war_name}? Essa acao remove
-              o policial e faz soft delete do usuario vinculado na API.
+              Tem certeza que deseja excluir {policeOfficerToDelete?.name ?? policeOfficerToDelete?.war_name}? Essa ação remove
+              o policial e faz soft delete do usuário vinculado na API.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -126,7 +126,7 @@ export function PoliceOfficersTable({ policeOfficers }: PoliceOfficersTableProps
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -43,9 +43,9 @@ export function CountriesTable({ countries }: CountriesTableProps) {
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Pais</th>
+                <th className="px-4 py-3 font-medium">País</th>
                 <th className="px-4 py-3 font-medium">Sigla</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -54,7 +54,7 @@ export function CountriesTable({ countries }: CountriesTableProps) {
                   <td className="px-4 py-4">
                     <div>
                       <p className="font-medium text-slate-900">{country.name}</p>
-                      <p className="mt-1 text-slate-500">Cadastro administrativo global de paises.</p>
+                      <p className="mt-1 text-slate-500">Cadastro administrativo global de países.</p>
                     </div>
                   </td>
                   <td className="px-4 py-4">
@@ -95,9 +95,9 @@ export function CountriesTable({ countries }: CountriesTableProps) {
       <Dialog open={Boolean(countryToDelete)} onOpenChange={(open) => !open && setCountryToDelete(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir pais</DialogTitle>
+            <DialogTitle>Excluir país</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {countryToDelete?.name}? Essa acao remove o pais do cadastro administrativo.
+              Tem certeza que deseja excluir {countryToDelete?.name}? Essa ação remove o país do cadastro administrativo.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -105,7 +105,7 @@ export function CountriesTable({ countries }: CountriesTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

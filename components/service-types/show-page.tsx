@@ -25,8 +25,8 @@ export function ServiceTypeShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `service-types.view` para
-            visualizar tipos de servico.
+            Você precisa de `administrator` e `service-types.view` para
+            visualizar tipos de serviço.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -41,9 +41,9 @@ export function ServiceTypeShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar tipo de servico</CardTitle>
+          <CardTitle>Erro ao carregar tipo de serviço</CardTitle>
           <CardDescription>
-            Os dados do tipo de servico nao estao disponiveis no momento.
+            Os dados do tipo de serviço não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -72,7 +72,7 @@ export function ServiceTypeShowPage() {
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             {serviceType.description?.trim() ||
-              "Tipo administrativo global usado para classificar servicos em outros fluxos do sistema."}
+              "Tipo administrativo global usado para classificar serviços em outros fluxos do sistema."}
           </p>
         </div>
 
@@ -121,7 +121,7 @@ export function ServiceTypeShowPage() {
                 <p className="text-sm text-slate-700">
                   {serviceType.estimated_duration_hours
                     ? `${serviceType.estimated_duration_hours} hora(s)`
-                    : "Nao informada"}
+                    : "Não informada"}
                 </p>
               </div>
             </div>
@@ -130,10 +130,10 @@ export function ServiceTypeShowPage() {
               <FileText className="mt-0.5 h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Descricao
+                  Descrição
                 </p>
                 <p className="text-sm text-slate-700">
-                  {serviceType.description?.trim() || "Nao informada"}
+                  {serviceType.description?.trim() || "Não informada"}
                 </p>
               </div>
             </div>
@@ -144,7 +144,7 @@ export function ServiceTypeShowPage() {
           <CardHeader>
             <CardTitle>Metadados</CardTitle>
             <CardDescription>
-              Usuarios responsaveis pelo cadastro e auditoria.
+              Usuários responsáveis pelo cadastro e auditoria.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -157,7 +157,7 @@ export function ServiceTypeShowPage() {
                 <p className="text-sm text-slate-700">
                   {serviceType.creator
                     ? `${serviceType.creator.name} (${serviceType.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -171,7 +171,7 @@ export function ServiceTypeShowPage() {
                 <p className="text-sm text-slate-700">
                   {serviceType.updater
                     ? `${serviceType.updater.name} (${serviceType.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>

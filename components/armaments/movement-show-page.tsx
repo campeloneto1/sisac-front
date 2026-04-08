@@ -24,14 +24,14 @@ export function ArmamentMovementShowPage() {
         <CardHeader>
           <CardTitle>Movimentacao #{params.movementId}</CardTitle>
           <CardDescription>
-            Esta rota ja esta pronta para receber o detalhe do movimento.
+            Esta rota já esta pronta para receber o detalhe do movimento.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
-          <p>Informacoes esperadas:</p>
-          <p>tipo, quantidade, data/hora do evento e autorizacao;</p>
+          <p>Informações esperadas:</p>
+          <p>tipo, quantidade, data/hora do evento e autorização;</p>
           <p>unidade ou lote relacionados;</p>
-          <p>referencia de origem e observacoes operacionais.</p>
+          <p>referência de origem e observações operacionais.</p>
         </CardContent>
       </Card>
     </ArmamentMovementsPageShell>

@@ -41,7 +41,7 @@ export function SubunitsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `subunits.viewAny` para visualizar subunidades.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `subunits.viewAny` para visualizar subunidades.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -52,7 +52,7 @@ export function SubunitsListPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="font-display text-3xl text-slate-900">Subunidades</h1>
-          <p className="text-sm text-slate-500">Gerencie subunidades administrativas, seus vinculos territoriais e a cadeia de comando principal.</p>
+          <p className="text-sm text-slate-500">Gerencie subunidades administrativas, seus vínculos territoriais e a cadeia de comando principal.</p>
         </div>
 
         {permissions.canCreate ? (
@@ -100,7 +100,7 @@ export function SubunitsListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar subunidades</CardTitle>
-            <CardDescription>Verifique a API, as permissoes e o acesso aos cadastros auxiliares.</CardDescription>
+            <CardDescription>Verifique a API, as permissões e o acesso aos cadastros auxiliares.</CardDescription>
           </CardHeader>
         </Card>
       ) : !subunitsQuery.data?.data.length ? (

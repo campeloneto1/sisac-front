@@ -15,7 +15,7 @@ export function SubunitCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `subunits.create` para cadastrar subunidades.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `subunits.create` para cadastrar subunidades.</CardDescription>
         </CardHeader>
       </Card>
     );

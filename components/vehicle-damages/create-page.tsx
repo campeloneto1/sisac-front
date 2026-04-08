@@ -20,8 +20,8 @@ export function VehicleDamageCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar danos de
-            veiculos.
+            Você precisa da permissão `create` para cadastrar danos de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>

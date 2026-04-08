@@ -58,7 +58,7 @@ export function PoliceOfficerVacationsTable({ vacations }: PoliceOfficerVacation
                 </div>
                 <div>Total: {vacation.total_days} dias</div>
                 <div>Usados: {vacation.used_days ?? 0} dias</div>
-                <div>Disponiveis: {vacation.available_days ?? vacation.remaining_days ?? 0} dias</div>
+                <div>Disponíveis: {vacation.available_days ?? vacation.remaining_days ?? 0} dias</div>
               </div>
             </div>
 

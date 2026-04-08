@@ -23,7 +23,7 @@ export function GenderShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `genders.view` para visualizar generos.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `genders.view` para visualizar gêneros.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -37,8 +37,8 @@ export function GenderShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar genero</CardTitle>
-          <CardDescription>Os dados do genero nao estao disponiveis no momento.</CardDescription>
+          <CardTitle>Erro ao carregar gênero</CardTitle>
+          <CardDescription>Os dados do gênero não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -52,7 +52,7 @@ export function GenderShowPage() {
         <div>
           <h1 className="font-display text-3xl text-slate-900">{gender.name}</h1>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Genero cadastrado no modulo administrativo para uso em entidades e formulários do sistema.
+            Gênero cadastrado no módulo administrativo para uso em entidades e formulários do sistema.
           </p>
         </div>
 
@@ -67,7 +67,7 @@ export function GenderShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Visao geral</CardTitle>
-            <CardDescription>Indicadores rapidos do genero.</CardDescription>
+            <CardDescription>Indicadores rapidos do gênero.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -81,14 +81,14 @@ export function GenderShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{gender.creator ? `${gender.creator.name} (${gender.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{gender.creator ? `${gender.creator.name} (${gender.creator.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{gender.updater ? `${gender.updater.name} (${gender.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{gender.updater ? `${gender.updater.name} (${gender.updater.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>
@@ -97,19 +97,19 @@ export function GenderShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Uso administrativo</CardTitle>
-            <CardDescription>Contexto funcional do cadastro de genero.</CardDescription>
+            <CardDescription>Contexto funcional do cadastro de gênero.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <p className="text-sm font-medium text-slate-900">Cadastro global</p>
               <p className="mt-2 text-sm text-slate-600">
-                Este genero pode ser referenciado por policiais e outros modulos que dependam desse tipo de classificacao.
+                Este gênero pode ser referenciado por policiais e outros módulos que dependam desse tipo de classificação.
               </p>
             </div>
 
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3">
               <p className="text-sm text-slate-600">
-                Se existirem registros vinculados a este genero, a exclusao pode ser recusada pela API ou pelo banco de dados.
+                Se existirem registros vinculados a este gênero, a exclusão pode ser recusada pela API ou pelo banco de dados.
               </p>
             </div>
           </CardContent>

@@ -53,17 +53,17 @@ export function VehicleDamagesFilters({
   return (
     <div className="grid gap-4 rounded-[24px] border border-slate-200/70 bg-white/80 p-5 md:grid-cols-2 xl:grid-cols-6">
       <Input
-        placeholder="Buscar por descricao, local ou observacoes"
+        placeholder="Buscar por descrição, local ou observações"
         value={search}
         onChange={(event) => onSearchChange(event.target.value)}
       />
 
       <Select value={vehicleId} onValueChange={onVehicleChange}>
         <SelectTrigger>
-          <SelectValue placeholder="Todos os veiculos" />
+          <SelectValue placeholder="Todos os veículos" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todos os veiculos</SelectItem>
+          <SelectItem value="all">Todos os veículos</SelectItem>
           {vehicles.map((vehicle) => (
             <SelectItem key={vehicle.id} value={String(vehicle.id)}>
               {vehicle.license_plate}

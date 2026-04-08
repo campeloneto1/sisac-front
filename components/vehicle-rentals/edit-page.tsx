@@ -25,8 +25,8 @@ export function VehicleRentalEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar locacoes de
-            veiculos.
+            Você precisa da permissão `update` para editar locações de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -41,9 +41,9 @@ export function VehicleRentalEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar locacao</CardTitle>
+          <CardTitle>Erro ao carregar locação</CardTitle>
           <CardDescription>
-            Os dados da locacao nao estao disponiveis para edicao no momento.
+            Os dados da locação não estão disponíveis para edição no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -58,10 +58,10 @@ export function VehicleRentalEditPage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Editar locacao
+            Editar locação
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize contrato, custos, quilometragem e status da locacao.
+            Atualize contrato, custos, quilometragem e status da locação.
           </p>
         </div>
       </div>

@@ -21,8 +21,8 @@ export function PatrimonyTypeCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `patrimony-types.create` para
-            cadastrar tipos de patrimonio.
+            Você precisa de `administrator` e `patrimony-types.create` para
+            cadastrar tipos de patrimônio.
           </CardDescription>
         </CardHeader>
       </Card>

@@ -19,7 +19,7 @@ export function VehicleEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar veiculos.
+            Você precisa da permissão `update` para editar veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -34,9 +34,9 @@ export function VehicleEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar veiculo</CardTitle>
+          <CardTitle>Erro ao carregar veículo</CardTitle>
           <CardDescription>
-            Os dados do veiculo nao estao disponiveis no momento.
+            Os dados do veículo não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>

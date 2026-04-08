@@ -18,7 +18,7 @@ export function PoliceOfficerLeaveEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `update` para editar afastamentos.</CardDescription>
+          <CardDescription>Você precisa da permissão `update` para editar afastamentos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -33,7 +33,7 @@ export function PoliceOfficerLeaveEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar afastamento</CardTitle>
-          <CardDescription>Os dados do afastamento nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do afastamento não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );

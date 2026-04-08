@@ -21,7 +21,7 @@ export function CompanyEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `companies.update` para editar empresas.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `companies.update` para editar empresas.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function CompanyEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar empresa</CardTitle>
-          <CardDescription>A empresa nao pode ser editada agora.</CardDescription>
+          <CardDescription>A empresa não pode ser editada agora.</CardDescription>
         </CardHeader>
       </Card>
     );

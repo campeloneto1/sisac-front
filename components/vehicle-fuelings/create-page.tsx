@@ -20,8 +20,8 @@ export function VehicleFuelingCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar abastecimentos de
-            veiculos.
+            Você precisa da permissão `create` para cadastrar abastecimentos de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -39,7 +39,7 @@ export function VehicleFuelingCreatePage() {
             Novo abastecimento
           </h1>
           <p className="text-sm text-slate-500">
-            Registre o abastecimento do veiculo dentro do contexto operacional
+            Registre o abastecimento do veículo dentro do contexto operacional
             correspondente.
           </p>
         </div>

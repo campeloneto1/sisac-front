@@ -51,7 +51,7 @@ export function NotificationResponsibilitiesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `notification-responsibilities.viewAny` para visualizar responsabilidades de notificacao.
+            Você precisa de `administrator` e `notification-responsibilities.viewAny` para visualizar responsabilidades de notificação.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -62,9 +62,9 @@ export function NotificationResponsibilitiesListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Responsabilidades de notificacao</h1>
+          <h1 className="font-display text-3xl text-slate-900">Responsabilidades de notificação</h1>
           <p className="text-sm text-slate-500">
-            Configure qual setor recebe notificacoes automaticas por dominio em cada subunidade.
+            Configure qual setor recebe notificações automaticas por dominio em cada subunidade.
           </p>
           <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-400">
             Contexto ativo: {activeSubunit?.name ?? "Nenhuma subunidade selecionada"}
@@ -122,7 +122,7 @@ export function NotificationResponsibilitiesListPage() {
           <CardHeader>
             <CardTitle>Selecione uma subunidade</CardTitle>
             <CardDescription>
-              Este modulo exige `X-Active-Subunit` em todas as requisicoes. Selecione uma subunidade no header para listar e editar as regras.
+              Este módulo exige `X-Active-Subunit` em todas as requisicoes. Selecione uma subunidade no header para listar e editar as regras.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -131,7 +131,7 @@ export function NotificationResponsibilitiesListPage() {
           <CardHeader>
             <CardTitle>Filtro de setor dependente do contexto</CardTitle>
             <CardDescription>
-              Voce esta filtrando a subunidade #{subunitId}, mas os setores carregados pertencem a subunidade ativa. Troque o contexto global para
+              Você esta filtrando a subunidade #{subunitId}, mas os setores carregados pertencem a subunidade ativa. Troque o contexto global para
               refinar por setor nessa subunidade.
             </CardDescription>
           </CardHeader>
@@ -147,7 +147,7 @@ export function NotificationResponsibilitiesListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar responsabilidades</CardTitle>
-            <CardDescription>Verifique a API, as permissoes do usuario e o contexto de subunidade ativo.</CardDescription>
+            <CardDescription>Verifique a API, as permissões do usuário e o contexto de subunidade ativo.</CardDescription>
           </CardHeader>
         </Card>
       ) : !itemsQuery.data?.data.length ? (
@@ -155,7 +155,7 @@ export function NotificationResponsibilitiesListPage() {
           <CardHeader>
             <CardTitle>Nenhuma regra encontrada</CardTitle>
             <CardDescription>
-              Nao ha responsabilidade cadastrada para os filtros atuais{domain !== "all" ? ` no dominio ${getNotificationResponsibilityDomainLabel(domain)}.` : "."}
+              Não ha responsabilidade cadastrada para os filtros atuais{domain !== "all" ? ` no dominio ${getNotificationResponsibilityDomainLabel(domain)}.` : "."}
             </CardDescription>
           </CardHeader>
         </Card>

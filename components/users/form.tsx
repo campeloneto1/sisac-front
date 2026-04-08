@@ -26,8 +26,8 @@ import {
 const userFormSchema = z
   .object({
     name: z.string().min(3, "O nome precisa ter ao menos 3 caracteres."),
-    document: z.string().min(11, "Informe 11 digitos.").max(14, "Documento invalido."),
-    email: z.string().email("Informe um e-mail valido."),
+    document: z.string().min(11, "Informe 11 dígitos.").max(14, "Documento invalido."),
+    email: z.string().email("Informe um e-mail válido."),
     phone: z.string().optional(),
     password: z.string().optional(),
     password_confirmation: z.string().optional(),
@@ -142,7 +142,7 @@ export function UserForm({ mode, user }: UserFormProps) {
       if (!values.password?.trim()) {
         setError("password", {
           type: "manual",
-          message: "A senha e obrigatoria no cadastro.",
+          message: "A senha e obrigatória no cadastro.",
         });
         return;
       }
@@ -191,7 +191,7 @@ export function UserForm({ mode, user }: UserFormProps) {
   return (
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Novo usuario" : "Editar usuario"}</CardTitle>
+        <CardTitle>{mode === "create" ? "Novo usuário" : "Editar usuário"}</CardTitle>
         <CardDescription>
           Formulario alinhado com o `StoreUserRequest` e `UpdateUserRequest` do backend.
         </CardDescription>
@@ -269,7 +269,7 @@ export function UserForm({ mode, user }: UserFormProps) {
                 <SelectValue placeholder="Selecione o status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">Nao informar</SelectItem>
+                <SelectItem value="none">Não informar</SelectItem>
                 {userStatusOptions.map((status) => (
                   <SelectItem key={status.value} value={status.value}>
                     {status.label}
@@ -289,7 +289,7 @@ export function UserForm({ mode, user }: UserFormProps) {
               {...register("authorized_until")}
             />
             <p className="text-xs text-slate-500">
-              Campo relevante principalmente para usuarios externos temporariamente autorizados.
+              Campo relevante principalmente para usuários externos temporariamente autorizados.
             </p>
             {errors.authorized_until ? (
               <p className="text-sm text-destructive">{errors.authorized_until.message}</p>
@@ -318,7 +318,7 @@ export function UserForm({ mode, user }: UserFormProps) {
               <Link href={mode === "create" ? "/users" : `/users/${user?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar usuario" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar usuário" : "Salvar alterações"}
             </Button>
           </div>
         </form>

@@ -61,7 +61,7 @@ export function PoliceOfficerPublicationsListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar publicacoes.
+            Você precisa da permissão `viewAny` para visualizar publicações.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -72,9 +72,9 @@ export function PoliceOfficerPublicationsListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Publicacoes</h1>
+          <h1 className="font-display text-3xl text-slate-900">Publicações</h1>
           <p className="text-sm text-slate-500">
-            Gerencie as publicacoes em boletim dos policiais.
+            Gerencie as publicações em boletim dos policiais.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export function PoliceOfficerPublicationsListPage() {
           <Button asChild>
             <Link href="/police-officer-publications/create">
               <Plus className="mr-2 h-4 w-4" />
-              Nova publicacao
+              Nova publicação
             </Link>
           </Button>
         ) : null}
@@ -134,18 +134,18 @@ export function PoliceOfficerPublicationsListPage() {
       ) : policeOfficerPublicationsQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar publicacoes</CardTitle>
+            <CardTitle>Erro ao carregar publicações</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>
       ) : !policeOfficerPublicationsQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhuma publicacao encontrada</CardTitle>
+            <CardTitle>Nenhuma publicação encontrada</CardTitle>
             <CardDescription>
-              Crie uma nova publicacao ou refine os filtros aplicados.
+              Crie uma nova publicação ou refine os filtros aplicados.
             </CardDescription>
           </CardHeader>
         </Card>

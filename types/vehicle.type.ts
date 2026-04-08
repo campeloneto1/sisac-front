@@ -127,9 +127,9 @@ export const vehicleOperationalStatusOptions: Array<{
   value: VehicleOperationalStatus;
   label: string;
 }> = [
-  { value: "available", label: "Disponivel" },
+  { value: "available", label: "Disponível" },
   { value: "in_use", label: "Em uso" },
-  { value: "maintenance", label: "Em manutencao" },
+  { value: "maintenance", label: "Em manutenção" },
   { value: "custody", label: "Cautelado" },
   { value: "decommissioned", label: "Baixado" },
 ];
@@ -138,6 +138,6 @@ export const vehicleOwnershipTypeOptions: Array<{
   value: VehicleOwnershipType;
   label: string;
 }> = [
-  { value: "owned", label: "Proprio" },
+  { value: "owned", label: "Próprio" },
   { value: "rented", label: "Locado" },
 ];

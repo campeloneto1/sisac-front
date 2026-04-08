@@ -23,7 +23,7 @@ export function CompanyShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `companies.view` para visualizar empresas.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `companies.view` para visualizar empresas.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -38,7 +38,7 @@ export function CompanyShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar empresa</CardTitle>
-          <CardDescription>Os dados da empresa nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados da empresa não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -67,7 +67,7 @@ export function CompanyShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Informacoes gerais</CardTitle>
+            <CardTitle>Informações gerais</CardTitle>
             <CardDescription>Dados basicos da empresa.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -114,7 +114,7 @@ export function CompanyShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Contato</CardTitle>
-            <CardDescription>Informacoes de contato da empresa.</CardDescription>
+            <CardDescription>Informações de contato da empresa.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {company.phone ? (
@@ -152,7 +152,7 @@ export function CompanyShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Endereco</CardTitle>
-            <CardDescription>Localizacao da empresa.</CardDescription>
+            <CardDescription>Localização da empresa.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {company.street ? (
@@ -169,7 +169,7 @@ export function CompanyShowPage() {
               <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <MapPin className="h-4 w-4 text-primary" />
                 <div>
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Numero</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Número</p>
                   <p className="text-sm text-slate-700">{company.number}</p>
                 </div>
               </div>
@@ -210,7 +210,7 @@ export function CompanyShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Auditoria</CardTitle>
-            <CardDescription>Informacoes de criacao e atualizacao.</CardDescription>
+            <CardDescription>Informações de criação e atualização.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {company.subunit ? (
@@ -227,7 +227,7 @@ export function CompanyShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{company.creator ? `${company.creator.name} (${company.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{company.creator ? `${company.creator.name} (${company.creator.email})` : "Não informado"}</p>
               </div>
             </div>
 
@@ -235,7 +235,7 @@ export function CompanyShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{company.updater ? `${company.updater.name} (${company.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{company.updater ? `${company.updater.name} (${company.updater.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>

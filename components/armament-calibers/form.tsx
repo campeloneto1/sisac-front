@@ -32,10 +32,10 @@ const armamentCaliberFormSchema = z.object({
   name: z
     .string()
     .min(2, "Informe o nome com ao menos 2 caracteres.")
-    .max(50, "O nome deve ter no maximo 50 caracteres."),
+    .max(50, "O nome deve ter no máximo 50 caracteres."),
   slug: z
     .string()
-    .max(50, "O slug deve ter no maximo 50 caracteres.")
+    .max(50, "O slug deve ter no máximo 50 caracteres.")
     .regex(
       /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
       "O slug deve conter apenas letras minusculas, numeros e hifens.",
@@ -43,7 +43,7 @@ const armamentCaliberFormSchema = z.object({
     .or(z.literal("")),
   description: z
     .string()
-    .max(5000, "A descricao deve ter no maximo 5000 caracteres."),
+    .max(5000, "A descrição deve ter no máximo 5000 caracteres."),
 });
 
 type ArmamentCaliberFormValues = z.infer<typeof armamentCaliberFormSchema>;
@@ -193,7 +193,7 @@ export function ArmamentCaliberForm({
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="armament-caliber-description">Descricao</Label>
+              <Label htmlFor="armament-caliber-description">Descrição</Label>
               <Textarea
                 id="armament-caliber-description"
                 placeholder="Explique quando esse calibre deve ser utilizado."
@@ -224,7 +224,7 @@ export function ArmamentCaliberForm({
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar calibre"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

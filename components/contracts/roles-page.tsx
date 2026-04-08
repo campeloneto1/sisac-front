@@ -40,14 +40,14 @@ const roleSchema = z.object({
 type RoleFormValues = z.infer<typeof roleSchema>;
 
 function formatDate(value?: string | null) {
-  return value ? new Date(`${value}T00:00:00`).toLocaleDateString("pt-BR") : "Nao informado";
+  return value ? new Date(`${value}T00:00:00`).toLocaleDateString("pt-BR") : "Não informado";
 }
 
 function getPoliceOfficerLabel(role: ContractRoleItem) {
   const policeOfficer = role.police_officer;
 
   if (!policeOfficer) {
-    return "Nao vinculado";
+    return "Não vinculado";
   }
 
   return policeOfficer.registration_number
@@ -128,7 +128,7 @@ function RoleDialog({
         <DialogHeader>
           <DialogTitle>{role ? "Editar papel do contrato" : "Novo papel do contrato"}</DialogTitle>
           <DialogDescription>
-            Registre quem responde pelo contrato e o intervalo de vigencia operacional desse papel.
+            Registre quem responde pelo contrato e o intervalo de vigência operacional desse papel.
           </DialogDescription>
         </DialogHeader>
 
@@ -152,8 +152,8 @@ function RoleDialog({
                 label: formatPoliceOfficerOptionLabel(policeOfficer),
               })}
               selectedOption={selectedPoliceOfficer}
-              placeholder="Nao vinculado"
-              searchPlaceholder="Buscar policial por nome ou matricula"
+              placeholder="Não vinculado"
+              searchPlaceholder="Buscar policial por nome ou matrícula"
               emptyMessage="Nenhum policial encontrado."
             />
             <p className="text-xs text-slate-500">
@@ -195,7 +195,7 @@ function RoleDialog({
 
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="contract-role-start-date">Inicio</Label>
+              <Label htmlFor="contract-role-start-date">Início</Label>
               <Input id="contract-role-start-date" type="date" {...register("start_date")} />
               {errors.start_date ? <p className="text-sm text-destructive">{errors.start_date.message}</p> : null}
             </div>
@@ -258,16 +258,16 @@ export function ContractRolesPage() {
   return (
     <ContractSubpageShell
       title="Papeis do contrato"
-      description="Gerencie gestor, fiscal e demais responsaveis com historico de vigencia."
+      description="Gerencie gestor, fiscal e demais responsáveis com histórico de vigência."
       canView={permissions.canViewAny}
       permissionDeniedTitle="Acesso negado"
-      permissionDeniedDescription="Voce precisa da permissao `viewAny` para visualizar os papeis do contrato."
+      permissionDeniedDescription="Você precisa da permissão `viewAny` para visualizar os papeis do contrato."
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <CardTitle>Historico de papeis</CardTitle>
-            <CardDescription>Use filtros para localizar rapidamente o responsavel atual ou papeis encerrados.</CardDescription>
+            <CardTitle>Histórico de papeis</CardTitle>
+            <CardDescription>Use filtros para localizar rapidamente o responsável atual ou papeis encerrados.</CardDescription>
           </div>
           {permissions.canCreate ? (
             <Button onClick={() => { setEditingRole(null); setIsDialogOpen(true); }}>
@@ -281,7 +281,7 @@ export function ContractRolesPage() {
       <div className="grid gap-4 rounded-[24px] border border-slate-200/70 bg-white/80 p-4 md:grid-cols-4">
         <div className="space-y-2 md:col-span-2">
           <Label htmlFor="contract-role-search">Busca</Label>
-          <Input id="contract-role-search" placeholder="Busque por policial ou matricula" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} />
+          <Input id="contract-role-search" placeholder="Busque por policial ou matrícula" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} />
         </div>
         <div className="space-y-2">
           <Label>Papel</Label>
@@ -323,14 +323,14 @@ export function ContractRolesPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar papeis</CardTitle>
-            <CardDescription>Verifique se a API dos papeis do contrato ja esta publicada.</CardDescription>
+            <CardDescription>Verifique se a API dos papeis do contrato já esta publicada.</CardDescription>
           </CardHeader>
         </Card>
       ) : !rolesQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Nenhum papel encontrado</CardTitle>
-            <CardDescription>Cadastre o gestor, fiscal e demais responsaveis operacionais deste contrato.</CardDescription>
+            <CardDescription>Cadastre o gestor, fiscal e demais responsáveis operacionais deste contrato.</CardDescription>
           </CardHeader>
         </Card>
       ) : (
@@ -340,11 +340,11 @@ export function ContractRolesPage() {
               <table className="min-w-full text-left text-sm">
                 <thead className="bg-slate-50 text-slate-500">
                   <tr>
-                    <th className="px-4 py-3 font-medium">Responsavel</th>
+                    <th className="px-4 py-3 font-medium">Responsável</th>
                     <th className="px-4 py-3 font-medium">Papel</th>
-                    <th className="px-4 py-3 font-medium">Vigencia</th>
+                    <th className="px-4 py-3 font-medium">Vigência</th>
                     <th className="px-4 py-3 font-medium">Status</th>
-                    <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                    <th className="px-4 py-3 font-medium text-right">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -414,7 +414,7 @@ export function ContractRolesPage() {
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={() => setRoleToDelete(null)}>Cancelar</Button>
             <Button type="button" variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

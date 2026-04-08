@@ -60,7 +60,7 @@ const generalItems = [
   },
   {
     href: "/users",
-    label: "Usuarios",
+    label: "Usuários",
     icon: Users,
     visible: false,
     permissionResource: "users",
@@ -88,28 +88,28 @@ const generalItems = [
   },
   {
     href: "/police-officer-vacations",
-    label: "Ferias",
+    label: "Férias",
     icon: Palmtree,
     visible: false,
     permissionResource: "police-officer-vacations",
   },
   {
     href: "/police-officer-publications",
-    label: "Publicacoes",
+    label: "Publicações",
     icon: Newspaper,
     visible: false,
     permissionResource: "police-officer-publications",
   },
   {
     href: "/vehicles",
-    label: "Veiculos",
+    label: "Veículos",
     icon: CarFront,
     visible: false,
     permissionResource: "vehicles",
   },
   {
     href: "/vehicle-loans",
-    label: "Emprestimos",
+    label: "Empréstimos",
     icon: CarFront,
     visible: false,
     permissionResource: "vehicle-loans",
@@ -137,7 +137,7 @@ const generalItems = [
   },
   {
     href: "/vehicle-rentals",
-    label: "Locacoes",
+    label: "Locações",
     icon: BriefcaseBusiness,
     visible: false,
     permissionResource: "vehicle-rentals",
@@ -165,21 +165,21 @@ const generalItems = [
   },
   {
     href: "/patrimonies",
-    label: "Patrimonios",
+    label: "Patrimônios",
     icon: Landmark,
     visible: false,
     permissionResource: "patrimonies",
   },
   {
     href: "/material-loans",
-    label: "Emprestimos de materiais",
+    label: "Empréstimos de materiais",
     icon: Boxes,
     visible: false,
     permissionResource: "material-loans",
   },
   {
     href: "/armament-loans",
-    label: "Emprestimos de armamentos",
+    label: "Empréstimos de armamentos",
     icon: Crosshair,
     visible: false,
     permissionResource: "armament-loans",
@@ -221,7 +221,7 @@ const generalItems = [
   },
   {
     href: "/services",
-    label: "Servicos",
+    label: "Serviços",
     icon: BriefcaseBusiness,
     visible: false,
     permissionResource: "services",
@@ -269,7 +269,7 @@ const administratorItems: Array<{
   },
   {
     href: "/contract-features",
-    label: "Caracteristicas contrato",
+    label: "Características contrato",
     icon: Sparkles,
     requirements: [
       { type: "resource", resource: "contract-features", action: "viewAny" },
@@ -285,7 +285,7 @@ const administratorItems: Array<{
   },
   {
     href: "/countries",
-    label: "Paises",
+    label: "Países",
     icon: Globe2,
     requirements: [
       { type: "resource", resource: "countries", action: "viewAny" },
@@ -325,7 +325,7 @@ const administratorItems: Array<{
   },
   {
     href: "/genders",
-    label: "Generos",
+    label: "Gêneros",
     icon: Orbit,
     requirements: [
       { type: "resource", resource: "genders", action: "viewAny" },
@@ -355,7 +355,7 @@ const administratorItems: Array<{
   },
   {
     href: "/permissions",
-    label: "Permissoes",
+    label: "Permissões",
     icon: Shield,
     requirements: [
       { type: "resource", resource: "permissions", action: "viewAny" },
@@ -363,7 +363,7 @@ const administratorItems: Array<{
   },
   {
     href: "/notification-responsibilities",
-    label: "Respons. notificacoes",
+    label: "Respons. notificações",
     icon: BellRing,
     requirements: [
       {
@@ -407,7 +407,7 @@ const administratorTypeItems: Array<{
   },
   {
     href: "/vehicle-types",
-    label: "Tipos de veiculo",
+    label: "Tipos de veículo",
     icon: CarFront,
     requirements: [
       { type: "resource", resource: "vehicle-types", action: "viewAny" },
@@ -423,7 +423,7 @@ const administratorTypeItems: Array<{
   },
   {
     href: "/patrimony-types",
-    label: "Tipos de patrimonio",
+    label: "Tipos de patrimônio",
     icon: Landmark,
     requirements: [
       { type: "resource", resource: "patrimony-types", action: "viewAny" },
@@ -431,7 +431,7 @@ const administratorTypeItems: Array<{
   },
   {
     href: "/service-types",
-    label: "Tipos de servico",
+    label: "Tipos de serviço",
     icon: Wrench,
     requirements: [
       { type: "resource", resource: "service-types", action: "viewAny" },
@@ -447,7 +447,7 @@ const administratorTypeItems: Array<{
   },
   {
     href: "/publication-types",
-    label: "Tipos de publicacao",
+    label: "Tipos de publicação",
     icon: FileHeart,
     requirements: [
       { type: "resource", resource: "publication-types", action: "viewAny" },
@@ -503,7 +503,7 @@ const reportsItems: Array<{
 }> = [
   {
     href: "#",
-    label: "Relatorios gerais",
+    label: "Relatórios gerais",
     icon: BarChart3,
     requirements: [{ type: "slug", value: "reports" }],
   },
@@ -802,7 +802,7 @@ export function AppSidebar() {
       items: managerItems,
     },
     {
-      key: "Relatorios",
+      key: "Relatórios",
       visible: canSeeReportsMenu && visibleReportsItems.length > 0,
       items: visibleReportsItems,
     },
@@ -872,7 +872,7 @@ export function AppSidebar() {
 
       <div className="mt-auto rounded-[20px] border border-white/10 bg-white/5 px-4 py-3">
         <p className="text-xs text-slate-300">
-          Estrutura pronta para receber os modulos da operacao.
+          Estrutura pronta para receber os módulos da operação.
         </p>
       </div>
     </aside>

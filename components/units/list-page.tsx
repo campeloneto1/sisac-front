@@ -38,7 +38,7 @@ export function UnitsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `units.viewAny` para visualizar unidades.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `units.viewAny` para visualizar unidades.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -90,7 +90,7 @@ export function UnitsListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar unidades</CardTitle>
-            <CardDescription>Verifique a API, as permissoes e o acesso aos cadastros auxiliares.</CardDescription>
+            <CardDescription>Verifique a API, as permissões e o acesso aos cadastros auxiliares.</CardDescription>
           </CardHeader>
         </Card>
       ) : !unitsQuery.data?.data.length ? (

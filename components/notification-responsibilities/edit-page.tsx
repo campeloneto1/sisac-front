@@ -24,7 +24,7 @@ export function NotificationResponsibilityEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `notification-responsibilities.update` para editar este cadastro.
+            Você precisa de `administrator` e `notification-responsibilities.update` para editar este cadastro.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -36,7 +36,7 @@ export function NotificationResponsibilityEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>A edicao depende da subunidade ativa para carregar os setores permitidos.</CardDescription>
+          <CardDescription>A edição depende da subunidade ativa para carregar os setores permitidos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -51,7 +51,7 @@ export function NotificationResponsibilityEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar responsabilidade</CardTitle>
-          <CardDescription>O cadastro nao pode ser editado agora.</CardDescription>
+          <CardDescription>O cadastro não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -63,7 +63,7 @@ export function NotificationResponsibilityEditPage() {
         <CardHeader>
           <CardTitle>Troque a subunidade ativa</CardTitle>
           <CardDescription>
-            Esta regra pertence a outra subunidade. Para editar o setor responsavel com seguranca, altere o contexto global para a subunidade do registro.
+            Esta regra pertence a outra subunidade. Para editar o setor responsável com segurança, altere o contexto global para a subunidade do registro.
           </CardDescription>
         </CardHeader>
       </Card>

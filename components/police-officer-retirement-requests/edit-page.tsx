@@ -24,7 +24,7 @@ export function PoliceOfficerRetirementRequestEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar requerimentos de
+            Você precisa da permissão `update` para editar requerimentos de
             aposentadoria.
           </CardDescription>
         </CardHeader>
@@ -42,7 +42,7 @@ export function PoliceOfficerRetirementRequestEditPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar requerimento</CardTitle>
           <CardDescription>
-            Os dados do requerimento nao estao disponiveis no momento.
+            Os dados do requerimento não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>

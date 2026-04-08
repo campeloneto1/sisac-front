@@ -20,8 +20,8 @@ export function VehicleMaintenanceCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar manutencoes de
-            veiculos.
+            Você precisa da permissão `create` para cadastrar manutencoes de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -36,11 +36,11 @@ export function VehicleMaintenanceCreatePage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Nova manutencao de veiculo
+            Nova manutenção de veículo
           </h1>
           <p className="text-sm text-slate-500">
-            Registre a entrada em manutencao usando apenas veiculos
-            operacionalmente disponiveis.
+            Registre a entrada em manutenção usando apenas veículos
+            operacionalmente disponíveis.
           </p>
         </div>
       </div>

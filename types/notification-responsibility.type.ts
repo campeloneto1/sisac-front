@@ -9,7 +9,7 @@ export const notificationResponsibilityDomains = [
   "patrimony",
   "service",
   "ensino",
-  "sargentiacao",
+  "sargentiação",
   "contract",
   "police_officer",
   "user",
@@ -18,16 +18,16 @@ export const notificationResponsibilityDomains = [
 export type NotificationResponsibilityDomain = (typeof notificationResponsibilityDomains)[number];
 
 export const notificationResponsibilityDomainLabels: Record<NotificationResponsibilityDomain, string> = {
-  vehicle: "Veiculos",
+  vehicle: "Veículos",
   armament: "Armamentos",
   material: "Materiais",
-  patrimony: "Patrimonios",
-  service: "Servicos",
+  patrimony: "Patrimônios",
+  service: "Serviços",
   ensino: "Ensino",
-  sargentiacao: "Sargentiacao",
+  sargentiação: "Sargentiação",
   contract: "Contratos",
   police_officer: "Policiais",
-  user: "Usuarios",
+  user: "Usuários",
 };
 
 export function getNotificationResponsibilityDomainLabel(domain: string) {

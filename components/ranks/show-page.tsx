@@ -23,7 +23,7 @@ export function RankShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `ranks.view` para visualizar postos/graduações.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `ranks.view` para visualizar postos/graduações.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -38,7 +38,7 @@ export function RankShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar posto/graduação</CardTitle>
-          <CardDescription>Os dados do posto/graduação nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do posto/graduação não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -53,7 +53,7 @@ export function RankShowPage() {
           <h1 className="font-display text-3xl text-slate-900">{rank.name}</h1>
           <p className="mt-2 text-sm text-slate-500">Sigla: {rank.abbreviation}</p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Cadastro administrativo que representa a posicao hierarquica usada no historico funcional e nas regras de promocao.
+            Cadastro administrativo que representa a posição hierárquica usada no histórico funcional e nas regras de promoção.
           </p>
         </div>
 
@@ -83,7 +83,7 @@ export function RankShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Intersticio</p>
                 <p className="text-sm text-slate-700">
-                  {rank.interstice !== null ? `${rank.interstice} meses` : "Nao informado"}
+                  {rank.interstice !== null ? `${rank.interstice} meses` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -91,14 +91,14 @@ export function RankShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{rank.creator ? `${rank.creator.name} (${rank.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{rank.creator ? `${rank.creator.name} (${rank.creator.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{rank.updater ? `${rank.updater.name} (${rank.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{rank.updater ? `${rank.updater.name} (${rank.updater.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>
@@ -113,14 +113,14 @@ export function RankShowPage() {
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <p className="text-sm font-medium text-slate-900">Hierarquia estruturante</p>
               <p className="mt-2 text-sm text-slate-600">
-                Este cadastro deve permanecer coerente porque pode ser referenciado por historicos de postos e regras relacionadas a promocao.
+                Este cadastro deve permanecer coerente porque pode ser referenciado por históricos de postos e regras relacionadas a promoção.
               </p>
             </div>
 
             <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-4">
               <ShieldAlert className="mt-0.5 h-4 w-4 text-amber-700" />
               <p className="text-sm text-amber-800">
-                A exclusao pode ser recusada pela policy se este posto/graduação estiver vinculado a registros em `police_officer_ranks`.
+                A exclusão pode ser recusada pela policy se este posto/graduação estiver vinculado a registros em `police_officer_ranks`.
               </p>
             </div>
           </CardContent>

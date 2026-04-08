@@ -19,7 +19,7 @@ export function getContractBillingModelLabel(model: string) {
 }
 
 export function getContractBillingModelDescription(model: string) {
-  return contractBillingModelDescriptions[model as ContractBillingModel] ?? "Sem descricao disponivel.";
+  return contractBillingModelDescriptions[model as ContractBillingModel] ?? "Sem descrição disponível.";
 }
 
 export interface ContractTypeFeatureItem {

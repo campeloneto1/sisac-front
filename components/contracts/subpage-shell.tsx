@@ -63,7 +63,7 @@ export function ContractSubpageShell({
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>O modulo de contratos depende do contexto ativo para enviar `X-Active-Subunit`.</CardDescription>
+          <CardDescription>O módulo de contratos depende do contexto ativo para enviar `X-Active-Subunit`.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -78,7 +78,7 @@ export function ContractSubpageShell({
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar contrato</CardTitle>
-          <CardDescription>Nao foi possivel carregar o contrato base para navegar pelos submodulos.</CardDescription>
+          <CardDescription>Não foi possível carregar o contrato base para navegar pelos submodulos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -103,7 +103,7 @@ export function ContractSubpageShell({
           </div>
 
           <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-            <p>Empresa: <span className="font-medium text-slate-900">{contract.company?.name ?? "Nao informada"}</span></p>
+            <p>Empresa: <span className="font-medium text-slate-900">{contract.company?.name ?? "Não informada"}</span></p>
             <p className="mt-1">SACC: <span className="font-medium text-slate-900">{contract.sacc_number}</span></p>
           </div>
         </div>

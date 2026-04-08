@@ -70,8 +70,8 @@ export function VehicleLoansListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar emprestimos de
-            veiculos.
+            Você precisa da permissão `viewAny` para visualizar empréstimos de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -87,10 +87,10 @@ export function VehicleLoansListPage() {
           </div>
           <div>
             <h1 className="font-display text-3xl text-slate-900">
-              Emprestimos de veiculos
+              Empréstimos de veículos
             </h1>
             <p className="text-sm text-slate-500">
-              Controle as saidas e devolucoes da frota por veiculo e tomador.
+              Controle as saidas e devolucoes da frota por veículo e tomador.
             </p>
           </div>
         </div>
@@ -99,7 +99,7 @@ export function VehicleLoansListPage() {
           <Button asChild>
             <Link href="/vehicle-loans/create">
               <Plus className="mr-2 h-4 w-4" />
-              Novo emprestimo
+              Novo empréstimo
             </Link>
           </Button>
         ) : null}
@@ -170,9 +170,9 @@ export function VehicleLoansListPage() {
       ) : loansQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar emprestimos</CardTitle>
+            <CardTitle>Erro ao carregar empréstimos</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario
+              Verifique a API, a subunidade ativa e as permissões do usuário
               autenticado.
             </CardDescription>
           </CardHeader>
@@ -180,9 +180,9 @@ export function VehicleLoansListPage() {
       ) : !loansQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhum emprestimo encontrado</CardTitle>
+            <CardTitle>Nenhum empréstimo encontrado</CardTitle>
             <CardDescription>
-              Crie um novo emprestimo ou refine os filtros aplicados.
+              Crie um novo empréstimo ou refine os filtros aplicados.
             </CardDescription>
           </CardHeader>
         </Card>

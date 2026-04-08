@@ -34,7 +34,7 @@ export function MaterialShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `view` para visualizar materiais.</CardDescription>
+          <CardDescription>Você precisa da permissão `view` para visualizar materiais.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -45,7 +45,7 @@ export function MaterialShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>O modulo de materiais depende da subunidade ativa para carregar os dados do registro.</CardDescription>
+          <CardDescription>O módulo de materiais depende da subunidade ativa para carregar os dados do registro.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -60,7 +60,7 @@ export function MaterialShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar material</CardTitle>
-          <CardDescription>Os dados do material nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do material não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -75,10 +75,10 @@ export function MaterialShowPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="font-display text-3xl text-slate-900">{material.type?.name ?? "Material"}</h1>
-            <Badge variant="outline">{material.variant?.name ?? "Variante nao informada"}</Badge>
+            <Badge variant="outline">{material.variant?.name ?? "Variante não informada"}</Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            Marca: {material.variant?.brand?.name ?? "Nao informada"} • Subunidade: {material.subunit?.abbreviation ?? material.subunit?.name ?? activeSubunit.name}
+            Marca: {material.variant?.brand?.name ?? "Não informada"} • Subunidade: {material.subunit?.abbreviation ?? material.subunit?.name ?? activeSubunit.name}
           </p>
         </div>
 
@@ -133,14 +133,14 @@ export function MaterialShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{material.creator ? `${material.creator.name} (${material.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{material.creator ? `${material.creator.name} (${material.creator.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{material.updater ? `${material.updater.name} (${material.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{material.updater ? `${material.updater.name} (${material.updater.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -168,7 +168,7 @@ export function MaterialShowPage() {
               ))}
             </div>
           ) : (
-            <p className="text-sm text-slate-500">Nenhuma especificacao informada.</p>
+            <p className="text-sm text-slate-500">Nenhuma especificação informada.</p>
           )}
         </CardContent>
       </Card>
@@ -180,10 +180,10 @@ export function MaterialShowPage() {
         </CardHeader>
         <CardContent className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <p className="text-sm text-slate-600">
-            Parte das ocorrencias ja nasce automaticamente no fluxo de emprestimos, mas o backend ainda nao expoe `MaterialOccurrence` como recurso REST dedicado.
+            Parte das ocorrencias já nasce automaticamente no fluxo de empréstimos, mas o backend ainda não expoe `MaterialOccurrence` como recurso REST dedicado.
           </p>
           <Button asChild variant="outline">
-            <Link href={`/materials/${material.id}/occurrences`}>Abrir modulo de ocorrencias</Link>
+            <Link href={`/materials/${material.id}/occurrences`}>Abrir módulo de ocorrencias</Link>
           </Button>
         </CardContent>
       </Card>
@@ -191,14 +191,14 @@ export function MaterialShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Movimentacoes</CardTitle>
-          <CardDescription>Area preparada para a trilha operacional de entradas, saidas, emprestimos e ajustes.</CardDescription>
+          <CardDescription>Area preparada para a trilha operacional de entradas, saidas, empréstimos e ajustes.</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <p className="text-sm text-slate-600">
-            O backend ainda nao expoe `MaterialMovement` como recurso REST, mas a navegacao do modulo ja esta pronta para receber esse historico.
+            O backend ainda não expoe `MaterialMovement` como recurso REST, mas a navegação do módulo já esta pronta para receber esse histórico.
           </p>
           <Button asChild variant="outline">
-            <Link href={`/materials/${material.id}/movements`}>Abrir modulo de movimentacoes</Link>
+            <Link href={`/materials/${material.id}/movements`}>Abrir módulo de movimentacoes</Link>
           </Button>
         </CardContent>
       </Card>
@@ -211,7 +211,7 @@ export function MaterialShowPage() {
         <CardContent>
           <div className="mb-4 flex justify-end">
             <Button asChild variant="outline">
-              <Link href={`/materials/${material.id}/units`}>Abrir modulo de unidades</Link>
+              <Link href={`/materials/${material.id}/units`}>Abrir módulo de unidades</Link>
             </Button>
           </div>
           {material.units?.length ? (
@@ -219,8 +219,8 @@ export function MaterialShowPage() {
               <table className="min-w-full text-left text-sm">
                 <thead className="bg-slate-50 text-slate-500">
                   <tr>
-                    <th className="px-4 py-3 font-medium">Patrimonio 1</th>
-                    <th className="px-4 py-3 font-medium">Patrimonio 2</th>
+                    <th className="px-4 py-3 font-medium">Patrimônio 1</th>
+                    <th className="px-4 py-3 font-medium">Patrimônio 2</th>
                     <th className="px-4 py-3 font-medium">Status</th>
                     <th className="px-4 py-3 font-medium">Aquisicao</th>
                     <th className="px-4 py-3 font-medium">Vencimento</th>
@@ -252,12 +252,12 @@ export function MaterialShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Lotes</CardTitle>
-          <CardDescription>Lotes e saldos disponiveis retornados pela API.</CardDescription>
+          <CardDescription>Lotes e saldos disponíveis retornados pela API.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="mb-4 flex justify-end">
             <Button asChild variant="outline">
-              <Link href={`/materials/${material.id}/batches`}>Abrir modulo de lotes</Link>
+              <Link href={`/materials/${material.id}/batches`}>Abrir módulo de lotes</Link>
             </Button>
           </div>
           {material.batches?.length ? (
@@ -267,7 +267,7 @@ export function MaterialShowPage() {
                   <tr>
                     <th className="px-4 py-3 font-medium">Lote</th>
                     <th className="px-4 py-3 font-medium">Quantidade</th>
-                    <th className="px-4 py-3 font-medium">Disponivel</th>
+                    <th className="px-4 py-3 font-medium">Disponível</th>
                     <th className="px-4 py-3 font-medium">Em uso</th>
                     <th className="px-4 py-3 font-medium">Vencimento</th>
                   </tr>

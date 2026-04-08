@@ -160,7 +160,7 @@ export const vehicleLoanBorrowerTypeOptions: Array<{
   label: string;
 }> = [
   { value: "App\\Models\\PoliceOfficer", label: "Policial" },
-  { value: "App\\Models\\User", label: "Usuario" },
+  { value: "App\\Models\\User", label: "Usuário" },
 ];
 
 export function getVehicleLoanBorrowerLabel(loan: VehicleLoanItem) {
@@ -174,7 +174,7 @@ export function getVehicleLoanBorrowerLabel(loan: VehicleLoanItem) {
       return policeOfficerLabel ?? "Policial vinculado";
     }
 
-    return loan.borrower.name ?? loan.borrower.email ?? "Usuario vinculado";
+    return loan.borrower.name ?? loan.borrower.email ?? "Usuário vinculado";
   }
 
   return loan.external_borrower_name ?? "Tomador externo";

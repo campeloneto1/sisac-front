@@ -50,12 +50,12 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 const photoSchema = z.object({
-  value: z.string().trim().max(500, "A URL da foto deve ter no maximo 500 caracteres."),
+  value: z.string().trim().max(500, "A URL da foto deve ter no máximo 500 caracteres."),
 });
 
 const vehicleDamageFormSchema = z
   .object({
-    vehicle_id: z.string().min(1, "Selecione um veiculo."),
+    vehicle_id: z.string().min(1, "Selecione um veículo."),
     context_type: z.string(),
     context_id: z.string(),
     detected_date: z.string(),
@@ -65,24 +65,24 @@ const vehicleDamageFormSchema = z
     location: z
       .string()
       .min(3, "Informe o local do dano.")
-      .max(100, "O local deve ter no maximo 100 caracteres."),
+      .max(100, "O local deve ter no máximo 100 caracteres."),
     description: z
       .string()
-      .min(5, "A descricao deve ter ao menos 5 caracteres.")
-      .max(1000, "A descricao deve ter no maximo 1000 caracteres."),
+      .min(5, "A descrição deve ter ao menos 5 caracteres.")
+      .max(1000, "A descrição deve ter no máximo 1000 caracteres."),
     severity: z.string(),
     photos: z.array(photoSchema),
     responsible_user_id: z.string(),
     responsible_external_name: z
       .string()
-      .max(100, "O nome do responsavel externo deve ter no maximo 100 caracteres."),
+      .max(100, "O nome do responsável externo deve ter no máximo 100 caracteres."),
     estimated_repair_cost: z.union([z.coerce.number().min(0), z.literal("")]),
     actual_repair_cost: z.union([z.coerce.number().min(0), z.literal("")]),
     status: z.string(),
     repair_date: z.string(),
     notes: z
       .string()
-      .max(2000, "As observacoes devem ter no maximo 2000 caracteres."),
+      .max(2000, "As observações devem ter no máximo 2000 caracteres."),
   })
   .superRefine((values, ctx) => {
     if (
@@ -246,7 +246,7 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
         )
         .map((loan) => ({
           value: String(loan.id),
-          label: `${loan.vehicle?.license_plate ?? `#${loan.vehicle_id}`} • ${loan.status_label ?? "Emprestimo"}`,
+          label: `${loan.vehicle?.license_plate ?? `#${loan.vehicle_id}`} • ${loan.status_label ?? "Empréstimo"}`,
         }));
     }
 
@@ -272,7 +272,7 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
         )
         .map((maintenance) => ({
           value: String(maintenance.id),
-          label: `${maintenance.vehicle?.license_plate ?? `#${maintenance.vehicle_id}`} • ${maintenance.maintenance_type_label ?? "Manutencao"}`,
+          label: `${maintenance.vehicle?.license_plate ?? `#${maintenance.vehicle_id}`} • ${maintenance.maintenance_type_label ?? "Manutenção"}`,
         }));
     }
 
@@ -356,14 +356,14 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
         <CardTitle>{mode === "create" ? "Novo dano" : "Editar dano"}</CardTitle>
         <CardDescription>
           Registre o dano, o contexto operacional, a gravidade e os custos de
-          reparo do veiculo.
+          reparo do veículo.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label>Veiculo</Label>
+              <Label>Veículo</Label>
               <Select
                 value={selectedVehicleId || "none"}
                 onValueChange={(value) => {
@@ -378,10 +378,10 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
                 }}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione um veiculo" />
+                  <SelectValue placeholder="Selecione um veículo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Selecione um veiculo</SelectItem>
+                  <SelectItem value="none">Selecione um veículo</SelectItem>
                   {(vehiclesQuery.data?.data ?? []).map((vehicle) => (
                     <SelectItem key={vehicle.id} value={String(vehicle.id)}>
                       {vehicle.license_plate}
@@ -460,7 +460,7 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label>Responsavel interno</Label>
+              <Label>Responsável interno</Label>
               <Select
                 value={selectedResponsibleUserId || "none"}
                 onValueChange={(value) =>
@@ -474,10 +474,10 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione o usuario" />
+                  <SelectValue placeholder="Selecione o usuário" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Nao informado</SelectItem>
+                  <SelectItem value="none">Não informado</SelectItem>
                   {(usersQuery.data?.data ?? []).map((user) => (
                     <SelectItem key={user.id} value={String(user.id)}>
                       {user.name}
@@ -597,7 +597,7 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
           </section>
 
           <section className="space-y-2">
-            <Label htmlFor="description">Descricao</Label>
+            <Label htmlFor="description">Descrição</Label>
             <Textarea
               id="description"
               rows={4}
@@ -714,7 +714,7 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="responsible_external_name">
-                Responsavel externo
+                Responsável externo
               </Label>
               <Input
                 id="responsible_external_name"
@@ -723,11 +723,11 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="notes">Observacoes</Label>
+              <Label htmlFor="notes">Observações</Label>
               <Textarea
                 id="notes"
                 rows={4}
-                placeholder="Informacoes complementares sobre o dano"
+                placeholder="Informações complementares sobre o dano"
                 {...register("notes")}
               />
             </div>
@@ -746,7 +746,7 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
                 ? "Salvando..."
                 : mode === "create"
                   ? "Registrar dano"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

@@ -51,7 +51,7 @@ export function ContractsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `viewAny` para visualizar contratos.</CardDescription>
+          <CardDescription>Você precisa da permissão `viewAny` para visualizar contratos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -62,7 +62,7 @@ export function ContractsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>O modulo de contratos depende do contexto ativo para enviar `X-Active-Subunit` em todas as requisicoes.</CardDescription>
+          <CardDescription>O módulo de contratos depende do contexto ativo para enviar `X-Active-Subunit` em todas as requisicoes.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -77,7 +77,7 @@ export function ContractsListPage() {
           </div>
           <div>
             <h1 className="font-display text-3xl text-slate-900">Contratos</h1>
-            <p className="text-sm text-slate-500">Gerencie contratos da subunidade ativa com empresa, vigencia, execucao e responsaveis.</p>
+            <p className="text-sm text-slate-500">Gerencie contratos da subunidade ativa com empresa, vigência, execução e responsáveis.</p>
             <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-400">Contexto ativo: {activeSubunit.name}</p>
           </div>
         </div>
@@ -139,7 +139,7 @@ export function ContractsListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar contratos</CardTitle>
-            <CardDescription>Verifique a API, a subunidade ativa e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API, a subunidade ativa e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !contractsQuery.data?.data.length ? (

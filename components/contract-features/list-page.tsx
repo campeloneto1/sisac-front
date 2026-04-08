@@ -35,7 +35,7 @@ export function ContractFeaturesListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `contract-features.viewAny` para visualizar caracteristicas.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `contract-features.viewAny` para visualizar características.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -45,15 +45,15 @@ export function ContractFeaturesListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Caracteristicas de contrato</h1>
-          <p className="text-sm text-slate-500">Gerencie o cadastro administrativo global das caracteristicas vinculaveis aos tipos de contrato.</p>
+          <h1 className="font-display text-3xl text-slate-900">Características de contrato</h1>
+          <p className="text-sm text-slate-500">Gerencie o cadastro administrativo global das características vinculaveis aos tipos de contrato.</p>
         </div>
 
         {permissions.canCreate ? (
           <Button asChild>
             <Link href="/contract-features/create">
               <Plus className="mr-2 h-4 w-4" />
-              Nova caracteristica
+              Nova característica
             </Link>
           </Button>
         ) : null}
@@ -79,15 +79,15 @@ export function ContractFeaturesListPage() {
       ) : contractFeaturesQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar caracteristicas</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardTitle>Erro ao carregar características</CardTitle>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !contractFeaturesQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhuma caracteristica encontrada</CardTitle>
-            <CardDescription>Crie uma nova caracteristica ou refine a busca.</CardDescription>
+            <CardTitle>Nenhuma característica encontrada</CardTitle>
+            <CardDescription>Crie uma nova característica ou refine a busca.</CardDescription>
           </CardHeader>
         </Card>
       ) : (

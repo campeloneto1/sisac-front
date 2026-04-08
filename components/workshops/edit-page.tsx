@@ -23,7 +23,7 @@ export function WorkshopEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `manager` e `workshops.update` para editar
+            Você precisa de `manager` e `workshops.update` para editar
             oficinas.
           </CardDescription>
         </CardHeader>
@@ -41,7 +41,7 @@ export function WorkshopEditPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar oficina</CardTitle>
           <CardDescription>
-            Os dados da oficina nao estao disponiveis para edicao no momento.
+            Os dados da oficina não estão disponíveis para edição no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -59,7 +59,7 @@ export function WorkshopEditPage() {
             Editar oficina
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize contatos, localizacao, status e especialidades da oficina.
+            Atualize contatos, localização, status e especialidades da oficina.
           </p>
         </div>
       </div>

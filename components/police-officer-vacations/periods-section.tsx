@@ -68,8 +68,8 @@ export function PoliceOfficerVacationPeriodsSection({ vacation }: PoliceOfficerV
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <CardTitle>Periodos de ferias</CardTitle>
-            <CardDescription>Planejamento do gozo, incluindo parcelamento, aprovacoes e boletins de inicio/retorno.</CardDescription>
+            <CardTitle>Períodos de férias</CardTitle>
+            <CardDescription>Planejamento do gozo, incluindo parcelamento, aprovacoes e boletins de início/retorno.</CardDescription>
           </div>
 
           {permissions.canCreate && vacation.can_add_period ? (
@@ -80,7 +80,7 @@ export function PoliceOfficerVacationPeriodsSection({ vacation }: PoliceOfficerV
               }}
             >
               <Plus className="mr-2 h-4 w-4" />
-              Adicionar periodo
+              Adicionar período
             </Button>
           ) : null}
         </CardHeader>
@@ -91,7 +91,7 @@ export function PoliceOfficerVacationPeriodsSection({ vacation }: PoliceOfficerV
               <Skeleton className="h-24 w-full" />
             </div>
           ) : periodsQuery.isError ? (
-            <p className="text-sm text-slate-500">Nao foi possivel carregar os periodos de ferias.</p>
+            <p className="text-sm text-slate-500">Não foi possível carregar os períodos de férias.</p>
           ) : periods.length ? (
             <div className="space-y-3">
               {periods.map((period) => (
@@ -110,8 +110,8 @@ export function PoliceOfficerVacationPeriodsSection({ vacation }: PoliceOfficerV
                           <CalendarDays className="h-4 w-4 text-primary" />
                           <span>{period.days ?? 0} dias</span>
                         </div>
-                        <div>Boletim de inicio: {period.bulletin_start ?? "Nao informado"}</div>
-                        <div>Boletim de retorno: {period.bulletin_return ?? "Nao informado"}</div>
+                        <div>Boletim de início: {period.bulletin_start ?? "Não informado"}</div>
+                        <div>Boletim de retorno: {period.bulletin_return ?? "Não informado"}</div>
                       </div>
                     </div>
 
@@ -140,7 +140,7 @@ export function PoliceOfficerVacationPeriodsSection({ vacation }: PoliceOfficerV
               ))}
             </div>
           ) : (
-            <p className="text-sm text-slate-500">Nenhum periodo cadastrado para este registro de ferias.</p>
+            <p className="text-sm text-slate-500">Nenhum período cadastrado para este registro de férias.</p>
           )}
         </CardContent>
       </Card>
@@ -155,9 +155,9 @@ export function PoliceOfficerVacationPeriodsSection({ vacation }: PoliceOfficerV
       <Dialog open={Boolean(periodToDelete)} onOpenChange={(open) => !open && setPeriodToDelete(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir periodo de ferias</DialogTitle>
+            <DialogTitle>Excluir período de férias</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir o periodo de {periodToDelete?.start_date} ate {periodToDelete?.end_date}?
+              Tem certeza que deseja excluir o período de {periodToDelete?.start_date} ate {periodToDelete?.end_date}?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -165,7 +165,7 @@ export function PoliceOfficerVacationPeriodsSection({ vacation }: PoliceOfficerV
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

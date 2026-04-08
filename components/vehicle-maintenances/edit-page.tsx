@@ -25,8 +25,8 @@ export function VehicleMaintenanceEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar manutencoes de
-            veiculos.
+            Você precisa da permissão `update` para editar manutencoes de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -41,9 +41,9 @@ export function VehicleMaintenanceEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar manutencao</CardTitle>
+          <CardTitle>Erro ao carregar manutenção</CardTitle>
           <CardDescription>
-            Os dados da manutencao nao estao disponiveis para edicao no
+            Os dados da manutenção não estão disponíveis para edição no
             momento.
           </CardDescription>
         </CardHeader>
@@ -59,10 +59,10 @@ export function VehicleMaintenanceEditPage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Editar manutencao
+            Editar manutenção
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize oficina, custos, datas de saida e status da manutencao.
+            Atualize oficina, custos, datas de saida e status da manutenção.
           </p>
         </div>
       </div>

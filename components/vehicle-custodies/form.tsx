@@ -46,12 +46,12 @@ const vehicleCustodyFormSchema = z.object({
   custodian_id: z.string().min(1),
   document_number: z
     .string()
-    .max(100, "O documento deve ter no maximo 100 caracteres."),
+    .max(100, "O documento deve ter no máximo 100 caracteres."),
   end_date: z.string(),
-  reason: z.string().max(5000, "O motivo deve ter no maximo 5000 caracteres."),
+  reason: z.string().max(5000, "O motivo deve ter no máximo 5000 caracteres."),
   notes: z
     .string()
-    .max(5000, "As observacoes devem ter no maximo 5000 caracteres."),
+    .max(5000, "As observações devem ter no máximo 5000 caracteres."),
   start_date: z.string(),
 });
 
@@ -189,7 +189,7 @@ export function VehicleCustodyForm({
           {mode === "create" ? "Nova cautela" : "Editar cautela"}
         </CardTitle>
         <CardDescription>
-          O inicio, status e contexto da subunidade ativa sao definidos
+          O início, status e contexto da subunidade ativa sao definidos
           automaticamente pela API.
         </CardDescription>
       </CardHeader>
@@ -197,7 +197,7 @@ export function VehicleCustodyForm({
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label>Veiculo</Label>
+              <Label>Veículo</Label>
               <Select
                 value={selectedVehicleId || "none"}
                 onValueChange={(value) =>
@@ -208,10 +208,10 @@ export function VehicleCustodyForm({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione um veiculo" />
+                  <SelectValue placeholder="Selecione um veículo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Selecione um veiculo</SelectItem>
+                  <SelectItem value="none">Selecione um veículo</SelectItem>
                   {selectableVehicles.map((vehicle) => (
                     <SelectItem key={vehicle.id} value={String(vehicle.id)}>
                       {vehicle.license_plate}
@@ -221,21 +221,21 @@ export function VehicleCustodyForm({
               </Select>
               {errors.vehicle_id ? (
                 <p className="text-sm text-destructive">
-                  Selecione um veiculo.
+                  Selecione um veículo.
                 </p>
               ) : null}
             </div>
 
             {mode === "edit" ? (
               <div className="space-y-2">
-                <Label htmlFor="start_date">Data de inicio</Label>
+                <Label htmlFor="start_date">Data de início</Label>
                 <Input id="start_date" type="date" {...register("start_date")} />
               </div>
             ) : (
               <div className="space-y-2">
-                <Label>Inicio automatico</Label>
+                <Label>Início automático</Label>
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-700">
-                  A data de inicio sera registrada automaticamente ao criar a
+                  A data de início será registrada automaticamente ao criar a
                   cautela.
                 </div>
               </div>
@@ -305,7 +305,7 @@ export function VehicleCustodyForm({
               <Label htmlFor="document_number">Documento</Label>
               <Input
                 id="document_number"
-                placeholder="Numero do documento"
+                placeholder="Número do documento"
                 {...register("document_number")}
               />
               {errors.document_number ? (
@@ -337,10 +337,10 @@ export function VehicleCustodyForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="notes">Observacoes</Label>
+              <Label htmlFor="notes">Observações</Label>
               <Textarea
                 id="notes"
-                placeholder="Observacoes complementares"
+                placeholder="Observações complementares"
                 {...register("notes")}
               />
               {errors.notes ? (
@@ -368,7 +368,7 @@ export function VehicleCustodyForm({
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar cautela"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

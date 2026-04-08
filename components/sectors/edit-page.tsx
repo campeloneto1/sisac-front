@@ -23,7 +23,7 @@ export function SectorEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `sectors.update` para editar setores.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `sectors.update` para editar setores.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -34,7 +34,7 @@ export function SectorEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>A edicao do setor depende da subunidade ativa.</CardDescription>
+          <CardDescription>A edição do setor depende da subunidade ativa.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -49,7 +49,7 @@ export function SectorEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar setor</CardTitle>
-          <CardDescription>O setor nao pode ser editado agora.</CardDescription>
+          <CardDescription>O setor não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

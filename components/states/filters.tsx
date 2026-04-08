@@ -38,10 +38,10 @@ export function StatesFilters({
 
       <Select value={countryId} onValueChange={onCountryChange}>
         <SelectTrigger>
-          <SelectValue placeholder="Filtrar por pais" />
+          <SelectValue placeholder="Filtrar por país" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todos os paises</SelectItem>
+          <SelectItem value="all">Todos os países</SelectItem>
           {countries.map((country) => (
             <SelectItem key={country.id} value={String(country.id)}>
               {country.name} • {country.abbreviation}

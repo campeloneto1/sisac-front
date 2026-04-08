@@ -80,12 +80,12 @@ export interface PaginatedResponse<T> {
 
 export const brandTypeOptions = [
   { value: "weapon", label: "Armamento" },
-  { value: "logistics", label: "Logistica" },
+  { value: "logistics", label: "Logística" },
   { value: "transport", label: "Transporte" },
 ] as const;
 
 export type BrandType = (typeof brandTypeOptions)[number]["value"];
 
 export function getBrandTypeLabel(type: BrandType | string | null | undefined) {
-  return brandTypeOptions.find((option) => option.value === type)?.label ?? "Nao informado";
+  return brandTypeOptions.find((option) => option.value === type)?.label ?? "Não informado";
 }

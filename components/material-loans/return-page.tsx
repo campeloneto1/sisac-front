@@ -30,7 +30,7 @@ const returnSchema = z
     approved_by: z.string(),
     return_notes: z
       .string()
-      .max(1000, "As observacoes devem ter no maximo 1000 caracteres."),
+      .max(1000, "As observações devem ter no máximo 1000 caracteres."),
     items: z.array(
       z.object({
         id: z.coerce.number(),
@@ -44,13 +44,13 @@ const returnSchema = z
         lost_now: z.coerce.number().int().min(0),
         consumed_justification: z
           .string()
-          .max(1000, "A justificativa deve ter no maximo 1000 caracteres."),
+          .max(1000, "A justificativa deve ter no máximo 1000 caracteres."),
         lost_justification: z
           .string()
-          .max(1000, "A justificativa deve ter no maximo 1000 caracteres."),
+          .max(1000, "A justificativa deve ter no máximo 1000 caracteres."),
         lost_report_number: z
           .string()
-          .max(100, "O numero do relatorio deve ter no maximo 100 caracteres."),
+          .max(100, "O número do relatório deve ter no máximo 100 caracteres."),
       }),
     ),
   })
@@ -74,7 +74,7 @@ const returnSchema = z
           code: z.ZodIssueCode.custom,
           path: ["items", index, "returned_now"],
           message:
-            "A soma devolvida, consumida e extraviada nesta devolucao nao pode exceder o saldo pendente.",
+            "A soma devolvida, consumida e extraviada nesta devolução não pode exceder o saldo pendente.",
         });
       }
 
@@ -82,7 +82,7 @@ const returnSchema = z
         context.addIssue({
           code: z.ZodIssueCode.custom,
           path: ["items", index, "consumed_now"],
-          message: "Itens por unidade nao aceitam quantidade consumida.",
+          message: "Itens por unidade não aceitam quantidade consumida.",
         });
       }
 
@@ -119,7 +119,7 @@ const returnSchema = z
         code: z.ZodIssueCode.custom,
         path: ["items"],
         message:
-          "Informe devolucao, consumo ou extravio em pelo menos um item.",
+          "Informe devolução, consumo ou extravio em pelo menos um item.",
       });
     }
   });
@@ -216,7 +216,7 @@ export function MaterialLoanReturnPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para registrar devolucao de
+            Você precisa da permissão `update` para registrar devolução de
             materiais.
           </CardDescription>
         </CardHeader>
@@ -230,7 +230,7 @@ export function MaterialLoanReturnPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O modulo depende da subunidade ativa para registrar a devolucao.
+            O módulo depende da subunidade ativa para registrar a devolução.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -245,9 +245,9 @@ export function MaterialLoanReturnPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar emprestimo</CardTitle>
+          <CardTitle>Erro ao carregar empréstimo</CardTitle>
           <CardDescription>
-            O emprestimo nao esta disponivel para devolucao no momento.
+            O empréstimo não esta disponível para devolução no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -260,9 +260,9 @@ export function MaterialLoanReturnPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Emprestimo ja finalizado</CardTitle>
+          <CardTitle>Empréstimo já finalizado</CardTitle>
           <CardDescription>
-            Este emprestimo ja foi totalmente devolvido e nao aceita novas
+            Este empréstimo já foi totalmente devolvido e não aceita novas
             baixas.
           </CardDescription>
         </CardHeader>
@@ -341,11 +341,11 @@ export function MaterialLoanReturnPage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Registrar devolucao
+            Registrar devolução
           </h1>
           <p className="text-sm text-slate-500">
-            Informe apenas o que retorna agora. O sistema soma com o historico e
-            permite devolucao parcial por item.
+            Informe apenas o que retorna agora. O sistema soma com o histórico e
+            permite devolução parcial por item.
           </p>
         </div>
       </div>
@@ -353,10 +353,10 @@ export function MaterialLoanReturnPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>
-            Emprestimo de {loan.police_officer?.war_name || loan.police_officer?.name}
+            Empréstimo de {loan.police_officer?.war_name || loan.police_officer?.name}
           </CardTitle>
           <CardDescription>
-            A data e hora da devolucao agora sao registradas automaticamente
+            A data e hora da devolução agora sao registradas automaticamente
             pela API.
           </CardDescription>
         </CardHeader>
@@ -393,10 +393,10 @@ export function MaterialLoanReturnPage() {
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <Label>Observacoes de retorno</Label>
+                <Label>Observações de retorno</Label>
                 <Textarea
                   rows={3}
-                  placeholder="Descreva o contexto da devolucao, se necessario."
+                  placeholder="Descreva o contexto da devolução, se necessario."
                   {...register("return_notes")}
                 />
                 {errors.return_notes ? (
@@ -469,7 +469,7 @@ export function MaterialLoanReturnPage() {
                         <Label>Justificativa de consumo</Label>
                         <Textarea
                           rows={2}
-                          placeholder="Obrigatoria quando houver consumo."
+                          placeholder="Obrigatória quando houver consumo."
                           {...register(`items.${index}.consumed_justification`)}
                         />
                         {errors.items?.[index]?.consumed_justification ? (
@@ -483,7 +483,7 @@ export function MaterialLoanReturnPage() {
                         <Label>Justificativa de extravio</Label>
                         <Textarea
                           rows={2}
-                          placeholder="Obrigatoria quando houver extravio."
+                          placeholder="Obrigatória quando houver extravio."
                           {...register(`items.${index}.lost_justification`)}
                         />
                         {errors.items?.[index]?.lost_justification ? (
@@ -494,7 +494,7 @@ export function MaterialLoanReturnPage() {
                       </div>
 
                       <div className="space-y-2">
-                        <Label>Numero do relatorio</Label>
+                        <Label>Número do relatório</Label>
                         <Input
                           placeholder="Opcional"
                           {...register(`items.${index}.lost_report_number`)}
@@ -502,7 +502,7 @@ export function MaterialLoanReturnPage() {
                       </div>
 
                       <div className="rounded-2xl border border-slate-200/70 bg-white px-4 py-3 text-sm text-slate-600 md:col-span-3">
-                        Historico: devolvido {item.current_returned_quantity} •
+                        Histórico: devolvido {item.current_returned_quantity} •
                         consumido {item.current_consumed_quantity} • extraviado{" "}
                         {item.current_lost_quantity}.
                       </div>
@@ -527,7 +527,7 @@ export function MaterialLoanReturnPage() {
               <Button type="submit" disabled={returnMutation.isPending}>
                 {returnMutation.isPending
                   ? "Registrando..."
-                  : "Registrar devolucao"}
+                  : "Registrar devolução"}
               </Button>
             </div>
           </form>

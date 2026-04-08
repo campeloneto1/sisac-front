@@ -35,7 +35,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDateTime(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -88,7 +88,7 @@ export function NotificationsListPage() {
             </h1>
             <p className="text-sm text-slate-500">
               Acompanhe seus avisos do sistema e abra a origem quando houver rota
-              disponivel.
+              disponível.
             </p>
           </div>
         </div>
@@ -109,7 +109,7 @@ export function NotificationsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardContent className="grid gap-3 pt-6 md:grid-cols-[1fr_220px]">
           <Input
-            placeholder="Filtrar por tipo de notificacao..."
+            placeholder="Filtrar por tipo de notificação..."
             value={type}
             onChange={(event) => {
               setType(event.target.value);
@@ -129,7 +129,7 @@ export function NotificationsListPage() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Todas</SelectItem>
-              <SelectItem value="unread">Nao lidas</SelectItem>
+              <SelectItem value="unread">Não lidas</SelectItem>
               <SelectItem value="read">Lidas</SelectItem>
             </SelectContent>
           </Select>
@@ -145,9 +145,9 @@ export function NotificationsListPage() {
       ) : notificationsQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar notificacoes</CardTitle>
+            <CardTitle>Erro ao carregar notificações</CardTitle>
             <CardDescription>
-              As notificacoes do usuario autenticado nao estao disponiveis no
+              As notificações do usuário autenticado não estão disponíveis no
               momento.
             </CardDescription>
           </CardHeader>
@@ -155,9 +155,9 @@ export function NotificationsListPage() {
       ) : !notificationsQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhuma notificacao encontrada</CardTitle>
+            <CardTitle>Nenhuma notificação encontrada</CardTitle>
             <CardDescription>
-              Ajuste os filtros ou aguarde novas notificacoes do sistema.
+              Ajuste os filtros ou aguarde novas notificações do sistema.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -186,14 +186,14 @@ export function NotificationsListPage() {
                           {notification.level || "info"}
                         </Badge>
                         {!notification.is_read ? (
-                          <Badge variant="info">Nao lida</Badge>
+                          <Badge variant="info">Não lida</Badge>
                         ) : null}
                       </div>
                       <p className="text-sm text-slate-600">
                         {notification.message || "Sem detalhes adicionais."}
                       </p>
                       <p className="text-xs text-slate-500">
-                        Tipo: {notification.type || "Nao informado"} • Criada em{" "}
+                        Tipo: {notification.type || "Não informado"} • Criada em{" "}
                         {formatDateTime(notification.created_at)}
                       </p>
                     </div>

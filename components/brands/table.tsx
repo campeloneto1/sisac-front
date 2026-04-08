@@ -60,7 +60,7 @@ export function BrandsTable({ brands }: BrandsTableProps) {
                 <th className="px-4 py-3 font-medium">Sigla</th>
                 <th className="px-4 py-3 font-medium">Tipo</th>
                 <th className="px-4 py-3 font-medium">Modelos</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -137,7 +137,7 @@ export function BrandsTable({ brands }: BrandsTableProps) {
             <DialogTitle>Excluir marca</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja excluir {brandToDelete?.name}? Marcas com
-              modelos vinculados nao podem ser removidas pela policy.
+              modelos vinculados não podem ser removidas pela policy.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -149,7 +149,7 @@ export function BrandsTable({ brands }: BrandsTableProps) {
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

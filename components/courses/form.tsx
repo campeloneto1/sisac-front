@@ -15,8 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const courseFormSchema = z.object({
-  name: z.string().min(3, "O nome precisa ter ao menos 3 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
-  abbreviation: z.string().min(2, "A sigla precisa ter ao menos 2 caracteres.").max(10, "A sigla deve ter no maximo 10 caracteres."),
+  name: z.string().min(3, "O nome precisa ter ao menos 3 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
+  abbreviation: z.string().min(2, "A sigla precisa ter ao menos 2 caracteres.").max(10, "A sigla deve ter no máximo 10 caracteres."),
 });
 
 type CourseFormValues = z.infer<typeof courseFormSchema>;
@@ -84,7 +84,7 @@ export function CourseForm({ mode, course }: CourseFormProps) {
       <CardHeader>
         <CardTitle>{mode === "create" ? "Novo curso" : "Editar curso"}</CardTitle>
         <CardDescription>
-          Cursos ficam na area geral e servem como base para turmas, disciplinas e historicos formativos dos policiais.
+          Cursos ficam na area geral e servem como base para turmas, disciplinas e históricos formativos dos policiais.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -98,12 +98,12 @@ export function CourseForm({ mode, course }: CourseFormProps) {
           <div className="space-y-2">
             <Label htmlFor="abbreviation">Sigla</Label>
             <Input id="abbreviation" placeholder="Ex.: CFS" {...register("abbreviation")} />
-            <p className="text-xs text-slate-500">A API converte a sigla para maiusculas automaticamente.</p>
+            <p className="text-xs text-slate-500">A API converte a sigla para maiúsculas automaticamente.</p>
             {errors.abbreviation ? <p className="text-sm text-destructive">{errors.abbreviation.message}</p> : null}
           </div>
 
           <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/80 px-4 py-3 text-sm text-slate-600 md:col-span-2">
-            Alteracoes neste cadastro impactam turmas, disciplinas e futuros modulos de historico de cursos dos policiais.
+            Alteracoes neste cadastro impactam turmas, disciplinas e futuros módulos de histórico de cursos dos policiais.
           </div>
 
           <div className="flex justify-end gap-3 md:col-span-2">
@@ -111,7 +111,7 @@ export function CourseForm({ mode, course }: CourseFormProps) {
               <Link href={mode === "create" ? "/courses" : `/courses/${course?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar curso" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar curso" : "Salvar alterações"}
             </Button>
           </div>
         </form>

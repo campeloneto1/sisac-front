@@ -13,7 +13,7 @@ export function MaterialOccurrenceCreatePage() {
   return (
     <MaterialOccurrencesPageShell
       title="Nova ocorrencia de material"
-      description="Estruture o fluxo de registro manual para eventos que nao nascem automaticamente do emprestimo."
+      description="Estruture o fluxo de registro manual para eventos que não nascem automaticamente do empréstimo."
       requiredPermission="create"
       materialId={params.id}
     >
@@ -27,7 +27,7 @@ export function MaterialOccurrenceCreatePage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-slate-600">
           <p>Campos esperados:</p>
-          <p>material, unidade ou lote, tipo, data/hora, BO, descricao, status e reportado por.</p>
+          <p>material, unidade ou lote, tipo, data/hora, BO, descrição, status e reportado por.</p>
           <div className="flex flex-wrap gap-2">
             {materialOccurrenceTypeOptions.map((option) => (
               <Badge key={option.value} variant="outline">

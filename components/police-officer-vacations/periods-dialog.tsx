@@ -17,8 +17,8 @@ const periodSchema = z.object({
   start_date: z.string().min(1, "Informe a data inicial."),
   end_date: z.string().min(1, "Informe a data final."),
   status: z.string(),
-  bulletin_start: z.string().max(50, "O boletim deve ter no maximo 50 caracteres.").optional(),
-  bulletin_return: z.string().max(50, "O boletim deve ter no maximo 50 caracteres.").optional(),
+  bulletin_start: z.string().max(50, "O boletim deve ter no máximo 50 caracteres.").optional(),
+  bulletin_return: z.string().max(50, "O boletim deve ter no máximo 50 caracteres.").optional(),
 }).superRefine((values, context) => {
   if (values.end_date < values.start_date) {
     context.addIssue({
@@ -104,9 +104,9 @@ export function PoliceOfficerVacationPeriodsDialog({
     <Dialog open={open} onOpenChange={(nextOpen) => !isPending && onOpenChange(nextOpen)}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{period ? "Editar periodo de ferias" : "Adicionar periodo de ferias"}</DialogTitle>
+          <DialogTitle>{period ? "Editar período de férias" : "Adicionar período de férias"}</DialogTitle>
           <DialogDescription>
-            Planeje o gozo em periodos separados, respeitando o saldo disponivel e evitando sobreposicao com outros afastamentos.
+            Planeje o gozo em períodos separados, respeitando o saldo disponível e evitando sobreposição com outros afastamentos.
           </DialogDescription>
         </DialogHeader>
 
@@ -142,7 +142,7 @@ export function PoliceOfficerVacationPeriodsDialog({
 
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="vacation-period-bulletin-start">Boletim de inicio</Label>
+              <Label htmlFor="vacation-period-bulletin-start">Boletim de início</Label>
               <Input id="vacation-period-bulletin-start" placeholder="Ex.: BG-2025/120" {...register("bulletin_start")} />
             </div>
             <div className="space-y-2">
@@ -156,7 +156,7 @@ export function PoliceOfficerVacationPeriodsDialog({
               Cancelar
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : period ? "Salvar periodo" : "Adicionar periodo"}
+              {isPending ? "Salvando..." : period ? "Salvar período" : "Adicionar período"}
             </Button>
           </DialogFooter>
         </form>

@@ -35,7 +35,7 @@ export function RanksListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `ranks.viewAny` para visualizar postos/graduações.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `ranks.viewAny` para visualizar postos/graduações.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -47,7 +47,7 @@ export function RanksListPage() {
         <div>
           <h1 className="font-display text-3xl text-slate-900">Postos/graduações</h1>
           <p className="text-sm text-slate-500">
-            Gerencie a hierarquia administrativa usada em promocoes e historicos funcionais.
+            Gerencie a hierarquia administrativa usada em promoções e históricos funcionais.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export function RanksListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar postos/graduações</CardTitle>
-            <CardDescription>Verifique a API, o resource e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API, o resource e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !ranksQuery.data?.data.length ? (

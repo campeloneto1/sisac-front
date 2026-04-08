@@ -36,7 +36,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 const patrimonyCreateSchema = z.object({
-  patrimony_type_id: z.string().min(1, "Selecione o tipo de patrimonio."),
+  patrimony_type_id: z.string().min(1, "Selecione o tipo de patrimônio."),
   current_sector_id: z.string(),
   serial_number: z.string().max(100).optional().or(z.literal("")),
   description: z.string().max(1000).optional().or(z.literal("")),
@@ -206,25 +206,25 @@ export function PatrimonyForm({ mode, patrimony }: PatrimonyFormProps) {
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>
-          {mode === "create" ? "Novo patrimonio" : "Editar patrimonio"}
+          {mode === "create" ? "Novo patrimônio" : "Editar patrimônio"}
         </CardTitle>
         <CardDescription>
           {mode === "create"
-            ? "Cadastre um patrimonio na subunidade ativa. O codigo e o status inicial sao definidos pela API."
-            : "Atualize os dados cadastrais do patrimonio. Transferencias e baixas possuem fluxos proprios."}
+            ? "Cadastre um patrimônio na subunidade ativa. O codigo e o status inicial sao definidos pela API."
+            : "Atualize os dados cadastrais do patrimônio. Transferências e baixas possuem fluxos próprios."}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {!activeSubunit ? (
           <div className="mb-5 rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-5 text-sm text-slate-500">
-            Selecione uma subunidade ativa antes de cadastrar ou editar patrimonios.
+            Selecione uma subunidade ativa antes de cadastrar ou editar patrimônios.
           </div>
         ) : null}
 
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             <div className="space-y-2">
-              <Label>Tipo de patrimonio</Label>
+              <Label>Tipo de patrimônio</Label>
               <Select
                 value={selectedPatrimonyTypeId || "none"}
                 onValueChange={(value) =>
@@ -280,13 +280,13 @@ export function PatrimonyForm({ mode, patrimony }: PatrimonyFormProps) {
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-slate-500">
-                  Se informado, a API cria automaticamente o primeiro evento no historico setorial.
+                  Se informado, a API cria automaticamente o primeiro evento no histórico setorial.
                 </p>
               </div>
             ) : null}
 
             <div className="space-y-2">
-              <Label htmlFor="serial_number">Numero de serie</Label>
+              <Label htmlFor="serial_number">Número de serie</Label>
               <Input id="serial_number" {...register("serial_number")} />
               {"serial_number" in errors && errors.serial_number ? (
                 <p className="text-sm text-destructive">
@@ -322,11 +322,11 @@ export function PatrimonyForm({ mode, patrimony }: PatrimonyFormProps) {
             </div>
 
             <div className="space-y-2 md:col-span-2 xl:col-span-3">
-              <Label htmlFor="description">Descricao</Label>
+              <Label htmlFor="description">Descrição</Label>
               <Textarea
                 id="description"
                 rows={5}
-                placeholder="Descreva o patrimonio, caracteristicas e observacoes relevantes."
+                placeholder="Descreva o patrimônio, características e observações relevantes."
                 {...register("description")}
               />
               {"description" in errors && errors.description ? (
@@ -353,8 +353,8 @@ export function PatrimonyForm({ mode, patrimony }: PatrimonyFormProps) {
               {isPending
                 ? "Salvando..."
                 : mode === "create"
-                  ? "Criar patrimonio"
-                  : "Salvar alteracoes"}
+                  ? "Criar patrimônio"
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

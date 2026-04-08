@@ -25,7 +25,7 @@ interface ServicesTableProps {
 
 function formatDateTime(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -46,11 +46,11 @@ export function ServicesTable({ services }: ServicesTableProps) {
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Servico</th>
+                <th className="px-4 py-3 font-medium">Serviço</th>
                 <th className="px-4 py-3 font-medium">Status e prioridade</th>
-                <th className="px-4 py-3 font-medium">Solicitacao</th>
+                <th className="px-4 py-3 font-medium">Solicitação</th>
                 <th className="px-4 py-3 font-medium">Agendamento</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -58,13 +58,13 @@ export function ServicesTable({ services }: ServicesTableProps) {
                 <tr key={service.id} className="border-t border-slate-200/70 align-top">
                   <td className="px-4 py-4">
                     <p className="font-medium text-slate-900">
-                      {service.service_type?.name || `Servico #${service.id}`}
+                      {service.service_type?.name || `Serviço #${service.id}`}
                     </p>
                     <p className="mt-1 text-slate-500">
-                      {service.company?.trade_name || service.company?.name || "Empresa nao informada"}
+                      {service.company?.trade_name || service.company?.name || "Empresa não informada"}
                     </p>
                     <p className="mt-1 text-slate-500">
-                      {service.location || "Localizacao nao informada"}
+                      {service.location || "Localização não informada"}
                     </p>
                   </td>
                   <td className="px-4 py-4">
@@ -83,13 +83,13 @@ export function ServicesTable({ services }: ServicesTableProps) {
                     <p className="mt-2 text-slate-500">
                       {service.service_type?.requires_approval
                         ? "Fluxo com aprovacao"
-                        : "Fluxo sem aprovacao obrigatoria"}
+                        : "Fluxo sem aprovacao obrigatória"}
                     </p>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
                     <p>
                       Solicitado por{" "}
-                      {service.requester?.name || `Usuario #${service.requested_by}`}
+                      {service.requester?.name || `Usuário #${service.requested_by}`}
                     </p>
                     <p className="mt-1">
                       Em {formatDateTime(service.requested_at)}
@@ -97,7 +97,7 @@ export function ServicesTable({ services }: ServicesTableProps) {
                   </td>
                   <td className="px-4 py-4 text-slate-600">
                     <p>Agendado: {formatDateTime(service.scheduled_date)}</p>
-                    <p className="mt-1">Inicio: {formatDateTime(service.started_at)}</p>
+                    <p className="mt-1">Início: {formatDateTime(service.started_at)}</p>
                     <p className="mt-1">Fim: {formatDateTime(service.finished_at)}</p>
                   </td>
                   <td className="px-4 py-4">
@@ -146,12 +146,12 @@ export function ServicesTable({ services }: ServicesTableProps) {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir servico</DialogTitle>
+            <DialogTitle>Excluir serviço</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir este servico de{" "}
+              Tem certeza que deseja excluir este serviço de{" "}
               {serviceToDelete?.company?.trade_name ||
                 serviceToDelete?.company?.name ||
-                "empresa nao informada"}
+                "empresa não informada"}
               ?
             </DialogDescription>
           </DialogHeader>
@@ -172,7 +172,7 @@ export function ServicesTable({ services }: ServicesTableProps) {
                 setServiceToDelete(null);
               }}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

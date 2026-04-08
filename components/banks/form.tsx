@@ -15,8 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const bankFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
-  code: z.string().min(1, "O codigo e obrigatorio.").max(20, "O codigo deve ter no maximo 20 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
+  code: z.string().min(1, "O codigo e obrigatório.").max(20, "O codigo deve ter no máximo 20 caracteres."),
 });
 
 type BankFormValues = z.infer<typeof bankFormSchema>;
@@ -96,7 +96,7 @@ export function BankForm({ mode, bank }: BankFormProps) {
           <div className="space-y-2">
             <Label htmlFor="code">Codigo</Label>
             <Input id="code" maxLength={20} placeholder="Ex.: 001" {...register("code")} />
-            <p className="text-xs text-slate-500">Obrigatorio. O backend salva automaticamente em caixa alta.</p>
+            <p className="text-xs text-slate-500">Obrigatório. O backend salva automaticamente em caixa alta.</p>
             {errors.code ? <p className="text-sm text-destructive">{errors.code.message}</p> : null}
           </div>
 
@@ -105,7 +105,7 @@ export function BankForm({ mode, bank }: BankFormProps) {
               <Link href={mode === "create" ? "/banks" : `/banks/${bank?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar banco" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar banco" : "Salvar alterações"}
             </Button>
           </div>
         </form>

@@ -83,7 +83,7 @@ export function CourseDisciplinesSection({ courseId, courseName }: CourseDiscipl
               <Skeleton className="h-24 w-full" />
             </div>
           ) : disciplinesQuery.isError ? (
-            <p className="text-sm text-slate-500">Nao foi possivel carregar as disciplinas deste curso.</p>
+            <p className="text-sm text-slate-500">Não foi possível carregar as disciplinas deste curso.</p>
           ) : disciplines.length ? (
             <div className="space-y-3">
               {disciplines.map((discipline) => (
@@ -104,7 +104,7 @@ export function CourseDisciplinesSection({ courseId, courseName }: CourseDiscipl
                         </div>
                         <div className="flex items-center gap-2 text-sm text-slate-600">
                           <Clock3 className="h-4 w-4 text-primary" />
-                          <span>{discipline.workload_hours ? `${discipline.workload_hours} horas` : "Carga horaria nao informada"}</span>
+                          <span>{discipline.workload_hours ? `${discipline.workload_hours} horas` : "Carga horaria não informada"}</span>
                         </div>
                       </div>
                     </div>
@@ -152,7 +152,7 @@ export function CourseDisciplinesSection({ courseId, courseName }: CourseDiscipl
           <DialogHeader>
             <DialogTitle>Excluir disciplina</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir a disciplina {disciplineToDelete?.name}? Essa acao nao pode ser desfeita.
+              Tem certeza que deseja excluir a disciplina {disciplineToDelete?.name}? Essa ação não pode ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -160,7 +160,7 @@ export function CourseDisciplinesSection({ courseId, courseName }: CourseDiscipl
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

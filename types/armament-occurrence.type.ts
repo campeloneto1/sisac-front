@@ -42,7 +42,7 @@ export const armamentOccurrenceStatusOptions: Array<{
   label: string;
 }> = [
   { value: "reported", label: "Reportado" },
-  { value: "investigating", label: "Em investigacao" },
+  { value: "investigating", label: "Em investigação" },
   { value: "resolved", label: "Resolvido" },
   { value: "closed", label: "Encerrado" },
 ];

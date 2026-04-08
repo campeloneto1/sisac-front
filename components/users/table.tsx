@@ -62,12 +62,12 @@ export function UsersTable({ users }: UsersTableProps) {
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Usuario</th>
+                <th className="px-4 py-3 font-medium">Usuário</th>
                 <th className="px-4 py-3 font-medium">Documento</th>
                 <th className="px-4 py-3 font-medium">Tipo</th>
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">Perfil</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -135,10 +135,10 @@ export function UsersTable({ users }: UsersTableProps) {
       <Dialog open={Boolean(userToDelete)} onOpenChange={(open) => !open && setUserToDelete(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir usuario</DialogTitle>
+            <DialogTitle>Excluir usuário</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {userToDelete?.name}? Essa acao depende da permissao `delete` e nao deve
-              ser usada no proprio usuario autenticado.
+              Tem certeza que deseja excluir {userToDelete?.name}? Essa ação depende da permissão `delete` e não deve
+              ser usada no próprio usuário autenticado.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -146,7 +146,7 @@ export function UsersTable({ users }: UsersTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

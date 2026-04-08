@@ -42,7 +42,7 @@ export function ArmamentOccurrencesPageShell({
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce nao possui permissao suficiente para acessar ocorrencias de
+            Você não possui permissão suficiente para acessar ocorrencias de
             armamentos.
           </CardDescription>
         </CardHeader>
@@ -76,10 +76,10 @@ export function ArmamentOccurrencesPageShell({
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-amber-900">
             <ShieldAlert className="h-5 w-5" />
-            Integracao pendente com a API
+            Integração pendente com a API
           </CardTitle>
           <CardDescription className="text-amber-800">
-            A navegacao do modulo foi preparada, mas o backend ainda nao expoe
+            A navegação do módulo foi preparada, mas o backend ainda não expoe
             endpoints REST dedicados para `ArmamentOccurrence`.
           </CardDescription>
         </CardHeader>

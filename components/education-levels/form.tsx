@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const educationLevelFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
 });
 
 type EducationLevelFormValues = z.infer<typeof educationLevelFormSchema>;
@@ -80,7 +80,7 @@ export function EducationLevelForm({ mode, educationLevel }: EducationLevelFormP
       <CardHeader>
         <CardTitle>{mode === "create" ? "Novo nivel de escolaridade" : "Editar nivel de escolaridade"}</CardTitle>
         <CardDescription>
-          Niveis de escolaridade ficam dentro de Administrador e servem como base para o cadastro e a classificacao de policiais.
+          Niveis de escolaridade ficam dentro de Administrador e servem como base para o cadastro e a classificação de policiais.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -96,7 +96,7 @@ export function EducationLevelForm({ mode, educationLevel }: EducationLevelFormP
               <Link href={mode === "create" ? "/education-levels" : `/education-levels/${educationLevel?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar nivel" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar nivel" : "Salvar alterações"}
             </Button>
           </div>
         </form>

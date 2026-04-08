@@ -35,7 +35,7 @@ export function EducationLevelsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `education-levels.viewAny` para visualizar niveis de escolaridade.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `education-levels.viewAny` para visualizar niveis de escolaridade.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -46,7 +46,7 @@ export function EducationLevelsListPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="font-display text-3xl text-slate-900">Niveis de escolaridade</h1>
-          <p className="text-sm text-slate-500">Gerencie o cadastro administrativo de escolaridade utilizado por policiais e outros modulos.</p>
+          <p className="text-sm text-slate-500">Gerencie o cadastro administrativo de escolaridade utilizado por policiais e outros módulos.</p>
         </div>
 
         {permissions.canCreate ? (
@@ -80,7 +80,7 @@ export function EducationLevelsListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar niveis de escolaridade</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !educationLevelsQuery.data?.data.length ? (

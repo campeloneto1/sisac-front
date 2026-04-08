@@ -46,7 +46,7 @@ export function ArmamentBatchesPageShell({
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce nao possui permissao suficiente para acessar a gestao de lotes
+            Você não possui permissão suficiente para acessar a gestão de lotes
             deste armamento.
           </CardDescription>
         </CardHeader>
@@ -68,9 +68,9 @@ export function ArmamentBatchesPageShell({
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o armamento</CardTitle>
+          <CardTitle>Não foi possível carregar o armamento</CardTitle>
           <CardDescription>
-            Verifique se o cadastro existe e se voce possui acesso a ele.
+            Verifique se o cadastro existe e se você possui acesso a ele.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -122,19 +122,19 @@ export function ArmamentBatchesPageShell({
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-amber-900">
             <ShieldAlert className="h-5 w-5" />
-            Integracao pendente com a API
+            Integração pendente com a API
           </CardTitle>
           <CardDescription className="text-amber-800">
-            A estrutura de navegacao e gestao dos lotes foi preparada dentro do
-            CRUD de armamentos, mas o backend ainda nao expoe endpoints
+            A estrutura de navegação e gestão dos lotes foi preparada dentro do
+            CRUD de armamentos, mas o backend ainda não expoe endpoints
             dedicados para `ArmamentBatch`.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-amber-900">
           <p>Assim que a API publicar o recurso, esta tela pode receber:</p>
           <p>listagem por lote, quantidade e validade;</p>
-          <p>cadastro, edicao e visualizacao de cada lote;</p>
-          <p>indicadores de quantidade disponivel, usada e vencimento.</p>
+          <p>cadastro, edição e visualizacao de cada lote;</p>
+          <p>indicadores de quantidade disponível, usada e vencimento.</p>
         </CardContent>
       </Card>
 

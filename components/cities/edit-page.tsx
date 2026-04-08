@@ -21,7 +21,7 @@ export function CityEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `cities.update` para editar cidades.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `cities.update` para editar cidades.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function CityEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar cidade</CardTitle>
-          <CardDescription>A cidade nao pode ser editada agora.</CardDescription>
+          <CardDescription>A cidade não pode ser editada agora.</CardDescription>
         </CardHeader>
       </Card>
     );

@@ -24,14 +24,14 @@ export function ArmamentUnitShowPage() {
         <CardHeader>
           <CardTitle>Unidade #{params.unitId}</CardTitle>
           <CardDescription>
-            Esta rota ja esta pronta para receber o detalhe operacional da
+            Esta rota já esta pronta para receber o detalhe operacional da
             unidade.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
-          <p>Informacoes esperadas:</p>
-          <p>numero de serie, status e datas importantes;</p>
-          <p>movimentacoes, emprestimos e ocorrencias relacionadas;</p>
+          <p>Informações esperadas:</p>
+          <p>número de serie, status e datas importantes;</p>
+          <p>movimentacoes, empréstimos e ocorrencias relacionadas;</p>
           <p>alertas de vencimento e indisponibilidade.</p>
         </CardContent>
       </Card>

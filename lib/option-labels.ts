@@ -74,7 +74,7 @@ export function formatVehicleOptionLabel(vehicle: VehicleOptionShape) {
     vehicle.special_plate ? `Esp.: ${vehicle.special_plate}` : null,
   ]).join(" • ");
 
-  return compactParts([model, plates, !model && !plates ? `Veiculo #${vehicle.id}` : null]).join(" • ");
+  return compactParts([model, plates, !model && !plates ? `Veículo #${vehicle.id}` : null]).join(" • ");
 }
 
 export function formatArmamentOptionLabel(armament: ArmamentOptionShape) {

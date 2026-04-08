@@ -17,7 +17,7 @@ export function MaterialLoanCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar emprestimos de
+            Você precisa da permissão `create` para cadastrar empréstimos de
             materiais.
           </CardDescription>
         </CardHeader>
@@ -31,7 +31,7 @@ export function MaterialLoanCreatePage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O cadastro de emprestimos de materiais depende da subunidade ativa.
+            O cadastro de empréstimos de materiais depende da subunidade ativa.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -46,10 +46,10 @@ export function MaterialLoanCreatePage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Novo emprestimo de material
+            Novo empréstimo de material
           </h1>
           <p className="text-sm text-slate-500">
-            Registre cautela ou emprestimo temporario com itens por unidade ou
+            Registre cautela ou empréstimo temporário com itens por unidade ou
             lote.
           </p>
         </div>

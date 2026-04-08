@@ -21,7 +21,7 @@ export function RankEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `ranks.update` para editar postos/graduações.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `ranks.update` para editar postos/graduações.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function RankEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar posto/graduação</CardTitle>
-          <CardDescription>O posto/graduação nao pode ser editado agora.</CardDescription>
+          <CardDescription>O posto/graduação não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

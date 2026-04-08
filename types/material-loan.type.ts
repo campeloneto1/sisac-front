@@ -142,7 +142,7 @@ export const materialLoanKindOptions: Array<{
   value: MaterialLoanKind;
   label: string;
 }> = [
-  { value: "temporary", label: "Temporario" },
+  { value: "temporary", label: "Temporário" },
   { value: "cautela", label: "Cautela" },
 ];
 

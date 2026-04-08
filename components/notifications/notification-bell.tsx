@@ -70,7 +70,7 @@ export function NotificationBell() {
             <p className="text-sm font-semibold text-slate-900">Notificacoes</p>
             <p className="text-xs text-slate-500">
               {unreadCount > 0
-                ? `${unreadCount} nao lida(s)`
+                ? `${unreadCount} não lida(s)`
                 : "Tudo em dia por aqui"}
             </p>
           </div>
@@ -100,7 +100,7 @@ export function NotificationBell() {
             </div>
           ) : !notificationsQuery.data?.data.length ? (
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-8 text-center text-sm text-slate-500">
-              Nenhuma notificacao encontrada.
+              Nenhuma notificação encontrada.
             </div>
           ) : (
             <div className="space-y-2">
@@ -145,7 +145,7 @@ export function NotificationBell() {
                       </span>
                       {originHref ? (
                         <span className="text-xs font-medium text-primary">
-                          Origem disponivel
+                          Origem disponível
                         </span>
                       ) : null}
                     </div>

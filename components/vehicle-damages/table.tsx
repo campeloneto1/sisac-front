@@ -54,13 +54,13 @@ export function VehicleDamagesTable({ damages }: VehicleDamagesTableProps) {
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Veiculo</th>
+                <th className="px-4 py-3 font-medium">Veículo</th>
                 <th className="px-4 py-3 font-medium">Contexto</th>
                 <th className="px-4 py-3 font-medium">Tipo e local</th>
                 <th className="px-4 py-3 font-medium">Deteccao</th>
                 <th className="px-4 py-3 font-medium">Gravidade</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -144,10 +144,10 @@ export function VehicleDamagesTable({ damages }: VehicleDamagesTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir dano</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir o dano do veiculo{" "}
+              Tem certeza que deseja excluir o dano do veículo{" "}
               {damageToDelete?.vehicle?.license_plate ??
                 `#${damageToDelete?.vehicle_id}`}
-              ? Essa acao nao podera ser desfeita.
+              ? Essa ação não podera ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -164,7 +164,7 @@ export function VehicleDamagesTable({ damages }: VehicleDamagesTableProps) {
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

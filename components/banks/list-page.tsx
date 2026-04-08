@@ -35,7 +35,7 @@ export function BanksListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `banks.viewAny` para visualizar bancos.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `banks.viewAny` para visualizar bancos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -46,7 +46,7 @@ export function BanksListPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="font-display text-3xl text-slate-900">Bancos</h1>
-          <p className="text-sm text-slate-500">Gerencie o cadastro administrativo de bancos utilizado por outros modulos.</p>
+          <p className="text-sm text-slate-500">Gerencie o cadastro administrativo de bancos utilizado por outros módulos.</p>
         </div>
 
         {permissions.canCreate ? (
@@ -80,7 +80,7 @@ export function BanksListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar bancos</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !banksQuery.data?.data.length ? (

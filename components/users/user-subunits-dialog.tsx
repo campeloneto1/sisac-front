@@ -87,7 +87,7 @@ export function UserSubunitsDialog({
         <DialogHeader>
           <DialogTitle>Subunidades com acesso</DialogTitle>
           <DialogDescription>
-            Defina quais subunidades {userName} pode selecionar na navbar. A subunidade ativa escolhida la sera enviada no header `X-Active-Subunit`.
+            Defina quais subunidades {userName} pode selecionar na navbar. A subunidade ativa escolhida la será enviada no header `X-Active-Subunit`.
           </DialogDescription>
         </DialogHeader>
 
@@ -126,7 +126,7 @@ export function UserSubunitsDialog({
                 <Skeleton className="h-16 w-full" />
               </div>
             ) : !userSubunitsQuery.data?.data.length ? (
-              <p className="mt-4 text-sm text-slate-500">Este usuario ainda nao possui subunidades vinculadas.</p>
+              <p className="mt-4 text-sm text-slate-500">Este usuário ainda não possui subunidades vinculadas.</p>
             ) : (
               <div className="mt-4 space-y-3">
                 {userSubunitsQuery.data.data.map((item) => (

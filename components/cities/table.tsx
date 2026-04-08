@@ -46,7 +46,7 @@ export function CitiesTable({ cities }: CitiesTableProps) {
                 <th className="px-4 py-3 font-medium">Cidade</th>
                 <th className="px-4 py-3 font-medium">Sigla</th>
                 <th className="px-4 py-3 font-medium">Estado</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -101,7 +101,7 @@ export function CitiesTable({ cities }: CitiesTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir cidade</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {cityToDelete?.name}? Se existirem empresas vinculadas, a API pode bloquear essa exclusao.
+              Tem certeza que deseja excluir {cityToDelete?.name}? Se existirem empresas vinculadas, a API pode bloquear essa exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -109,7 +109,7 @@ export function CitiesTable({ cities }: CitiesTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

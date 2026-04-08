@@ -15,8 +15,8 @@ export function VehicleLoanCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar emprestimos de
-            veiculos.
+            Você precisa da permissão `create` para cadastrar empréstimos de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -31,10 +31,10 @@ export function VehicleLoanCreatePage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Novo emprestimo de veiculo
+            Novo empréstimo de veículo
           </h1>
           <p className="text-sm text-slate-500">
-            Registre a saida de um veiculo para tomador interno ou externo.
+            Registre a saida de um veículo para tomador interno ou externo.
           </p>
         </div>
       </div>

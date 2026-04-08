@@ -43,7 +43,7 @@ export function MaterialTypesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `material-types.viewAny` para
+            Você precisa de `administrator` e `material-types.viewAny` para
             visualizar tipos de material.
           </CardDescription>
         </CardHeader>
@@ -64,7 +64,7 @@ export function MaterialTypesListPage() {
                 Tipos de material
               </h1>
               <p className="text-sm text-slate-500">
-                Gerencie a classificacao administrativa global usada pelos
+                Gerencie a classificação administrativa global usada pelos
                 materiais do sistema.
               </p>
             </div>
@@ -103,7 +103,7 @@ export function MaterialTypesListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar tipos de material</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

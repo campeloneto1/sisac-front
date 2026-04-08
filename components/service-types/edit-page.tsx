@@ -22,8 +22,8 @@ export function ServiceTypeEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `service-types.update` para
-            editar tipos de servico.
+            Você precisa de `administrator` e `service-types.update` para
+            editar tipos de serviço.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -38,9 +38,9 @@ export function ServiceTypeEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar tipo de servico</CardTitle>
+          <CardTitle>Erro ao carregar tipo de serviço</CardTitle>
           <CardDescription>
-            O tipo de servico nao pode ser editado agora.
+            O tipo de serviço não pode ser editado agora.
           </CardDescription>
         </CardHeader>
       </Card>

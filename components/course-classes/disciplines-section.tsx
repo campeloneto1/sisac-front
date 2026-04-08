@@ -86,7 +86,7 @@ export function CourseClassDisciplinesSection({
               <Skeleton className="h-24 w-full" />
             </div>
           ) : disciplinesQuery.isError ? (
-            <p className="text-sm text-slate-500">Nao foi possivel carregar as disciplinas desta turma.</p>
+            <p className="text-sm text-slate-500">Não foi possível carregar as disciplinas desta turma.</p>
           ) : disciplines.length ? (
             <div className="space-y-3">
               {disciplines.map((discipline) => (
@@ -103,11 +103,11 @@ export function CourseClassDisciplinesSection({
                       <div className="grid gap-3 md:grid-cols-2">
                         <div className="flex items-center gap-2 text-sm text-slate-600">
                           <Clock3 className="h-4 w-4 text-primary" />
-                          <span>{discipline.workload_hours ? `${discipline.workload_hours} horas` : "Carga horaria nao informada"}</span>
+                          <span>{discipline.workload_hours ? `${discipline.workload_hours} horas` : "Carga horaria não informada"}</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-slate-600">
                           <UserRound className="h-4 w-4 text-primary" />
-                          <span>{discipline.instructor ? discipline.instructor.name : "Instrutor nao definido"}</span>
+                          <span>{discipline.instructor ? discipline.instructor.name : "Instrutor não definido"}</span>
                         </div>
                       </div>
                     </div>
@@ -160,7 +160,7 @@ export function CourseClassDisciplinesSection({
           <DialogHeader>
             <DialogTitle>Excluir disciplina da turma</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir a disciplina {disciplineToDelete?.name} de {courseClassName}? Essa acao nao pode ser desfeita.
+              Tem certeza que deseja excluir a disciplina {disciplineToDelete?.name} de {courseClassName}? Essa ação não pode ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -168,7 +168,7 @@ export function CourseClassDisciplinesSection({
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

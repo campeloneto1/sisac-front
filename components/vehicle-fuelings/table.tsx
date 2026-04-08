@@ -65,13 +65,13 @@ export function VehicleFuelingsTable({
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Veiculo</th>
+                <th className="px-4 py-3 font-medium">Veículo</th>
                 <th className="px-4 py-3 font-medium">Contexto</th>
                 <th className="px-4 py-3 font-medium">Data</th>
                 <th className="px-4 py-3 font-medium">Combustivel</th>
                 <th className="px-4 py-3 font-medium">Litros / custo</th>
                 <th className="px-4 py-3 font-medium">Posto</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -112,7 +112,7 @@ export function VehicleFuelingsTable({
                     <p>{formatCurrency(fueling.total_cost)}</p>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
-                    <p>{fueling.gas_station ?? "Nao informado"}</p>
+                    <p>{fueling.gas_station ?? "Não informado"}</p>
                     <p>{fueling.gas_station_city ?? "-"}</p>
                   </td>
                   <td className="px-4 py-4">
@@ -157,10 +157,10 @@ export function VehicleFuelingsTable({
           <DialogHeader>
             <DialogTitle>Excluir abastecimento</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir o abastecimento do veiculo{" "}
+              Tem certeza que deseja excluir o abastecimento do veículo{" "}
               {fuelingToDelete?.vehicle?.license_plate ??
                 `#${fuelingToDelete?.vehicle_id}`}
-              ? Essa acao nao podera ser desfeita.
+              ? Essa ação não podera ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -179,7 +179,7 @@ export function VehicleFuelingsTable({
             >
               {deleteMutation.isPending
                 ? "Excluindo..."
-                : "Confirmar exclusao"}
+                : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

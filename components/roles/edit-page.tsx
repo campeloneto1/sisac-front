@@ -21,7 +21,7 @@ export function RoleEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `roles.update` para editar perfis.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `roles.update` para editar perfis.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function RoleEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar perfil</CardTitle>
-          <CardDescription>O perfil nao pode ser editado agora.</CardDescription>
+          <CardDescription>O perfil não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

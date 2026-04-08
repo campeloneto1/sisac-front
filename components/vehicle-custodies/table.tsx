@@ -54,12 +54,12 @@ export function VehicleCustodiesTable({
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Veiculo</th>
+                <th className="px-4 py-3 font-medium">Veículo</th>
                 <th className="px-4 py-3 font-medium">Custodiante</th>
-                <th className="px-4 py-3 font-medium">Periodo</th>
+                <th className="px-4 py-3 font-medium">Período</th>
                 <th className="px-4 py-3 font-medium">Documento</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -74,7 +74,7 @@ export function VehicleCustodiesTable({
                         {custody.vehicle?.license_plate ?? `#${custody.vehicle_id}`}
                       </p>
                       <p className="mt-1 text-slate-500">
-                        {custody.vehicle?.vehicle_type?.name ?? "Tipo nao informado"}
+                        {custody.vehicle?.vehicle_type?.name ?? "Tipo não informado"}
                         {custody.vehicle?.variant?.name
                           ? ` • ${custody.vehicle.variant.name}`
                           : ""}
@@ -89,12 +89,12 @@ export function VehicleCustodiesTable({
                       <p className="mt-1 text-slate-500">
                         {custody.custodian_type === "App\\Models\\PoliceOfficer"
                           ? "Policial"
-                          : "Usuario"}
+                          : "Usuário"}
                       </p>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
-                    <p>Inicio: {formatDate(custody.start_date)}</p>
+                    <p>Início: {formatDate(custody.start_date)}</p>
                     <p>Previsto: {formatDate(custody.end_date)}</p>
                     <p>Efetivo: {formatDate(custody.actual_end_date)}</p>
                   </td>
@@ -152,10 +152,10 @@ export function VehicleCustodiesTable({
           <DialogHeader>
             <DialogTitle>Excluir cautela</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir a cautela do veiculo{" "}
+              Tem certeza que deseja excluir a cautela do veículo{" "}
               {custodyToDelete?.vehicle?.license_plate ??
                 `#${custodyToDelete?.vehicle_id}`}
-              ? Essa acao nao podera ser desfeita.
+              ? Essa ação não podera ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -169,7 +169,7 @@ export function VehicleCustodiesTable({
             >
               {deleteMutation.isPending
                 ? "Excluindo..."
-                : "Confirmar exclusao"}
+                : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

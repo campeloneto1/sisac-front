@@ -13,7 +13,7 @@ export function ArmamentMovementsListPage() {
   return (
     <ArmamentMovementsPageShell
       title="Movimentacoes"
-      description="Consulte o historico operacional deste armamento."
+      description="Consulte o histórico operacional deste armamento."
       requiredPermission="view"
     >
       <div className="grid gap-4 md:grid-cols-3">
@@ -33,7 +33,7 @@ export function ArmamentMovementsListPage() {
           <CardHeader>
             <CardTitle>Saidas</CardTitle>
             <CardDescription>
-              Emprestimos, cessoes, baixas e outras reducoes de estoque.
+              Empréstimos, cessoes, baixas e outras reducoes de estoque.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -58,19 +58,19 @@ export function ArmamentMovementsListPage() {
         <CardHeader>
           <CardTitle>Fluxo preparado</CardTitle>
           <CardDescription>
-            Esta area ja esta pronta para receber a tabela historica de
+            Esta area já esta pronta para receber a tabela historica de
             movimentacoes quando a API do recurso for publicada.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-slate-600">
-          <p>Filtros planejados: tipo, periodo, unidade, lote e referencia.</p>
+          <p>Filtros planejados: tipo, período, unidade, lote e referência.</p>
           <p>
-            Acoes planejadas: visualizar movimento e navegar para a origem do
+            Ações planejadas: visualizar movimento e navegar para a origem do
             evento.
           </p>
           <p>
             O ideal aqui e expor um endpoint `armament-movements` com filtro por
-            `armament_id` e suporte a relacoes de referencia.
+            `armament_id` e suporte a relacoes de referência.
           </p>
         </CardContent>
       </Card>

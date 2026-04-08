@@ -25,8 +25,8 @@ export function VehicleCustodyEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar cautelas de
-            veiculos.
+            Você precisa da permissão `update` para editar cautelas de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -43,7 +43,7 @@ export function VehicleCustodyEditPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar cautela</CardTitle>
           <CardDescription>
-            Os dados da cautela nao estao disponiveis para edicao no momento.
+            Os dados da cautela não estão disponíveis para edição no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -61,7 +61,7 @@ export function VehicleCustodyEditPage() {
             Editar cautela
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize o responsavel, observacoes e os dados operacionais da
+            Atualize o responsável, observações e os dados operacionais da
             cautela.
           </p>
         </div>

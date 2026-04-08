@@ -20,7 +20,7 @@ export function ArmamentTypeCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar tipos de
+            Você precisa da permissão `create` para cadastrar tipos de
             armamento.
           </CardDescription>
         </CardHeader>
@@ -39,7 +39,7 @@ export function ArmamentTypeCreatePage() {
             Novo tipo de armamento
           </h1>
           <p className="text-sm text-slate-500">
-            Cadastre um novo tipo para classificacao administrativa.
+            Cadastre um novo tipo para classificação administrativa.
           </p>
         </div>
       </div>

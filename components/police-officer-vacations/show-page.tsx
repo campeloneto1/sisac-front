@@ -39,7 +39,7 @@ export function PoliceOfficerVacationShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `view` para visualizar ferias.</CardDescription>
+          <CardDescription>Você precisa da permissão `view` para visualizar férias.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -53,8 +53,8 @@ export function PoliceOfficerVacationShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar ferias</CardTitle>
-          <CardDescription>Os dados do registro anual nao estao disponiveis no momento.</CardDescription>
+          <CardTitle>Erro ao carregar férias</CardTitle>
+          <CardDescription>Os dados do registro anual não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -73,10 +73,10 @@ export function PoliceOfficerVacationShowPage() {
             <Badge variant={getStatusVariant(vacation.status?.value)}>{vacation.status?.label ?? "Sem status"}</Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            Ferias de {vacation.reference_year} • validade {vacation.valid_from ?? "-"} ate {vacation.valid_until ?? "-"}
+            Férias de {vacation.reference_year} • validade {vacation.valid_from ?? "-"} ate {vacation.valid_until ?? "-"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Registro anual de ferias com saldo, boletins e planejamento de periodos de gozo para o policial.
+            Registro anual de férias com saldo, boletins e planejamento de períodos de gozo para o policial.
           </p>
         </div>
 
@@ -90,8 +90,8 @@ export function PoliceOfficerVacationShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Saldo e vigencia</CardTitle>
-            <CardDescription>Visao resumida do saldo anual e da janela valida para gozo.</CardDescription>
+            <CardTitle>Saldo e vigência</CardTitle>
+            <CardDescription>Visao resumida do saldo anual e da janela válida para gozo.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="grid gap-3 md:grid-cols-2">
@@ -108,7 +108,7 @@ export function PoliceOfficerVacationShowPage() {
                 <p className="mt-1 text-sm font-semibold text-slate-900">{vacation.sold_days ?? 0}</p>
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Disponiveis para gozo</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Disponíveis para gozo</p>
                 <p className="mt-1 text-sm font-semibold text-slate-900">{vacation.available_days ?? vacation.remaining_days ?? 0}</p>
               </div>
             </div>
@@ -116,7 +116,7 @@ export function PoliceOfficerVacationShowPage() {
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <CalendarDays className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Vigencia</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Vigência</p>
                 <p className="text-sm text-slate-700">{vacation.valid_from ?? "-"} ate {vacation.valid_until ?? "-"}</p>
               </div>
             </div>
@@ -140,29 +140,29 @@ export function PoliceOfficerVacationShowPage() {
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-primary" />
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Boletim de autorizacao</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Boletim de autorização</p>
               </div>
-              <p className="mt-1 text-sm text-slate-700">{vacation.authorization_bulletin ?? "Nao informado"}</p>
+              <p className="mt-1 text-sm text-slate-700">{vacation.authorization_bulletin ?? "Não informado"}</p>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-primary" />
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Boletim de fracionamento</p>
               </div>
-              <p className="mt-1 text-sm text-slate-700">{vacation.fractionation_bulletin ?? "Nao informado"}</p>
+              <p className="mt-1 text-sm text-slate-700">{vacation.fractionation_bulletin ?? "Não informado"}</p>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <div className="flex items-center gap-2">
                 <Coins className="h-4 w-4 text-primary" />
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Boletim de venda</p>
               </div>
-              <p className="mt-1 text-sm text-slate-700">{vacation.sale_bulletin ?? "Nao informado"}</p>
+              <p className="mt-1 text-sm text-slate-700">{vacation.sale_bulletin ?? "Não informado"}</p>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{vacation.creator ? `${vacation.creator.name} (${vacation.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{vacation.creator ? `${vacation.creator.name} (${vacation.creator.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>

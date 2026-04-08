@@ -24,7 +24,7 @@ interface SubunitsTableProps {
 
 function getOfficerLabel(officer: SubunitItem["commander"] | SubunitItem["deputy_commander"]) {
   if (!officer) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   if (officer.name && officer.registration_number) {
@@ -58,7 +58,7 @@ export function SubunitsTable({ subunits }: SubunitsTableProps) {
                 <th className="px-4 py-3 font-medium">Subunidade</th>
                 <th className="px-4 py-3 font-medium">Estrutura</th>
                 <th className="px-4 py-3 font-medium">Comando</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -122,7 +122,7 @@ export function SubunitsTable({ subunits }: SubunitsTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir subunidade</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {subunitToDelete?.name}? Se houver usuarios, empresas ou responsabilidades vinculadas, a API pode bloquear a exclusao.
+              Tem certeza que deseja excluir {subunitToDelete?.name}? Se houver usuários, empresas ou responsabilidades vinculadas, a API pode bloquear a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -130,7 +130,7 @@ export function SubunitsTable({ subunits }: SubunitsTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

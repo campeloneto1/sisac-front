@@ -27,8 +27,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const studentSchema = z.object({
   police_officer_id: z.string().refine((value) => value !== "none", "Selecione o policial."),
   workload_hours: z.string().optional(),
-  bulletin: z.string().max(100, "O boletim deve ter no maximo 100 caracteres.").optional(),
-  start_date: z.string().min(1, "Informe a data de inicio."),
+  bulletin: z.string().max(100, "O boletim deve ter no máximo 100 caracteres.").optional(),
+  start_date: z.string().min(1, "Informe a data de início."),
   end_date: z.string().optional(),
   status: z.string(),
 }).superRefine((values, context) => {
@@ -36,7 +36,7 @@ const studentSchema = z.object({
     context.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["end_date"],
-      message: "A data de termino deve ser igual ou posterior a data de inicio.",
+      message: "A data de término deve ser igual ou posterior a data de início.",
     });
   }
 
@@ -44,7 +44,7 @@ const studentSchema = z.object({
     context.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["end_date"],
-      message: "Informe a data de termino para matriculas encerradas.",
+      message: "Informe a data de término para matriculas encerradas.",
     });
   }
 });
@@ -130,10 +130,10 @@ export function CourseClassStudentsDialog({
     <Dialog open={open} onOpenChange={(nextOpen) => !isPending && onOpenChange(nextOpen)}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{studentCourse ? "Editar matricula" : "Matricular policial"}</DialogTitle>
+          <DialogTitle>{studentCourse ? "Editar matrícula" : "Matricular policial"}</DialogTitle>
           <DialogDescription>
             {studentCourse
-              ? `Atualize a matricula do policial em ${courseClassName}.`
+              ? `Atualize a matrícula do policial em ${courseClassName}.`
               : `Cadastre um novo aluno para a turma ${courseClassName}.`}
           </DialogDescription>
         </DialogHeader>
@@ -172,13 +172,13 @@ export function CourseClassStudentsDialog({
 
           <div className="grid gap-5 md:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="student-course-start">Inicio</Label>
+              <Label htmlFor="student-course-start">Início</Label>
               <Input id="student-course-start" type="date" {...register("start_date")} />
               {errors.start_date ? <p className="text-sm text-destructive">{errors.start_date.message}</p> : null}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="student-course-end">Termino</Label>
+              <Label htmlFor="student-course-end">Término</Label>
               <Input id="student-course-end" type="date" {...register("end_date")} />
               {errors.end_date ? <p className="text-sm text-destructive">{errors.end_date.message}</p> : null}
             </div>
@@ -205,7 +205,7 @@ export function CourseClassStudentsDialog({
               Cancelar
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : studentCourse ? "Salvar matricula" : "Matricular policial"}
+              {isPending ? "Salvando..." : studentCourse ? "Salvar matrícula" : "Matricular policial"}
             </Button>
           </DialogFooter>
         </form>

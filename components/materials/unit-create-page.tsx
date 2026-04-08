@@ -20,7 +20,7 @@ export function MaterialUnitCreatePage() {
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
           <p>Campos previstos:</p>
-          <p>patrimonio 1 e patrimonio 2;</p>
+          <p>patrimônio 1 e patrimônio 2;</p>
           <p>data de aquisicao;</p>
           <p>data de expiracao;</p>
           <p>status da unidade.</p>

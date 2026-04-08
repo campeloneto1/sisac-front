@@ -42,7 +42,7 @@ export function PoliceOfficerVacationsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `viewAny` para visualizar ferias.</CardDescription>
+          <CardDescription>Você precisa da permissão `viewAny` para visualizar férias.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -52,8 +52,8 @@ export function PoliceOfficerVacationsListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Ferias</h1>
-          <p className="text-sm text-slate-500">Gerencie o saldo anual de ferias dos policiais e o parcelamento em periodos de gozo.</p>
+          <h1 className="font-display text-3xl text-slate-900">Férias</h1>
+          <p className="text-sm text-slate-500">Gerencie o saldo anual de férias dos policiais e o parcelamento em períodos de gozo.</p>
         </div>
 
         {permissions.canCreate ? (
@@ -105,15 +105,15 @@ export function PoliceOfficerVacationsListPage() {
       ) : vacationsQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar ferias</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardTitle>Erro ao carregar férias</CardTitle>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !vacationsQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Nenhum registro encontrado</CardTitle>
-            <CardDescription>Crie um novo registro anual de ferias ou refine os filtros aplicados.</CardDescription>
+            <CardDescription>Crie um novo registro anual de férias ou refine os filtros aplicados.</CardDescription>
           </CardHeader>
         </Card>
       ) : (

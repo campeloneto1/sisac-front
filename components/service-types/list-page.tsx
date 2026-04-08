@@ -44,8 +44,8 @@ export function ServiceTypesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `service-types.viewAny` para
-            visualizar tipos de servico.
+            Você precisa de `administrator` e `service-types.viewAny` para
+            visualizar tipos de serviço.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -62,10 +62,10 @@ export function ServiceTypesListPage() {
             </div>
             <div>
               <h1 className="font-display text-3xl text-slate-900">
-                Tipos de servico
+                Tipos de serviço
               </h1>
               <p className="text-sm text-slate-500">
-                Gerencie o catalogo administrativo global usado pelo modulo de servicos.
+                Gerencie o catalogo administrativo global usado pelo módulo de serviços.
               </p>
             </div>
           </div>
@@ -113,9 +113,9 @@ export function ServiceTypesListPage() {
       ) : serviceTypesQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar tipos de servico</CardTitle>
+            <CardTitle>Erro ao carregar tipos de serviço</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

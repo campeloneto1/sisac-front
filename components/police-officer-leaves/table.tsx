@@ -66,10 +66,10 @@ export function PoliceOfficerLeavesTable({ policeOfficerLeaves }: PoliceOfficerL
               <tr>
                 <th className="px-4 py-3 font-medium">Policial</th>
                 <th className="px-4 py-3 font-medium">Tipo</th>
-                <th className="px-4 py-3 font-medium">Periodo</th>
+                <th className="px-4 py-3 font-medium">Período</th>
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">COPEM</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -80,7 +80,7 @@ export function PoliceOfficerLeavesTable({ policeOfficerLeaves }: PoliceOfficerL
                       <p className="font-medium text-slate-900">
                         {leave.police_officer?.name ?? leave.police_officer?.user?.name ?? leave.police_officer?.war_name ?? `Policial #${leave.police_officer_id}`}
                       </p>
-                      <p className="mt-1 text-slate-500">Matricula: {leave.police_officer?.registration_number ?? "Nao informada"}</p>
+                      <p className="mt-1 text-slate-500">Matrícula: {leave.police_officer?.registration_number ?? "Não informada"}</p>
                     </div>
                   </td>
                   <td className="px-4 py-4">
@@ -94,13 +94,13 @@ export function PoliceOfficerLeavesTable({ policeOfficerLeaves }: PoliceOfficerL
                       <p>
                         {leave.start_date ?? "-"} ate {leave.end_date ?? "-"}
                       </p>
-                      <p className="mt-1 text-slate-500">{leave.days ? `${leave.days} dias` : "Periodo sem total calculado"}</p>
+                      <p className="mt-1 text-slate-500">{leave.days ? `${leave.days} dias` : "Período sem total calculado"}</p>
                     </div>
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex flex-wrap gap-2">
                       <Badge variant={getStatusVariant(leave.status?.value)}>{leave.status?.label ?? "Sem status"}</Badge>
-                      {leave.is_renewal ? <Badge variant="outline">Renovacao</Badge> : null}
+                      {leave.is_renewal ? <Badge variant="outline">Renovação</Badge> : null}
                     </div>
                   </td>
                   <td className="px-4 py-4">
@@ -157,7 +157,7 @@ export function PoliceOfficerLeavesTable({ policeOfficerLeaves }: PoliceOfficerL
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

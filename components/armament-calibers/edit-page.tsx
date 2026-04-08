@@ -25,7 +25,7 @@ export function ArmamentCaliberEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar calibres de
+            Você precisa da permissão `update` para editar calibres de
             armamento.
           </CardDescription>
         </CardHeader>
@@ -46,9 +46,9 @@ export function ArmamentCaliberEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o calibre</CardTitle>
+          <CardTitle>Não foi possível carregar o calibre</CardTitle>
           <CardDescription>
-            Verifique se o registro existe e se voce possui acesso a ele.
+            Verifique se o registro existe e se você possui acesso a ele.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -66,7 +66,7 @@ export function ArmamentCaliberEditPage() {
             Editar calibre de armamento
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize as informacoes do calibre{" "}
+            Atualize as informações do calibre{" "}
             {armamentCaliberQuery.data.data.name}.
           </p>
         </div>

@@ -52,7 +52,7 @@ export function PoliceOfficerVacationsFilters({
               value={search}
               onChange={(event) => onSearchChange(event.target.value)}
               className="pl-9"
-              placeholder="Buscar por nome, guerra ou matricula"
+              placeholder="Buscar por nome, guerra ou matrícula"
             />
           </div>
         </div>
@@ -76,7 +76,7 @@ export function PoliceOfficerVacationsFilters({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="vacation-reference-year">Ano de referencia</Label>
+          <Label htmlFor="vacation-reference-year">Ano de referência</Label>
           <Input
             id="vacation-reference-year"
             value={referenceYear}

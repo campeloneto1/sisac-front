@@ -12,7 +12,7 @@ export function PublicationTypeCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `create` para cadastrar tipos de publicacao.</CardDescription>
+          <CardDescription>Você precisa da permissão `create` para cadastrar tipos de publicação.</CardDescription>
         </CardHeader>
       </Card>
     );

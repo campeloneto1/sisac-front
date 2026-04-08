@@ -7,7 +7,7 @@ export function MaterialMovementsListPage() {
   return (
     <MaterialMovementsPageShell
       title="Movimentacoes"
-      description="Consulte o historico operacional deste material."
+      description="Consulte o histórico operacional deste material."
       requiredPermission="view"
     >
       <div className="grid gap-4 md:grid-cols-3">
@@ -24,7 +24,7 @@ export function MaterialMovementsListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Saidas</CardTitle>
-            <CardDescription>Emprestimos, cessoes, baixas e outras reducoes de estoque.</CardDescription>
+            <CardDescription>Empréstimos, cessoes, baixas e outras reducoes de estoque.</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-display text-slate-900">--</p>
@@ -45,12 +45,12 @@ export function MaterialMovementsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Fluxo preparado</CardTitle>
-          <CardDescription>Esta area ja esta pronta para receber a tabela historica de movimentacoes quando a API do recurso for publicada.</CardDescription>
+          <CardDescription>Esta area já esta pronta para receber a tabela historica de movimentacoes quando a API do recurso for publicada.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-slate-600">
-          <p>Filtros planejados: tipo, periodo, unidade, lote e referencia.</p>
-          <p>Acoes planejadas: visualizar movimento e navegar para a origem do evento.</p>
-          <p>O ideal aqui e expor um endpoint `material-movements` com filtro por `material_id` e suporte a relacoes de referencia.</p>
+          <p>Filtros planejados: tipo, período, unidade, lote e referência.</p>
+          <p>Ações planejadas: visualizar movimento e navegar para a origem do evento.</p>
+          <p>O ideal aqui e expor um endpoint `material-movements` com filtro por `material_id` e suporte a relacoes de referência.</p>
         </CardContent>
       </Card>
     </MaterialMovementsPageShell>

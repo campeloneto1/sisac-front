@@ -38,7 +38,7 @@ export function StatesListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `states.viewAny` para visualizar estados.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `states.viewAny` para visualizar estados.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -49,7 +49,7 @@ export function StatesListPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="font-display text-3xl text-slate-900">Estados</h1>
-          <p className="text-sm text-slate-500">Gerencie estados vinculados a paises dentro do cadastro administrativo.</p>
+          <p className="text-sm text-slate-500">Gerencie estados vinculados a países dentro do cadastro administrativo.</p>
         </div>
 
         {permissions.canCreate ? (
@@ -90,7 +90,7 @@ export function StatesListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar estados</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !statesQuery.data?.data.length ? (

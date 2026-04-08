@@ -47,9 +47,9 @@ export function MaterialTypesTable({
               <tr>
                 <th className="px-4 py-3 font-medium">Tipo</th>
                 <th className="px-4 py-3 font-medium">Slug</th>
-                <th className="px-4 py-3 font-medium">Descricao</th>
-                <th className="px-4 py-3 font-medium">Atualizacao</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">Descrição</th>
+                <th className="px-4 py-3 font-medium">Atualização</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -64,7 +64,7 @@ export function MaterialTypesTable({
                         {materialType.name}
                       </p>
                       <p className="mt-1 text-slate-500">
-                        Classificacao administrativa global para materiais.
+                        Classificação administrativa global para materiais.
                       </p>
                     </div>
                   </td>
@@ -122,7 +122,7 @@ export function MaterialTypesTable({
             <DialogTitle>Excluir tipo de material</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja excluir {materialTypeToDelete?.name}? Se
-              houver materiais vinculados, a API podera recusar a exclusao.
+              houver materiais vinculados, a API podera recusar a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -139,7 +139,7 @@ export function MaterialTypesTable({
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

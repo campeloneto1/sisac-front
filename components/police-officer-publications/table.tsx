@@ -57,7 +57,7 @@ export function PoliceOfficerPublicationsTable({
                 <th className="px-4 py-3 font-medium">Boletim</th>
                 <th className="px-4 py-3 font-medium">Data</th>
                 <th className="px-4 py-3 font-medium">Conteudo</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -74,9 +74,9 @@ export function PoliceOfficerPublicationsTable({
                           `Policial #${publication.police_officer_id}`}
                       </p>
                       <p className="mt-1 text-slate-500">
-                        Matricula:{" "}
+                        Matrícula:{" "}
                         {publication.police_officer?.registration_number ??
-                          "Nao informada"}
+                          "Não informada"}
                       </p>
                     </div>
                   </td>
@@ -96,7 +96,7 @@ export function PoliceOfficerPublicationsTable({
                         </Badge>
                       </div>
                     ) : (
-                      <span className="text-slate-500">Nao informado</span>
+                      <span className="text-slate-500">Não informado</span>
                     )}
                   </td>
                   <td className="px-4 py-4">
@@ -169,9 +169,9 @@ export function PoliceOfficerPublicationsTable({
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir publicacao</DialogTitle>
+            <DialogTitle>Excluir publicação</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir a publicacao &quot;
+              Tem certeza que deseja excluir a publicação &quot;
               {publicationToDelete?.bulletin}&quot; de{" "}
               {publicationToDelete?.police_officer?.war_name ??
                 publicationToDelete?.police_officer?.user?.name}
@@ -187,7 +187,7 @@ export function PoliceOfficerPublicationsTable({
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

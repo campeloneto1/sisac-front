@@ -21,7 +21,7 @@ export function UserEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `update` para editar este usuario.</CardDescription>
+          <CardDescription>Você precisa da permissão `update` para editar este usuário.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -35,8 +35,8 @@ export function UserEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar usuario</CardTitle>
-          <CardDescription>Verifique se o registro existe e se voce tem acesso.</CardDescription>
+          <CardTitle>Erro ao carregar usuário</CardTitle>
+          <CardDescription>Verifique se o registro existe e se você tem acesso.</CardDescription>
         </CardHeader>
       </Card>
     );

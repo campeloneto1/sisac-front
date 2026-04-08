@@ -42,7 +42,7 @@ export function PoliceOfficerLeaveShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `view` para visualizar afastamentos.</CardDescription>
+          <CardDescription>Você precisa da permissão `view` para visualizar afastamentos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -57,7 +57,7 @@ export function PoliceOfficerLeaveShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar afastamento</CardTitle>
-          <CardDescription>Os dados do afastamento nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do afastamento não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -79,7 +79,7 @@ export function PoliceOfficerLeaveShowPage() {
             {leave.leave_type?.name ?? `Tipo #${leave.leave_type_id}`} • {leave.start_date ?? "-"} ate {leave.end_date ?? "-"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Registro completo do afastamento, incluindo dados medicos, regra de renovacao, auditoria e acompanhamento de COPEM.
+            Registro completo do afastamento, incluindo dados médicos, regra de renovação, auditoria e acompanhamento de COPEM.
           </p>
         </div>
 
@@ -94,13 +94,13 @@ export function PoliceOfficerLeaveShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Visao operacional</CardTitle>
-            <CardDescription>Informacoes principais do afastamento.</CardDescription>
+            <CardDescription>Informações principais do afastamento.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <CalendarDays className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Periodo</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Período</p>
                 <p className="text-sm text-slate-700">
                   {leave.start_date ?? "-"} ate {leave.end_date ?? "-"} {leave.days ? `(${leave.days} dias)` : ""}
                 </p>
@@ -110,7 +110,7 @@ export function PoliceOfficerLeaveShowPage() {
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <HeartPulse className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Dados medicos</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Dados médicos</p>
                 <p className="text-sm text-slate-700">
                   CRM: {leave.crm_number ?? "-"} • CID: {leave.cid_code ?? "-"}
                 </p>
@@ -122,15 +122,15 @@ export function PoliceOfficerLeaveShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">COPEM</p>
                 <p className="text-sm text-slate-700">
-                  {leave.requires_copem ? "Requer acompanhamento COPEM" : "Nao requer COPEM"}
+                  {leave.requires_copem ? "Requer acompanhamento COPEM" : "Não requer COPEM"}
                   {leave.copem_result ? ` • ${leave.copem_result.label}` : ""}
                 </p>
               </div>
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Observacoes</p>
-              <p className="mt-1 text-sm text-slate-700">{leave.notes || "Nao informadas"}</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Observações</p>
+              <p className="mt-1 text-sm text-slate-700">{leave.notes || "Não informadas"}</p>
             </div>
           </CardContent>
         </Card>
@@ -138,7 +138,7 @@ export function PoliceOfficerLeaveShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Contexto e auditoria</CardTitle>
-            <CardDescription>Relacionamentos, renovacao e responsaveis pela alteracao.</CardDescription>
+            <CardDescription>Relacionamentos, renovação e responsáveis pela alteração.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -154,9 +154,9 @@ export function PoliceOfficerLeaveShowPage() {
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Renovacao</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Renovação</p>
               <p className="mt-1 text-sm text-slate-700">
-                {leave.is_renewal ? `Sim${leave.previous_leave ? ` • referencia #${leave.previous_leave.id}` : ""}` : "Nao"}
+                {leave.is_renewal ? `Sim${leave.previous_leave ? ` • referência #${leave.previous_leave.id}` : ""}` : "Não"}
               </p>
             </div>
 
@@ -164,7 +164,7 @@ export function PoliceOfficerLeaveShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{leave.creator ? `${leave.creator.name} (${leave.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{leave.creator ? `${leave.creator.name} (${leave.creator.email})` : "Não informado"}</p>
               </div>
             </div>
 
@@ -172,7 +172,7 @@ export function PoliceOfficerLeaveShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{leave.updater ? `${leave.updater.name} (${leave.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{leave.updater ? `${leave.updater.name} (${leave.updater.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>
@@ -199,12 +199,12 @@ export function PoliceOfficerLeaveShowPage() {
               <p className="mt-1 text-sm text-slate-700">{leave.copem_scheduled_date ?? "-"}</p>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Avaliacao</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Avaliação</p>
               <p className="mt-1 text-sm text-slate-700">{leave.copem_evaluation_date ?? "-"}</p>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 md:col-span-2">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Laudo/observacoes</p>
-              <p className="mt-1 text-sm text-slate-700">{leave.copem_notes || leave.copem_report_date || "Nao informados"}</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Laudo/observações</p>
+              <p className="mt-1 text-sm text-slate-700">{leave.copem_notes || leave.copem_report_date || "Não informados"}</p>
             </div>
           </CardContent>
         </Card>
@@ -218,7 +218,7 @@ export function PoliceOfficerLeaveShowPage() {
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Afastamento anterior</p>
               <p className="mt-1 text-sm text-slate-700">
-                {leave.previous_leave ? `#${leave.previous_leave.id} • ${leave.previous_leave.start_date ?? "-"} ate ${leave.previous_leave.end_date ?? "-"}` : "Nao informado"}
+                {leave.previous_leave ? `#${leave.previous_leave.id} • ${leave.previous_leave.start_date ?? "-"} ate ${leave.previous_leave.end_date ?? "-"}` : "Não informado"}
               </p>
             </div>
 
@@ -233,7 +233,7 @@ export function PoliceOfficerLeaveShowPage() {
                   ))}
                 </div>
               ) : (
-                <p className="mt-1 text-sm text-slate-700">Nenhuma renovacao retornada.</p>
+                <p className="mt-1 text-sm text-slate-700">Nenhuma renovação retornada.</p>
               )}
             </div>
 

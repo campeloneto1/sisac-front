@@ -80,7 +80,7 @@ export function CourseClassesFilters({
               <SelectItem value="all">Todos</SelectItem>
               <SelectItem value="planned">Planejada</SelectItem>
               <SelectItem value="ongoing">Em andamento</SelectItem>
-              <SelectItem value="completed">Concluida</SelectItem>
+              <SelectItem value="completed">Concluída</SelectItem>
               <SelectItem value="cancelled">Cancelada</SelectItem>
             </SelectContent>
           </Select>

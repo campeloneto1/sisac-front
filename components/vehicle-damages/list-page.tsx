@@ -64,8 +64,8 @@ export function VehicleDamagesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar danos de
-            veiculos.
+            Você precisa da permissão `viewAny` para visualizar danos de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -81,11 +81,11 @@ export function VehicleDamagesListPage() {
           </div>
           <div>
             <h1 className="font-display text-3xl text-slate-900">
-              Danos de veiculos
+              Danos de veículos
             </h1>
             <p className="text-sm text-slate-500">
-              Controle danos detectados na retirada, devolucao, manutencao ou
-              inspecao.
+              Controle danos detectados na retirada, devolução, manutenção ou
+              inspeção.
             </p>
           </div>
         </div>
@@ -153,7 +153,7 @@ export function VehicleDamagesListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar danos</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario
+              Verifique a API, a subunidade ativa e as permissões do usuário
               autenticado.
             </CardDescription>
           </CardHeader>

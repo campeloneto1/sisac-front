@@ -21,7 +21,7 @@ export function VariantCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `variants.create` para cadastrar
+            Você precisa de `administrator` e `variants.create` para cadastrar
             modelos.
           </CardDescription>
         </CardHeader>

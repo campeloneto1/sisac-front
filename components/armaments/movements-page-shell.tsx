@@ -46,7 +46,7 @@ export function ArmamentMovementsPageShell({
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce nao possui permissao suficiente para acessar as movimentacoes
+            Você não possui permissão suficiente para acessar as movimentacoes
             deste armamento.
           </CardDescription>
         </CardHeader>
@@ -68,9 +68,9 @@ export function ArmamentMovementsPageShell({
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o armamento</CardTitle>
+          <CardTitle>Não foi possível carregar o armamento</CardTitle>
           <CardDescription>
-            Verifique se o cadastro existe e se voce possui acesso a ele.
+            Verifique se o cadastro existe e se você possui acesso a ele.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -122,18 +122,18 @@ export function ArmamentMovementsPageShell({
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-amber-900">
             <ShieldAlert className="h-5 w-5" />
-            Integracao pendente com a API
+            Integração pendente com a API
           </CardTitle>
           <CardDescription className="text-amber-800">
-            A estrutura de navegacao e consulta das movimentacoes foi preparada
-            dentro do CRUD de armamentos, mas o backend ainda nao expoe
+            A estrutura de navegação e consulta das movimentacoes foi preparada
+            dentro do CRUD de armamentos, mas o backend ainda não expoe
             endpoints dedicados para `ArmamentMovement`.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-amber-900">
           <p>Assim que a API publicar o recurso, esta tela pode receber:</p>
-          <p>historico por tipo, data, unidade e lote;</p>
-          <p>detalhe do movimento com referencia de origem;</p>
+          <p>histórico por tipo, data, unidade e lote;</p>
+          <p>detalhe do movimento com referência de origem;</p>
           <p>indicadores de impacto no estoque e auditoria operacional.</p>
         </CardContent>
       </Card>

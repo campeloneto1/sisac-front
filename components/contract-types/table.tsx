@@ -47,7 +47,7 @@ export function ContractTypesTable({ contractTypes }: ContractTypesTableProps) {
                 <th className="px-4 py-3 font-medium">Tipo de contrato</th>
                 <th className="px-4 py-3 font-medium">Faturamento</th>
                 <th className="px-4 py-3 font-medium">Features</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -56,7 +56,7 @@ export function ContractTypesTable({ contractTypes }: ContractTypesTableProps) {
                   <td className="px-4 py-4">
                     <div>
                       <p className="font-medium text-slate-900">{contractType.name}</p>
-                      <p className="mt-1 text-slate-500">Cadastro administrativo global para classificacao e regra base de contratos.</p>
+                      <p className="mt-1 text-slate-500">Cadastro administrativo global para classificação e regra base de contratos.</p>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-700">
@@ -112,7 +112,7 @@ export function ContractTypesTable({ contractTypes }: ContractTypesTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir tipo de contrato</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {contractTypeToDelete?.name}? Como a API usa exclusao logica, o registro pode deixar de aparecer,
+              Tem certeza que deseja excluir {contractTypeToDelete?.name}? Como a API usa exclusão logica, o registro pode deixar de aparecer,
               mas contratos existentes ainda podem referenciar esse tipo.
             </DialogDescription>
           </DialogHeader>
@@ -121,7 +121,7 @@ export function ContractTypesTable({ contractTypes }: ContractTypesTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -18,8 +18,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 
 const publicationTypeFormSchema = z.object({
-  name: z.string().min(1, "Informe o nome.").max(100, "O nome deve ter no maximo 100 caracteres."),
-  slug: z.string().min(1, "Informe o slug.").max(120, "O slug deve ter no maximo 120 caracteres."),
+  name: z.string().min(1, "Informe o nome.").max(100, "O nome deve ter no máximo 100 caracteres."),
+  slug: z.string().min(1, "Informe o slug.").max(120, "O slug deve ter no máximo 120 caracteres."),
   description: z.string().optional(),
   nature: z.enum(["positive", "neutral", "negative"]).default("neutral"),
   generates_points: z.boolean().default(false),
@@ -102,9 +102,9 @@ export function PublicationTypeForm({ mode, publicationType }: PublicationTypeFo
   return (
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Novo tipo de publicacao" : "Editar tipo de publicacao"}</CardTitle>
+        <CardTitle>{mode === "create" ? "Novo tipo de publicação" : "Editar tipo de publicação"}</CardTitle>
         <CardDescription>
-          Cadastre o tipo administrativo que classifica publicacoes funcionais, inclusive se ele e positivo e se gera pontos.
+          Cadastre o tipo administrativo que classifica publicações funcionais, inclusive se ele e positivo e se gera pontos.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -123,8 +123,8 @@ export function PublicationTypeForm({ mode, publicationType }: PublicationTypeFo
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="publication-type-description">Descricao</Label>
-              <Textarea id="publication-type-description" placeholder="Descreva como esse tipo de publicacao deve ser usado." {...register("description")} />
+              <Label htmlFor="publication-type-description">Descrição</Label>
+              <Textarea id="publication-type-description" placeholder="Descreva como esse tipo de publicação deve ser usado." {...register("description")} />
               {errors.description ? <p className="text-sm text-destructive">{errors.description.message}</p> : null}
             </div>
           </div>
@@ -151,7 +151,7 @@ export function PublicationTypeForm({ mode, publicationType }: PublicationTypeFo
               <Checkbox checked={generatesPoints} onCheckedChange={(checked) => setValue("generates_points", Boolean(checked), { shouldValidate: true })} />
               <span className="space-y-1">
                 <span className="block text-sm font-medium text-slate-900">Gera pontos</span>
-                <span className="block text-sm text-slate-500">Use esta opcao para publicacoes que pontuam em regras internas.</span>
+                <span className="block text-sm text-slate-500">Use esta opcao para publicações que pontuam em regras internas.</span>
               </span>
             </label>
           </div>
@@ -161,7 +161,7 @@ export function PublicationTypeForm({ mode, publicationType }: PublicationTypeFo
               <Link href={mode === "create" ? "/publication-types" : `/publication-types/${publicationType?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar tipo" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar tipo" : "Salvar alterações"}
             </Button>
           </div>
         </form>

@@ -21,7 +21,7 @@ export function CountryEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `countries.update` para editar paises.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `countries.update` para editar países.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -35,8 +35,8 @@ export function CountryEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar pais</CardTitle>
-          <CardDescription>O pais nao pode ser editado agora.</CardDescription>
+          <CardTitle>Erro ao carregar país</CardTitle>
+          <CardDescription>O país não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

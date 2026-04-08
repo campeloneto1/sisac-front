@@ -37,13 +37,13 @@ const policeOfficerLeaveFormSchema = z
     start_date: z.string().min(1, "Informe a data inicial."),
     end_date: z.string().min(1, "Informe a data final."),
     compen_date: z.string().optional(),
-    crm_number: z.string().max(50, "O CRM deve ter no maximo 50 caracteres."),
-    cid_code: z.string().max(20, "O CID deve ter no maximo 20 caracteres."),
-    hospital_name: z.string().max(150, "O hospital deve ter no maximo 150 caracteres."),
+    crm_number: z.string().max(50, "O CRM deve ter no máximo 50 caracteres."),
+    cid_code: z.string().max(20, "O CID deve ter no máximo 20 caracteres."),
+    hospital_name: z.string().max(150, "O hospital deve ter no máximo 150 caracteres."),
     notes: z.string().optional(),
     status: z.string(),
     requires_copem: z.boolean(),
-    copem_protocol: z.string().max(100, "O protocolo COPEM deve ter no maximo 100 caracteres."),
+    copem_protocol: z.string().max(100, "O protocolo COPEM deve ter no máximo 100 caracteres."),
     copem_scheduled_date: z.string().optional(),
     copem_evaluation_date: z.string().optional(),
     copem_report_date: z.string().optional(),
@@ -71,7 +71,7 @@ const policeOfficerLeaveFormSchema = z
       context.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["previous_leave_id"],
-        message: "Selecione o afastamento anterior quando marcar renovacao.",
+        message: "Selecione o afastamento anterior quando marcar renovação.",
       });
     }
   });
@@ -222,7 +222,7 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
       <CardHeader>
         <CardTitle>{mode === "create" ? "Novo afastamento" : "Editar afastamento"}</CardTitle>
         <CardDescription>
-          Fluxo completo de afastamento do policial, com dados do periodo, validacoes medicas, renovacao e acompanhamento de COPEM.
+          Fluxo completo de afastamento do policial, com dados do período, válidações médicas, renovação e acompanhamento de COPEM.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -230,7 +230,7 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
           <section className="space-y-4">
             <div>
               <h3 className="text-base font-semibold text-slate-900">Dados principais</h3>
-              <p className="text-sm text-slate-500">Selecione o policial, o tipo de afastamento e o periodo principal.</p>
+              <p className="text-sm text-slate-500">Selecione o policial, o tipo de afastamento e o período principal.</p>
             </div>
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
@@ -252,7 +252,7 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
                   })}
                   selectedOption={selectedPoliceOfficerOption}
                   placeholder="Selecione"
-                  searchPlaceholder="Buscar policial por nome ou matricula"
+                  searchPlaceholder="Buscar policial por nome ou matrícula"
                   emptyMessage="Nenhum policial encontrado."
                 />
                 {errors.police_officer_id ? <p className="text-sm text-destructive">{errors.police_officer_id.message}</p> : null}
@@ -298,10 +298,10 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
                 <Label>Status</Label>
                 <Select value={selectedStatus} onValueChange={(value) => setValue("status", value, { shouldValidate: true })}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Automatico" />
+                    <SelectValue placeholder="Automático" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="auto">Automatico pela API</SelectItem>
+                    <SelectItem value="auto">Automático pela API</SelectItem>
                     {POLICE_OFFICER_LEAVE_STATUS_OPTIONS.map((statusOption) => (
                       <SelectItem key={statusOption.value} value={statusOption.value}>
                         {statusOption.label}
@@ -315,8 +315,8 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
             {selectedLeaveType ? (
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
                 {selectedLeaveType.requires_medical_report
-                  ? "Este tipo exige comprovacao medica. O CRM do profissional responsavel deve ser informado."
-                  : "Este tipo nao exige laudo medico por regra do cadastro."}
+                  ? "Este tipo exige comprovação médica. O CRM do profissional responsável deve ser informado."
+                  : "Este tipo não exige laudo médico por regra do cadastro."}
                 {selectedLeaveType.max_days ? ` Limite configurado: ${selectedLeaveType.max_days} dias.` : ""}
               </div>
             ) : null}
@@ -324,8 +324,8 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
 
           <section className="space-y-4">
             <div>
-              <h3 className="text-base font-semibold text-slate-900">Informacoes medicas e administrativas</h3>
-              <p className="text-sm text-slate-500">Campos usados em licencas medicas, acompanhamento e observacoes gerais.</p>
+              <h3 className="text-base font-semibold text-slate-900">Informações médicas e administrativas</h3>
+              <p className="text-sm text-slate-500">Campos usados em licencas médicas, acompanhamento e observações gerais.</p>
             </div>
             <div className="grid gap-5 md:grid-cols-2">
               <div className={`space-y-2 ${selectedLeaveType?.requires_medical_report ? "rounded-2xl border border-primary/20 bg-primary/5 p-4" : ""}`}>
@@ -347,7 +347,7 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="notes">Observacoes</Label>
+                <Label htmlFor="notes">Observações</Label>
                 <Textarea id="notes" placeholder="Registre detalhes relevantes sobre o afastamento." {...register("notes")} />
                 {errors.notes ? <p className="text-sm text-destructive">{errors.notes.message}</p> : null}
               </div>
@@ -356,7 +356,7 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
 
           <section className="space-y-4">
             <div>
-              <h3 className="text-base font-semibold text-slate-900">Renovacao</h3>
+              <h3 className="text-base font-semibold text-slate-900">Renovação</h3>
               <p className="text-sm text-slate-500">Use quando este afastamento for continuidade de um anterior.</p>
             </div>
             <div className="space-y-4 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
@@ -367,8 +367,8 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
                   onCheckedChange={(checked) => setValue("is_renewal", checked === true, { shouldDirty: true, shouldValidate: true })}
                 />
                 <div className="space-y-1">
-                  <Label htmlFor="is_renewal">Marcar como renovacao</Label>
-                  <p className="text-sm text-slate-500">A API permite sobreposicao de periodo quando o afastamento e registrado como renovacao.</p>
+                  <Label htmlFor="is_renewal">Marcar como renovação</Label>
+                  <p className="text-sm text-slate-500">A API permite sobreposição de período quando o afastamento e registrado como renovação.</p>
                 </div>
               </div>
 
@@ -408,7 +408,7 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
                 />
                 <div className="space-y-1">
                   <Label htmlFor="requires_copem">Requer COPEM</Label>
-                  <p className="text-sm text-slate-500">Afastações medicas acima de 3 dias costumam ser marcadas automaticamente pela API.</p>
+                  <p className="text-sm text-slate-500">Afastações médicas acima de 3 dias costumam ser marcadas automaticamente pela API.</p>
                 </div>
               </div>
 
@@ -423,10 +423,10 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
                   <Label>Resultado COPEM</Label>
                   <Select value={selectedCopemResult} onValueChange={(value) => setValue("copem_result", value, { shouldValidate: true })}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Nao informado" />
+                      <SelectValue placeholder="Não informado" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="none">Nao informado</SelectItem>
+                      <SelectItem value="none">Não informado</SelectItem>
                       {POLICE_OFFICER_LEAVE_COPEM_RESULT_OPTIONS.map((result) => (
                         <SelectItem key={result.value} value={result.value}>
                           {result.label}
@@ -442,7 +442,7 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="copem_evaluation_date">Data da avaliacao</Label>
+                  <Label htmlFor="copem_evaluation_date">Data da avaliação</Label>
                   <Input id="copem_evaluation_date" type="date" {...register("copem_evaluation_date")} />
                 </div>
 
@@ -452,8 +452,8 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
                 </div>
 
                 <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="copem_notes">Observacoes COPEM</Label>
-                  <Textarea id="copem_notes" placeholder="Detalhes da pericia, restricoes ou observacoes da junta." {...register("copem_notes")} />
+                  <Label htmlFor="copem_notes">Observações COPEM</Label>
+                  <Textarea id="copem_notes" placeholder="Detalhes da pericia, restricoes ou observações da junta." {...register("copem_notes")} />
                   {errors.copem_notes ? <p className="text-sm text-destructive">{errors.copem_notes.message}</p> : null}
                 </div>
               </div>
@@ -465,7 +465,7 @@ export function PoliceOfficerLeaveForm({ mode, policeOfficerLeave }: PoliceOffic
               <Link href={mode === "create" ? "/police-officer-leaves" : `/police-officer-leaves/${policeOfficerLeave?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar afastamento" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar afastamento" : "Salvar alterações"}
             </Button>
           </div>
         </form>

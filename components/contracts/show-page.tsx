@@ -26,7 +26,7 @@ function formatCurrency(value?: string | number | null) {
 
 function formatDate(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Date(`${value}T00:00:00`).toLocaleDateString("pt-BR");
@@ -34,7 +34,7 @@ function formatDate(value?: string | null) {
 
 function getRoleLabel(role: NonNullable<ReturnType<typeof useContract>["data"]>["data"]["current_manager_role"]) {
   if (!role?.police_officer) {
-    return "Nao definido";
+    return "Não definido";
   }
 
   const warName = role.police_officer.war_name ?? role.police_officer.user?.name ?? "Policial";
@@ -54,7 +54,7 @@ export function ContractShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `view` para visualizar contratos.</CardDescription>
+          <CardDescription>Você precisa da permissão `view` para visualizar contratos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -80,7 +80,7 @@ export function ContractShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar contrato</CardTitle>
-          <CardDescription>Os dados do contrato nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do contrato não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -109,7 +109,7 @@ export function ContractShowPage() {
           </div>
           <p className="mt-2 text-sm text-slate-500">SACC: {contract.sacc_number}</p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Contrato operacional da subunidade ativa, com acompanhamento de execucao financeira, papeis atuais e artefatos historicos do modulo.
+            Contrato operacional da subunidade ativa, com acompanhamento de execução financeira, papeis atuais e artefatos históricos do módulo.
           </p>
         </div>
 
@@ -164,7 +164,7 @@ export function ContractShowPage() {
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <CalendarClock className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Vigencia</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Vigência</p>
                 <p className="text-sm text-slate-700">
                   {formatDate(contract.start_date)} ate {formatDate(contract.end_date)}
                 </p>
@@ -174,7 +174,7 @@ export function ContractShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{contract.creator ? `${contract.creator.name} (${contract.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{contract.creator ? `${contract.creator.name} (${contract.creator.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>
@@ -183,19 +183,19 @@ export function ContractShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Estrutura do contrato</CardTitle>
-            <CardDescription>Dados basicos, vinculos e responsaveis atuais.</CardDescription>
+            <CardDescription>Dados basicos, vínculos e responsáveis atuais.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <p className="text-sm font-medium text-slate-900">Empresa</p>
-              <p className="mt-2 text-sm text-slate-600">{contract.company?.name ?? "Nao informada"}</p>
-              <p className="mt-1 text-xs text-slate-500">CNPJ: {contract.company?.cnpj ?? "Nao informado"}</p>
+              <p className="mt-2 text-sm text-slate-600">{contract.company?.name ?? "Não informada"}</p>
+              <p className="mt-1 text-xs text-slate-500">CNPJ: {contract.company?.cnpj ?? "Não informado"}</p>
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <p className="text-sm font-medium text-slate-900">Tipo e objeto</p>
-              <p className="mt-2 text-sm text-slate-600">Tipo: {contract.contract_type?.name ?? "Nao informado"}</p>
-              <p className="mt-1 text-sm text-slate-600">Objeto: {contract.contract_object?.name ?? "Nao informado"}</p>
+              <p className="mt-2 text-sm text-slate-600">Tipo: {contract.contract_type?.name ?? "Não informado"}</p>
+              <p className="mt-1 text-sm text-slate-600">Objeto: {contract.contract_object?.name ?? "Não informado"}</p>
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
@@ -209,7 +209,7 @@ export function ContractShowPage() {
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <p className="text-sm font-medium text-slate-900">Renovacoes</p>
-              <p className="mt-2 text-sm text-slate-600">Origem: {contract.renewed_from_contract?.contract_number ?? "Nao se aplica"}</p>
+              <p className="mt-2 text-sm text-slate-600">Origem: {contract.renewed_from_contract?.contract_number ?? "Não se aplica"}</p>
               <p className="mt-1 text-sm text-slate-600">Renovacoes derivadas: {contract.renewed_contracts?.length ?? 0}</p>
             </div>
           </CardContent>
@@ -230,9 +230,9 @@ export function ContractShowPage() {
                   {contract.status_label ?? getContractStatusLabel(contract.status)}
                 </Badge>
               </div>
-              <p className="mt-2 text-xs text-slate-500">Use o historico para registrar cada transicao relevante do contrato.</p>
+              <p className="mt-2 text-xs text-slate-500">Use o histórico para registrar cada transição relevante do contrato.</p>
               <Button asChild className="mt-3 w-full" size="sm" variant="outline">
-                <Link href={`/contracts/${contract.id}/status-history`}>Abrir historico de status</Link>
+                <Link href={`/contracts/${contract.id}/status-history`}>Abrir histórico de status</Link>
               </Button>
             </div>
           </CardContent>
@@ -247,7 +247,7 @@ export function ContractShowPage() {
             {contract.contract_transactions?.length ? (
               contract.contract_transactions.slice(0, 3).map((transaction) => (
                 <div key={transaction.id} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                  <p className="text-sm font-medium text-slate-900">{transaction.type ?? "Tipo nao informado"}</p>
+                  <p className="text-sm font-medium text-slate-900">{transaction.type ?? "Tipo não informado"}</p>
                   <p className="mt-1 text-xs text-slate-500">{formatCurrency(transaction.amount)} • {formatDate(transaction.transaction_date)}</p>
                 </div>
               ))
@@ -255,7 +255,7 @@ export function ContractShowPage() {
               <p className="text-sm text-slate-500">Nenhuma transacao vinculada no retorno atual.</p>
             )}
             <Button asChild className="w-full" variant="outline">
-              <Link href={`/contracts/${contract.id}/transactions`}>Abrir modulo de transacoes</Link>
+              <Link href={`/contracts/${contract.id}/transactions`}>Abrir módulo de transacoes</Link>
             </Button>
           </CardContent>
         </Card>
@@ -313,7 +313,7 @@ export function ContractShowPage() {
               <p className="text-sm text-slate-500">Nenhum alerta retornado para este contrato.</p>
             )}
             <Button asChild className="w-full" variant="outline">
-              <Link href={`/contracts/${contract.id}/alerts`}>Abrir modulo de alertas</Link>
+              <Link href={`/contracts/${contract.id}/alerts`}>Abrir módulo de alertas</Link>
             </Button>
           </CardContent>
         </Card>
@@ -321,20 +321,20 @@ export function ContractShowPage() {
 
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Observacoes</CardTitle>
+          <CardTitle>Observações</CardTitle>
           <CardDescription>Campo livre de contexto operacional e administrativo.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
-            <p className="whitespace-pre-wrap text-sm text-slate-600">{contract.notes?.trim() || "Sem observacoes cadastradas."}</p>
+            <p className="whitespace-pre-wrap text-sm text-slate-600">{contract.notes?.trim() || "Sem observações cadastradas."}</p>
           </div>
         </CardContent>
       </Card>
 
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Gestao detalhada</CardTitle>
-          <CardDescription>Submodulos dedicados para operacao do contrato, com filtros e acoes especializadas.</CardDescription>
+          <CardTitle>Gestão detalhada</CardTitle>
+          <CardDescription>Submodulos dedicados para operação do contrato, com filtros e ações especializadas.</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-3 md:grid-cols-3">
           <Button asChild variant="outline">

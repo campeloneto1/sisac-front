@@ -40,10 +40,10 @@ const variantFormSchema = z.object({
   name: z
     .string()
     .min(2, "O nome precisa ter ao menos 2 caracteres.")
-    .max(100, "O nome deve ter no maximo 100 caracteres."),
+    .max(100, "O nome deve ter no máximo 100 caracteres."),
   abbreviation: z
     .string()
-    .max(5, "A sigla deve ter no maximo 5 caracteres.")
+    .max(5, "A sigla deve ter no máximo 5 caracteres.")
     .optional()
     .or(z.literal("")),
   brand_id: z.string(),
@@ -150,7 +150,7 @@ export function VariantForm({ mode, variant }: VariantFormProps) {
               {...register("name")}
             />
             <p className="text-xs text-slate-500">
-              O backend valida unicidade por marca. Duas marcas diferentes podem
+              O backend válida unicidade por marca. Duas marcas diferentes podem
               ter o mesmo nome.
             </p>
             {errors.name ? (
@@ -223,7 +223,7 @@ export function VariantForm({ mode, variant }: VariantFormProps) {
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar variante"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

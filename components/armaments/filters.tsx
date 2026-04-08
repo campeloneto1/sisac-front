@@ -154,10 +154,10 @@ export function ArmamentsFilters({
 
           <Select value={genderId} onValueChange={onGenderChange}>
             <SelectTrigger>
-              <SelectValue placeholder="Genero" />
+              <SelectValue placeholder="Gênero" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Todos os generos</SelectItem>
+              <SelectItem value="all">Todos os gêneros</SelectItem>
               {genders.map((gender) => (
                 <SelectItem key={gender.id} value={String(gender.id)}>
                   {gender.name}

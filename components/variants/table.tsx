@@ -61,7 +61,7 @@ export function VariantsTable({ variants }: VariantsTableProps) {
                 <th className="px-4 py-3 font-medium">Sigla</th>
                 <th className="px-4 py-3 font-medium">Marca</th>
                 <th className="px-4 py-3 font-medium">Tipo da marca</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -115,7 +115,7 @@ export function VariantsTable({ variants }: VariantsTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir variante</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {variantToDelete?.name}? Essa acao remove o cadastro da variante do
+              Tem certeza que deseja excluir {variantToDelete?.name}? Essa ação remove o cadastro da variante do
               catalogo administrativo.
             </DialogDescription>
           </DialogHeader>
@@ -124,7 +124,7 @@ export function VariantsTable({ variants }: VariantsTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

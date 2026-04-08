@@ -29,12 +29,12 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "Nao informado";
+  return date ? date.slice(0, 10) : "Não informado";
 }
 
 function formatCurrency(value?: number | null) {
   if (value === null || value === undefined) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.NumberFormat("pt-BR", {
@@ -54,8 +54,8 @@ export function VehicleFuelingShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar abastecimentos de
-            veiculos.
+            Você precisa da permissão `view` para visualizar abastecimentos de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -72,7 +72,7 @@ export function VehicleFuelingShowPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar abastecimento</CardTitle>
           <CardDescription>
-            Os dados do abastecimento nao estao disponiveis no momento.
+            Os dados do abastecimento não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -111,9 +111,9 @@ export function VehicleFuelingShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Veiculo e contexto</CardTitle>
+            <CardTitle>Veículo e contexto</CardTitle>
             <CardDescription>
-              Identificacao do veiculo e do registro operacional associado.
+              Identificação do veículo e do registro operacional associado.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -121,7 +121,7 @@ export function VehicleFuelingShowPage() {
               <CarFront className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Veiculo
+                  Veículo
                 </p>
                 <p className="text-sm text-slate-700">
                   {fueling.vehicle?.license_plate ?? `#${fueling.vehicle_id}`}
@@ -145,10 +145,10 @@ export function VehicleFuelingShowPage() {
               <User2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Responsavel
+                  Responsável
                 </p>
                 <p className="text-sm text-slate-700">
-                  {fueling.fueled_by_user?.name ?? "Nao informado"}
+                  {fueling.fueled_by_user?.name ?? "Não informado"}
                 </p>
               </div>
             </div>
@@ -242,7 +242,7 @@ export function VehicleFuelingShowPage() {
                 Cupom / nota
               </p>
               <p className="text-sm text-slate-700">
-                {fueling.invoice_number ?? "Nao informado"}
+                {fueling.invoice_number ?? "Não informado"}
               </p>
             </div>
           </CardContent>
@@ -250,7 +250,7 @@ export function VehicleFuelingShowPage() {
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Local e observacoes</CardTitle>
+            <CardTitle>Local e observações</CardTitle>
             <CardDescription>
               Posto, cidade e detalhes complementares do registro.
             </CardDescription>
@@ -263,7 +263,7 @@ export function VehicleFuelingShowPage() {
                   Posto
                 </p>
                 <p className="text-sm text-slate-700">
-                  {fueling.gas_station ?? "Nao informado"}
+                  {fueling.gas_station ?? "Não informado"}
                   {fueling.gas_station_city
                     ? ` • ${fueling.gas_station_city}`
                     : ""}
@@ -285,10 +285,10 @@ export function VehicleFuelingShowPage() {
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Observacoes
+                Observações
               </p>
               <p className="mt-1 text-sm text-slate-700">
-                {fueling.notes ?? "Nenhuma observacao informada."}
+                {fueling.notes ?? "Nenhuma observação informada."}
               </p>
             </div>
           </CardContent>

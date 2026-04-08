@@ -31,8 +31,8 @@ export function VehicleTypeShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `vehicle-types.view` para
-            visualizar tipos de veiculo.
+            Você precisa de `administrator` e `vehicle-types.view` para
+            visualizar tipos de veículo.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -47,9 +47,9 @@ export function VehicleTypeShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar tipo de veiculo</CardTitle>
+          <CardTitle>Erro ao carregar tipo de veículo</CardTitle>
           <CardDescription>
-            Os dados do tipo de veiculo nao estao disponiveis no momento.
+            Os dados do tipo de veículo não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -74,7 +74,7 @@ export function VehicleTypeShowPage() {
             Slug: {vehicleType.slug}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Classificacao administrativa de veiculos com codigo interno, status
+            Classificação administrativa de veículos com codigo interno, status
             e auditoria.
           </p>
         </div>
@@ -102,7 +102,7 @@ export function VehicleTypeShowPage() {
                   Codigo
                 </p>
                 <p className="text-sm text-slate-700">
-                  {vehicleType.code ?? "Nao informado"}
+                  {vehicleType.code ?? "Não informado"}
                 </p>
               </div>
             </div>
@@ -111,7 +111,7 @@ export function VehicleTypeShowPage() {
               <Car className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Veiculos vinculados
+                  Veículos vinculados
                 </p>
                 <p className="text-sm text-slate-700">
                   {vehicleType.vehicles_count ?? 0}
@@ -125,7 +125,7 @@ export function VehicleTypeShowPage() {
           <CardHeader>
             <CardTitle>Metadados</CardTitle>
             <CardDescription>
-              Identificacao tecnica e usuarios responsaveis pelo cadastro.
+              Identificação técnica e usuários responsáveis pelo cadastro.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -148,7 +148,7 @@ export function VehicleTypeShowPage() {
                 <p className="text-sm text-slate-700">
                   {vehicleType.creator
                     ? `${vehicleType.creator.name} (${vehicleType.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -162,7 +162,7 @@ export function VehicleTypeShowPage() {
                 <p className="text-sm text-slate-700">
                   {vehicleType.updater
                     ? `${vehicleType.updater.name} (${vehicleType.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>

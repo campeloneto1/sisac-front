@@ -24,14 +24,14 @@ export function ArmamentBatchShowPage() {
         <CardHeader>
           <CardTitle>Lote #{params.batchId}</CardTitle>
           <CardDescription>
-            Esta rota ja esta pronta para receber o detalhe operacional do lote.
+            Esta rota já esta pronta para receber o detalhe operacional do lote.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
-          <p>Informacoes esperadas:</p>
-          <p>numero do lote, quantidade total e disponivel;</p>
+          <p>Informações esperadas:</p>
+          <p>número do lote, quantidade total e disponível;</p>
           <p>validade, percentual de uso e alertas de expiracao;</p>
-          <p>movimentacoes, emprestimos e ocorrencias relacionadas.</p>
+          <p>movimentacoes, empréstimos e ocorrencias relacionadas.</p>
         </CardContent>
       </Card>
     </ArmamentBatchesPageShell>

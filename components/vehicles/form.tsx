@@ -52,20 +52,20 @@ const vehicleFormSchema = z
     license_plate: z
       .string()
       .min(7, "A placa precisa ter ao menos 7 caracteres.")
-      .max(10, "A placa deve ter no maximo 10 caracteres."),
+      .max(10, "A placa deve ter no máximo 10 caracteres."),
     special_plate: z
       .string()
-      .max(20, "A placa especial deve ter no maximo 20 caracteres.")
+      .max(20, "A placa especial deve ter no máximo 20 caracteres.")
       .optional()
       .or(z.literal("")),
     chassis: z
       .string()
-      .max(30, "O chassis deve ter no maximo 30 caracteres.")
+      .max(30, "O chassis deve ter no máximo 30 caracteres.")
       .optional()
       .or(z.literal("")),
     renavam: z
       .string()
-      .max(20, "O RENAVAM deve ter no maximo 20 caracteres.")
+      .max(20, "O RENAVAM deve ter no máximo 20 caracteres.")
       .optional()
       .or(z.literal("")),
     manufacture_year: z.string().optional().or(z.literal("")),
@@ -89,7 +89,7 @@ const vehicleFormSchema = z
     is_available_for_trip: z.boolean(),
     notes: z
       .string()
-      .max(5000, "As observacoes devem ter no maximo 5000 caracteres.")
+      .max(5000, "As observações devem ter no máximo 5000 caracteres.")
       .optional()
       .or(z.literal("")),
   })
@@ -354,11 +354,11 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>
-          {mode === "create" ? "Novo veiculo" : "Editar veiculo"}
+          {mode === "create" ? "Novo veículo" : "Editar veículo"}
         </CardTitle>
         <CardDescription>
-          Cadastro operacional do veiculo com identificacao, classificacao,
-          quilometragem e vinculos administrativos.
+          Cadastro operacional do veículo com identificação, classificação,
+          quilometragem e vínculos administrativos.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -366,10 +366,10 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
           <section className="space-y-4">
             <div>
               <h3 className="text-base font-semibold text-slate-900">
-                Identificacao
+                Identificação
               </h3>
               <p className="text-sm text-slate-500">
-                Dados unicos e identificadores principais do veiculo.
+                Dados unicos e identificadores principais do veículo.
               </p>
             </div>
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -419,7 +419,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
           <section className="space-y-4">
             <div>
               <h3 className="text-base font-semibold text-slate-900">
-                Classificacao
+                Classificação
               </h3>
               <p className="text-sm text-slate-500">
                 Tipo, modelo, cor, subunidade e contexto operacional.
@@ -427,7 +427,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
             </div>
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               <div className="space-y-2">
-                <Label>Tipo de veiculo</Label>
+                <Label>Tipo de veículo</Label>
                 <Select
                   value={selectedVehicleTypeId}
                   onValueChange={(value) =>
@@ -438,7 +438,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Nao informado</SelectItem>
+                    <SelectItem value="none">Não informado</SelectItem>
                     {(vehicleTypesQuery.data?.data ?? []).map((item) => (
                       <SelectItem key={item.id} value={String(item.id)}>
                         {item.name}
@@ -463,7 +463,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Nao informado</SelectItem>
+                    <SelectItem value="none">Não informado</SelectItem>
                     {(brandsQuery.data?.data ?? []).map((item) => (
                       <SelectItem key={item.id} value={String(item.id)}>
                         {item.abbreviation
@@ -499,7 +499,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                     />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Nao informado</SelectItem>
+                    <SelectItem value="none">Não informado</SelectItem>
                     {(variantsQuery.data?.data ?? []).map((item) => (
                       <SelectItem key={item.id} value={String(item.id)}>
                         {item.name}
@@ -521,7 +521,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Nao informado</SelectItem>
+                    <SelectItem value="none">Não informado</SelectItem>
                     {(colorsQuery.data?.data ?? []).map((item) => (
                       <SelectItem key={item.id} value={String(item.id)}>
                         {item.name}
@@ -543,7 +543,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Nao informado</SelectItem>
+                    <SelectItem value="none">Não informado</SelectItem>
                     {(subunitsQuery.data?.data ?? []).map((item) => (
                       <SelectItem key={item.id} value={String(item.id)}>
                         {item.abbreviation
@@ -609,7 +609,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                 Quilometragem e revisao
               </h3>
               <p className="text-sm text-slate-500">
-                Controle basico de uso e marcos preventivos.
+                Controle básico de uso e marcos preventivos.
               </p>
             </div>
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -686,10 +686,10 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
           <section className="space-y-4">
             <div>
               <h3 className="text-base font-semibold text-slate-900">
-                Caracteristicas e vinculacao
+                Características e vinculacao
               </h3>
               <p className="text-sm text-slate-500">
-                Flags operacionais, responsavel atual e observacoes.
+                Flags operacionais, responsável atual e observações.
               </p>
             </div>
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -714,7 +714,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label>Responsavel atual</Label>
+                <Label>Responsável atual</Label>
                 <Select
                   value={selectedAssignedTo}
                   onValueChange={(value) =>
@@ -727,7 +727,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Nao atribuido</SelectItem>
+                    <SelectItem value="none">Não atribuido</SelectItem>
                     {(usersQuery.data?.data ?? []).map((item) => (
                       <SelectItem key={item.id} value={String(item.id)}>
                         {item.name}
@@ -752,7 +752,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                     Blindado
                   </span>
                   <span className="block text-sm text-slate-500">
-                    Marque se o veiculo possuir blindagem.
+                    Marque se o veículo possuir blindagem.
                   </span>
                 </span>
               </label>
@@ -772,7 +772,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                     Organico
                   </span>
                   <span className="block text-sm text-slate-500">
-                    Indica veiculo proprio da estrutura organica.
+                    Indica veículo próprio da estrutura organica.
                   </span>
                 </span>
               </label>
@@ -789,20 +789,20 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                 />
                 <span className="space-y-1">
                   <span className="block text-sm font-medium text-slate-900">
-                    Disponivel para viagem
+                    Disponível para viagem
                   </span>
                   <span className="block text-sm text-slate-500">
-                    Use para destacar veiculos aptos para deslocamentos.
+                    Use para destacar veículos aptos para deslocamentos.
                   </span>
                 </span>
               </label>
 
               <div className="space-y-2 md:col-span-2 xl:col-span-3">
-                <Label htmlFor="notes">Observacoes</Label>
+                <Label htmlFor="notes">Observações</Label>
                 <Textarea
                   id="notes"
                   rows={5}
-                  placeholder="Registre observacoes operacionais, administrativas ou tecnicas."
+                  placeholder="Registre observações operacionais, administrativas ou técnicas."
                   {...register("notes")}
                 />
                 {errors.notes ? (
@@ -824,8 +824,8 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
               {isPending
                 ? "Salvando..."
                 : mode === "create"
-                  ? "Criar veiculo"
-                  : "Salvar alteracoes"}
+                  ? "Criar veículo"
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

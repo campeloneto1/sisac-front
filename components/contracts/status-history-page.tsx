@@ -31,8 +31,8 @@ import { ContractSubpageShell } from "@/components/contracts/subpage-shell";
 const statusHistorySchema = z.object({
   old_status: z.string(),
   new_status: z.enum(["active", "expired", "suspended", "closed"]),
-  changed_at: z.string().min(1, "Informe a data e hora da alteracao."),
-  reason: z.string().max(1000, "O motivo deve ter no maximo 1000 caracteres.").optional(),
+  changed_at: z.string().min(1, "Informe a data e hora da alteração."),
+  reason: z.string().max(1000, "O motivo deve ter no máximo 1000 caracteres.").optional(),
 });
 
 type StatusHistoryFormValues = z.output<typeof statusHistorySchema>;
@@ -50,7 +50,7 @@ function formatDateTimeLocal(value?: string | null) {
 
 function formatDateTime(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -126,7 +126,7 @@ function StatusHistoryDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Novo registro de status</DialogTitle>
-          <DialogDescription>O historico e imutavel no backend, entao cada mudanca vira um novo evento de auditoria.</DialogDescription>
+          <DialogDescription>O histórico e imutavel no backend, entao cada mudança vira um novo evento de auditoria.</DialogDescription>
         </DialogHeader>
 
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
@@ -135,10 +135,10 @@ function StatusHistoryDialog({
               <Label>Status anterior</Label>
               <Select value={selectedOldStatus} onValueChange={(value) => setValue("old_status", value, { shouldValidate: true })}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Nao informar" />
+                  <SelectValue placeholder="Não informar" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Nao informar</SelectItem>
+                  <SelectItem value="none">Não informar</SelectItem>
                   {contractStatusOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
@@ -167,20 +167,20 @@ function StatusHistoryDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="contract-status-history-changed-at">Data e hora da alteracao</Label>
+            <Label htmlFor="contract-status-history-changed-at">Data e hora da alteração</Label>
             <Input id="contract-status-history-changed-at" type="datetime-local" {...register("changed_at")} />
             {errors.changed_at ? <p className="text-sm text-destructive">{errors.changed_at.message}</p> : null}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="contract-status-history-reason">Motivo</Label>
-            <Textarea id="contract-status-history-reason" rows={4} placeholder="Descreva o contexto da mudanca de status" {...register("reason")} />
+            <Textarea id="contract-status-history-reason" rows={4} placeholder="Descreva o contexto da mudança de status" {...register("reason")} />
             {errors.reason ? <p className="text-sm text-destructive">{errors.reason.message}</p> : null}
           </div>
 
           <DialogFooter>
             <Button type="button" variant="ghost" disabled={isPending} onClick={() => onOpenChange(false)}>Cancelar</Button>
-            <Button type="submit" disabled={isPending || !user}>{isPending ? "Salvando..." : "Registrar alteracao"}</Button>
+            <Button type="submit" disabled={isPending || !user}>{isPending ? "Salvando..." : "Registrar alteração"}</Button>
           </DialogFooter>
         </form>
       </DialogContent>
@@ -214,17 +214,17 @@ export function ContractStatusHistoryPage() {
 
   return (
     <ContractSubpageShell
-      title="Historico de status"
-      description="Trilha de auditoria das mudancas de estado do contrato, com usuario responsavel, data e justificativa."
+      title="Histórico de status"
+      description="Trilha de auditoria das mudancas de estado do contrato, com usuário responsável, data e justificativa."
       canView={canViewPage}
       permissionDeniedTitle="Acesso negado"
-      permissionDeniedDescription="Voce precisa da permissao `view` ou `viewAny` para visualizar o historico de status do contrato."
+      permissionDeniedDescription="Você precisa da permissão `view` ou `viewAny` para visualizar o histórico de status do contrato."
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <CardTitle>Linha do tempo de status</CardTitle>
-            <CardDescription>O backend nao permite editar nem remover esse historico, entao cada evento funciona como registro permanente.</CardDescription>
+            <CardDescription>O backend não permite editar nem remover esse histórico, entao cada evento funciona como registro permanente.</CardDescription>
           </div>
           {permissions.canCreate ? (
             <Button onClick={() => setIsDialogOpen(true)}>
@@ -270,8 +270,8 @@ export function ContractStatusHistoryPage() {
       ) : historyQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar historico</CardTitle>
-            <CardDescription>Verifique se a API de historico de status do contrato ja esta disponivel.</CardDescription>
+            <CardTitle>Erro ao carregar histórico</CardTitle>
+            <CardDescription>Verifique se a API de histórico de status do contrato já esta disponível.</CardDescription>
           </CardHeader>
         </Card>
       ) : !historyQuery.data?.data.length ? (
@@ -289,14 +289,14 @@ export function ContractStatusHistoryPage() {
                 <div className="space-y-3">
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge variant={entry.old_status ? getContractStatusBadgeVariant(entry.old_status) : "outline"}>
-                      {entry.old_status_label ?? getContractStatusLabel(entry.old_status ?? "Nao informado")}
+                      {entry.old_status_label ?? getContractStatusLabel(entry.old_status ?? "Não informado")}
                     </Badge>
                     <ArrowRight className="h-4 w-4 text-slate-400" />
                     <Badge variant={getContractStatusBadgeVariant(entry.new_status)}>
                       {entry.new_status_label ?? getContractStatusLabel(entry.new_status)}
                     </Badge>
                   </div>
-                  <p className="text-sm text-slate-600">{entry.reason?.trim() || "Sem justificativa informada para esta alteracao."}</p>
+                  <p className="text-sm text-slate-600">{entry.reason?.trim() || "Sem justificativa informada para esta alteração."}</p>
                 </div>
 
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
@@ -304,7 +304,7 @@ export function ContractStatusHistoryPage() {
                     <History className="h-4 w-4 text-primary" />
                     <span className="font-medium">{formatDateTime(entry.changed_at)}</span>
                   </div>
-                  <p className="mt-2">Responsavel: <span className="font-medium text-slate-900">{entry.changed_by_user?.name ?? `Usuario #${entry.changed_by}`}</span></p>
+                  <p className="mt-2">Responsável: <span className="font-medium text-slate-900">{entry.changed_by_user?.name ?? `Usuário #${entry.changed_by}`}</span></p>
                   <p className="mt-1 text-xs text-slate-500">{entry.changed_by_user?.email ?? "Sem email informado."}</p>
                 </div>
               </CardContent>

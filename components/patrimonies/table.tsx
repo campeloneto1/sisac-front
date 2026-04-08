@@ -58,12 +58,12 @@ export function PatrimoniesTable({ patrimonies }: PatrimoniesTableProps) {
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Patrimonio</th>
+                <th className="px-4 py-3 font-medium">Patrimônio</th>
                 <th className="px-4 py-3 font-medium">Tipo</th>
                 <th className="px-4 py-3 font-medium">Setor atual</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Atualizacao</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">Atualização</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -134,10 +134,10 @@ export function PatrimoniesTable({ patrimonies }: PatrimoniesTableProps) {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir patrimonio</DialogTitle>
+            <DialogTitle>Excluir patrimônio</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja excluir {patrimonyToDelete?.code}? Se
-              houver vinculos de negocio, a API pode recusar a remocao.
+              houver vínculos de negocio, a API pode recusar a remoção.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -154,7 +154,7 @@ export function PatrimoniesTable({ patrimonies }: PatrimoniesTableProps) {
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

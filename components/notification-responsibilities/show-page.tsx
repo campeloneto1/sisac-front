@@ -28,7 +28,7 @@ export function NotificationResponsibilityShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `notification-responsibilities.view` para visualizar esta configuracao.
+            Você precisa de `administrator` e `notification-responsibilities.view` para visualizar esta configuração.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -55,7 +55,7 @@ export function NotificationResponsibilityShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar responsabilidade</CardTitle>
-          <CardDescription>Os dados da responsabilidade de notificacao nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados da responsabilidade de notificação não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -73,7 +73,7 @@ export function NotificationResponsibilityShowPage() {
           </div>
           <p className="mt-2 text-sm text-slate-500">Subunidade: {item.subunit?.name ?? `#${item.subunit_id}`}</p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Esta regra define qual setor recebe as notificacoes automaticas desse dominio dentro da subunidade configurada.
+            Esta regra define qual setor recebe as notificações automaticas desse dominio dentro da subunidade configurada.
           </p>
         </div>
 
@@ -88,7 +88,7 @@ export function NotificationResponsibilityShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Visao geral</CardTitle>
-            <CardDescription>Resumo rapido da configuracao.</CardDescription>
+            <CardDescription>Resumo rápido da configuração.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -102,14 +102,14 @@ export function NotificationResponsibilityShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{item.creator ? `${item.creator.name} (${item.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{item.creator ? `${item.creator.name} (${item.creator.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{item.updater ? `${item.updater.name} (${item.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{item.updater ? `${item.updater.name} (${item.updater.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>
@@ -117,7 +117,7 @@ export function NotificationResponsibilityShowPage() {
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Destino das notificacoes</CardTitle>
+            <CardTitle>Destino das notificações</CardTitle>
             <CardDescription>Dados retornados pelo `NotificationResponsibilityResource`.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -134,7 +134,7 @@ export function NotificationResponsibilityShowPage() {
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-primary" />
-                <p className="text-sm font-medium text-slate-900">Setor responsavel</p>
+                <p className="text-sm font-medium text-slate-900">Setor responsável</p>
               </div>
               <p className="mt-2 text-sm text-slate-600">
                 {item.sector ? `${item.sector.name} (${item.sector.abbreviation ?? "Sem sigla"})` : `Setor #${item.sector_id}`}
@@ -143,7 +143,7 @@ export function NotificationResponsibilityShowPage() {
 
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3">
               <p className="text-sm text-slate-600">
-                Se essa configuracao ficar ausente ou incorreta, o resolvedor de destinatarios pode nao encontrar usuarios para esse dominio.
+                Se essa configuração ficar ausente ou incorreta, o resolvedor de destinatarios pode não encontrar usuários para esse dominio.
               </p>
             </div>
           </CardContent>

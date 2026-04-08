@@ -32,15 +32,15 @@ const vehicleTypeFormSchema = z.object({
   name: z
     .string()
     .min(2, "O nome precisa ter ao menos 2 caracteres.")
-    .max(100, "O nome deve ter no maximo 100 caracteres."),
+    .max(100, "O nome deve ter no máximo 100 caracteres."),
   slug: z
     .string()
     .min(2, "O slug precisa ter ao menos 2 caracteres.")
-    .max(100, "O slug deve ter no maximo 100 caracteres."),
+    .max(100, "O slug deve ter no máximo 100 caracteres."),
   code: z
     .string()
     .min(2, "O codigo precisa ter ao menos 2 caracteres.")
-    .max(50, "O codigo deve ter no maximo 50 caracteres.")
+    .max(50, "O codigo deve ter no máximo 50 caracteres.")
     .optional()
     .or(z.literal("")),
   is_active: z.boolean(),
@@ -158,10 +158,10 @@ export function VehicleTypeForm({
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>
-          {mode === "create" ? "Novo tipo de veiculo" : "Editar tipo de veiculo"}
+          {mode === "create" ? "Novo tipo de veículo" : "Editar tipo de veículo"}
         </CardTitle>
         <CardDescription>
-          Tipos de veiculo ficam em Administrador e organizam classificacoes
+          Tipos de veículo ficam em Administrador e organizam classificações
           mestres usadas por cadastros dependentes.
         </CardDescription>
       </CardHeader>
@@ -233,7 +233,7 @@ export function VehicleTypeForm({
                   Tipo ativo
                 </span>
                 <span className="block text-sm text-slate-500">
-                  Tipos inativos podem ser mantidos por historico sem aparecer em
+                  Tipos inativos podem ser mantidos por histórico sem aparecer em
                   novos fluxos administrativos.
                 </span>
               </span>
@@ -257,7 +257,7 @@ export function VehicleTypeForm({
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar tipo"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

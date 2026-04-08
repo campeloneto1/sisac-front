@@ -32,14 +32,14 @@ const materialTypeFormSchema = z.object({
   name: z
     .string()
     .min(2, "O nome precisa ter ao menos 2 caracteres.")
-    .max(100, "O nome deve ter no maximo 100 caracteres."),
+    .max(100, "O nome deve ter no máximo 100 caracteres."),
   slug: z
     .string()
     .min(2, "O slug precisa ter ao menos 2 caracteres.")
-    .max(100, "O slug deve ter no maximo 100 caracteres."),
+    .max(100, "O slug deve ter no máximo 100 caracteres."),
   description: z
     .string()
-    .max(1000, "A descricao deve ter no maximo 1000 caracteres.")
+    .max(1000, "A descrição deve ter no máximo 1000 caracteres.")
     .optional()
     .or(z.literal("")),
 });
@@ -151,8 +151,8 @@ export function MaterialTypeForm({
           {mode === "create" ? "Novo tipo de material" : "Editar tipo de material"}
         </CardTitle>
         <CardDescription>
-          Tipos de material ficam em Administrador e sustentam a classificacao
-          mestre usada pelo modulo de materiais.
+          Tipos de material ficam em Administrador e sustentam a classificação
+          mestre usada pelo módulo de materiais.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -194,11 +194,11 @@ export function MaterialTypeForm({
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="description">Descricao</Label>
+              <Label htmlFor="description">Descrição</Label>
               <Textarea
                 id="description"
                 rows={5}
-                placeholder="Descreva como esse tipo deve ser usado na classificacao administrativa dos materiais."
+                placeholder="Descreva como esse tipo deve ser usado na classificação administrativa dos materiais."
                 {...register("description")}
               />
               <p className="text-xs text-slate-500">
@@ -230,7 +230,7 @@ export function MaterialTypeForm({
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar tipo"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

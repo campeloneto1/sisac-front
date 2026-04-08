@@ -85,7 +85,7 @@ export function PoliceOfficerPublicationsFilters({
         </div>
 
         <div className="space-y-2">
-          <Label>Tipo de publicacao</Label>
+          <Label>Tipo de publicação</Label>
           <Select
             value={publicationTypeId}
             onValueChange={onPublicationTypeChange}

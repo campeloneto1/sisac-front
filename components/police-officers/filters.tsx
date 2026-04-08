@@ -57,7 +57,7 @@ export function PoliceOfficersFilters({
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
         <Input
           className="pl-9"
-          placeholder="Buscar por nome, nome de guerra, matricula, CPF ou email"
+          placeholder="Buscar por nome, nome de guerra, matrícula, CPF ou email"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
         />
@@ -93,10 +93,10 @@ export function PoliceOfficersFilters({
 
       <Select value={genderId} onValueChange={onGenderChange}>
         <SelectTrigger>
-          <SelectValue placeholder="Genero" />
+          <SelectValue placeholder="Gênero" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todos os generos</SelectItem>
+          <SelectItem value="all">Todos os gêneros</SelectItem>
           {genders.map((gender) => (
             <SelectItem key={gender.id} value={String(gender.id)}>
               {gender.name}

@@ -15,7 +15,7 @@ export function PermissionCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `permissions.create` para cadastrar permissoes.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `permissions.create` para cadastrar permissões.</CardDescription>
         </CardHeader>
       </Card>
     );

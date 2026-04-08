@@ -46,7 +46,7 @@ export function RanksTable({ ranks }: RanksTableProps) {
                 <th className="px-4 py-3 font-medium">Sigla</th>
                 <th className="px-4 py-3 font-medium">Nivel</th>
                 <th className="px-4 py-3 font-medium">Intersticio</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -63,7 +63,7 @@ export function RanksTable({ ranks }: RanksTableProps) {
                   <td className="px-4 py-4 text-slate-700">{rank.abbreviation}</td>
                   <td className="px-4 py-4 text-slate-700">{rank.hierarchy_level}</td>
                   <td className="px-4 py-4 text-slate-700">
-                    {rank.interstice !== null ? `${rank.interstice} meses` : "Nao informado"}
+                    {rank.interstice !== null ? `${rank.interstice} meses` : "Não informado"}
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex justify-end gap-2">
@@ -102,8 +102,8 @@ export function RanksTable({ ranks }: RanksTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir posto/graduação</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {rankToDelete?.name}? Se houver historico em `police_officer_ranks`,
-              a policy da API bloqueara a exclusao.
+              Tem certeza que deseja excluir {rankToDelete?.name}? Se houver histórico em `police_officer_ranks`,
+              a policy da API bloqueara a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -111,7 +111,7 @@ export function RanksTable({ ranks }: RanksTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

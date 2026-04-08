@@ -19,7 +19,7 @@ export function ArmamentUnitsListPage() {
 
   return (
     <ArmamentUnitsPageShell
-      title="Gestao de unidades"
+      title="Gestão de unidades"
       description="Acompanhe e organize as unidades fisicas vinculadas a este armamento."
       requiredPermission="view"
     >
@@ -37,7 +37,7 @@ export function ArmamentUnitsListPage() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Disponiveis</CardTitle>
+            <CardTitle>Disponíveis</CardTitle>
             <CardDescription>
               Quantidade de unidades aptas para uso operacional.
             </CardDescription>
@@ -63,7 +63,7 @@ export function ArmamentUnitsListPage() {
           <CardHeader>
             <CardTitle>Indisponiveis</CardTitle>
             <CardDescription>
-              Emprestadas, cedidas, em manutencao, baixadas ou extraviadas.
+              Emprestadas, cedidas, em manutenção, baixadas ou extraviadas.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -76,14 +76,14 @@ export function ArmamentUnitsListPage() {
         <CardHeader>
           <CardTitle>Fluxo preparado</CardTitle>
           <CardDescription>
-            Esta area ja esta pronta para receber a tabela operacional das
+            Esta area já esta pronta para receber a tabela operacional das
             unidades quando a API do recurso for publicada.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-slate-600">
           <p>Filtros planejados: serial number, status, vencido e vencendo.</p>
           <p>
-            Acoes planejadas: visualizar, editar, excluir e criar nova unidade.
+            Ações planejadas: visualizar, editar, excluir e criar nova unidade.
           </p>
           <p>
             O ideal aqui e consumir um endpoint dedicado por armamento ou um

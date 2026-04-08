@@ -45,7 +45,7 @@ export function BrandsListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `brands.viewAny` para visualizar
+            Você precisa de `administrator` e `brands.viewAny` para visualizar
             marcas.
           </CardDescription>
         </CardHeader>
@@ -101,7 +101,7 @@ export function BrandsListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar marcas</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

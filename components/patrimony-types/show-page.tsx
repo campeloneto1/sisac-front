@@ -41,8 +41,8 @@ export function PatrimonyTypeShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `patrimony-types.view` para
-            visualizar tipos de patrimonio.
+            Você precisa de `administrator` e `patrimony-types.view` para
+            visualizar tipos de patrimônio.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -57,9 +57,9 @@ export function PatrimonyTypeShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar tipo de patrimonio</CardTitle>
+          <CardTitle>Erro ao carregar tipo de patrimônio</CardTitle>
           <CardDescription>
-            Os dados do tipo de patrimonio nao estao disponiveis no momento.
+            Os dados do tipo de patrimônio não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -77,7 +77,7 @@ export function PatrimonyTypeShowPage() {
           </h1>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             {patrimonyType.description?.trim() ||
-              "Tipo administrativo global usado para classificar patrimonios em outros fluxos do sistema."}
+              "Tipo administrativo global usado para classificar patrimônios em outros fluxos do sistema."}
           </p>
         </div>
 
@@ -111,10 +111,10 @@ export function PatrimonyTypeShowPage() {
               <FileText className="mt-0.5 h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Descricao
+                  Descrição
                 </p>
                 <p className="text-sm text-slate-700">
-                  {patrimonyType.description?.trim() || "Nao informada"}
+                  {patrimonyType.description?.trim() || "Não informada"}
                 </p>
               </div>
             </div>
@@ -125,7 +125,7 @@ export function PatrimonyTypeShowPage() {
           <CardHeader>
             <CardTitle>Metadados</CardTitle>
             <CardDescription>
-              Usuarios responsaveis pelo cadastro e auditoria.
+              Usuários responsáveis pelo cadastro e auditoria.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -138,7 +138,7 @@ export function PatrimonyTypeShowPage() {
                 <p className="text-sm text-slate-700">
                   {patrimonyType.creator
                     ? `${patrimonyType.creator.name} (${patrimonyType.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -152,7 +152,7 @@ export function PatrimonyTypeShowPage() {
                 <p className="text-sm text-slate-700">
                   {patrimonyType.updater
                     ? `${patrimonyType.updater.name} (${patrimonyType.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>

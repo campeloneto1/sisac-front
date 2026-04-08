@@ -25,7 +25,7 @@ export function ArmamentTypeEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar tipos de armamento.
+            Você precisa da permissão `update` para editar tipos de armamento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -42,7 +42,7 @@ export function ArmamentTypeEditPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar tipo de armamento</CardTitle>
           <CardDescription>
-            Os dados do tipo nao estao disponiveis para edicao no momento.
+            Os dados do tipo não estão disponíveis para edição no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -60,7 +60,7 @@ export function ArmamentTypeEditPage() {
             Editar tipo de armamento
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize nome, slug e descricao do tipo cadastrado.
+            Atualize nome, slug e descrição do tipo cadastrado.
           </p>
         </div>
       </div>

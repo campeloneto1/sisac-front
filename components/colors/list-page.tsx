@@ -43,7 +43,7 @@ export function ColorsListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `colors.viewAny` para visualizar
+            Você precisa de `administrator` e `colors.viewAny` para visualizar
             cores.
           </CardDescription>
         </CardHeader>
@@ -100,7 +100,7 @@ export function ColorsListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar cores</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

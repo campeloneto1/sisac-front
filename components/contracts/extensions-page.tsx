@@ -23,10 +23,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { ContractSubpageShell } from "@/components/contracts/subpage-shell";
 
 const extensionSchema = z.object({
-  extension_number: z.string().max(100, "Numero muito longo.").optional(),
+  extension_number: z.string().max(100, "Número muito longo.").optional(),
   start_date: z.string().optional(),
   end_date: z.string().optional(),
-  notes: z.string().max(5000, "As observacoes devem ter no maximo 5000 caracteres.").optional(),
+  notes: z.string().max(5000, "As observações devem ter no máximo 5000 caracteres.").optional(),
 }).refine((values) => !values.start_date || !values.end_date || values.end_date >= values.start_date, {
   message: "A data final precisa ser posterior a data inicial.",
   path: ["end_date"],
@@ -35,7 +35,7 @@ const extensionSchema = z.object({
 type ExtensionFormValues = z.infer<typeof extensionSchema>;
 
 function formatDate(value?: string | null) {
-  return value ? new Date(`${value}T00:00:00`).toLocaleDateString("pt-BR") : "Nao informado";
+  return value ? new Date(`${value}T00:00:00`).toLocaleDateString("pt-BR") : "Não informado";
 }
 
 function ExtensionDialog({
@@ -95,19 +95,19 @@ function ExtensionDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{extension ? "Editar prorrogacao" : "Nova prorrogacao"}</DialogTitle>
-          <DialogDescription>Registre a nova janela de vigencia e o contexto administrativo da prorrogacao.</DialogDescription>
+          <DialogDescription>Registre a nova janela de vigência e o contexto administrativo da prorrogacao.</DialogDescription>
         </DialogHeader>
 
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
-            <Label htmlFor="contract-extension-number">Numero</Label>
+            <Label htmlFor="contract-extension-number">Número</Label>
             <Input id="contract-extension-number" placeholder="Ex.: PR-2026-01" {...register("extension_number")} />
             {errors.extension_number ? <p className="text-sm text-destructive">{errors.extension_number.message}</p> : null}
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="contract-extension-start-date">Inicio</Label>
+              <Label htmlFor="contract-extension-start-date">Início</Label>
               <Input id="contract-extension-start-date" type="date" {...register("start_date")} />
             </div>
             <div className="space-y-2">
@@ -118,7 +118,7 @@ function ExtensionDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="contract-extension-notes">Observacoes</Label>
+            <Label htmlFor="contract-extension-notes">Observações</Label>
             <Textarea id="contract-extension-notes" rows={4} placeholder="Descreva o motivo da prorrogacao" {...register("notes")} />
           </div>
 
@@ -162,16 +162,16 @@ export function ContractExtensionsPage() {
   return (
     <ContractSubpageShell
       title="Prorrogacoes do contrato"
-      description="Acompanhe o historico de extensoes de vigencia sem perder o contexto do contrato pai."
+      description="Acompanhe o histórico de extensoes de vigência sem perder o contexto do contrato pai."
       canView={permissions.canViewAny}
       permissionDeniedTitle="Acesso negado"
-      permissionDeniedDescription="Voce precisa da permissao `viewAny` para visualizar as prorrogacoes do contrato."
+      permissionDeniedDescription="Você precisa da permissão `viewAny` para visualizar as prorrogacoes do contrato."
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <CardTitle>Historico de prorrogacoes</CardTitle>
-            <CardDescription>Consulte rapidamente o numero, a vigencia e o racional de cada extensao.</CardDescription>
+            <CardTitle>Histórico de prorrogacoes</CardTitle>
+            <CardDescription>Consulte rapidamente o número, a vigência e o racional de cada extensao.</CardDescription>
           </div>
           {permissions.canCreate ? (
             <Button onClick={() => { setEditingExtension(null); setIsDialogOpen(true); }}>
@@ -185,7 +185,7 @@ export function ContractExtensionsPage() {
       <div className="rounded-[24px] border border-slate-200/70 bg-white/80 p-4">
         <div className="space-y-2">
           <Label htmlFor="contract-extension-search">Busca</Label>
-          <Input id="contract-extension-search" placeholder="Busque por numero ou observacoes" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} />
+          <Input id="contract-extension-search" placeholder="Busque por número ou observações" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} />
         </div>
       </div>
 
@@ -198,14 +198,14 @@ export function ContractExtensionsPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar prorrogacoes</CardTitle>
-            <CardDescription>Verifique se a API de prorrogacoes do contrato ja esta disponivel.</CardDescription>
+            <CardDescription>Verifique se a API de prorrogacoes do contrato já esta disponível.</CardDescription>
           </CardHeader>
         </Card>
       ) : !extensionsQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Nenhuma prorrogacao encontrada</CardTitle>
-            <CardDescription>Cadastre as extensoes de vigencia conforme forem aprovadas para o contrato.</CardDescription>
+            <CardDescription>Cadastre as extensoes de vigência conforme forem aprovadas para o contrato.</CardDescription>
           </CardHeader>
         </Card>
       ) : (
@@ -215,10 +215,10 @@ export function ContractExtensionsPage() {
               <table className="min-w-full text-left text-sm">
                 <thead className="bg-slate-50 text-slate-500">
                   <tr>
-                    <th className="px-4 py-3 font-medium">Numero</th>
-                    <th className="px-4 py-3 font-medium">Vigencia</th>
+                    <th className="px-4 py-3 font-medium">Número</th>
+                    <th className="px-4 py-3 font-medium">Vigência</th>
                     <th className="px-4 py-3 font-medium">Resumo</th>
-                    <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                    <th className="px-4 py-3 font-medium text-right">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -233,7 +233,7 @@ export function ContractExtensionsPage() {
                           <span>{formatDate(extension.start_date)} ate {formatDate(extension.end_date)}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-4 text-slate-600">{extension.notes?.trim() || "Sem observacoes informadas."}</td>
+                      <td className="px-4 py-4 text-slate-600">{extension.notes?.trim() || "Sem observações informadas."}</td>
                       <td className="px-4 py-4">
                         <div className="flex justify-end gap-2">
                           {permissions.canUpdate ? (
@@ -278,7 +278,7 @@ export function ContractExtensionsPage() {
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={() => setExtensionToDelete(null)}>Cancelar</Button>
             <Button type="button" variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

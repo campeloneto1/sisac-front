@@ -38,11 +38,11 @@ import { Textarea } from "@/components/ui/textarea";
 
 const returnSchema = z
   .object({
-    returned_at: z.string().min(1, "Informe a data e hora da devolucao."),
+    returned_at: z.string().min(1, "Informe a data e hora da devolução."),
     approved_by: z.string(),
     return_notes: z
       .string()
-      .max(1000, "As observacoes devem ter no maximo 1000 caracteres."),
+      .max(1000, "As observações devem ter no máximo 1000 caracteres."),
     items: z.array(
       z.object({
         id: z.coerce.number(),
@@ -56,13 +56,13 @@ const returnSchema = z
         lost_now: z.coerce.number().int().min(0),
         consumed_justification: z
           .string()
-          .max(1000, "A justificativa deve ter no maximo 1000 caracteres."),
+          .max(1000, "A justificativa deve ter no máximo 1000 caracteres."),
         lost_justification: z
           .string()
-          .max(1000, "A justificativa deve ter no maximo 1000 caracteres."),
+          .max(1000, "A justificativa deve ter no máximo 1000 caracteres."),
         lost_report_number: z
           .string()
-          .max(100, "O numero do relatorio deve ter no maximo 100 caracteres."),
+          .max(100, "O número do relatório deve ter no máximo 100 caracteres."),
       }),
     ),
   })
@@ -86,7 +86,7 @@ const returnSchema = z
           code: z.ZodIssueCode.custom,
           path: ["items", index, "returned_now"],
           message:
-            "A soma devolvida, consumida e extraviada nesta devolucao nao pode exceder o saldo pendente.",
+            "A soma devolvida, consumida e extraviada nesta devolução não pode exceder o saldo pendente.",
         });
       }
 
@@ -94,7 +94,7 @@ const returnSchema = z
         context.addIssue({
           code: z.ZodIssueCode.custom,
           path: ["items", index, "consumed_now"],
-          message: "Itens por unidade nao aceitam quantidade consumida.",
+          message: "Itens por unidade não aceitam quantidade consumida.",
         });
       }
 
@@ -131,7 +131,7 @@ const returnSchema = z
         code: z.ZodIssueCode.custom,
         path: ["items"],
         message:
-          "Informe devolucao, consumo ou extravio em pelo menos um item.",
+          "Informe devolução, consumo ou extravio em pelo menos um item.",
       });
     }
   });
@@ -223,7 +223,7 @@ export function ArmamentLoanReturnPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para registrar devolucao de
+            Você precisa da permissão `update` para registrar devolução de
             armamentos.
           </CardDescription>
         </CardHeader>
@@ -239,9 +239,9 @@ export function ArmamentLoanReturnPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar emprestimo</CardTitle>
+          <CardTitle>Erro ao carregar empréstimo</CardTitle>
           <CardDescription>
-            O emprestimo nao esta disponivel para devolucao no momento.
+            O empréstimo não esta disponível para devolução no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -254,9 +254,9 @@ export function ArmamentLoanReturnPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Emprestimo ja finalizado</CardTitle>
+          <CardTitle>Empréstimo já finalizado</CardTitle>
           <CardDescription>
-            Este emprestimo ja foi totalmente devolvido e nao aceita novas
+            Este empréstimo já foi totalmente devolvido e não aceita novas
             baixas.
           </CardDescription>
         </CardHeader>
@@ -327,18 +327,18 @@ export function ArmamentLoanReturnPage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Registrar devolucao
+            Registrar devolução
           </h1>
           <p className="text-sm text-slate-500">
-            Informe apenas o que retorna agora. O sistema soma com o historico e
-            permite devolucao parcial por item.
+            Informe apenas o que retorna agora. O sistema soma com o histórico e
+            permite devolução parcial por item.
           </p>
         </div>
       </div>
 
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Emprestimo de {loan.police_officer?.war_name || loan.police_officer?.name}</CardTitle>
+          <CardTitle>Empréstimo de {loan.police_officer?.war_name || loan.police_officer?.name}</CardTitle>
           <CardDescription>
             Exemplo comum: o policial devolve a municao, mas permanece com a arma
             cautelada. Nesse caso, baixe apenas os itens correspondentes.
@@ -348,7 +348,7 @@ export function ArmamentLoanReturnPage() {
           <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
             <section className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
-                <Label>Data e hora da devolucao</Label>
+                <Label>Data e hora da devolução</Label>
                 <Input type="datetime-local" {...register("returned_at")} />
                 {errors.returned_at ? (
                   <p className="text-sm text-destructive">
@@ -372,7 +372,7 @@ export function ArmamentLoanReturnPage() {
                     <SelectValue placeholder="Selecione o aprovador" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Nao informado</SelectItem>
+                    <SelectItem value="none">Não informado</SelectItem>
                     {(usersQuery.data?.data ?? []).map((user) => (
                       <SelectItem key={user.id} value={String(user.id)}>
                         {user.name}
@@ -383,10 +383,10 @@ export function ArmamentLoanReturnPage() {
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <Label>Observacoes gerais</Label>
+                <Label>Observações gerais</Label>
                 <Textarea
                   rows={3}
-                  placeholder="Observacoes administrativas desta devolucao."
+                  placeholder="Observações administrativas desta devolução."
                   {...register("return_notes")}
                 />
               </div>
@@ -395,7 +395,7 @@ export function ArmamentLoanReturnPage() {
             <section className="space-y-4">
               <div>
                 <h2 className="text-lg font-semibold text-slate-900">
-                  Itens desta devolucao
+                  Itens desta devolução
                 </h2>
                 <p className="text-sm text-slate-500">
                   Informe somente o movimento desta etapa. O frontend transforma
@@ -454,7 +454,7 @@ export function ArmamentLoanReturnPage() {
                           </div>
                           <div className="rounded-2xl border border-slate-200/70 bg-white px-4 py-3">
                             <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                              Ja devolvido
+                              Já devolvido
                             </p>
                             <p className="mt-1 text-xl font-semibold text-emerald-700">
                               {Number(formItem?.current_returned_quantity ?? 0)}
@@ -462,7 +462,7 @@ export function ArmamentLoanReturnPage() {
                           </div>
                           <div className="rounded-2xl border border-slate-200/70 bg-white px-4 py-3">
                             <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                              Ja baixado
+                              Já baixado
                             </p>
                             <p className="mt-1 text-xl font-semibold text-amber-700">
                               {Number(formItem?.current_consumed_quantity ?? 0) +
@@ -519,7 +519,7 @@ export function ArmamentLoanReturnPage() {
                             <Label>Justificativa de consumo</Label>
                             <Textarea
                               rows={3}
-                              placeholder="Obrigatoria se houver consumo."
+                              placeholder="Obrigatória se houver consumo."
                               disabled={pending === 0}
                               {...register(`items.${index}.consumed_justification`)}
                             />
@@ -534,7 +534,7 @@ export function ArmamentLoanReturnPage() {
                             <Label>Justificativa de extravio</Label>
                             <Textarea
                               rows={3}
-                              placeholder="Obrigatoria se houver extravio."
+                              placeholder="Obrigatória se houver extravio."
                               disabled={pending === 0}
                               {...register(`items.${index}.lost_justification`)}
                             />
@@ -547,7 +547,7 @@ export function ArmamentLoanReturnPage() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label>Numero do relatorio de extravio</Label>
+                          <Label>Número do relatório de extravio</Label>
                           <Input
                             placeholder="Opcional quando houver extravio."
                             disabled={pending === 0}
@@ -579,7 +579,7 @@ export function ArmamentLoanReturnPage() {
               <Button type="submit" disabled={returnMutation.isPending}>
                 {returnMutation.isPending
                   ? "Registrando..."
-                  : "Registrar devolucao"}
+                  : "Registrar devolução"}
               </Button>
             </div>
           </form>

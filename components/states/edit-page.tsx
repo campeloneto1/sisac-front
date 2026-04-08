@@ -21,7 +21,7 @@ export function StateEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `states.update` para editar estados.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `states.update` para editar estados.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function StateEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar estado</CardTitle>
-          <CardDescription>O estado nao pode ser editado agora.</CardDescription>
+          <CardDescription>O estado não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

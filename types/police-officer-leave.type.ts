@@ -141,7 +141,7 @@ export const POLICE_OFFICER_LEAVE_STATUS_OPTIONS = [
   { value: "ongoing", label: "Em andamento" },
   { value: "awaiting_copem", label: "Aguardando COPEM" },
   { value: "copem_scheduled", label: "COPEM agendada" },
-  { value: "in_copem_evaluation", label: "Em avaliacao COPEM" },
+  { value: "in_copem_evaluation", label: "Em avaliação COPEM" },
   { value: "copem_approved", label: "Aprovado pela COPEM" },
   { value: "copem_rejected", label: "Reprovado pela COPEM" },
   { value: "completed", label: "Concluido" },
@@ -149,8 +149,8 @@ export const POLICE_OFFICER_LEAVE_STATUS_OPTIONS = [
 ] as const;
 
 export const POLICE_OFFICER_LEAVE_COPEM_RESULT_OPTIONS = [
-  { value: "fit_for_duty", label: "Apto ao servico" },
-  { value: "light_duty", label: "Servicos leves" },
+  { value: "fit_for_duty", label: "Apto ao serviço" },
+  { value: "light_duty", label: "Serviços leves" },
   { value: "unfit_for_duty", label: "Inapto" },
-  { value: "under_evaluation", label: "Em avaliacao" },
+  { value: "under_evaluation", label: "Em avaliação" },
 ] as const;

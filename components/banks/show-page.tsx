@@ -24,7 +24,7 @@ export function BankShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `banks.view` para visualizar bancos.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `banks.view` para visualizar bancos.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -39,7 +39,7 @@ export function BankShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar banco</CardTitle>
-          <CardDescription>Os dados do banco nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do banco não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -56,7 +56,7 @@ export function BankShowPage() {
             <Badge variant="outline">{bank.code}</Badge>
           </div>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Banco cadastrado no modulo administrativo para apoiar cadastros financeiros e de policiais.
+            Banco cadastrado no módulo administrativo para apoiar cadastros financeiros e de policiais.
           </p>
         </div>
 
@@ -85,14 +85,14 @@ export function BankShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{bank.creator ? `${bank.creator.name} (${bank.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{bank.creator ? `${bank.creator.name} (${bank.creator.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{bank.updater ? `${bank.updater.name} (${bank.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{bank.updater ? `${bank.updater.name} (${bank.updater.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>
@@ -110,13 +110,13 @@ export function BankShowPage() {
                 <p className="text-sm font-medium text-slate-900">Cadastro global</p>
               </div>
               <p className="mt-2 text-sm text-slate-600">
-                Este banco pode ser referenciado por policiais e outros modulos que dependam de instituicoes financeiras.
+                Este banco pode ser referenciado por policiais e outros módulos que dependam de instituicoes financeiras.
               </p>
             </div>
 
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3">
               <p className="text-sm text-slate-600">
-                Se existirem policiais vinculados a este banco, a exclusao pode ser recusada pela API ou pelo banco de dados.
+                Se existirem policiais vinculados a este banco, a exclusão pode ser recusada pela API ou pelo banco de dados.
               </p>
             </div>
           </CardContent>

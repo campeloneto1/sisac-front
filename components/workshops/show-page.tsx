@@ -35,7 +35,7 @@ export function WorkshopShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `manager` e `workshops.view` para visualizar
+            Você precisa de `manager` e `workshops.view` para visualizar
             oficinas.
           </CardDescription>
         </CardHeader>
@@ -53,7 +53,7 @@ export function WorkshopShowPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar oficina</CardTitle>
           <CardDescription>
-            Os dados da oficina nao estao disponiveis no momento.
+            Os dados da oficina não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -80,7 +80,7 @@ export function WorkshopShowPage() {
             </div>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            {workshop.cnpj ? `CNPJ: ${workshop.cnpj}` : "CNPJ nao informado"}
+            {workshop.cnpj ? `CNPJ: ${workshop.cnpj}` : "CNPJ não informado"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             Cadastro gerencial da oficina com contatos, cobertura geografica,
@@ -98,9 +98,9 @@ export function WorkshopShowPage() {
       <div className="grid gap-6 xl:grid-cols-[1fr_1fr]">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Contato e localizacao</CardTitle>
+            <CardTitle>Contato e localização</CardTitle>
             <CardDescription>
-              Informacoes para acionamento operacional da oficina.
+              Informações para acionamento operacional da oficina.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -110,7 +110,7 @@ export function WorkshopShowPage() {
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Telefone principal
                 </p>
-                <p className="text-sm text-slate-700">{workshop.phone ?? "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{workshop.phone ?? "Não informado"}</p>
               </div>
             </div>
 
@@ -120,7 +120,7 @@ export function WorkshopShowPage() {
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Email
                 </p>
-                <p className="text-sm text-slate-700">{workshop.email ?? "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{workshop.email ?? "Não informado"}</p>
               </div>
             </div>
 
@@ -128,10 +128,10 @@ export function WorkshopShowPage() {
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Contato responsavel
+                  Contato responsável
                 </p>
                 <p className="text-sm text-slate-700">
-                  {workshop.contact_person ?? "Nao informado"}
+                  {workshop.contact_person ?? "Não informado"}
                   {workshop.contact_phone ? ` • ${workshop.contact_phone}` : ""}
                 </p>
               </div>
@@ -144,7 +144,7 @@ export function WorkshopShowPage() {
                   Endereco
                 </p>
                 <p className="text-sm text-slate-700">
-                  {workshop.address || "Nao informado"}
+                  {workshop.address || "Não informado"}
                 </p>
                 <p className="text-sm text-slate-700">
                   {[workshop.city, workshop.state].filter(Boolean).join(" / ") || "-"}
@@ -159,7 +159,7 @@ export function WorkshopShowPage() {
           <CardHeader>
             <CardTitle>Especialidades e auditoria</CardTitle>
             <CardDescription>
-              Areas de atuacao da oficina e usuarios responsaveis pelo cadastro.
+              Areas de atuação da oficina e usuários responsáveis pelo cadastro.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -182,10 +182,10 @@ export function WorkshopShowPage() {
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Observacoes
+                Observações
               </p>
               <p className="mt-2 text-sm text-slate-700">
-                {workshop.notes ?? "Nenhuma observacao registrada."}
+                {workshop.notes ?? "Nenhuma observação registrada."}
               </p>
             </div>
 
@@ -196,7 +196,7 @@ export function WorkshopShowPage() {
               <p className="mt-1 text-sm text-slate-700">
                 {workshop.creator
                   ? `${workshop.creator.name} (${workshop.creator.email})`
-                  : "Nao informado"}
+                  : "Não informado"}
               </p>
               <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-400">
                 Atualizado por
@@ -204,7 +204,7 @@ export function WorkshopShowPage() {
               <p className="mt-1 text-sm text-slate-700">
                 {workshop.updater
                   ? `${workshop.updater.name} (${workshop.updater.email})`
-                  : "Nao informado"}
+                  : "Não informado"}
               </p>
               <p className="mt-3 text-sm text-slate-700">
                 Criado em: {workshop.created_at ?? "-"}

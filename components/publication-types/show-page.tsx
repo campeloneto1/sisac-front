@@ -21,7 +21,7 @@ export function PublicationTypeShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `view` para visualizar tipos de publicacao.</CardDescription>
+          <CardDescription>Você precisa da permissão `view` para visualizar tipos de publicação.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -35,8 +35,8 @@ export function PublicationTypeShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar tipo de publicacao</CardTitle>
-          <CardDescription>Os dados nao estao disponiveis no momento.</CardDescription>
+          <CardTitle>Erro ao carregar tipo de publicação</CardTitle>
+          <CardDescription>Os dados não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -62,12 +62,12 @@ export function PublicationTypeShowPage() {
               {publicationType.nature?.label ?? "Neutra"}
             </Badge>
             <Badge variant={publicationType.generates_points ? "info" : "secondary"}>
-              {publicationType.generates_points ? "Gera pontos" : "Nao gera pontos"}
+              {publicationType.generates_points ? "Gera pontos" : "Não gera pontos"}
             </Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">Slug: {publicationType.slug}</p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Tipo administrativo utilizado para classificar publicacoes funcionais e orientar regras de pontos e natureza da publicacao.
+            Tipo administrativo utilizado para classificar publicações funcionais e orientar regras de pontos e natureza da publicação.
           </p>
         </div>
 
@@ -82,15 +82,15 @@ export function PublicationTypeShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Definicao</CardTitle>
-            <CardDescription>Informacoes principais do tipo de publicacao.</CardDescription>
+            <CardDescription>Informações principais do tipo de publicação.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-primary" />
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Descricao</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Descrição</p>
               </div>
-              <p className="mt-2 text-sm text-slate-700">{publicationType.description || "Sem descricao cadastrada."}</p>
+              <p className="mt-2 text-sm text-slate-700">{publicationType.description || "Sem descrição cadastrada."}</p>
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -100,7 +100,7 @@ export function PublicationTypeShowPage() {
               </div>
               <div className="mt-2 space-y-1 text-sm text-slate-700">
                 <p>Natureza: {publicationType.nature?.label ?? "Neutra"}</p>
-                <p>Pontuacao: {publicationType.generates_points ? "Gera pontos" : "Nao gera pontos"}</p>
+                <p>Pontuacao: {publicationType.generates_points ? "Gera pontos" : "Não gera pontos"}</p>
               </div>
             </div>
           </CardContent>
@@ -109,21 +109,21 @@ export function PublicationTypeShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Auditoria</CardTitle>
-            <CardDescription>Usuarios responsaveis pela criacao e ultima atualizacao.</CardDescription>
+            <CardDescription>Usuários responsáveis pela criação e última atualização.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{publicationType.creator ? `${publicationType.creator.name} (${publicationType.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{publicationType.creator ? `${publicationType.creator.name} (${publicationType.creator.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{publicationType.updater ? `${publicationType.updater.name} (${publicationType.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{publicationType.updater ? `${publicationType.updater.name} (${publicationType.updater.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>

@@ -17,8 +17,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const stateFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
-  abbreviation: z.string().min(2, "A sigla precisa ter ao menos 2 caracteres.").max(5, "A sigla deve ter no maximo 5 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
+  abbreviation: z.string().min(2, "A sigla precisa ter ao menos 2 caracteres.").max(5, "A sigla deve ter no máximo 5 caracteres."),
   country_id: z.string(),
 });
 
@@ -97,32 +97,32 @@ export function StateForm({ mode, stateItem }: StateFormProps) {
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>{mode === "create" ? "Novo estado" : "Editar estado"}</CardTitle>
-        <CardDescription>Estados ficam dentro de Administrador e dependem do pais para contexto e unicidade.</CardDescription>
+        <CardDescription>Estados ficam dentro de Administrador e dependem do país para contexto e unicidade.</CardDescription>
       </CardHeader>
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="name">Nome</Label>
             <Input id="name" placeholder="Ex.: Ceara" {...register("name")} />
-            <p className="text-xs text-slate-500">O backend valida unicidade do nome dentro do mesmo pais.</p>
+            <p className="text-xs text-slate-500">O backend válida unicidade do nome dentro do mesmo país.</p>
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="abbreviation">Sigla</Label>
             <Input id="abbreviation" maxLength={5} placeholder="Ex.: CE" {...register("abbreviation")} />
-            <p className="text-xs text-slate-500">Obrigatoria. O backend salva automaticamente em caixa alta.</p>
+            <p className="text-xs text-slate-500">Obrigatória. O backend salva automaticamente em caixa alta.</p>
             {errors.abbreviation ? <p className="text-sm text-destructive">{errors.abbreviation.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label>Pais</Label>
+            <Label>País</Label>
             <Select value={selectedCountryId} onValueChange={(value) => setValue("country_id", value, { shouldValidate: true })}>
               <SelectTrigger>
-                <SelectValue placeholder="Selecione um pais" />
+                <SelectValue placeholder="Selecione um país" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">Sem pais vinculado</SelectItem>
+                <SelectItem value="none">Sem país vinculado</SelectItem>
                 {(countriesQuery.data?.data ?? []).map((country) => (
                   <SelectItem key={country.id} value={String(country.id)}>
                     {country.name} • {country.abbreviation}
@@ -132,8 +132,8 @@ export function StateForm({ mode, stateItem }: StateFormProps) {
             </Select>
             <p className="text-xs text-slate-500">
               {selectedCountry
-                ? `Pais selecionado: ${selectedCountry.name} (${selectedCountry.abbreviation}).`
-                : "Selecione um pais para contextualizar o estado e suas regras de unicidade."}
+                ? `País selecionado: ${selectedCountry.name} (${selectedCountry.abbreviation}).`
+                : "Selecione um país para contextualizar o estado e suas regras de unicidade."}
             </p>
             {errors.country_id ? <p className="text-sm text-destructive">{errors.country_id.message}</p> : null}
           </div>
@@ -143,7 +143,7 @@ export function StateForm({ mode, stateItem }: StateFormProps) {
               <Link href={mode === "create" ? "/states" : `/states/${stateItem?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar estado" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar estado" : "Salvar alterações"}
             </Button>
           </div>
         </form>

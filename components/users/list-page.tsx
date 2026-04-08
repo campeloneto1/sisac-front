@@ -36,7 +36,7 @@ export function UsersListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `viewAny` para visualizar o menu e a lista de usuarios.</CardDescription>
+          <CardDescription>Você precisa da permissão `viewAny` para visualizar o menu e a lista de usuários.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -46,15 +46,15 @@ export function UsersListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Usuarios</h1>
-          <p className="text-sm text-slate-500">Gestao completa de usuarios, perfis e acesso administrativo.</p>
+          <h1 className="font-display text-3xl text-slate-900">Usuários</h1>
+          <p className="text-sm text-slate-500">Gestão completa de usuários, perfis e acesso administrativo.</p>
         </div>
 
         {permissions.canCreate ? (
           <Button asChild>
             <Link href="/users/create">
               <Plus className="mr-2 h-4 w-4" />
-              Novo usuario
+              Novo usuário
             </Link>
           </Button>
         ) : null}
@@ -88,15 +88,15 @@ export function UsersListPage() {
       ) : usersQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar usuarios</CardTitle>
-            <CardDescription>Tente novamente em instantes. Se persistir, revise as permissoes e a API.</CardDescription>
+            <CardTitle>Erro ao carregar usuários</CardTitle>
+            <CardDescription>Tente novamente em instantes. Se persistir, revise as permissões e a API.</CardDescription>
           </CardHeader>
         </Card>
       ) : !usersQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhum usuario encontrado</CardTitle>
-            <CardDescription>Ajuste os filtros ou cadastre um novo usuario.</CardDescription>
+            <CardTitle>Nenhum usuário encontrado</CardTitle>
+            <CardDescription>Ajuste os filtros ou cadastre um novo usuário.</CardDescription>
           </CardHeader>
         </Card>
       ) : (

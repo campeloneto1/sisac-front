@@ -17,7 +17,7 @@ export function SectorCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `sectors.create` para cadastrar setores.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `sectors.create` para cadastrar setores.</CardDescription>
         </CardHeader>
       </Card>
     );

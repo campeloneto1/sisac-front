@@ -27,9 +27,9 @@ const transactionSchema = z.object({
   status: z.string().max(100, "Status muito longo.").optional(),
   amount: z.string().optional(),
   transaction_date: z.string().optional(),
-  document_number: z.string().max(120, "Numero muito longo.").optional(),
-  invoice_number: z.string().max(120, "Numero muito longo.").optional(),
-  notes: z.string().max(5000, "As observacoes devem ter no maximo 5000 caracteres.").optional(),
+  document_number: z.string().max(120, "Número muito longo.").optional(),
+  invoice_number: z.string().max(120, "Número muito longo.").optional(),
+  notes: z.string().max(5000, "As observações devem ter no máximo 5000 caracteres.").optional(),
 });
 
 type TransactionFormValues = z.infer<typeof transactionSchema>;
@@ -44,7 +44,7 @@ function formatCurrency(value?: string | number | null) {
 }
 
 function formatDate(value?: string | null) {
-  return value ? new Date(`${value}T00:00:00`).toLocaleDateString("pt-BR") : "Nao informado";
+  return value ? new Date(`${value}T00:00:00`).toLocaleDateString("pt-BR") : "Não informado";
 }
 
 function TransactionDialog({
@@ -149,7 +149,7 @@ function TransactionDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="contract-transaction-notes">Observacoes</Label>
+            <Label htmlFor="contract-transaction-notes">Observações</Label>
             <Textarea id="contract-transaction-notes" rows={4} placeholder="Detalhes da transacao" {...register("notes")} />
             {errors.notes ? <p className="text-sm text-destructive">{errors.notes.message}</p> : null}
           </div>
@@ -198,10 +198,10 @@ export function ContractTransactionsPage() {
   return (
     <ContractSubpageShell
       title="Transacoes do contrato"
-      description="Mantenha o fluxo financeiro organizado por tipo, status, valor e documento de referencia."
+      description="Mantenha o fluxo financeiro organizado por tipo, status, valor e documento de referência."
       canView={permissions.canViewAny}
       permissionDeniedTitle="Acesso negado"
-      permissionDeniedDescription="Voce precisa da permissao `viewAny` para visualizar as transacoes do contrato."
+      permissionDeniedDescription="Você precisa da permissão `viewAny` para visualizar as transacoes do contrato."
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -221,7 +221,7 @@ export function ContractTransactionsPage() {
       <div className="grid gap-4 rounded-[24px] border border-slate-200/70 bg-white/80 p-4 md:grid-cols-3">
         <div className="space-y-2">
           <Label htmlFor="contract-transaction-search">Busca</Label>
-          <Input id="contract-transaction-search" placeholder="Documento, fatura ou observacoes" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} />
+          <Input id="contract-transaction-search" placeholder="Documento, fatura ou observações" value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} />
         </div>
         <div className="space-y-2">
           <Label htmlFor="contract-transaction-type-filter">Tipo</Label>
@@ -242,7 +242,7 @@ export function ContractTransactionsPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar transacoes</CardTitle>
-            <CardDescription>Verifique se a API de transacoes do contrato ja esta disponivel.</CardDescription>
+            <CardDescription>Verifique se a API de transacoes do contrato já esta disponível.</CardDescription>
           </CardHeader>
         </Card>
       ) : !transactionsQuery.data?.data.length ? (
@@ -263,7 +263,7 @@ export function ContractTransactionsPage() {
                     <th className="px-4 py-3 font-medium">Valor / data</th>
                     <th className="px-4 py-3 font-medium">Documentos</th>
                     <th className="px-4 py-3 font-medium">Resumo</th>
-                    <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                    <th className="px-4 py-3 font-medium text-right">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -271,8 +271,8 @@ export function ContractTransactionsPage() {
                     <tr key={transaction.id} className="border-t border-slate-200/70">
                       <td className="px-4 py-4">
                         <div className="space-y-2">
-                          <Badge variant="info">{transaction.type ?? "Tipo nao informado"}</Badge>
-                          <Badge variant="outline">{transaction.status ?? "Status nao informado"}</Badge>
+                          <Badge variant="info">{transaction.type ?? "Tipo não informado"}</Badge>
+                          <Badge variant="outline">{transaction.status ?? "Status não informado"}</Badge>
                         </div>
                       </td>
                       <td className="px-4 py-4 text-slate-600">
@@ -290,10 +290,10 @@ export function ContractTransactionsPage() {
                             <Receipt className="h-4 w-4 text-primary" />
                             <span>{transaction.document_number ?? "Sem documento"}</span>
                           </div>
-                          <p>NF: {transaction.invoice_number ?? "Nao informada"}</p>
+                          <p>NF: {transaction.invoice_number ?? "Não informada"}</p>
                         </div>
                       </td>
-                      <td className="px-4 py-4 text-slate-600">{transaction.notes?.trim() || "Sem observacoes informadas."}</td>
+                      <td className="px-4 py-4 text-slate-600">{transaction.notes?.trim() || "Sem observações informadas."}</td>
                       <td className="px-4 py-4">
                         <div className="flex justify-end gap-2">
                           {permissions.canUpdate ? (
@@ -338,7 +338,7 @@ export function ContractTransactionsPage() {
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={() => setTransactionToDelete(null)}>Cancelar</Button>
             <Button type="button" variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

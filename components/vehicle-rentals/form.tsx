@@ -40,14 +40,14 @@ import { Textarea } from "@/components/ui/textarea";
 
 const vehicleRentalFormSchema = z
   .object({
-    vehicle_id: z.string().min(1, "Selecione um veiculo."),
+    vehicle_id: z.string().min(1, "Selecione um veículo."),
     company_id: z.string().min(1, "Selecione a locadora."),
     contract_number: z
       .string()
-      .max(50, "O numero do contrato deve ter no maximo 50 caracteres."),
+      .max(50, "O número do contrato deve ter no máximo 50 caracteres."),
     contract_start_date: z
       .string()
-      .min(1, "Informe a data de inicio do contrato."),
+      .min(1, "Informe a data de início do contrato."),
     contract_end_date: z.string(),
     actual_start_date: z.string(),
     actual_end_date: z.string(),
@@ -60,7 +60,7 @@ const vehicleRentalFormSchema = z
     returned_from_company_date: z.string(),
     notes: z
       .string()
-      .max(5000, "As observacoes devem ter no maximo 5000 caracteres."),
+      .max(5000, "As observações devem ter no máximo 5000 caracteres."),
   })
   .superRefine((values, ctx) => {
     if (!values.daily_cost && !values.monthly_cost) {
@@ -235,18 +235,18 @@ export function VehicleRentalForm({
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>
-          {mode === "create" ? "Nova locacao" : "Editar locacao"}
+          {mode === "create" ? "Nova locação" : "Editar locação"}
         </CardTitle>
         <CardDescription>
           Controle o contrato com a locadora, os custos e o ciclo real de uso
-          do veiculo alugado.
+          do veículo alugado.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label>Veiculo</Label>
+              <Label>Veículo</Label>
               <Select
                 value={selectedVehicleId || "none"}
                 onValueChange={(value) =>
@@ -257,10 +257,10 @@ export function VehicleRentalForm({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione um veiculo" />
+                  <SelectValue placeholder="Selecione um veículo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Selecione um veiculo</SelectItem>
+                  <SelectItem value="none">Selecione um veículo</SelectItem>
                   {(vehiclesQuery.data?.data ?? []).map((vehicle) => (
                     <SelectItem key={vehicle.id} value={String(vehicle.id)}>
                       {vehicle.license_plate}
@@ -308,7 +308,7 @@ export function VehicleRentalForm({
 
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="contract_number">Numero do contrato</Label>
+              <Label htmlFor="contract_number">Número do contrato</Label>
               <Input id="contract_number" {...register("contract_number")} />
             </div>
 
@@ -339,7 +339,7 @@ export function VehicleRentalForm({
 
           <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             <div className="space-y-2">
-              <Label htmlFor="contract_start_date">Inicio do contrato</Label>
+              <Label htmlFor="contract_start_date">Início do contrato</Label>
               <Input
                 id="contract_start_date"
                 type="date"
@@ -367,7 +367,7 @@ export function VehicleRentalForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="actual_start_date">Inicio real</Label>
+              <Label htmlFor="actual_start_date">Início real</Label>
               <Input
                 id="actual_start_date"
                 type="date"
@@ -468,11 +468,11 @@ export function VehicleRentalForm({
           </section>
 
           <section className="space-y-2">
-            <Label htmlFor="notes">Observacoes</Label>
+            <Label htmlFor="notes">Observações</Label>
             <Textarea
               id="notes"
               rows={5}
-              placeholder="Informacoes complementares sobre a locacao"
+              placeholder="Informações complementares sobre a locação"
               {...register("notes")}
             />
           </section>
@@ -489,8 +489,8 @@ export function VehicleRentalForm({
               {isPending
                 ? "Salvando..."
                 : mode === "create"
-                  ? "Registrar locacao"
-                  : "Salvar alteracoes"}
+                  ? "Registrar locação"
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

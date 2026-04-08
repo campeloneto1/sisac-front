@@ -25,7 +25,7 @@ export function ArmamentEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar armamentos.
+            Você precisa da permissão `update` para editar armamentos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -45,9 +45,9 @@ export function ArmamentEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o armamento</CardTitle>
+          <CardTitle>Não foi possível carregar o armamento</CardTitle>
           <CardDescription>
-            Verifique se o registro existe e se voce possui acesso a ele.
+            Verifique se o registro existe e se você possui acesso a ele.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -67,7 +67,7 @@ export function ArmamentEditPage() {
             Editar armamento
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize as informacoes do armamento {armament.type?.name}{" "}
+            Atualize as informações do armamento {armament.type?.name}{" "}
             {armament.variant?.name}.
           </p>
         </div>

@@ -42,9 +42,9 @@ export function ContractFeaturesTable({ contractFeatures }: ContractFeaturesTabl
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Caracteristica</th>
+                <th className="px-4 py-3 font-medium">Característica</th>
                 <th className="px-4 py-3 font-medium">Uso</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -53,11 +53,11 @@ export function ContractFeaturesTable({ contractFeatures }: ContractFeaturesTabl
                   <td className="px-4 py-4">
                     <div>
                       <p className="font-medium text-slate-900">{contractFeature.name}</p>
-                      <p className="mt-1 text-slate-500">Cadastro administrativo global de caracteristicas que podem ser vinculadas a tipos de contrato.</p>
+                      <p className="mt-1 text-slate-500">Cadastro administrativo global de características que podem ser vinculadas a tipos de contrato.</p>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-700">
-                    A API atual nao retorna contagem de tipos vinculados, mas esta caracteristica pode estar em uso por `contract-types`.
+                    A API atual não retorna contagem de tipos vinculados, mas esta característica pode estar em uso por `contract-types`.
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex justify-end gap-2">
@@ -92,10 +92,10 @@ export function ContractFeaturesTable({ contractFeatures }: ContractFeaturesTabl
       <Dialog open={Boolean(contractFeatureToDelete)} onOpenChange={(open) => !open && setContractFeatureToDelete(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir caracteristica</DialogTitle>
+            <DialogTitle>Excluir característica</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {contractFeatureToDelete?.name}? Esta caracteristica pode estar vinculada a tipos de contrato,
-              e a API pode bloquear a remocao conforme o uso existente.
+              Tem certeza que deseja excluir {contractFeatureToDelete?.name}? Esta característica pode estar vinculada a tipos de contrato,
+              e a API pode bloquear a remoção conforme o uso existente.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -103,7 +103,7 @@ export function ContractFeaturesTable({ contractFeatures }: ContractFeaturesTabl
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

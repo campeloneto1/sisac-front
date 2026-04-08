@@ -27,14 +27,14 @@ const serviceTypeFormSchema = z.object({
   name: z
     .string()
     .min(2, "O nome precisa ter ao menos 2 caracteres.")
-    .max(100, "O nome deve ter no maximo 100 caracteres."),
+    .max(100, "O nome deve ter no máximo 100 caracteres."),
   code: z
     .string()
     .min(2, "O codigo precisa ter ao menos 2 caracteres.")
-    .max(50, "O codigo deve ter no maximo 50 caracteres."),
+    .max(50, "O codigo deve ter no máximo 50 caracteres."),
   description: z
     .string()
-    .max(1000, "A descricao deve ter no maximo 1000 caracteres.")
+    .max(1000, "A descrição deve ter no máximo 1000 caracteres.")
     .optional()
     .or(z.literal("")),
   active: z.boolean(),
@@ -44,8 +44,8 @@ const serviceTypeFormSchema = z.object({
     z.coerce
       .number()
       .int("A duracao estimada deve ser inteira.")
-      .min(1, "A duracao estimada deve ser de no minimo 1 hora.")
-      .max(1000, "A duracao estimada deve ser de no maximo 1000 horas."),
+      .min(1, "A duracao estimada deve ser de no mínimo 1 hora.")
+      .max(1000, "A duracao estimada deve ser de no máximo 1000 horas."),
   ]),
 });
 
@@ -164,11 +164,11 @@ export function ServiceTypeForm({ mode, serviceType }: ServiceTypeFormProps) {
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>
-          {mode === "create" ? "Novo tipo de servico" : "Editar tipo de servico"}
+          {mode === "create" ? "Novo tipo de serviço" : "Editar tipo de serviço"}
         </CardTitle>
         <CardDescription>
-          Tipos de servico ficam em Administrador e sustentam o cadastro mestre
-          usado pelos servicos do sistema.
+          Tipos de serviço ficam em Administrador e sustentam o cadastro mestre
+          usado pelos serviços do sistema.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -178,7 +178,7 @@ export function ServiceTypeForm({ mode, serviceType }: ServiceTypeFormProps) {
               <Label htmlFor="name">Nome</Label>
               <Input
                 id="name"
-                placeholder="Ex.: Manutencao corretiva, Visita tecnica, Atendimento"
+                placeholder="Ex.: Manutenção corretiva, Visita técnica, Atendimento"
                 {...nameField}
                 onChange={(event) => {
                   nameField.onChange(event);
@@ -193,7 +193,7 @@ export function ServiceTypeForm({ mode, serviceType }: ServiceTypeFormProps) {
               <Label htmlFor="code">Codigo</Label>
               <Input
                 id="code"
-                placeholder="Ex.: manutencao-corretiva"
+                placeholder="Ex.: manutenção-corretiva"
                 {...codeField}
                 onChange={(event) => {
                   setAutoCode(false);
@@ -226,15 +226,15 @@ export function ServiceTypeForm({ mode, serviceType }: ServiceTypeFormProps) {
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="description">Descricao</Label>
+              <Label htmlFor="description">Descrição</Label>
               <Textarea
                 id="description"
                 rows={5}
-                placeholder="Descreva como esse tipo deve ser usado no catalogo administrativo de servicos."
+                placeholder="Descreva como esse tipo deve ser usado no catalogo administrativo de serviços."
                 {...register("description")}
               />
               <p className="text-xs text-slate-500">
-                Campo opcional para orientar o uso do cadastro no dominio de servicos.
+                Campo opcional para orientar o uso do cadastro no dominio de serviços.
               </p>
               {errors.description ? (
                 <p className="text-sm text-destructive">
@@ -258,7 +258,7 @@ export function ServiceTypeForm({ mode, serviceType }: ServiceTypeFormProps) {
                 <div className="space-y-1">
                   <Label htmlFor="active">Tipo ativo</Label>
                   <p className="text-sm text-slate-500">
-                    Quando ativo, o tipo pode ser usado normalmente nos fluxos de servico.
+                    Quando ativo, o tipo pode ser usado normalmente nos fluxos de serviço.
                   </p>
                 </div>
               </div>
@@ -279,7 +279,7 @@ export function ServiceTypeForm({ mode, serviceType }: ServiceTypeFormProps) {
                 <div className="space-y-1">
                   <Label htmlFor="requires_approval">Requer aprovacao</Label>
                   <p className="text-sm text-slate-500">
-                    Indica que os servicos deste tipo devem seguir fluxo de aprovacao.
+                    Indica que os serviços deste tipo devem seguir fluxo de aprovacao.
                   </p>
                 </div>
               </div>
@@ -303,7 +303,7 @@ export function ServiceTypeForm({ mode, serviceType }: ServiceTypeFormProps) {
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar tipo"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

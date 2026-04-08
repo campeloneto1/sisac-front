@@ -48,7 +48,7 @@ import { ContractSubpageShell } from "@/components/contracts/subpage-shell";
 const alertSchema = z.object({
   type: z.enum(contractAlertTypeOptions.map((option) => option.value) as [ContractAlertType, ...ContractAlertType[]]),
   status: z.enum(contractAlertStatusOptions.map((option) => option.value) as [ContractAlertStatus, ...ContractAlertStatus[]]),
-  message: z.string().min(5, "A mensagem deve ter ao menos 5 caracteres.").max(1000, "A mensagem deve ter no maximo 1000 caracteres."),
+  message: z.string().min(5, "A mensagem deve ter ao menos 5 caracteres.").max(1000, "A mensagem deve ter no máximo 1000 caracteres."),
   alert_date: z.string().min(1, "Informe a data e hora do alerta."),
 });
 
@@ -67,7 +67,7 @@ function formatDateTimeLocal(value?: string | null) {
 
 function formatDateTime(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -251,16 +251,16 @@ export function ContractAlertsPage() {
   return (
     <ContractSubpageShell
       title="Alertas do contrato"
-      description="Centralize alertas de execucao financeira e vencimento com acompanhamento de reconhecimento e resolucao."
+      description="Centralize alertas de execução financeira e vencimento com acompanhamento de reconhecimento e resolucao."
       canView={canViewPage}
       permissionDeniedTitle="Acesso negado"
-      permissionDeniedDescription="Voce precisa da permissao `view` ou `viewAny` para visualizar os alertas do contrato."
+      permissionDeniedDescription="Você precisa da permissão `view` ou `viewAny` para visualizar os alertas do contrato."
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <CardTitle>Painel de alertas</CardTitle>
-            <CardDescription>Filtre riscos por tipo, status e palavras-chave, e aja rapido quando houver reconhecimento ou resolucao pendente.</CardDescription>
+            <CardDescription>Filtre riscos por tipo, status e palavras-chave, e aja rápido quando houver reconhecimento ou resolucao pendente.</CardDescription>
           </div>
           {permissions.canCreate ? (
             <Button onClick={() => { setEditingAlert(null); setIsDialogOpen(true); }}>
@@ -319,14 +319,14 @@ export function ContractAlertsPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar alertas</CardTitle>
-            <CardDescription>Verifique se a API de alertas do contrato ja esta disponivel.</CardDescription>
+            <CardDescription>Verifique se a API de alertas do contrato já esta disponível.</CardDescription>
           </CardHeader>
         </Card>
       ) : !alertsQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Nenhum alerta encontrado</CardTitle>
-            <CardDescription>Cadastre alertas para prazos, execucao orcamentaria ou outras sinalizacoes operacionais do contrato.</CardDescription>
+            <CardDescription>Cadastre alertas para prazos, execução orcamentaria ou outras sinalizacoes operacionais do contrato.</CardDescription>
           </CardHeader>
         </Card>
       ) : (
@@ -340,7 +340,7 @@ export function ContractAlertsPage() {
                     <th className="px-4 py-3 font-medium">Status</th>
                     <th className="px-4 py-3 font-medium">Mensagem</th>
                     <th className="px-4 py-3 font-medium">Datas</th>
-                    <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                    <th className="px-4 py-3 font-medium text-right">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -426,7 +426,7 @@ export function ContractAlertsPage() {
           <DialogFooter>
             <Button type="button" variant="ghost" onClick={() => setAlertToDelete(null)}>Cancelar</Button>
             <Button type="button" variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

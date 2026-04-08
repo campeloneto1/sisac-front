@@ -30,7 +30,7 @@ function formatCurrency(value?: string | number | null) {
 
 function formatRoleLabel(role: ContractItem["current_manager_role"] | ContractItem["current_inspector_role"]) {
   if (!role?.police_officer) {
-    return "Nao definido";
+    return "Não definido";
   }
 
   const warName = role.police_officer.war_name ?? role.police_officer.user?.name ?? "Policial";
@@ -66,10 +66,10 @@ export function ContractsTable({ contracts }: ContractsTableProps) {
               <tr>
                 <th className="px-4 py-3 font-medium">Contrato</th>
                 <th className="px-4 py-3 font-medium">Empresa e tipo</th>
-                <th className="px-4 py-3 font-medium">Vigencia</th>
-                <th className="px-4 py-3 font-medium">Execucao</th>
-                <th className="px-4 py-3 font-medium">Responsaveis</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">Vigência</th>
+                <th className="px-4 py-3 font-medium">Execução</th>
+                <th className="px-4 py-3 font-medium">Responsáveis</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -90,13 +90,13 @@ export function ContractsTable({ contracts }: ContractsTableProps) {
                   <td className="px-4 py-4 text-slate-700">
                     <div className="space-y-1">
                       <p className="font-medium text-slate-900">{contract.company?.name ?? `Empresa #${contract.company_id}`}</p>
-                      <p>Tipo: {contract.contract_type?.name ?? "Nao informado"}</p>
-                      <p>Objeto: {contract.contract_object?.name ?? "Nao informado"}</p>
+                      <p>Tipo: {contract.contract_type?.name ?? "Não informado"}</p>
+                      <p>Objeto: {contract.contract_object?.name ?? "Não informado"}</p>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-700">
                     <div className="space-y-1">
-                      <p>Inicio: {contract.start_date ? new Date(`${contract.start_date}T00:00:00`).toLocaleDateString("pt-BR") : "-"}</p>
+                      <p>Início: {contract.start_date ? new Date(`${contract.start_date}T00:00:00`).toLocaleDateString("pt-BR") : "-"}</p>
                       <p>Fim: {contract.end_date ? new Date(`${contract.end_date}T00:00:00`).toLocaleDateString("pt-BR") : "-"}</p>
                       <p>Valor: {formatCurrency(contract.total_value)}</p>
                     </div>
@@ -149,8 +149,8 @@ export function ContractsTable({ contracts }: ContractsTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir contrato</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir o contrato {contractToDelete?.contract_number}? Como esse modulo possui alertas, transacoes,
-              papeis, aditivos e prorrogacoes associados, a API pode restringir a remocao conforme o estado atual do registro.
+              Tem certeza que deseja excluir o contrato {contractToDelete?.contract_number}? Como esse módulo possui alertas, transacoes,
+              papeis, aditivos e prorrogacoes associados, a API pode restringir a remoção conforme o estado atual do registro.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -158,7 +158,7 @@ export function ContractsTable({ contracts }: ContractsTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

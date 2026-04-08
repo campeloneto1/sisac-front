@@ -23,7 +23,7 @@ export function EducationLevelShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `education-levels.view` para visualizar niveis de escolaridade.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `education-levels.view` para visualizar niveis de escolaridade.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -38,7 +38,7 @@ export function EducationLevelShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar nivel de escolaridade</CardTitle>
-          <CardDescription>Os dados do nivel de escolaridade nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do nivel de escolaridade não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -52,7 +52,7 @@ export function EducationLevelShowPage() {
         <div>
           <h1 className="font-display text-3xl text-slate-900">{educationLevel.name}</h1>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Nivel de escolaridade cadastrado no modulo administrativo para uso em policiais e outras classificacoes dependentes.
+            Nivel de escolaridade cadastrado no módulo administrativo para uso em policiais e outras classificações dependentes.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export function EducationLevelShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                 <p className="text-sm text-slate-700">
-                  {educationLevel.creator ? `${educationLevel.creator.name} (${educationLevel.creator.email})` : "Nao informado"}
+                  {educationLevel.creator ? `${educationLevel.creator.name} (${educationLevel.creator.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -91,7 +91,7 @@ export function EducationLevelShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
                 <p className="text-sm text-slate-700">
-                  {educationLevel.updater ? `${educationLevel.updater.name} (${educationLevel.updater.email})` : "Nao informado"}
+                  {educationLevel.updater ? `${educationLevel.updater.name} (${educationLevel.updater.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -107,13 +107,13 @@ export function EducationLevelShowPage() {
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <p className="text-sm font-medium text-slate-900">Cadastro global</p>
               <p className="mt-2 text-sm text-slate-600">
-                Este nivel pode ser referenciado por policiais e outros modulos que dependam da classificacao educacional.
+                Este nivel pode ser referenciado por policiais e outros módulos que dependam da classificação educacional.
               </p>
             </div>
 
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3">
               <p className="text-sm text-slate-600">
-                Se existirem registros vinculados a este nivel, a exclusao pode ser recusada pela API ou pelo banco de dados.
+                Se existirem registros vinculados a este nivel, a exclusão pode ser recusada pela API ou pelo banco de dados.
               </p>
             </div>
           </CardContent>

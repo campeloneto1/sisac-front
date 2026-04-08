@@ -27,7 +27,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDate(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -47,7 +47,7 @@ export function ArmamentShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar armamentos.
+            Você precisa da permissão `view` para visualizar armamentos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -68,9 +68,9 @@ export function ArmamentShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o armamento</CardTitle>
+          <CardTitle>Não foi possível carregar o armamento</CardTitle>
           <CardDescription>
-            Verifique se o registro existe e se voce possui acesso a ele.
+            Verifique se o registro existe e se você possui acesso a ele.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -110,7 +110,7 @@ export function ArmamentShowPage() {
         <div className="space-y-6">
           <Card className="border-slate-200/70 bg-white/80">
             <CardHeader>
-              <CardTitle>Identificacao</CardTitle>
+              <CardTitle>Identificação</CardTitle>
               <CardDescription>
                 Dados principais do cadastro do armamento.
               </CardDescription>
@@ -122,7 +122,7 @@ export function ArmamentShowPage() {
                   Tipo
                 </div>
                 <p className="text-sm font-semibold text-slate-900">
-                  {armament.type?.name || "Nao informado"}
+                  {armament.type?.name || "Não informado"}
                 </p>
               </div>
 
@@ -134,7 +134,7 @@ export function ArmamentShowPage() {
                 <p className="text-sm font-semibold text-slate-900">
                   {armament.variant?.brand?.name
                     ? `${armament.variant.brand.name} - ${armament.variant.name}`
-                    : armament.variant?.name || "Nao informada"}
+                    : armament.variant?.name || "Não informada"}
                 </p>
               </div>
 
@@ -144,18 +144,18 @@ export function ArmamentShowPage() {
                   Calibre
                 </div>
                 <p className="text-sm font-semibold text-slate-900">
-                  {armament.caliber?.name || "Nao informado"}
+                  {armament.caliber?.name || "Não informado"}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
                 <div className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-600">
                   <Tag className="h-4 w-4 text-primary" />
-                  Tamanho / Genero
+                  Tamanho / Gênero
                 </div>
                 <p className="text-sm font-semibold text-slate-900">
                   {armament.size?.name || "Sem tamanho"} /{" "}
-                  {armament.gender?.name || "Sem genero"}
+                  {armament.gender?.name || "Sem gênero"}
                 </p>
               </div>
 
@@ -167,7 +167,7 @@ export function ArmamentShowPage() {
                 <p className="text-sm font-semibold text-slate-900">
                   {armament.subunit?.abbreviation ||
                     armament.subunit?.name ||
-                    "Nao informada"}
+                    "Não informada"}
                 </p>
               </div>
             </CardContent>
@@ -177,7 +177,7 @@ export function ArmamentShowPage() {
             <CardHeader>
               <CardTitle>Especificacoes</CardTitle>
               <CardDescription>
-                Caracteristicas tecnicas adicionais do armamento.
+                Características técnicas adicionais do armamento.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -198,7 +198,7 @@ export function ArmamentShowPage() {
                 </div>
               ) : (
                 <p className="text-sm text-slate-500">
-                  Nenhuma especificacao tecnica informada.
+                  Nenhuma especificação técnica informada.
                 </p>
               )}
             </CardContent>
@@ -223,7 +223,7 @@ export function ArmamentShowPage() {
             <CardContent className="grid gap-4 md:grid-cols-3">
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
                 <p className="text-sm font-medium text-slate-600">
-                  Disponiveis
+                  Disponíveis
                 </p>
                 <p className="mt-2 text-3xl font-display text-slate-900">--</p>
               </div>
@@ -267,7 +267,7 @@ export function ArmamentShowPage() {
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
                 <p className="text-sm font-medium text-slate-600">
-                  Disponivel
+                  Disponível
                 </p>
                 <p className="mt-2 text-3xl font-display text-slate-900">--</p>
               </div>
@@ -285,7 +285,7 @@ export function ArmamentShowPage() {
               <div>
                 <CardTitle>Movimentacoes</CardTitle>
                 <CardDescription>
-                  Consulte o historico operacional e os eventos de estoque deste
+                  Consulte o histórico operacional e os eventos de estoque deste
                   armamento.
                 </CardDescription>
               </div>
@@ -319,7 +319,7 @@ export function ArmamentShowPage() {
           <CardHeader>
             <CardTitle>Auditoria</CardTitle>
             <CardDescription>
-              Dados de criacao e ultima atualizacao do cadastro.
+              Dados de criação e última atualização do cadastro.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -332,7 +332,7 @@ export function ArmamentShowPage() {
                 {formatDate(armament.created_at)}
               </p>
               <p className="mt-1 text-xs text-slate-500">
-                {armament.creator?.name || "Usuario nao informado"}
+                {armament.creator?.name || "Usuário não informado"}
               </p>
             </div>
 
@@ -345,7 +345,7 @@ export function ArmamentShowPage() {
                 {formatDate(armament.updated_at)}
               </p>
               <p className="mt-1 text-xs text-slate-500">
-                {armament.updater?.name || "Usuario nao informado"}
+                {armament.updater?.name || "Usuário não informado"}
               </p>
             </div>
           </CardContent>

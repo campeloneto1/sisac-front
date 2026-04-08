@@ -20,7 +20,7 @@ export function ArmamentCaliberCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar calibres de
+            Você precisa da permissão `create` para cadastrar calibres de
             armamento.
           </CardDescription>
         </CardHeader>
@@ -39,7 +39,7 @@ export function ArmamentCaliberCreatePage() {
             Novo calibre de armamento
           </h1>
           <p className="text-sm text-slate-500">
-            Cadastre um novo calibre administrativo para uso no modulo de
+            Cadastre um novo calibre administrativo para uso no módulo de
             armamentos.
           </p>
         </div>

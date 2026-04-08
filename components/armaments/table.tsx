@@ -39,9 +39,9 @@ export function ArmamentsTable({ armaments }: ArmamentsTableProps) {
             <thead className="bg-slate-50 text-slate-500">
               <tr>
                 <th className="px-4 py-3 font-medium">Armamento</th>
-                <th className="px-4 py-3 font-medium">Classificacao</th>
+                <th className="px-4 py-3 font-medium">Classificação</th>
                 <th className="px-4 py-3 font-medium">Subunidade</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -54,7 +54,7 @@ export function ArmamentsTable({ armaments }: ArmamentsTableProps) {
                     <p className="mt-1 text-slate-500">
                       {armament.variant?.brand?.name
                         ? `Marca: ${armament.variant.brand.name}`
-                        : "Marca nao informada"}
+                        : "Marca não informada"}
                     </p>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
@@ -63,7 +63,7 @@ export function ArmamentsTable({ armaments }: ArmamentsTableProps) {
                       {armament.size?.name || "Sem tamanho"}
                     </p>
                     <p className="mt-1">
-                      {armament.gender?.name || "Sem genero"}
+                      {armament.gender?.name || "Sem gênero"}
                     </p>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
@@ -120,7 +120,7 @@ export function ArmamentsTable({ armaments }: ArmamentsTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir armamento</DialogTitle>
             <DialogDescription>
-              Essa acao removera o armamento
+              Essa ação removera o armamento
               {armamentToDelete ? ` "${getArmamentLabel(armamentToDelete)}"` : ""}
               . Confirme para continuar.
             </DialogDescription>

@@ -32,10 +32,10 @@ const armamentTypeFormSchema = z.object({
   name: z
     .string()
     .min(2, "Informe o nome com ao menos 2 caracteres.")
-    .max(100, "O nome deve ter no maximo 100 caracteres."),
+    .max(100, "O nome deve ter no máximo 100 caracteres."),
   slug: z
     .string()
-    .max(100, "O slug deve ter no maximo 100 caracteres.")
+    .max(100, "O slug deve ter no máximo 100 caracteres.")
     .regex(
       /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
       "O slug deve conter apenas letras minusculas, numeros e hifens.",
@@ -43,7 +43,7 @@ const armamentTypeFormSchema = z.object({
     .or(z.literal("")),
   description: z
     .string()
-    .max(5000, "A descricao deve ter no maximo 5000 caracteres."),
+    .max(5000, "A descrição deve ter no máximo 5000 caracteres."),
 });
 
 type ArmamentTypeFormValues = z.infer<typeof armamentTypeFormSchema>;
@@ -152,7 +152,7 @@ export function ArmamentTypeForm({
             : "Editar tipo de armamento"}
         </CardTitle>
         <CardDescription>
-          Cadastre as classificacoes usadas para organizar armamentos no
+          Cadastre as classificações usadas para organizar armamentos no
           sistema.
         </CardDescription>
       </CardHeader>
@@ -195,7 +195,7 @@ export function ArmamentTypeForm({
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="armament-type-description">Descricao</Label>
+              <Label htmlFor="armament-type-description">Descrição</Label>
               <Textarea
                 id="armament-type-description"
                 placeholder="Descreva quando esse tipo deve ser usado."
@@ -226,7 +226,7 @@ export function ArmamentTypeForm({
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar tipo"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

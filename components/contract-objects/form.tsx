@@ -16,8 +16,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 const contractObjectFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(150, "O nome deve ter no maximo 150 caracteres."),
-  description: z.string().max(5000, "A descricao deve ter no maximo 5000 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(150, "O nome deve ter no máximo 150 caracteres."),
+  description: z.string().max(5000, "A descrição deve ter no máximo 5000 caracteres."),
 });
 
 type ContractObjectFormValues = z.infer<typeof contractObjectFormSchema>;
@@ -90,12 +90,12 @@ export function ContractObjectForm({ mode, contractObject }: ContractObjectFormP
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="name">Nome</Label>
-            <Input id="name" placeholder="Ex.: Locacao de imoveis, Aquisicao de materiais, Prestacao de servicos" {...register("name")} />
+            <Input id="name" placeholder="Ex.: Locação de imoveis, Aquisicao de materiais, Prestacao de serviços" {...register("name")} />
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
 
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="description">Descricao</Label>
+            <Label htmlFor="description">Descrição</Label>
             <Textarea
               id="description"
               rows={6}
@@ -107,7 +107,7 @@ export function ContractObjectForm({ mode, contractObject }: ContractObjectFormP
           </div>
 
           <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3 text-sm text-slate-600 md:col-span-2">
-            A tela de detalhe mostra quantos contratos ja utilizam este objeto. Isso ajuda a evitar exclusoes em cadastros amplamente referenciados.
+            A tela de detalhe mostra quantos contratos já utilizam este objeto. Isso ajuda a evitar exclusoes em cadastros amplamente referenciados.
           </div>
 
           <div className="flex justify-end gap-3 md:col-span-2">
@@ -115,7 +115,7 @@ export function ContractObjectForm({ mode, contractObject }: ContractObjectFormP
               <Link href={mode === "create" ? "/contract-objects" : `/contract-objects/${contractObject?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar objeto" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar objeto" : "Salvar alterações"}
             </Button>
           </div>
         </form>

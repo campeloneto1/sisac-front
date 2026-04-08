@@ -28,7 +28,7 @@ interface MaterialLoansTableProps {
 
 function formatDateTime(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -72,7 +72,7 @@ export function MaterialLoansTable({ loans }: MaterialLoansTableProps) {
                 <th className="px-4 py-3 font-medium">Tipo e status</th>
                 <th className="px-4 py-3 font-medium">Movimentacao</th>
                 <th className="px-4 py-3 font-medium">Quantitativo</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -92,7 +92,7 @@ export function MaterialLoansTable({ loans }: MaterialLoansTableProps) {
                       </p>
                       <p className="mt-1 text-slate-500">
                         {loan.police_officer?.registration_number ||
-                          "Matricula nao informada"}
+                          "Matrícula não informada"}
                       </p>
                     </td>
                     <td className="px-4 py-4">
@@ -114,7 +114,7 @@ export function MaterialLoansTable({ loans }: MaterialLoansTableProps) {
                         Previsto para{" "}
                         {loan.expected_return_at
                           ? formatDateTime(loan.expected_return_at)
-                          : "nao informado"}
+                          : "não informado"}
                       </p>
                     </td>
                     <td className="px-4 py-4 text-slate-600">
@@ -148,7 +148,7 @@ export function MaterialLoansTable({ loans }: MaterialLoansTableProps) {
                           <Button asChild size="icon" variant="outline">
                             <Link href={`/material-loans/${loan.id}/return`}>
                               <RotateCcw className="h-4 w-4" />
-                              <span className="sr-only">Registrar devolucao</span>
+                              <span className="sr-only">Registrar devolução</span>
                             </Link>
                           </Button>
                         ) : null}
@@ -183,9 +183,9 @@ export function MaterialLoansTable({ loans }: MaterialLoansTableProps) {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir emprestimo de material</DialogTitle>
+            <DialogTitle>Excluir empréstimo de material</DialogTitle>
             <DialogDescription>
-              Essa acao removera o emprestimo
+              Essa ação removera o empréstimo
               {loanToDelete
                 ? ` do policial ${
                     loanToDelete.police_officer?.war_name ||
@@ -193,7 +193,7 @@ export function MaterialLoansTable({ loans }: MaterialLoansTableProps) {
                     `#${loanToDelete.police_officer_id}`
                   }`
                 : ""}
-              . O backend so permite excluir emprestimos ja devolvidos.
+              . O backend so permite excluir empréstimos já devolvidos.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

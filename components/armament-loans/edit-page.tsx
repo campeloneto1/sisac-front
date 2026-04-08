@@ -25,7 +25,7 @@ export function ArmamentLoanEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar emprestimos de
+            Você precisa da permissão `update` para editar empréstimos de
             armamentos.
           </CardDescription>
         </CardHeader>
@@ -46,9 +46,9 @@ export function ArmamentLoanEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o emprestimo</CardTitle>
+          <CardTitle>Não foi possível carregar o empréstimo</CardTitle>
           <CardDescription>
-            Verifique se o registro existe e se voce possui acesso a ele.
+            Verifique se o registro existe e se você possui acesso a ele.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -61,9 +61,9 @@ export function ArmamentLoanEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Emprestimo finalizado</CardTitle>
+          <CardTitle>Empréstimo finalizado</CardTitle>
           <CardDescription>
-            Emprestimos devolvidos nao podem ser editados.
+            Empréstimos devolvidos não podem ser editados.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -78,10 +78,10 @@ export function ArmamentLoanEditPage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Editar emprestimo de armamento
+            Editar empréstimo de armamento
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize cabecalho, aprovador e previsao sem alterar os itens ja
+            Atualize cabecalho, aprovador e previsao sem alterar os itens já
             registrados.
           </p>
         </div>

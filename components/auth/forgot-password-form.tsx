@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const forgotPasswordSchema = z.object({
-  email: z.string().email("Informe um e-mail valido."),
+  email: z.string().email("Informe um e-mail válido."),
 });
 
 type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
@@ -61,7 +61,7 @@ export function ForgotPasswordForm() {
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
             <Label htmlFor="email">E-mail</Label>
-            <Input id="email" placeholder="voce@empresa.com" {...register("email")} />
+            <Input id="email" placeholder="você@empresa.com" {...register("email")} />
             {errors.email ? <p className="text-sm text-destructive">{errors.email.message}</p> : null}
           </div>
 

@@ -18,14 +18,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const unitFormSchema = z
   .object({
-    name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
-    abbreviation: z.string().min(2, "A sigla precisa ter ao menos 2 caracteres.").max(20, "A sigla deve ter no maximo 20 caracteres."),
-    phone: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length >= 10, "Informe um telefone com 10 ou 11 digitos."),
-    email: z.string().refine((value) => value.trim() === "" || z.email().safeParse(value.trim()).success, "Informe um email valido."),
-    street: z.string().max(100, "A rua deve ter no maximo 100 caracteres."),
-    number: z.string().max(20, "O numero deve ter no maximo 20 caracteres."),
-    neighborhood: z.string().max(100, "O bairro deve ter no maximo 100 caracteres."),
-    postal_code: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length === 8, "Informe um CEP com 8 digitos."),
+    name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
+    abbreviation: z.string().min(2, "A sigla precisa ter ao menos 2 caracteres.").max(20, "A sigla deve ter no máximo 20 caracteres."),
+    phone: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length >= 10, "Informe um telefone com 10 ou 11 dígitos."),
+    email: z.string().refine((value) => value.trim() === "" || z.email().safeParse(value.trim()).success, "Informe um email válido."),
+    street: z.string().max(100, "A rua deve ter no máximo 100 caracteres."),
+    number: z.string().max(20, "O número deve ter no máximo 20 caracteres."),
+    neighborhood: z.string().max(100, "O bairro deve ter no máximo 100 caracteres."),
+    postal_code: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length === 8, "Informe um CEP com 8 dígitos."),
     city_id: z.string(),
     commander_id: z.string(),
     deputy_commander_id: z.string(),
@@ -147,7 +147,7 @@ export function UnitForm({ mode, unit }: UnitFormProps) {
       <CardHeader>
         <CardTitle>{mode === "create" ? "Nova unidade" : "Editar unidade"}</CardTitle>
         <CardDescription>
-          Unidades ficam dentro de Administrador e concentram identificacao institucional, contato, endereco e cadeia de comando.
+          Unidades ficam dentro de Administrador e concentram identificação institucional, contato, endereco e cadeia de comando.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -161,7 +161,7 @@ export function UnitForm({ mode, unit }: UnitFormProps) {
           <div className="space-y-2">
             <Label htmlFor="abbreviation">Sigla</Label>
             <Input id="abbreviation" maxLength={20} placeholder="Ex.: CPC" {...register("abbreviation")} />
-            <p className="text-xs text-slate-500">Obrigatoria. O backend salva automaticamente em caixa alta.</p>
+            <p className="text-xs text-slate-500">Obrigatória. O backend salva automaticamente em caixa alta.</p>
             {errors.abbreviation ? <p className="text-sm text-destructive">{errors.abbreviation.message}</p> : null}
           </div>
 
@@ -184,7 +184,7 @@ export function UnitForm({ mode, unit }: UnitFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="number">Numero</Label>
+            <Label htmlFor="number">Número</Label>
             <Input id="number" placeholder="Ex.: 1200" {...register("number")} />
             {errors.number ? <p className="text-sm text-destructive">{errors.number.message}</p> : null}
           </div>
@@ -261,7 +261,7 @@ export function UnitForm({ mode, unit }: UnitFormProps) {
             <p className="text-xs text-slate-500">
               {selectedDeputyCommander
                 ? `Subcomandante selecionado: ${getOfficerLabel(selectedDeputyCommander)}.`
-                : "Opcional. Nao pode ser a mesma pessoa do comandante."}
+                : "Opcional. Não pode ser a mesma pessoa do comandante."}
             </p>
             {errors.deputy_commander_id ? <p className="text-sm text-destructive">{errors.deputy_commander_id.message}</p> : null}
           </div>
@@ -271,7 +271,7 @@ export function UnitForm({ mode, unit }: UnitFormProps) {
               <Link href={mode === "create" ? "/units" : `/units/${unit?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar unidade" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar unidade" : "Salvar alterações"}
             </Button>
           </div>
         </form>

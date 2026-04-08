@@ -37,7 +37,7 @@ export function PermissionsListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            O modulo de permissoes fica dentro de Administrador e exige `administrator` + `permissions.viewAny`.
+            O módulo de permissões fica dentro de Administrador e exige `administrator` + `permissions.viewAny`.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -48,7 +48,7 @@ export function PermissionsListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Permissoes</h1>
+          <h1 className="font-display text-3xl text-slate-900">Permissões</h1>
           <p className="text-sm text-slate-500">Gerencie os slugs que alimentam o RBAC do sistema.</p>
         </div>
 
@@ -56,7 +56,7 @@ export function PermissionsListPage() {
           <Button asChild>
             <Link href="/permissions/create">
               <Plus className="mr-2 h-4 w-4" />
-              Nova permissao
+              Nova permissão
             </Link>
           </Button>
         ) : null}
@@ -82,15 +82,15 @@ export function PermissionsListPage() {
       ) : permissionItemsQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar permissoes</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardTitle>Erro ao carregar permissões</CardTitle>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !permissionItemsQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhuma permissao encontrada</CardTitle>
-            <CardDescription>Crie uma nova permissao ou refine a busca.</CardDescription>
+            <CardTitle>Nenhuma permissão encontrada</CardTitle>
+            <CardDescription>Crie uma nova permissão ou refine a busca.</CardDescription>
           </CardHeader>
         </Card>
       ) : (

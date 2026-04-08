@@ -42,7 +42,7 @@ export function PatrimonyHistoryPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para acessar o historico setorial.
+            Você precisa da permissão `view` para acessar o histórico setorial.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -55,7 +55,7 @@ export function PatrimonyHistoryPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O historico setorial depende da subunidade ativa para enviar `X-Active-Subunit`.
+            O histórico setorial depende da subunidade ativa para enviar `X-Active-Subunit`.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -71,10 +71,10 @@ export function PatrimonyHistoryPage() {
           </div>
           <div>
             <h1 className="font-display text-3xl text-slate-900">
-              Historico setorial
+              Histórico setorial
             </h1>
             <p className="text-sm text-slate-500">
-              Trilha de alocacoes e transferencias do patrimonio atual.
+              Trilha de alocações e transferências do patrimônio atual.
             </p>
             {patrimonyQuery.data?.data ? (
               <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-600">
@@ -92,7 +92,7 @@ export function PatrimonyHistoryPage() {
         </div>
 
         <Button asChild variant="outline">
-          <Link href={`/patrimonies/${id}`}>Voltar ao patrimonio</Link>
+          <Link href={`/patrimonies/${id}`}>Voltar ao patrimônio</Link>
         </Button>
       </div>
 
@@ -104,18 +104,18 @@ export function PatrimonyHistoryPage() {
       ) : patrimonyQuery.isError || !patrimonyQuery.data?.data ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Patrimonio indisponivel</CardTitle>
+            <CardTitle>Patrimônio indisponivel</CardTitle>
             <CardDescription>
-              Nao foi possivel carregar o patrimonio vinculado a esse historico.
+              Não foi possível carregar o patrimônio vinculado a esse histórico.
             </CardDescription>
           </CardHeader>
         </Card>
       ) : historyQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar historico</CardTitle>
+            <CardTitle>Erro ao carregar histórico</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario.
+              Verifique a API, a subunidade ativa e as permissões do usuário.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -124,7 +124,7 @@ export function PatrimonyHistoryPage() {
           <CardHeader>
             <CardTitle>Nenhuma movimentacao encontrada</CardTitle>
             <CardDescription>
-              Este patrimonio ainda nao possui eventos de historico setorial.
+              Este patrimônio ainda não possui eventos de histórico setorial.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -138,7 +138,7 @@ export function PatrimonyHistoryPage() {
                     <th className="px-4 py-3 font-medium">Origem</th>
                     <th className="px-4 py-3 font-medium">Destino</th>
                     <th className="px-4 py-3 font-medium">Momento</th>
-                    <th className="px-4 py-3 font-medium">Responsavel</th>
+                    <th className="px-4 py-3 font-medium">Responsável</th>
                     <th className="px-4 py-3 font-medium">Motivo</th>
                   </tr>
                 </thead>
@@ -161,7 +161,7 @@ export function PatrimonyHistoryPage() {
                       <td className="px-4 py-4 text-slate-600">
                         {item.transferred_by
                           ? `${item.transferred_by.name} (${item.transferred_by.email})`
-                          : "Nao informado"}
+                          : "Não informado"}
                       </td>
                       <td className="px-4 py-4 text-slate-600">
                         {item.reason || "-"}

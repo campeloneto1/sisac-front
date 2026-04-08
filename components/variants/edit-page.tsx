@@ -27,7 +27,7 @@ export function VariantEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `variants.update` para editar
+            Você precisa de `administrator` e `variants.update` para editar
             modelos.
           </CardDescription>
         </CardHeader>
@@ -45,7 +45,7 @@ export function VariantEditPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar variante</CardTitle>
           <CardDescription>
-            A variante nao pode ser editada agora.
+            A variante não pode ser editada agora.
           </CardDescription>
         </CardHeader>
       </Card>

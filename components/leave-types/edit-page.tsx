@@ -18,7 +18,7 @@ export function LeaveTypeEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `update` para editar tipos de afastamento.</CardDescription>
+          <CardDescription>Você precisa da permissão `update` para editar tipos de afastamento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -33,7 +33,7 @@ export function LeaveTypeEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar tipo de afastamento</CardTitle>
-          <CardDescription>Os dados do tipo de afastamento nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do tipo de afastamento não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );

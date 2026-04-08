@@ -25,7 +25,7 @@ export function ArmamentSizeEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar tamanhos de
+            Você precisa da permissão `update` para editar tamanhos de
             armamento.
           </CardDescription>
         </CardHeader>
@@ -46,9 +46,9 @@ export function ArmamentSizeEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o tamanho</CardTitle>
+          <CardTitle>Não foi possível carregar o tamanho</CardTitle>
           <CardDescription>
-            Verifique se o registro existe e se voce possui acesso a ele.
+            Verifique se o registro existe e se você possui acesso a ele.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -66,7 +66,7 @@ export function ArmamentSizeEditPage() {
             Editar tamanho de armamento
           </h1>
           <p className="text-sm text-slate-500">
-            Atualize as informacoes do tamanho {armamentSizeQuery.data.data.name}
+            Atualize as informações do tamanho {armamentSizeQuery.data.data.name}
             .
           </p>
         </div>

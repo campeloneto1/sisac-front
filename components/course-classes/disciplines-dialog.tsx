@@ -29,7 +29,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const disciplineSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(150, "O nome deve ter no maximo 150 caracteres."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(150, "O nome deve ter no máximo 150 caracteres."),
   workload_hours: z.string().optional(),
   instructor_id: z.string(),
   order: z.string().optional(),
@@ -142,10 +142,10 @@ export function CourseClassDisciplinesDialog({
             <Label>Instrutor</Label>
             <Select value={selectedInstructorId} onValueChange={(value) => setValue("instructor_id", value, { shouldValidate: true })}>
               <SelectTrigger>
-                <SelectValue placeholder="Nao informado" />
+                <SelectValue placeholder="Não informado" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">Nao informado</SelectItem>
+                <SelectItem value="none">Não informado</SelectItem>
                 {(usersQuery.data?.data ?? []).map((user) => (
                   <SelectItem key={user.id} value={String(user.id)}>
                     {user.name}

@@ -53,7 +53,7 @@ export function ColorsTable({ colors }: ColorsTableProps) {
                 <th className="px-4 py-3 font-medium">Slug</th>
                 <th className="px-4 py-3 font-medium">HEX</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -70,7 +70,7 @@ export function ColorsTable({ colors }: ColorsTableProps) {
                           {color.name}
                         </p>
                         <p className="mt-1 text-slate-500">
-                          Cadastro mestre de cores para modulos administrativos.
+                          Cadastro mestre de cores para módulos administrativos.
                         </p>
                       </div>
                     </div>
@@ -128,8 +128,8 @@ export function ColorsTable({ colors }: ColorsTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir cor</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {colorToDelete?.name}? Essa acao
-              nao podera ser desfeita.
+              Tem certeza que deseja excluir {colorToDelete?.name}? Essa ação
+              não podera ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -141,7 +141,7 @@ export function ColorsTable({ colors }: ColorsTableProps) {
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

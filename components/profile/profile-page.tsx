@@ -34,7 +34,7 @@ export function ProfilePageContent() {
             </div>
             <div className="flex items-center gap-3">
               <Phone className="h-4 w-4 text-primary" />
-              <span>{user?.phone ?? "Nao informado"}</span>
+              <span>{user?.phone ?? "Não informado"}</span>
             </div>
             <div className="flex items-center gap-3">
               <User2 className="h-4 w-4 text-primary" />

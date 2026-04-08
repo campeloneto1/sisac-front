@@ -20,8 +20,8 @@ export function VehicleCustodyCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `create` para cadastrar cautelas de
-            veiculos.
+            Você precisa da permissão `create` para cadastrar cautelas de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -36,10 +36,10 @@ export function VehicleCustodyCreatePage() {
         </div>
         <div>
           <h1 className="font-display text-3xl text-slate-900">
-            Nova cautela de veiculo
+            Nova cautela de veículo
           </h1>
           <p className="text-sm text-slate-500">
-            Registre a entrega de um veiculo para responsavel interno ou
+            Registre a entrega de um veículo para responsável interno ou
             externo.
           </p>
         </div>

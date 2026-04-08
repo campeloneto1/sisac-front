@@ -19,7 +19,7 @@ export function ArmamentBatchesListPage() {
 
   return (
     <ArmamentBatchesPageShell
-      title="Gestao de lotes"
+      title="Gestão de lotes"
       description="Acompanhe os lotes vinculados a este armamento e sua disponibilidade."
       requiredPermission="view"
     >
@@ -49,9 +49,9 @@ export function ArmamentBatchesListPage() {
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Disponivel</CardTitle>
+            <CardTitle>Disponível</CardTitle>
             <CardDescription>
-              Quantidade ainda apta para emprestimo ou consumo.
+              Quantidade ainda apta para empréstimo ou consumo.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -76,14 +76,14 @@ export function ArmamentBatchesListPage() {
         <CardHeader>
           <CardTitle>Fluxo preparado</CardTitle>
           <CardDescription>
-            Esta area ja esta pronta para receber a tabela operacional dos lotes
+            Esta area já esta pronta para receber a tabela operacional dos lotes
             quando a API do recurso for publicada.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-slate-600">
           <p>Filtros planejados: lote, disponibilidade, vencendo e vencido.</p>
           <p>
-            Acoes planejadas: visualizar, editar, excluir e criar novo lote.
+            Ações planejadas: visualizar, editar, excluir e criar novo lote.
           </p>
           <p>
             O ideal aqui e consumir um endpoint dedicado por armamento ou um

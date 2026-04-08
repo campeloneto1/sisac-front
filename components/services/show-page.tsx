@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDateTime(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -26,7 +26,7 @@ function formatDateTime(value?: string | null) {
 
 function formatCurrency(value?: string | number | null) {
   if (value === null || value === undefined || value === "") {
-    return "Nao informado";
+    return "Não informado";
   }
 
   const parsed = typeof value === "number" ? value : Number(value);
@@ -54,7 +54,7 @@ export function ServiceShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar servicos.
+            Você precisa da permissão `view` para visualizar serviços.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -67,7 +67,7 @@ export function ServiceShowPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O modulo de servicos depende da subunidade ativa para carregar o registro.
+            O módulo de serviços depende da subunidade ativa para carregar o registro.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -82,9 +82,9 @@ export function ServiceShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar servico</CardTitle>
+          <CardTitle>Erro ao carregar serviço</CardTitle>
           <CardDescription>
-            Os dados do servico nao estao disponiveis no momento.
+            Os dados do serviço não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -99,7 +99,7 @@ export function ServiceShowPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="font-display text-3xl text-slate-900">
-              {service.service_type?.name || `Servico #${service.id}`}
+              {service.service_type?.name || `Serviço #${service.id}`}
             </h1>
             {service.status ? (
               <Badge variant={getServiceStatusVariant(service.status)}>
@@ -113,7 +113,7 @@ export function ServiceShowPage() {
             ) : null}
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            Empresa: {service.company?.trade_name || service.company?.name || "Nao informada"}
+            Empresa: {service.company?.trade_name || service.company?.name || "Não informada"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             {service.request_description}
@@ -125,7 +125,7 @@ export function ServiceShowPage() {
             <Button asChild variant="outline">
               <Link href={`/services/${service.id}/status-history`}>
                 <History className="mr-2 h-4 w-4" />
-                Historico de status
+                Histórico de status
               </Link>
             </Button>
           ) : null}
@@ -144,9 +144,9 @@ export function ServiceShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Contexto da solicitacao</CardTitle>
+            <CardTitle>Contexto da solicitação</CardTitle>
             <CardDescription>
-              Empresa, tipo, solicitante e setor relacionados ao servico.
+              Empresa, tipo, solicitante e setor relacionados ao serviço.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -155,7 +155,7 @@ export function ServiceShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Empresa</p>
                 <p className="text-sm text-slate-700">
-                  {service.company?.trade_name || service.company?.name || "Nao informada"}
+                  {service.company?.trade_name || service.company?.name || "Não informada"}
                 </p>
               </div>
             </div>
@@ -163,9 +163,9 @@ export function ServiceShowPage() {
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <ShieldCheck className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Tipo de servico</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Tipo de serviço</p>
                 <p className="text-sm text-slate-700">
-                  {service.service_type?.name || "Nao informado"}
+                  {service.service_type?.name || "Não informado"}
                 </p>
                 <p className="text-sm text-slate-500">
                   Codigo: {service.service_type?.code || "-"}
@@ -173,7 +173,7 @@ export function ServiceShowPage() {
                 <p className="text-sm text-slate-500">
                   {service.service_type?.requires_approval
                     ? "Requer aprovacao"
-                    : "Nao requer aprovacao obrigatoria"}
+                    : "Não requer aprovacao obrigatória"}
                 </p>
               </div>
             </div>
@@ -183,7 +183,7 @@ export function ServiceShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Solicitante</p>
                 <p className="text-sm text-slate-700">
-                  {service.requester?.name || `Usuario #${service.requested_by}`}
+                  {service.requester?.name || `Usuário #${service.requested_by}`}
                 </p>
                 <p className="text-sm text-slate-500">
                   {service.requester?.email || "Sem e-mail vinculado"}
@@ -194,12 +194,12 @@ export function ServiceShowPage() {
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <MapPin className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Setor e localizacao</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Setor e localização</p>
                 <p className="text-sm text-slate-700">
-                  {service.sector?.abbreviation || service.sector?.name || "Setor nao informado"}
+                  {service.sector?.abbreviation || service.sector?.name || "Setor não informado"}
                 </p>
                 <p className="text-sm text-slate-500">
-                  {service.location || "Localizacao nao informada"}
+                  {service.location || "Localização não informada"}
                 </p>
               </div>
             </div>
@@ -220,7 +220,7 @@ export function ServiceShowPage() {
           <CardHeader>
             <CardTitle>Cronologia e custos</CardTitle>
             <CardDescription>
-              Datas de solicitacao, execucao e acompanhamento financeiro.
+              Datas de solicitação, execução e acompanhamento financeiro.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -230,7 +230,7 @@ export function ServiceShowPage() {
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Datas</p>
                 <p className="text-sm text-slate-700">Solicitado em {formatDateTime(service.requested_at)}</p>
                 <p className="text-sm text-slate-500">Agendado para {formatDateTime(service.scheduled_date)}</p>
-                <p className="text-sm text-slate-500">Inicio: {formatDateTime(service.started_at)} • Fim: {formatDateTime(service.finished_at)}</p>
+                <p className="text-sm text-slate-500">Início: {formatDateTime(service.started_at)} • Fim: {formatDateTime(service.finished_at)}</p>
               </div>
             </div>
 
@@ -250,9 +250,9 @@ export function ServiceShowPage() {
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Star className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Avaliacao</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Avaliação</p>
                 <p className="text-sm text-slate-700">
-                  {service.rating ? `${service.rating}/5` : "Nao avaliado"}
+                  {service.rating ? `${service.rating}/5` : "Não avaliado"}
                 </p>
                 <p className="text-sm text-slate-500">
                   {service.rating_comment || "Sem comentario"}
@@ -265,28 +265,28 @@ export function ServiceShowPage() {
 
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Observacoes operacionais</CardTitle>
+          <CardTitle>Observações operacionais</CardTitle>
           <CardDescription>
-            Detalhes de execucao, conclusao ou cancelamento.
+            Detalhes de execução, conclusão ou cancelamento.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-            <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Inicio</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Início</p>
             <p className="mt-1 text-sm text-slate-700">
-              {service.start_observations || "Nao informada"}
+              {service.start_observations || "Não informada"}
             </p>
           </div>
           <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-            <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Termino</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Término</p>
             <p className="mt-1 text-sm text-slate-700">
-              {service.finish_observations || "Nao informada"}
+              {service.finish_observations || "Não informada"}
             </p>
           </div>
           <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
             <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Cancelamento</p>
             <p className="mt-1 text-sm text-slate-700">
-              {service.cancellation_reason || "Nao informado"}
+              {service.cancellation_reason || "Não informado"}
             </p>
           </div>
         </CardContent>
@@ -295,16 +295,16 @@ export function ServiceShowPage() {
       {(historyPermissions.canViewAny || historyPermissions.canView) ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Historico de status</CardTitle>
+            <CardTitle>Histórico de status</CardTitle>
             <CardDescription>
-              Acompanhe a trilha de auditoria das transicoes de estado desse servico.
+              Acompanhe a trilha de auditoria das transições de estado desse serviço.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Button asChild variant="outline">
               <Link href={`/services/${service.id}/status-history`}>
                 <History className="mr-2 h-4 w-4" />
-                Abrir historico
+                Abrir histórico
               </Link>
             </Button>
           </CardContent>
@@ -315,20 +315,20 @@ export function ServiceShowPage() {
         <CardHeader>
           <CardTitle>Auditoria</CardTitle>
           <CardDescription>
-            Usuarios responsaveis pelo cadastro e ultima atualizacao.
+            Usuários responsáveis pelo cadastro e última atualização.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-2">
           <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
             <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
             <p className="mt-1 text-sm text-slate-700">
-              {service.creator ? `${service.creator.name} (${service.creator.email})` : "Nao informado"}
+              {service.creator ? `${service.creator.name} (${service.creator.email})` : "Não informado"}
             </p>
           </div>
           <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
             <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
             <p className="mt-1 text-sm text-slate-700">
-              {service.updater ? `${service.updater.name} (${service.updater.email})` : "Nao informado"}
+              {service.updater ? `${service.updater.name} (${service.updater.email})` : "Não informado"}
             </p>
           </div>
         </CardContent>

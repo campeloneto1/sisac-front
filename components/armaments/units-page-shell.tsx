@@ -46,7 +46,7 @@ export function ArmamentUnitsPageShell({
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce nao possui permissao suficiente para acessar a gestao de
+            Você não possui permissão suficiente para acessar a gestão de
             unidades deste armamento.
           </CardDescription>
         </CardHeader>
@@ -68,9 +68,9 @@ export function ArmamentUnitsPageShell({
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o armamento</CardTitle>
+          <CardTitle>Não foi possível carregar o armamento</CardTitle>
           <CardDescription>
-            Verifique se o cadastro existe e se voce possui acesso a ele.
+            Verifique se o cadastro existe e se você possui acesso a ele.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -120,19 +120,19 @@ export function ArmamentUnitsPageShell({
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-amber-900">
             <ShieldAlert className="h-5 w-5" />
-            Integracao pendente com a API
+            Integração pendente com a API
           </CardTitle>
           <CardDescription className="text-amber-800">
-            A estrutura de navegacao e gestao das unidades foi preparada dentro
-            do CRUD de armamentos, mas o backend ainda nao expoe endpoints
+            A estrutura de navegação e gestão das unidades foi preparada dentro
+            do CRUD de armamentos, mas o backend ainda não expoe endpoints
             dedicados para `ArmamentUnit`.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-amber-900">
           <p>Assim que a API publicar o recurso, esta tela pode receber:</p>
           <p>listagem por serie, status e vencimento;</p>
-          <p>cadastro, edicao e visualizacao de cada unidade;</p>
-          <p>indicadores de disponibilidade, manutencao, cessao e extravio.</p>
+          <p>cadastro, edição e visualizacao de cada unidade;</p>
+          <p>indicadores de disponibilidade, manutenção, cessao e extravio.</p>
         </CardContent>
       </Card>
 

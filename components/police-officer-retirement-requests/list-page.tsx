@@ -56,7 +56,7 @@ export function PoliceOfficerRetirementRequestsListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar requerimentos de
+            Você precisa da permissão `viewAny` para visualizar requerimentos de
             aposentadoria.
           </CardDescription>
         </CardHeader>
@@ -133,7 +133,7 @@ export function PoliceOfficerRetirementRequestsListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar requerimentos</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

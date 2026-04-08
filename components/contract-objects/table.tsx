@@ -24,7 +24,7 @@ interface ContractObjectsTableProps {
 
 function getDescriptionPreview(description?: string | null) {
   if (!description?.trim()) {
-    return "Sem descricao cadastrada.";
+    return "Sem descrição cadastrada.";
   }
 
   return description.length > 120 ? `${description.slice(0, 120)}...` : description;
@@ -52,9 +52,9 @@ export function ContractObjectsTable({ contractObjects }: ContractObjectsTablePr
             <thead className="bg-slate-50 text-slate-500">
               <tr>
                 <th className="px-4 py-3 font-medium">Objeto</th>
-                <th className="px-4 py-3 font-medium">Descricao</th>
+                <th className="px-4 py-3 font-medium">Descrição</th>
                 <th className="px-4 py-3 font-medium">Contratos</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -105,7 +105,7 @@ export function ContractObjectsTable({ contractObjects }: ContractObjectsTablePr
           <DialogHeader>
             <DialogTitle>Excluir objeto de contrato</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {contractObjectToDelete?.name}? Como a API usa exclusao logica, o registro pode deixar de aparecer,
+              Tem certeza que deseja excluir {contractObjectToDelete?.name}? Como a API usa exclusão logica, o registro pode deixar de aparecer,
               mas contratos existentes ainda podem referenciar esse objeto.
             </DialogDescription>
           </DialogHeader>
@@ -114,7 +114,7 @@ export function ContractObjectsTable({ contractObjects }: ContractObjectsTablePr
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

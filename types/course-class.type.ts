@@ -102,6 +102,6 @@ export interface PaginatedResponse<T> {
 export const COURSE_CLASS_STATUS_OPTIONS = [
   { value: "planned", label: "Planejada" },
   { value: "ongoing", label: "Em andamento" },
-  { value: "completed", label: "Concluida" },
+  { value: "completed", label: "Concluída" },
   { value: "cancelled", label: "Cancelada" },
 ] as const;

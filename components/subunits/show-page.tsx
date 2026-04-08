@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function getOfficerLabel(officer: { id: number; name?: string | null; registration_number?: string | null } | null | undefined) {
   if (!officer) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   if (officer.name && officer.registration_number) {
@@ -38,7 +38,7 @@ function getAddressSummary(subunit: {
     return `${address} • CEP ${subunit.postal_code}`;
   }
 
-  return address || (subunit.postal_code ? `CEP ${subunit.postal_code}` : "Nao informado");
+  return address || (subunit.postal_code ? `CEP ${subunit.postal_code}` : "Não informado");
 }
 
 export function SubunitShowPage() {
@@ -52,7 +52,7 @@ export function SubunitShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `subunits.view` para visualizar subunidades.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `subunits.view` para visualizar subunidades.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -67,7 +67,7 @@ export function SubunitShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar subunidade</CardTitle>
-          <CardDescription>Os dados da subunidade nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados da subunidade não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -84,7 +84,7 @@ export function SubunitShowPage() {
             <Badge variant="outline">{subunit.abbreviation}</Badge>
           </div>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Subunidade administrativa estruturada para organizacao operacional, localizacao territorial e definicao de comando.
+            Subunidade administrativa estruturada para organizacao operacional, localização territorial e definicao de comando.
           </p>
         </div>
 
@@ -99,42 +99,42 @@ export function SubunitShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Visao geral</CardTitle>
-            <CardDescription>Resumo rapido da subunidade.</CardDescription>
+            <CardDescription>Resumo rápido da subunidade.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Phone className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Telefone</p>
-                <p className="text-sm text-slate-700">{subunit.phone || "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{subunit.phone || "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Mail className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Email</p>
-                <p className="text-sm text-slate-700">{subunit.email || "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{subunit.email || "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <MapPinned className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Cidade</p>
-                <p className="text-sm text-slate-700">{subunit.city ? `${subunit.city.name} (${subunit.city.abbreviation})` : "Nao informada"}</p>
+                <p className="text-sm text-slate-700">{subunit.city ? `${subunit.city.name} (${subunit.city.abbreviation})` : "Não informada"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{subunit.creator ? `${subunit.creator.name} (${subunit.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{subunit.creator ? `${subunit.creator.name} (${subunit.creator.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
-                <p className="text-sm text-slate-700">{subunit.updater ? `${subunit.updater.name} (${subunit.updater.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{subunit.updater ? `${subunit.updater.name} (${subunit.updater.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>
@@ -152,7 +152,7 @@ export function SubunitShowPage() {
                 <p className="text-sm font-medium text-slate-900">Unidade vinculada</p>
               </div>
               <p className="mt-2 text-sm text-slate-600">
-                {subunit.unit ? `${subunit.unit.name} (${subunit.unit.abbreviation})` : "Nao informada"}
+                {subunit.unit ? `${subunit.unit.name} (${subunit.unit.abbreviation})` : "Não informada"}
               </p>
             </div>
 

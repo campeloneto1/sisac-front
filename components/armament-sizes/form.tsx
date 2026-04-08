@@ -32,10 +32,10 @@ const armamentSizeFormSchema = z.object({
   name: z
     .string()
     .min(1, "Informe o nome do tamanho.")
-    .max(50, "O nome deve ter no maximo 50 caracteres."),
+    .max(50, "O nome deve ter no máximo 50 caracteres."),
   slug: z
     .string()
-    .max(50, "O slug deve ter no maximo 50 caracteres.")
+    .max(50, "O slug deve ter no máximo 50 caracteres.")
     .regex(
       /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
       "O slug deve conter apenas letras minusculas, numeros e hifens.",
@@ -43,7 +43,7 @@ const armamentSizeFormSchema = z.object({
     .or(z.literal("")),
   description: z
     .string()
-    .max(5000, "A descricao deve ter no maximo 5000 caracteres."),
+    .max(5000, "A descrição deve ter no máximo 5000 caracteres."),
 });
 
 type ArmamentSizeFormValues = z.infer<typeof armamentSizeFormSchema>;
@@ -193,7 +193,7 @@ export function ArmamentSizeForm({
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="armament-size-description">Descricao</Label>
+              <Label htmlFor="armament-size-description">Descrição</Label>
               <Textarea
                 id="armament-size-description"
                 placeholder="Explique quando esse tamanho deve ser utilizado."
@@ -224,7 +224,7 @@ export function ArmamentSizeForm({
                 ? "Salvando..."
                 : mode === "create"
                   ? "Criar tamanho"
-                  : "Salvar alteracoes"}
+                  : "Salvar alterações"}
             </Button>
           </div>
         </form>

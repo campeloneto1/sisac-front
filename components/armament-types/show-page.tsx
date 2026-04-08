@@ -17,7 +17,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDate(date?: string | null) {
-  return date ? new Date(date).toLocaleDateString("pt-BR") : "Nao informado";
+  return date ? new Date(date).toLocaleDateString("pt-BR") : "Não informado";
 }
 
 export function ArmamentTypeShowPage() {
@@ -31,7 +31,7 @@ export function ArmamentTypeShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar tipos de
+            Você precisa da permissão `view` para visualizar tipos de
             armamento.
           </CardDescription>
         </CardHeader>
@@ -49,7 +49,7 @@ export function ArmamentTypeShowPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar tipo de armamento</CardTitle>
           <CardDescription>
-            Os dados do tipo nao estao disponiveis no momento.
+            Os dados do tipo não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -82,7 +82,7 @@ export function ArmamentTypeShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Identificacao</CardTitle>
+            <CardTitle>Identificação</CardTitle>
             <CardDescription>
               Dados principais do tipo de armamento.
             </CardDescription>
@@ -112,11 +112,11 @@ export function ArmamentTypeShowPage() {
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-primary" />
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Descricao
+                  Descrição
                 </p>
               </div>
               <p className="mt-2 text-sm text-slate-700">
-                {armamentType.description ?? "Nenhuma descricao informada."}
+                {armamentType.description ?? "Nenhuma descrição informada."}
               </p>
             </div>
           </CardContent>
@@ -126,7 +126,7 @@ export function ArmamentTypeShowPage() {
           <CardHeader>
             <CardTitle>Auditoria</CardTitle>
             <CardDescription>
-              Informacoes de criacao e atualizacao do registro.
+              Informações de criação e atualização do registro.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -135,7 +135,7 @@ export function ArmamentTypeShowPage() {
                 Criado por
               </p>
               <p className="text-sm text-slate-700">
-                {armamentType.creator?.name ?? "Nao informado"}
+                {armamentType.creator?.name ?? "Não informado"}
               </p>
             </div>
 
@@ -144,7 +144,7 @@ export function ArmamentTypeShowPage() {
                 Atualizado por
               </p>
               <p className="text-sm text-slate-700">
-                {armamentType.updater?.name ?? "Nao informado"}
+                {armamentType.updater?.name ?? "Não informado"}
               </p>
             </div>
 

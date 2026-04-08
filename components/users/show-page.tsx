@@ -47,7 +47,7 @@ export function UserShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `view` para acessar o detalhe do usuario.</CardDescription>
+          <CardDescription>Você precisa da permissão `view` para acessar o detalhe do usuário.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -61,8 +61,8 @@ export function UserShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar usuario</CardTitle>
-          <CardDescription>O detalhe nao pode ser exibido agora.</CardDescription>
+          <CardTitle>Erro ao carregar usuário</CardTitle>
+          <CardDescription>O detalhe não pode ser exibido agora.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -112,45 +112,45 @@ export function UserShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Dados principais</CardTitle>
-            <CardDescription>Informacoes basicas retornadas pelo `UserResource`.</CardDescription>
+            <CardDescription>Informações básicas retornadas pelo `UserResource`.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3">
             <InfoRow icon={Mail} label="E-mail" value={user.email} />
-            <InfoRow icon={Phone} label="Telefone" value={user.phone ?? "Nao informado"} />
-            <InfoRow icon={CreditCard} label="Documento" value={user.document ?? "Nao informado"} />
+            <InfoRow icon={Phone} label="Telefone" value={user.phone ?? "Não informado"} />
+            <InfoRow icon={CreditCard} label="Documento" value={user.document ?? "Não informado"} />
             <InfoRow
               icon={CalendarClock}
               label="Autorizado ate"
-              value={user.authorized_until ? new Date(user.authorized_until).toLocaleString("pt-BR") : "Nao se aplica"}
+              value={user.authorized_until ? new Date(user.authorized_until).toLocaleString("pt-BR") : "Não se aplica"}
             />
           </CardContent>
         </Card>
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Vinculos e auditoria</CardTitle>
-            <CardDescription>Relacionamentos do usuario carregados pela API.</CardDescription>
+            <CardTitle>Vínculos e auditoria</CardTitle>
+            <CardDescription>Relacionamentos do usuário carregados pela API.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <InfoRow icon={Shield} label="Perfil" value={user.role?.name ?? "Nao carregado"} />
+            <InfoRow icon={Shield} label="Perfil" value={user.role?.name ?? "Não carregado"} />
             <InfoRow
               icon={UserCircle2}
               label="Policial vinculado"
               value={
                 user.police_officer
-                  ? `${user.police_officer.war_name ?? "Sem nome de guerra"} | Matricula ${user.police_officer.registration_number ?? "-"}`
-                  : "Nao vinculado"
+                  ? `${user.police_officer.war_name ?? "Sem nome de guerra"} | Matrícula ${user.police_officer.registration_number ?? "-"}`
+                  : "Não vinculado"
               }
             />
             <InfoRow
               icon={UserCircle2}
               label="Criado por"
-              value={user.creator ? `${user.creator.name} (${user.creator.email})` : "Nao informado"}
+              value={user.creator ? `${user.creator.name} (${user.creator.email})` : "Não informado"}
             />
             <InfoRow
               icon={UserCircle2}
               label="Atualizado por"
-              value={user.updater ? `${user.updater.name} (${user.updater.email})` : "Nao informado"}
+              value={user.updater ? `${user.updater.name} (${user.updater.email})` : "Não informado"}
             />
           </CardContent>
         </Card>
@@ -160,7 +160,7 @@ export function UserShowPage() {
         <CardHeader>
           <CardTitle>Subunidades</CardTitle>
           <CardDescription>
-            Estas subunidades definem o que o usuario pode selecionar na navbar e qual `X-Active-Subunit` pode ser enviado para a API.
+            Estas subunidades definem o que o usuário pode selecionar na navbar e qual `X-Active-Subunit` pode ser enviado para a API.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -179,13 +179,13 @@ export function UserShowPage() {
               ))}
             </div>
           ) : canViewUserSubunits ? (
-            <p className="text-sm text-slate-500">Nenhuma subunidade vinculada para este usuario.</p>
+            <p className="text-sm text-slate-500">Nenhuma subunidade vinculada para este usuário.</p>
           ) : isSelf ? (
             <p className="text-sm text-slate-500">
-              As subunidades disponiveis para a sua sessao sao exibidas aqui a partir do contexto autenticado.
+              As subunidades disponíveis para a sua sessao sao exibidas aqui a partir do contexto autenticado.
             </p>
           ) : (
-            <p className="text-sm text-slate-500">Voce nao possui permissao para visualizar os vinculos de subunidade deste usuario.</p>
+            <p className="text-sm text-slate-500">Você não possui permissão para visualizar os vínculos de subunidade deste usuário.</p>
           )}
         </CardContent>
       </Card>

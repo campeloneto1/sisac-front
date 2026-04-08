@@ -19,7 +19,7 @@ import {
 
 function getOfficerLabel(officer: { id: number; name?: string | null; registration_number?: string | null } | null | undefined) {
   if (!officer) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   if (officer.name && officer.registration_number) {
@@ -57,7 +57,7 @@ export function SectorsTable({ sectors }: SectorsTableProps) {
                 <th className="px-4 py-3 font-medium">Setor</th>
                 <th className="px-4 py-3 font-medium">Contato</th>
                 <th className="px-4 py-3 font-medium">Comando</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -66,7 +66,7 @@ export function SectorsTable({ sectors }: SectorsTableProps) {
                   <td className="px-4 py-4">
                     <div>
                       <p className="font-medium text-slate-900">{sector.name}</p>
-                      <p className="mt-1 text-slate-500">Sigla: {sector.abbreviation ?? "Nao informada"}</p>
+                      <p className="mt-1 text-slate-500">Sigla: {sector.abbreviation ?? "Não informada"}</p>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-700">
@@ -118,8 +118,8 @@ export function SectorsTable({ sectors }: SectorsTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir setor</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {sectorToDelete?.name}? Se este setor estiver em uso em alocacoes ou fluxos internos,
-              a remocao pode impactar a operacao da subunidade.
+              Tem certeza que deseja excluir {sectorToDelete?.name}? Se este setor estiver em uso em alocações ou fluxos internos,
+              a remoção pode impactar a operação da subunidade.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -127,7 +127,7 @@ export function SectorsTable({ sectors }: SectorsTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -39,8 +39,8 @@ export function ArmamentSizesTable({
               <tr>
                 <th className="px-4 py-3 font-medium">Nome</th>
                 <th className="px-4 py-3 font-medium">Slug</th>
-                <th className="px-4 py-3 font-medium">Descricao</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">Descrição</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -56,7 +56,7 @@ export function ArmamentSizesTable({
                     {armamentSize.slug}
                   </td>
                   <td className="max-w-xl px-4 py-4 text-slate-600">
-                    {armamentSize.description || "Sem descricao informada."}
+                    {armamentSize.description || "Sem descrição informada."}
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex justify-end gap-2">
@@ -109,7 +109,7 @@ export function ArmamentSizesTable({
           <DialogHeader>
             <DialogTitle>Excluir tamanho de armamento</DialogTitle>
             <DialogDescription>
-              Essa acao removera o tamanho
+              Essa ação removera o tamanho
               {sizeToDelete ? ` "${sizeToDelete.name}"` : ""}. Confirme para
               continuar.
             </DialogDescription>

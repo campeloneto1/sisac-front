@@ -2,11 +2,11 @@ import type { ApiMessageResponse } from "@/types/auth.type";
 import type { PaginatedResponse } from "@/types/contract.type";
 
 export const contractAlertTypeOptions = [
-  { value: "budget_70_percent", label: "Execucao financeira em 70%" },
-  { value: "budget_80_percent", label: "Execucao financeira em 80%" },
-  { value: "budget_90_percent", label: "Execucao financeira em 90%" },
-  { value: "budget_95_percent", label: "Execucao financeira em 95%" },
-  { value: "budget_100_percent", label: "Execucao financeira em 100%" },
+  { value: "budget_70_percent", label: "Execução financeira em 70%" },
+  { value: "budget_80_percent", label: "Execução financeira em 80%" },
+  { value: "budget_90_percent", label: "Execução financeira em 90%" },
+  { value: "budget_95_percent", label: "Execução financeira em 95%" },
+  { value: "budget_100_percent", label: "Execução financeira em 100%" },
   { value: "expiration_6_months", label: "Vencimento em 6 meses" },
   { value: "expiration_3_months", label: "Vencimento em 3 meses" },
   { value: "expiration_2_months", label: "Vencimento em 2 meses" },
@@ -94,11 +94,11 @@ export type ContractAlertListResponse = PaginatedResponse<ContractAlertItem>;
 export type ContractAlertDeleteResponse = ApiMessageResponse;
 
 export function getContractAlertTypeLabel(value?: string | null) {
-  return contractAlertTypeOptions.find((option) => option.value === value)?.label ?? "Tipo nao informado";
+  return contractAlertTypeOptions.find((option) => option.value === value)?.label ?? "Tipo não informado";
 }
 
 export function getContractAlertStatusLabel(value?: string | null) {
-  return contractAlertStatusOptions.find((option) => option.value === value)?.label ?? "Status nao informado";
+  return contractAlertStatusOptions.find((option) => option.value === value)?.label ?? "Status não informado";
 }
 
 export function getContractAlertBadgeVariant(color?: string | null): "danger" | "warning" | "info" | "success" | "outline" {

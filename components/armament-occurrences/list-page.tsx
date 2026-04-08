@@ -49,7 +49,7 @@ export function ArmamentOccurrencesListPage() {
               <CardDescription>
                 {option.requiresReport
                   ? "Exige controle formal de BO no fluxo ideal."
-                  : "Nao exige BO obrigatoriamente no dominio atual."}
+                  : "Não exige BO obrigatoriamente no dominio atual."}
               </CardDescription>
             </CardHeader>
           </Card>
@@ -60,17 +60,17 @@ export function ArmamentOccurrencesListPage() {
         <CardHeader>
           <CardTitle>Fluxo previsto</CardTitle>
           <CardDescription>
-            Esta tela ja esta pronta para receber a listagem operacional assim
+            Esta tela já esta pronta para receber a listagem operacional assim
             que a API do recurso for publicada.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 text-sm text-slate-600">
           <p>
-            Filtros planejados: tipo, status, armamento, periodo, numero do BO e
+            Filtros planejados: tipo, status, armamento, período, número do BO e
             reportado por.
           </p>
           <p>
-            Acoes planejadas: visualizar, criar, editar, excluir e navegar para
+            Ações planejadas: visualizar, criar, editar, excluir e navegar para
             o armamento relacionado.
           </p>
           <div className="flex flex-wrap gap-2">

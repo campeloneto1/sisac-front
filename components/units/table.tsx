@@ -24,7 +24,7 @@ interface UnitsTableProps {
 
 function getOfficerLabel(officer: UnitItem["commander"] | UnitItem["deputy_commander"]) {
   if (!officer) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   if (officer.name && officer.registration_number) {
@@ -58,7 +58,7 @@ export function UnitsTable({ units }: UnitsTableProps) {
                 <th className="px-4 py-3 font-medium">Unidade</th>
                 <th className="px-4 py-3 font-medium">Cidade</th>
                 <th className="px-4 py-3 font-medium">Comando</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -117,7 +117,7 @@ export function UnitsTable({ units }: UnitsTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir unidade</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {unitToDelete?.name}? A API bloqueia a exclusao de unidades que ainda possuem subunidades vinculadas.
+              Tem certeza que deseja excluir {unitToDelete?.name}? A API bloqueia a exclusão de unidades que ainda possuem subunidades vinculadas.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -125,7 +125,7 @@ export function UnitsTable({ units }: UnitsTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

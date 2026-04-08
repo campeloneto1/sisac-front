@@ -80,7 +80,7 @@ const historyDialogSchema = z.object({
   ]),
   notes: z
     .string()
-    .max(2000, "As observacoes devem ter no maximo 2000 caracteres.")
+    .max(2000, "As observações devem ter no máximo 2000 caracteres.")
     .optional()
     .or(z.literal("")),
   changed_at: z.string().optional().or(z.literal("")),
@@ -101,7 +101,7 @@ function formatDateTimeLocal(value?: string | null) {
 
 function formatDateTime(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -209,8 +209,8 @@ function StatusHistoryDialog({
           </DialogTitle>
           <DialogDescription>
             {mode === "create"
-              ? "Registre uma transicao de status para o servico atual. O horario do registro pode ser assumido automaticamente pela API."
-              : "Ajuste os dados do evento de historico quando houver necessidade de correcao administrativa."}
+              ? "Registre uma transição de status para o serviço atual. O horario do registro pode ser assumido automaticamente pela API."
+              : "Ajuste os dados do evento de histórico quando houver necessidade de correção administrativa."}
           </DialogDescription>
         </DialogHeader>
 
@@ -225,10 +225,10 @@ function StatusHistoryDialog({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Nao informar" />
+                  <SelectValue placeholder="Não informar" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Nao informar</SelectItem>
+                  <SelectItem value="none">Não informar</SelectItem>
                   {serviceStatusOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
@@ -270,7 +270,7 @@ function StatusHistoryDialog({
           {mode === "edit" ? (
             <div className="space-y-2">
               <Label htmlFor="service-status-history-changed-at">
-                Data e hora da alteracao
+                Data e hora da alteração
               </Label>
               <Input
                 id="service-status-history-changed-at"
@@ -284,17 +284,17 @@ function StatusHistoryDialog({
             </div>
           ) : (
             <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
-              O usuario autenticado sera usado como responsavel pela mudanca e o
+              O usuário autenticado será usado como responsável pela mudança e o
               horario pode ser definido automaticamente pela API.
             </div>
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="service-status-history-notes">Observacoes</Label>
+            <Label htmlFor="service-status-history-notes">Observações</Label>
             <Textarea
               id="service-status-history-notes"
               rows={4}
-              placeholder="Descreva o contexto da mudanca de status"
+              placeholder="Descreva o contexto da mudança de status"
               {...register("notes")}
             />
             {errors.notes ? (
@@ -315,8 +315,8 @@ function StatusHistoryDialog({
               {isPending
                 ? "Salvando..."
                 : mode === "create"
-                  ? "Registrar alteracao"
-                  : "Salvar alteracao"}
+                  ? "Registrar alteração"
+                  : "Salvar alteração"}
             </Button>
           </DialogFooter>
         </form>
@@ -374,8 +374,8 @@ export function ServiceStatusHistoryPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` ou `view` para acessar o
-            historico de status dos servicos.
+            Você precisa da permissão `viewAny` ou `view` para acessar o
+            histórico de status dos serviços.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -388,7 +388,7 @@ export function ServiceStatusHistoryPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O historico de status depende da subunidade ativa para enviar
+            O histórico de status depende da subunidade ativa para enviar
             `X-Active-Subunit`.
           </CardDescription>
         </CardHeader>
@@ -405,10 +405,10 @@ export function ServiceStatusHistoryPage() {
           </div>
           <div>
             <h1 className="font-display text-3xl text-slate-900">
-              Historico de status
+              Histórico de status
             </h1>
             <p className="text-sm text-slate-500">
-              Trilha de auditoria das transicoes de status do servico atual.
+              Trilha de auditoria das transições de status do serviço atual.
             </p>
             {serviceQuery.data?.data ? (
               <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-600">
@@ -416,7 +416,7 @@ export function ServiceStatusHistoryPage() {
                   href={`/services/${id}`}
                   className="font-medium text-primary hover:underline"
                 >
-                  {serviceQuery.data.data.service_type?.name || `Servico #${id}`}
+                  {serviceQuery.data.data.service_type?.name || `Serviço #${id}`}
                 </Link>
                 <ArrowRight className="h-4 w-4 text-slate-300" />
                 {serviceQuery.data.data.status ? (
@@ -489,7 +489,7 @@ export function ServiceStatusHistoryPage() {
           </div>
 
           <div className="space-y-2">
-            <Label>Responsavel</Label>
+            <Label>Responsável</Label>
             <Select
               value={changedBy}
               onValueChange={(value) => {
@@ -502,7 +502,7 @@ export function ServiceStatusHistoryPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Todos</SelectItem>
-                <SelectItem value="me">Meu usuario</SelectItem>
+                <SelectItem value="me">Meu usuário</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -560,18 +560,18 @@ export function ServiceStatusHistoryPage() {
       ) : serviceQuery.isError || !serviceQuery.data?.data ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Servico indisponivel</CardTitle>
+            <CardTitle>Serviço indisponivel</CardTitle>
             <CardDescription>
-              Nao foi possivel carregar o servico vinculado a esse historico.
+              Não foi possível carregar o serviço vinculado a esse histórico.
             </CardDescription>
           </CardHeader>
         </Card>
       ) : historyQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar historico</CardTitle>
+            <CardTitle>Erro ao carregar histórico</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario.
+              Verifique a API, a subunidade ativa e as permissões do usuário.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -580,7 +580,7 @@ export function ServiceStatusHistoryPage() {
           <CardHeader>
             <CardTitle>Nenhum evento encontrado</CardTitle>
             <CardDescription>
-              Registre a primeira mudanca de status ou ajuste os filtros
+              Registre a primeira mudança de status ou ajuste os filtros
               aplicados.
             </CardDescription>
           </CardHeader>
@@ -592,11 +592,11 @@ export function ServiceStatusHistoryPage() {
               <table className="min-w-full text-left text-sm">
                 <thead className="bg-slate-50 text-slate-500">
                   <tr>
-                    <th className="px-4 py-3 font-medium">Transicao</th>
-                    <th className="px-4 py-3 font-medium">Responsavel</th>
+                    <th className="px-4 py-3 font-medium">Transição</th>
+                    <th className="px-4 py-3 font-medium">Responsável</th>
                     <th className="px-4 py-3 font-medium">Momento</th>
-                    <th className="px-4 py-3 font-medium">Observacoes</th>
-                    <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                    <th className="px-4 py-3 font-medium">Observações</th>
+                    <th className="px-4 py-3 font-medium text-right">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -623,7 +623,7 @@ export function ServiceStatusHistoryPage() {
                         </div>
                       </td>
                       <td className="px-4 py-4 text-slate-600">
-                        <p>{item.changer?.name || `Usuario #${item.changed_by}`}</p>
+                        <p>{item.changer?.name || `Usuário #${item.changed_by}`}</p>
                         <p className="mt-1 text-slate-500">
                           {item.changer?.email || "Sem e-mail vinculado"}
                         </p>
@@ -635,7 +635,7 @@ export function ServiceStatusHistoryPage() {
                         </p>
                       </td>
                       <td className="px-4 py-4 text-slate-600">
-                        {item.notes || "Sem observacoes"}
+                        {item.notes || "Sem observações"}
                       </td>
                       <td className="px-4 py-4">
                         <div className="flex justify-end gap-2">
@@ -722,9 +722,9 @@ export function ServiceStatusHistoryPage() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir evento de historico</DialogTitle>
+            <DialogTitle>Excluir evento de histórico</DialogTitle>
             <DialogDescription>
-              Essa remocao apaga o registro da trilha de auditoria do servico.
+              Essa remoção apaga o registro da trilha de auditoria do serviço.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -748,7 +748,7 @@ export function ServiceStatusHistoryPage() {
                 setHistoryToDelete(null);
               }}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

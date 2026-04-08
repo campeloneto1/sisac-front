@@ -66,13 +66,13 @@ function RelatedTabSection({
       <CardContent className="space-y-4">
         {requiresSubunit && !hasActiveSubunit ? (
           <p className="text-sm text-slate-500">
-            Selecione uma subunidade ativa para carregar este modulo.
+            Selecione uma subunidade ativa para carregar este módulo.
           </p>
         ) : isLoading ? (
           <Skeleton className="h-24 w-full" />
         ) : isError ? (
           <p className="text-sm text-slate-500">
-            Nao foi possivel carregar os dados desta aba.
+            Não foi possível carregar os dados desta aba.
           </p>
         ) : isEmpty ? (
           <p className="text-sm text-slate-500">{emptyMessage}</p>
@@ -82,7 +82,7 @@ function RelatedTabSection({
 
         <div className="flex justify-end">
           <Button asChild variant="outline">
-            <Link href={href}>Abrir modulo completo</Link>
+            <Link href={href}>Abrir módulo completo</Link>
           </Button>
         </div>
       </CardContent>
@@ -147,7 +147,7 @@ export function PoliceOfficerShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `view` para visualizar policiais.</CardDescription>
+          <CardDescription>Você precisa da permissão `view` para visualizar policiais.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -162,7 +162,7 @@ export function PoliceOfficerShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar policial</CardTitle>
-          <CardDescription>Os dados do policial nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do policial não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -176,10 +176,10 @@ export function PoliceOfficerShowPage() {
         <div>
           <h1 className="font-display text-3xl text-slate-900">{policeOfficer.name ?? policeOfficer.user?.name ?? "Sem nome"}</h1>
           <p className="mt-2 text-sm text-slate-500">
-            Nome de guerra: {policeOfficer.war_name} • Matricula: {policeOfficer.registration_number}
+            Nome de guerra: {policeOfficer.war_name} • Matrícula: {policeOfficer.registration_number}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Registro funcional completo do policial, incluindo dados civis, identificacao militar, escolaridade e historico de graduacoes.
+            Registro funcional completo do policial, incluindo dados civis, identificação militar, escolaridade e histórico de graduações.
           </p>
         </div>
 
@@ -209,15 +209,15 @@ export function PoliceOfficerShowPage() {
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Visao geral</CardTitle>
-                <CardDescription>Resumo rapido do policial.</CardDescription>
+                <CardDescription>Resumo rápido do policial.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                   <ShieldCheck className="h-4 w-4 text-primary" />
                   <div>
-                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Graduacao atual</p>
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Graduação atual</p>
                     <p className="text-sm text-slate-700">
-                      {policeOfficer.current_rank ? `${policeOfficer.current_rank.name} (${policeOfficer.current_rank.abbreviation ?? "-"})` : "Nao informada"}
+                      {policeOfficer.current_rank ? `${policeOfficer.current_rank.name} (${policeOfficer.current_rank.abbreviation ?? "-"})` : "Não informada"}
                     </p>
                   </div>
                 </div>
@@ -225,7 +225,7 @@ export function PoliceOfficerShowPage() {
                   <GraduationCap className="h-4 w-4 text-primary" />
                   <div>
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Escolaridade</p>
-                    <p className="text-sm text-slate-700">{policeOfficer.education_level?.name ?? "Nao informada"}</p>
+                    <p className="text-sm text-slate-700">{policeOfficer.education_level?.name ?? "Não informada"}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -240,7 +240,7 @@ export function PoliceOfficerShowPage() {
                   <div>
                     <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                     <p className="text-sm text-slate-700">
-                      {policeOfficer.creator ? `${policeOfficer.creator.name} (${policeOfficer.creator.email})` : "Nao informado"}
+                      {policeOfficer.creator ? `${policeOfficer.creator.name} (${policeOfficer.creator.email})` : "Não informado"}
                     </p>
                   </div>
                 </div>
@@ -250,7 +250,7 @@ export function PoliceOfficerShowPage() {
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Dados pessoais e funcionais</CardTitle>
-                <CardDescription>Informacoes retornadas pelo `PoliceOfficerResource`.</CardDescription>
+                <CardDescription>Informações retornadas pelo `PoliceOfficerResource`.</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-3 md:grid-cols-2">
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -272,13 +272,13 @@ export function PoliceOfficerShowPage() {
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                   <MapPin className="mb-2 h-4 w-4 text-primary" />
                   <p className="text-sm text-slate-700">
-                    {[policeOfficer.street, policeOfficer.number, policeOfficer.neighborhood].filter(Boolean).join(", ") || "Nao informado"}
+                    {[policeOfficer.street, policeOfficer.number, policeOfficer.neighborhood].filter(Boolean).join(", ") || "Não informado"}
                   </p>
                 </div>
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                   <CreditCard className="mb-2 h-4 w-4 text-primary" />
                   <p className="text-sm text-slate-700">
-                    {policeOfficer.bank ? `${policeOfficer.bank.name} • Ag ${policeOfficer.agency ?? "-"} • Cc ${policeOfficer.account ?? "-"}` : "Nao informado"}
+                    {policeOfficer.bank ? `${policeOfficer.bank.name} • Ag ${policeOfficer.agency ?? "-"} • Cc ${policeOfficer.account ?? "-"}` : "Não informado"}
                   </p>
                 </div>
               </CardContent>
@@ -287,7 +287,7 @@ export function PoliceOfficerShowPage() {
 
           <Card className="border-slate-200/70 bg-white/80">
             <CardHeader>
-              <CardTitle>Historico de graduacoes</CardTitle>
+              <CardTitle>Histórico de graduações</CardTitle>
               <CardDescription>Dados carregados em `rank_history` no endpoint de detalhe.</CardDescription>
             </CardHeader>
             <CardContent>
@@ -296,17 +296,17 @@ export function PoliceOfficerShowPage() {
                   {policeOfficer.rank_history.map((item) => (
                     <div key={item.id} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
                       <p className="text-sm font-medium text-slate-900">
-                        {item.rank ? `${item.rank.name} (${item.rank.abbreviation ?? "-"})` : "Graduacao nao informada"}
+                        {item.rank ? `${item.rank.name} (${item.rank.abbreviation ?? "-"})` : "Graduação não informada"}
                       </p>
                       <p className="mt-2 text-sm text-slate-600">
-                        Inicio: {item.start_date ?? "-"} • Fim: {item.end_date ?? "Atual"}
+                        Início: {item.start_date ?? "-"} • Fim: {item.end_date ?? "Atual"}
                       </p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">{item.is_current ? "Atual" : "Historico"}</p>
+                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">{item.is_current ? "Atual" : "Histórico"}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-slate-500">Nenhum registro de graduacao encontrado para este policial.</p>
+                <p className="text-sm text-slate-500">Nenhum registro de graduação encontrado para este policial.</p>
               )}
             </CardContent>
           </Card>
@@ -336,13 +336,13 @@ export function PoliceOfficerShowPage() {
         <TabsContent value="publications">
           <RelatedTabSection
             title="Publications"
-            description="Publicacoes funcionais vinculadas a este policial."
+            description="Publicações funcionais vinculadas a este policial."
             href={`/police-officer-publications?police_officer_id=${policeOfficer.id}`}
             hasActiveSubunit={Boolean(activeSubunit)}
             isLoading={publicationsQuery.isLoading}
             isError={publicationsQuery.isError}
             isEmpty={!publicationsQuery.data?.data.length}
-            emptyMessage="Nenhuma publicacao encontrada para este policial."
+            emptyMessage="Nenhuma publicação encontrada para este policial."
           >
             <PoliceOfficerPublicationsTable policeOfficerPublications={publicationsQuery.data?.data ?? []} />
           </RelatedTabSection>
@@ -351,7 +351,7 @@ export function PoliceOfficerShowPage() {
         <TabsContent value="ranks">
           <RelatedTabSection
             title="Ranks"
-            description="Promocoes e historico formal de graduacoes deste policial."
+            description="Promoções e histórico formal de graduações deste policial."
             href={`/police-officer-ranks?police_officer_id=${policeOfficer.id}`}
             requiresSubunit
             hasActiveSubunit={Boolean(activeSubunit)}
@@ -382,14 +382,14 @@ export function PoliceOfficerShowPage() {
         <TabsContent value="vacations">
           <RelatedTabSection
             title="Vacations"
-            description="Ferias e saldos de periodos vinculados a este policial."
+            description="Férias e saldos de períodos vinculados a este policial."
             href={`/police-officer-vacations?police_officer_id=${policeOfficer.id}`}
             requiresSubunit
             hasActiveSubunit={Boolean(activeSubunit)}
             isLoading={vacationsQuery.isLoading}
             isError={vacationsQuery.isError}
             isEmpty={!vacationsQuery.data?.data.length}
-            emptyMessage="Nenhum registro de ferias encontrado para este policial."
+            emptyMessage="Nenhum registro de férias encontrado para este policial."
           >
             <PoliceOfficerVacationsTable vacations={vacationsQuery.data?.data ?? []} />
           </RelatedTabSection>
@@ -398,14 +398,14 @@ export function PoliceOfficerShowPage() {
         <TabsContent value="vehicle-loans">
           <RelatedTabSection
             title="Vehicle Loans"
-            description="Emprestimos de veiculos em que este policial aparece como tomador."
+            description="Empréstimos de veículos em que este policial aparece como tomador."
             href={`/vehicle-loans?borrower_id=${policeOfficer.id}`}
             requiresSubunit
             hasActiveSubunit={Boolean(activeSubunit)}
             isLoading={vehicleLoansQuery.isLoading}
             isError={vehicleLoansQuery.isError}
             isEmpty={!vehicleLoansQuery.data?.data.length}
-            emptyMessage="Nenhum emprestimo de veiculo encontrado para este policial."
+            emptyMessage="Nenhum empréstimo de veículo encontrado para este policial."
           >
             <VehicleLoansTable loans={vehicleLoansQuery.data?.data ?? []} />
           </RelatedTabSection>
@@ -414,14 +414,14 @@ export function PoliceOfficerShowPage() {
         <TabsContent value="vehicle-custodies">
           <RelatedTabSection
             title="Vehicle Custodies"
-            description="Cautelas de veiculos vinculadas a este policial."
+            description="Cautelas de veículos vinculadas a este policial."
             href={`/vehicle-custodies?custodian_id=${policeOfficer.id}`}
             requiresSubunit
             hasActiveSubunit={Boolean(activeSubunit)}
             isLoading={vehicleCustodiesQuery.isLoading}
             isError={vehicleCustodiesQuery.isError}
             isEmpty={!vehicleCustodiesQuery.data?.data.length}
-            emptyMessage="Nenhuma cautela de veiculo encontrada para este policial."
+            emptyMessage="Nenhuma cautela de veículo encontrada para este policial."
           >
             <VehicleCustodiesTable custodies={vehicleCustodiesQuery.data?.data ?? []} />
           </RelatedTabSection>
@@ -430,14 +430,14 @@ export function PoliceOfficerShowPage() {
         <TabsContent value="armament-loans">
           <RelatedTabSection
             title="Armament Loans"
-            description="Emprestimos e cautelas de armamento vinculados a este policial."
+            description="Empréstimos e cautelas de armamento vinculados a este policial."
             href={`/armament-loans?police_officer_id=${policeOfficer.id}`}
             requiresSubunit
             hasActiveSubunit={Boolean(activeSubunit)}
             isLoading={armamentLoansQuery.isLoading}
             isError={armamentLoansQuery.isError}
             isEmpty={!armamentLoansQuery.data?.data.length}
-            emptyMessage="Nenhum emprestimo de armamento encontrado para este policial."
+            emptyMessage="Nenhum empréstimo de armamento encontrado para este policial."
           >
             <ArmamentLoansTable loans={armamentLoansQuery.data?.data ?? []} />
           </RelatedTabSection>
@@ -446,14 +446,14 @@ export function PoliceOfficerShowPage() {
         <TabsContent value="material-loans">
           <RelatedTabSection
             title="Material Loans"
-            description="Emprestimos e cautelas de materiais vinculados a este policial."
+            description="Empréstimos e cautelas de materiais vinculados a este policial."
             href={`/material-loans?police_officer_id=${policeOfficer.id}`}
             requiresSubunit
             hasActiveSubunit={Boolean(activeSubunit)}
             isLoading={materialLoansQuery.isLoading}
             isError={materialLoansQuery.isError}
             isEmpty={!materialLoansQuery.data?.data.length}
-            emptyMessage="Nenhum emprestimo de material encontrado para este policial."
+            emptyMessage="Nenhum empréstimo de material encontrado para este policial."
           >
             <MaterialLoansTable loans={materialLoansQuery.data?.data ?? []} />
           </RelatedTabSection>

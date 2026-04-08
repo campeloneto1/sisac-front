@@ -46,9 +46,9 @@ export function NotificationResponsibilitiesTable({ items }: NotificationRespons
               <tr>
                 <th className="px-4 py-3 font-medium">Dominio</th>
                 <th className="px-4 py-3 font-medium">Subunidade</th>
-                <th className="px-4 py-3 font-medium">Setor responsavel</th>
+                <th className="px-4 py-3 font-medium">Setor responsável</th>
                 <th className="px-4 py-3 font-medium">Auditoria</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -74,8 +74,8 @@ export function NotificationResponsibilitiesTable({ items }: NotificationRespons
                   </td>
                   <td className="px-4 py-4 text-slate-600">
                     <div className="space-y-1">
-                      <p>Atualizado por: {item.updater ? item.updater.name : "Nao informado"}</p>
-                      <p>Em: {item.updated_at ? new Date(item.updated_at).toLocaleString("pt-BR") : "Nao informado"}</p>
+                      <p>Atualizado por: {item.updater ? item.updater.name : "Não informado"}</p>
+                      <p>Em: {item.updated_at ? new Date(item.updated_at).toLocaleString("pt-BR") : "Não informado"}</p>
                     </div>
                   </td>
                   <td className="px-4 py-4">
@@ -113,10 +113,10 @@ export function NotificationResponsibilitiesTable({ items }: NotificationRespons
       <Dialog open={Boolean(itemToDelete)} onOpenChange={(open) => !open && setItemToDelete(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir responsabilidade de notificacao</DialogTitle>
+            <DialogTitle>Excluir responsabilidade de notificação</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja remover a regra de {itemToDelete ? getNotificationResponsibilityDomainLabel(itemToDelete.domain) : ""}?
-              Isso pode impedir o envio automatico de notificacoes para a subunidade configurada.
+              Isso pode impedir o envio automático de notificações para a subunidade configurada.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -124,7 +124,7 @@ export function NotificationResponsibilitiesTable({ items }: NotificationRespons
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -17,7 +17,7 @@ export function ArmamentOccurrenceCreatePage() {
   return (
     <ArmamentOccurrencesPageShell
       title="Nova ocorrencia de armamento"
-      description="Estruture o fluxo de registro manual para eventos que nao nascem automaticamente do emprestimo."
+      description="Estruture o fluxo de registro manual para eventos que não nascem automaticamente do empréstimo."
       requiredPermission="create"
     >
       <Card className="border-slate-200/70 bg-white/80">
@@ -30,7 +30,7 @@ export function ArmamentOccurrenceCreatePage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-slate-600">
           <p>Campos esperados:</p>
-          <p>armamento, unidade ou lote, tipo, data/hora, BO, descricao, status e reportado por.</p>
+          <p>armamento, unidade ou lote, tipo, data/hora, BO, descrição, status e reportado por.</p>
           <div className="flex flex-wrap gap-2">
             {armamentOccurrenceTypeOptions.map((option) => (
               <Badge key={option.value} variant="outline">

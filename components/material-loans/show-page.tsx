@@ -19,7 +19,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDateTime(value?: string | null) {
   if (!value) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.DateTimeFormat("pt-BR", {
@@ -43,7 +43,7 @@ export function MaterialLoanShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar emprestimos de
+            Você precisa da permissão `view` para visualizar empréstimos de
             materiais.
           </CardDescription>
         </CardHeader>
@@ -57,7 +57,7 @@ export function MaterialLoanShowPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O modulo depende da subunidade ativa para carregar o emprestimo.
+            O módulo depende da subunidade ativa para carregar o empréstimo.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -72,9 +72,9 @@ export function MaterialLoanShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar emprestimo</CardTitle>
+          <CardTitle>Erro ao carregar empréstimo</CardTitle>
           <CardDescription>
-            Os dados do emprestimo nao estao disponiveis no momento.
+            Os dados do empréstimo não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -101,7 +101,7 @@ export function MaterialLoanShowPage() {
             <h1 className="font-display text-3xl text-slate-900">
               {loan.police_officer?.war_name ||
                 loan.police_officer?.name ||
-                `Emprestimo #${loan.id}`}
+                `Empréstimo #${loan.id}`}
             </h1>
             <Badge variant={getMaterialLoanKindVariant(loan.kind)}>
               {loan.kind_label ?? loan.kind}
@@ -115,8 +115,8 @@ export function MaterialLoanShowPage() {
             {formatDateTime(loan.loaned_at)}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Acompanhe o policial responsavel, os itens emprestados e o status
-            parcial ou total da devolucao.
+            Acompanhe o policial responsável, os itens emprestados e o status
+            parcial ou total da devolução.
           </p>
         </div>
 
@@ -129,7 +129,7 @@ export function MaterialLoanShowPage() {
           {canReturn ? (
             <Button asChild>
               <Link href={`/material-loans/${loan.id}/return`}>
-                Registrar devolucao
+                Registrar devolução
               </Link>
             </Button>
           ) : null}
@@ -139,7 +139,7 @@ export function MaterialLoanShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Contexto do emprestimo</CardTitle>
+            <CardTitle>Contexto do empréstimo</CardTitle>
             <CardDescription>
               Policial, aprovador e motivo principal da retirada.
             </CardDescription>
@@ -158,7 +158,7 @@ export function MaterialLoanShowPage() {
                 </p>
                 <p className="text-sm text-slate-500">
                   {loan.police_officer?.registration_number ||
-                    "Matricula nao informada"}
+                    "Matrícula não informada"}
                 </p>
               </div>
             </div>
@@ -170,7 +170,7 @@ export function MaterialLoanShowPage() {
                   Aprovado por
                 </p>
                 <p className="text-sm text-slate-700">
-                  {loan.approved_by?.name || "Nao informado"}
+                  {loan.approved_by?.name || "Não informado"}
                 </p>
                 <p className="text-sm text-slate-500">
                   {loan.approved_by?.email || "Sem e-mail vinculado"}
@@ -189,10 +189,10 @@ export function MaterialLoanShowPage() {
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Observacoes de retorno
+                Observações de retorno
               </p>
               <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">
-                {loan.return_notes || "Nenhuma observacao registrada."}
+                {loan.return_notes || "Nenhuma observação registrada."}
               </p>
             </div>
           </CardContent>
@@ -202,7 +202,7 @@ export function MaterialLoanShowPage() {
           <CardHeader>
             <CardTitle>Controle quantitativo</CardTitle>
             <CardDescription>
-              Totais do emprestimo, devolucao, consumo e extravio.
+              Totais do empréstimo, devolução, consumo e extravio.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3 md:grid-cols-2">
@@ -253,7 +253,7 @@ export function MaterialLoanShowPage() {
                     Previsao:{" "}
                     {loan.expected_return_at
                       ? formatDateTime(loan.expected_return_at)
-                      : "Nao informada"}{" "}
+                      : "Não informada"}{" "}
                     • Fechado em{" "}
                     {loan.returned_at ? formatDateTime(loan.returned_at) : "-"}
                   </p>
@@ -266,9 +266,9 @@ export function MaterialLoanShowPage() {
 
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Itens do emprestimo</CardTitle>
+          <CardTitle>Itens do empréstimo</CardTitle>
           <CardDescription>
-            Cada item pode ser por unidade ou por lote e aceita devolucao
+            Cada item pode ser por unidade ou por lote e aceita devolução
             parcial.
           </CardDescription>
         </CardHeader>
@@ -279,7 +279,7 @@ export function MaterialLoanShowPage() {
                 <thead className="bg-slate-50 text-slate-500">
                   <tr>
                     <th className="px-4 py-3 font-medium">Material</th>
-                    <th className="px-4 py-3 font-medium">Referencia</th>
+                    <th className="px-4 py-3 font-medium">Referência</th>
                     <th className="px-4 py-3 font-medium">Controle</th>
                   </tr>
                 </thead>
@@ -298,7 +298,7 @@ export function MaterialLoanShowPage() {
                             <p className="mt-1 text-slate-500">
                               {item.material?.subunit?.abbreviation ||
                                 item.material?.subunit?.name ||
-                                "Subunidade nao informada"}
+                                "Subunidade não informada"}
                             </p>
                           </div>
                         </div>

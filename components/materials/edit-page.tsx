@@ -20,7 +20,7 @@ export function MaterialEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `update` para editar materiais.</CardDescription>
+          <CardDescription>Você precisa da permissão `update` para editar materiais.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -46,7 +46,7 @@ export function MaterialEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar material</CardTitle>
-          <CardDescription>O material nao pode ser editado agora.</CardDescription>
+          <CardDescription>O material não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

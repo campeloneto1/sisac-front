@@ -22,7 +22,7 @@ export function ColorEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `colors.update` para editar cores.
+            Você precisa de `administrator` e `colors.update` para editar cores.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -38,7 +38,7 @@ export function ColorEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar cor</CardTitle>
-          <CardDescription>A cor nao pode ser editada agora.</CardDescription>
+          <CardDescription>A cor não pode ser editada agora.</CardDescription>
         </CardHeader>
       </Card>
     );

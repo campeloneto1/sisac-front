@@ -40,7 +40,7 @@ export function ArmamentTypesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar tipos de
+            Você precisa da permissão `viewAny` para visualizar tipos de
             armamento.
           </CardDescription>
         </CardHeader>
@@ -60,7 +60,7 @@ export function ArmamentTypesListPage() {
               Tipos de armamento
             </h1>
             <p className="text-sm text-slate-500">
-              Gerencie as classificacoes usadas para organizar armamentos.
+              Gerencie as classificações usadas para organizar armamentos.
             </p>
           </div>
         </div>
@@ -97,7 +97,7 @@ export function ArmamentTypesListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar tipos de armamento</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

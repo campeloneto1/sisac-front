@@ -96,15 +96,15 @@ export function PermissionForm({ mode, permission }: PermissionFormProps) {
   return (
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Nova permissao" : "Editar permissao"}</CardTitle>
+        <CardTitle>{mode === "create" ? "Nova permissão" : "Editar permissão"}</CardTitle>
         <CardDescription>
-          Permissoes ficam dentro de Administrador e definem os slugs usados pelo RBAC do sistema.
+          Permissões ficam dentro de Administrador e definem os slugs usados pelo RBAC do sistema.
         </CardDescription>
       </CardHeader>
       <CardContent>
         {mode === "edit" && isProtectedPermission(permission) ? (
           <div className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-            Permissoes com slug `permissions.*` sao tratadas como protegidas pela policy e exigem tambem a permissao
+            Permissões com slug `permissions.*` sao tratadas como protegidas pela policy e exigem também a permissão
             global `administrator` para update/delete.
           </div>
         ) : null}
@@ -120,14 +120,14 @@ export function PermissionForm({ mode, permission }: PermissionFormProps) {
             <Label htmlFor="slug">Slug</Label>
             <Input id="slug" placeholder="Ex.: users.view-any" {...register("slug")} />
             <p className="text-xs text-slate-500">
-              Use o padrao `recurso.acao`. Ex.: `roles.update`, `users.view-any`, `reports.view-any`.
+              Use o padrao `recurso.ação`. Ex.: `roles.update`, `users.view-any`, `reports.view-any`.
             </p>
             {errors.slug ? <p className="text-sm text-destructive">{errors.slug.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Descricao</Label>
-            <Textarea id="description" placeholder="Explique o objetivo desta permissao" {...register("description")} />
+            <Label htmlFor="description">Descrição</Label>
+            <Textarea id="description" placeholder="Explique o objetivo desta permissão" {...register("description")} />
             {errors.description ? <p className="text-sm text-destructive">{errors.description.message}</p> : null}
           </div>
 
@@ -136,7 +136,7 @@ export function PermissionForm({ mode, permission }: PermissionFormProps) {
               <Link href={mode === "create" ? "/permissions" : `/permissions/${permission?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar permissao" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar permissão" : "Salvar alterações"}
             </Button>
           </div>
         </form>

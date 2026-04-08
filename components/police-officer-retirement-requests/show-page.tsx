@@ -54,7 +54,7 @@ export function PoliceOfficerRetirementRequestShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar requerimentos de
+            Você precisa da permissão `view` para visualizar requerimentos de
             aposentadoria.
           </CardDescription>
         </CardHeader>
@@ -72,7 +72,7 @@ export function PoliceOfficerRetirementRequestShowPage() {
         <CardHeader>
           <CardTitle>Erro ao carregar requerimento</CardTitle>
           <CardDescription>
-            Os dados do requerimento nao estao disponiveis no momento.
+            Os dados do requerimento não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -99,7 +99,7 @@ export function PoliceOfficerRetirementRequestShowPage() {
             </Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            {policeOfficerName} • solicitacao em{" "}
+            {policeOfficerName} • solicitação em{" "}
             {retirementRequest.requested_at ?? "-"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
@@ -133,7 +133,7 @@ export function PoliceOfficerRetirementRequestShowPage() {
                 NUP
               </p>
               <p className="mt-1 text-sm text-slate-700">
-                {retirementRequest.nup ?? "Nao informado"}
+                {retirementRequest.nup ?? "Não informado"}
               </p>
             </div>
 
@@ -156,7 +156,7 @@ export function PoliceOfficerRetirementRequestShowPage() {
                   Data de aprovacao
                 </p>
                 <p className="text-sm text-slate-700">
-                  {retirementRequest.approved_at ?? "Nao informada"}
+                  {retirementRequest.approved_at ?? "Não informada"}
                 </p>
               </div>
             </div>
@@ -165,20 +165,20 @@ export function PoliceOfficerRetirementRequestShowPage() {
               <Newspaper className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Data de publicacao
+                  Data de publicação
                 </p>
                 <p className="text-sm text-slate-700">
-                  {retirementRequest.published_at ?? "Nao informada"}
+                  {retirementRequest.published_at ?? "Não informada"}
                 </p>
               </div>
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Observacoes
+                Observações
               </p>
               <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">
-                {retirementRequest.notes || "Nao informadas"}
+                {retirementRequest.notes || "Não informadas"}
               </p>
             </div>
           </CardContent>
@@ -188,7 +188,7 @@ export function PoliceOfficerRetirementRequestShowPage() {
           <CardHeader>
             <CardTitle>Contexto e auditoria</CardTitle>
             <CardDescription>
-              Relacionamento com o policial, boletins e usuarios responsaveis.
+              Relacionamento com o policial, boletins e usuários responsáveis.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -198,9 +198,9 @@ export function PoliceOfficerRetirementRequestShowPage() {
               </p>
               <p className="mt-1 text-sm text-slate-700">{policeOfficerName}</p>
               <p className="mt-1 text-xs text-slate-500">
-                Matricula:{" "}
+                Matrícula:{" "}
                 {retirementRequest.police_officer?.registration_number ??
-                  "Nao informada"}
+                  "Não informada"}
               </p>
             </div>
 
@@ -212,7 +212,7 @@ export function PoliceOfficerRetirementRequestShowPage() {
                 </p>
               </div>
               <p className="mt-1 text-sm text-slate-700">
-                {retirementRequest.bulletin_request ?? "Nao informado"}
+                {retirementRequest.bulletin_request ?? "Não informado"}
               </p>
             </div>
 
@@ -220,11 +220,11 @@ export function PoliceOfficerRetirementRequestShowPage() {
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-primary" />
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Boletim de publicacao
+                  Boletim de publicação
                 </p>
               </div>
               <p className="mt-1 text-sm text-slate-700">
-                {retirementRequest.bulletin_publication ?? "Nao informado"}
+                {retirementRequest.bulletin_publication ?? "Não informado"}
               </p>
             </div>
 
@@ -237,7 +237,7 @@ export function PoliceOfficerRetirementRequestShowPage() {
                 <p className="text-sm text-slate-700">
                   {retirementRequest.creator
                     ? `${retirementRequest.creator.name} (${retirementRequest.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -251,7 +251,7 @@ export function PoliceOfficerRetirementRequestShowPage() {
                 <p className="text-sm text-slate-700">
                   {retirementRequest.updater
                     ? `${retirementRequest.updater.name} (${retirementRequest.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>

@@ -60,10 +60,10 @@ function buildMaterialLoanSchema(mode: "create" | "edit") {
       approved_by: z.string(),
       purpose: z
         .string()
-        .max(1000, "A finalidade deve ter no maximo 1000 caracteres."),
+        .max(1000, "A finalidade deve ter no máximo 1000 caracteres."),
       return_notes: z
         .string()
-        .max(1000, "As observacoes devem ter no maximo 1000 caracteres."),
+        .max(1000, "As observações devem ter no máximo 1000 caracteres."),
       items: z.array(
         z.object({
           material_id: z.string(),
@@ -91,7 +91,7 @@ function buildMaterialLoanSchema(mode: "create" | "edit") {
           context.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["items"],
-            message: "Adicione ao menos um item ao emprestimo.",
+            message: "Adicione ao menos um item ao empréstimo.",
           });
         }
       }
@@ -319,13 +319,13 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
       <CardHeader>
         <CardTitle>
           {mode === "create"
-            ? "Novo emprestimo de material"
-            : "Editar emprestimo de material"}
+            ? "Novo empréstimo de material"
+            : "Editar empréstimo de material"}
         </CardTitle>
         <CardDescription>
           {mode === "create"
-            ? "Cadastre o policial, o tipo do emprestimo e os itens vinculados por unidade ou lote."
-            : "Atualize apenas o cabecalho. Itens e devolucoes seguem fluxo proprio."}
+            ? "Cadastre o policial, o tipo do empréstimo e os itens vinculados por unidade ou lote."
+            : "Atualize apenas o cabecalho. Itens e devolucoes seguem fluxo próprio."}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -356,7 +356,7 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                 })}
                 selectedOption={selectedPoliceOfficerOption}
                 placeholder="Selecione o policial"
-                searchPlaceholder="Buscar policial por nome ou matricula"
+                searchPlaceholder="Buscar policial por nome ou matrícula"
                 emptyMessage="Nenhum policial encontrado."
               />
               {errors.police_officer_id ? (
@@ -393,7 +393,7 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                 <Input
                   value={
                     materialLoanKindOptions.find((option) => option.value === loan?.kind)
-                      ?.label ?? "Nao informado"
+                      ?.label ?? "Não informado"
                   }
                   readOnly
                 />
@@ -401,7 +401,7 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label>Previsao de devolucao</Label>
+              <Label>Previsao de devolução</Label>
               <Input type="datetime-local" {...register("expected_return_at")} />
               {errors.expected_return_at ? (
                 <p className="text-sm text-destructive">
@@ -443,7 +443,7 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
               <Label>Finalidade</Label>
               <Textarea
                 rows={3}
-                placeholder="Descreva a finalidade do emprestimo."
+                placeholder="Descreva a finalidade do empréstimo."
                 {...register("purpose")}
               />
               {errors.purpose ? (
@@ -453,15 +453,15 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600 md:col-span-2">
               A subunidade vem do contexto ativo e o horario inicial do
-              emprestimo agora e definido automaticamente pela API.
+              empréstimo agora e definido automaticamente pela API.
             </div>
 
             {mode === "edit" ? (
               <div className="space-y-2 md:col-span-2">
-                <Label>Observacoes de retorno</Label>
+                <Label>Observações de retorno</Label>
                 <Textarea
                   rows={3}
-                  placeholder="Campo opcional para observacoes administrativas."
+                  placeholder="Campo opcional para observações administrativas."
                   {...register("return_notes")}
                 />
               </div>
@@ -476,10 +476,10 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-lg font-semibold text-slate-900">
-                      Itens do emprestimo
+                      Itens do empréstimo
                     </h2>
                     <p className="text-sm text-slate-500">
-                      Informe uma unidade ou um lote por item. A API valida
+                      Informe uma unidade ou um lote por item. A API válida
                       disponibilidade, vencimento e coerencia com o material.
                     </p>
                   </div>
@@ -502,8 +502,8 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                 </div>
 
                 <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-                  Ainda nao existe endpoint dedicado para listar apenas unidades
-                  e lotes disponiveis no formulario. Nesta primeira versao, o
+                  Ainda não existe endpoint dedicado para listar apenas unidades
+                  e lotes disponíveis no formulario. Nesta primeira versao, o
                   preenchimento usa o ID da unidade ou do lote e a API confirma
                   saldo, vencimento e subunidade.
                 </div>
@@ -657,8 +657,8 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                                 {...register(`items.${index}.material_batch_id`)}
                               />
                               <p className="text-xs text-slate-500">
-                                Para lotes, o backend verifica saldo disponivel
-                                antes de confirmar o emprestimo.
+                                Para lotes, o backend verifica saldo disponível
+                                antes de confirmar o empréstimo.
                               </p>
                               {errors.items?.[index]?.material_batch_id ? (
                                 <p className="text-sm text-destructive">
@@ -680,15 +680,15 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                 Itens emprestados
               </h2>
               <p className="mt-1 text-sm text-slate-500">
-                Os itens existentes nao sao alterados aqui. Para registrar
-                devolucao total ou parcial, use o fluxo dedicado de retorno.
+                Os itens existentes não sao alterados aqui. Para registrar
+                devolução total ou parcial, use o fluxo dedicado de retorno.
               </p>
               <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200/70 bg-white">
                 <table className="min-w-full text-left text-sm">
                   <thead className="bg-slate-50 text-slate-500">
                     <tr>
                       <th className="px-4 py-3 font-medium">Material</th>
-                      <th className="px-4 py-3 font-medium">Referencia</th>
+                      <th className="px-4 py-3 font-medium">Referência</th>
                       <th className="px-4 py-3 font-medium">Quantidade</th>
                     </tr>
                   </thead>
@@ -717,7 +717,7 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                 <div className="mt-4">
                   <Button asChild variant="outline">
                     <Link href={`/material-loans/${loan.id}/return`}>
-                      Ir para devolucao parcial
+                      Ir para devolução parcial
                     </Link>
                   </Button>
                 </div>
@@ -737,8 +737,8 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                   ? "Salvando..."
                   : "Atualizando..."
                 : mode === "create"
-                  ? "Salvar emprestimo"
-                  : "Atualizar emprestimo"}
+                  ? "Salvar empréstimo"
+                  : "Atualizar empréstimo"}
             </Button>
           </div>
         </form>

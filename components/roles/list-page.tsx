@@ -37,7 +37,7 @@ export function RolesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            O modulo de perfis fica dentro de Administrador e exige `administrator` + `roles.viewAny`.
+            O módulo de perfis fica dentro de Administrador e exige `administrator` + `roles.viewAny`.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -49,7 +49,7 @@ export function RolesListPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="font-display text-3xl text-slate-900">Perfis</h1>
-          <p className="text-sm text-slate-500">Gerencie roles e a matriz de permissoes do sistema.</p>
+          <p className="text-sm text-slate-500">Gerencie roles e a matriz de permissões do sistema.</p>
         </div>
 
         {permissions.canCreate ? (
@@ -83,7 +83,7 @@ export function RolesListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar perfis</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !rolesQuery.data?.data.length ? (

@@ -23,34 +23,34 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const policeOfficerFormSchema = z.object({
-  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
-  cpf: z.string().refine((value) => value.replace(/\D/g, "").length === 11, "Informe um CPF com 11 digitos."),
-  email: z.string().email("Informe um email valido."),
-  phone: z.string().refine((value) => value.trim() === "" || [10, 11].includes(value.replace(/\D/g, "").length), "Informe um telefone com 10 ou 11 digitos."),
+  name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
+  cpf: z.string().refine((value) => value.replace(/\D/g, "").length === 11, "Informe um CPF com 11 dígitos."),
+  email: z.string().email("Informe um email válido."),
+  phone: z.string().refine((value) => value.trim() === "" || [10, 11].includes(value.replace(/\D/g, "").length), "Informe um telefone com 10 ou 11 dígitos."),
   password: z.string().optional(),
   role_id: z.string(),
-  badge_number: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length <= 10, "O numeral deve ter no maximo 10 digitos."),
-  war_name: z.string().min(2, "O nome de guerra precisa ter ao menos 2 caracteres.").max(50, "O nome de guerra deve ter no maximo 50 caracteres."),
+  badge_number: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length <= 10, "O numeral deve ter no máximo 10 dígitos."),
+  war_name: z.string().min(2, "O nome de guerra precisa ter ao menos 2 caracteres.").max(50, "O nome de guerra deve ter no máximo 50 caracteres."),
   registration_number: z.string().refine((value) => {
     const digits = value.replace(/\D/g, "");
     return digits.length >= 1 && digits.length <= 8;
-  }, "A matricula deve ter entre 1 e 8 digitos."),
-  cc_registration_number: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length <= 8, "A matricula CC deve ter no maximo 8 digitos."),
-  phone2: z.string().refine((value) => value.trim() === "" || [10, 11].includes(value.replace(/\D/g, "").length), "Informe um telefone com 10 ou 11 digitos."),
+  }, "A matrícula deve ter entre 1 e 8 dígitos."),
+  cc_registration_number: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length <= 8, "A matrícula CC deve ter no máximo 8 dígitos."),
+  phone2: z.string().refine((value) => value.trim() === "" || [10, 11].includes(value.replace(/\D/g, "").length), "Informe um telefone com 10 ou 11 dígitos."),
   birth_date: z.string().optional(),
-  street: z.string().max(100, "A rua deve ter no maximo 100 caracteres."),
-  number: z.string().max(20, "O numero deve ter no maximo 20 caracteres."),
-  neighborhood: z.string().max(100, "O bairro deve ter no maximo 100 caracteres."),
-  postal_code: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length === 8, "Informe um CEP com 8 digitos."),
+  street: z.string().max(100, "A rua deve ter no máximo 100 caracteres."),
+  number: z.string().max(20, "O número deve ter no máximo 20 caracteres."),
+  neighborhood: z.string().max(100, "O bairro deve ter no máximo 100 caracteres."),
+  postal_code: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length === 8, "Informe um CEP com 8 dígitos."),
   inclusion_date: z.string().optional(),
   presentation_date: z.string().optional(),
-  inclusion_bulletin: z.string().max(50, "O boletim de inclusao deve ter no maximo 50 caracteres."),
-  presentation_bulletin: z.string().max(50, "O boletim de apresentacao deve ter no maximo 50 caracteres."),
-  transfer_bulletin: z.string().max(50, "O boletim de transferencia deve ter no maximo 50 caracteres."),
-  father_name: z.string().max(100, "O nome do pai deve ter no maximo 100 caracteres."),
-  mother_name: z.string().max(100, "O nome da mae deve ter no maximo 100 caracteres."),
-  agency: z.string().max(20, "A agencia deve ter no maximo 20 caracteres."),
-  account: z.string().max(20, "A conta deve ter no maximo 20 caracteres."),
+  inclusion_bulletin: z.string().max(50, "O boletim de inclusao deve ter no máximo 50 caracteres."),
+  presentation_bulletin: z.string().max(50, "O boletim de apresentacao deve ter no máximo 50 caracteres."),
+  transfer_bulletin: z.string().max(50, "O boletim de transferencia deve ter no máximo 50 caracteres."),
+  father_name: z.string().max(100, "O nome do pai deve ter no máximo 100 caracteres."),
+  mother_name: z.string().max(100, "O nome da mae deve ter no máximo 100 caracteres."),
+  agency: z.string().max(20, "A agencia deve ter no máximo 20 caracteres."),
+  account: z.string().max(20, "A conta deve ter no máximo 20 caracteres."),
   is_active: z.string(),
   bank_id: z.string(),
   city_id: z.string(),
@@ -223,15 +223,15 @@ export function PoliceOfficerForm({ mode, policeOfficer }: PoliceOfficerFormProp
       <CardHeader>
         <CardTitle>{mode === "create" ? "Novo policial" : "Editar policial"}</CardTitle>
         <CardDescription>
-          Formulario alinhado com `StorePoliceOfficerRequest` e `UpdatePoliceOfficerRequest`, incluindo dados do usuario vinculado e dados funcionais.
+          Formulario alinhado com `StorePoliceOfficerRequest` e `UpdatePoliceOfficerRequest`, incluindo dados do usuário vinculado e dados funcionais.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="space-y-4">
             <div>
-              <h3 className="text-base font-semibold text-slate-900">Usuario vinculado</h3>
-              <p className="text-sm text-slate-500">Informacoes persistidas no `User` associado ao policial.</p>
+              <h3 className="text-base font-semibold text-slate-900">Usuário vinculado</h3>
+              <p className="text-sm text-slate-500">Informações persistidas no `User` associado ao policial.</p>
             </div>
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2 md:col-span-2">
@@ -276,7 +276,7 @@ export function PoliceOfficerForm({ mode, policeOfficer }: PoliceOfficerFormProp
                 <Input id="password" type="password" {...register("password")} />
                 <p className="text-xs text-slate-500">
                   {mode === "create"
-                    ? "Opcional. Se nao informar, a API usa o CPF como senha inicial."
+                    ? "Opcional. Se não informar, a API usa o CPF como senha inicial."
                     : "Opcional. Deixe em branco para manter a senha atual."}
                 </p>
                 {errors.password ? <p className="text-sm text-destructive">{errors.password.message}</p> : null}
@@ -286,7 +286,7 @@ export function PoliceOfficerForm({ mode, policeOfficer }: PoliceOfficerFormProp
 
           <section className="space-y-4">
             <div>
-              <h3 className="text-base font-semibold text-slate-900">Identificacao funcional</h3>
+              <h3 className="text-base font-semibold text-slate-900">Identificação funcional</h3>
               <p className="text-sm text-slate-500">Campos principais do registro militar.</p>
             </div>
             <div className="grid gap-5 md:grid-cols-2">
@@ -296,12 +296,12 @@ export function PoliceOfficerForm({ mode, policeOfficer }: PoliceOfficerFormProp
                 {errors.war_name ? <p className="text-sm text-destructive">{errors.war_name.message}</p> : null}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="registration_number">Matricula</Label>
+                <Label htmlFor="registration_number">Matrícula</Label>
                 <Input id="registration_number" {...register("registration_number")} />
                 {errors.registration_number ? <p className="text-sm text-destructive">{errors.registration_number.message}</p> : null}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="cc_registration_number">Matricula CC</Label>
+                <Label htmlFor="cc_registration_number">Matrícula CC</Label>
                 <Input id="cc_registration_number" {...register("cc_registration_number")} />
                 {errors.cc_registration_number ? <p className="text-sm text-destructive">{errors.cc_registration_number.message}</p> : null}
               </div>
@@ -351,7 +351,7 @@ export function PoliceOfficerForm({ mode, policeOfficer }: PoliceOfficerFormProp
                 {errors.street ? <p className="text-sm text-destructive">{errors.street.message}</p> : null}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="number">Numero</Label>
+                <Label htmlFor="number">Número</Label>
                 <Input id="number" {...register("number")} />
                 {errors.number ? <p className="text-sm text-destructive">{errors.number.message}</p> : null}
               </div>
@@ -375,7 +375,7 @@ export function PoliceOfficerForm({ mode, policeOfficer }: PoliceOfficerFormProp
 
           <section className="space-y-4">
             <div>
-              <h3 className="text-base font-semibold text-slate-900">Vinculos e dados bancarios</h3>
+              <h3 className="text-base font-semibold text-slate-900">Vínculos e dados bancarios</h3>
             </div>
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
@@ -411,13 +411,13 @@ export function PoliceOfficerForm({ mode, policeOfficer }: PoliceOfficerFormProp
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>Genero</Label>
+                <Label>Gênero</Label>
                 <Select value={selectedGenderId} onValueChange={(value) => setValue("gender_id", value, { shouldValidate: true })}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione um genero" />
+                    <SelectValue placeholder="Selecione um gênero" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Sem genero vinculado</SelectItem>
+                    <SelectItem value="none">Sem gênero vinculado</SelectItem>
                     {(gendersQuery.data?.data ?? []).map((gender) => (
                       <SelectItem key={gender.id} value={String(gender.id)}>
                         {gender.name}
@@ -491,7 +491,7 @@ export function PoliceOfficerForm({ mode, policeOfficer }: PoliceOfficerFormProp
               <Link href={mode === "create" ? "/police-officers" : `/police-officers/${policeOfficer?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar policial" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar policial" : "Salvar alterações"}
             </Button>
           </div>
         </form>

@@ -32,7 +32,7 @@ function getStatusLabel(status?: string | null) {
     case "ongoing":
       return "Em andamento";
     case "completed":
-      return "Concluida";
+      return "Concluída";
     case "cancelled":
       return "Cancelada";
     default:
@@ -52,7 +52,7 @@ export function CourseClassShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `view` para visualizar turmas.</CardDescription>
+          <CardDescription>Você precisa da permissão `view` para visualizar turmas.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -67,7 +67,7 @@ export function CourseClassShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar turma</CardTitle>
-          <CardDescription>Os dados da turma nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados da turma não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -84,10 +84,10 @@ export function CourseClassShowPage() {
             <Badge variant={getStatusVariant(courseClass.status)}>{getStatusLabel(courseClass.status)}</Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            {courseClass.course ? `${courseClass.course.name} (${courseClass.course.abbreviation})` : "Curso nao informado"}
+            {courseClass.course ? `${courseClass.course.name} (${courseClass.course.abbreviation})` : "Curso não informado"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Turma operacional vinculada a curso e subunidade, com snapshot de disciplinas e acompanhamento de execucao.
+            Turma operacional vinculada a curso e subunidade, com snapshot de disciplinas e acompanhamento de execução.
           </p>
         </div>
 
@@ -137,7 +137,7 @@ export function CourseClassShowPage() {
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <CalendarDays className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Periodo planejado</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Período planejado</p>
                 <p className="text-sm text-slate-700">{courseClass.planned_start_date ?? "-"} ate {courseClass.planned_end_date ?? "-"}</p>
               </div>
             </div>
@@ -145,7 +145,7 @@ export function CourseClassShowPage() {
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <CalendarDays className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Periodo real</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Período real</p>
                 <p className="text-sm text-slate-700">{courseClass.start_date ?? "-"} ate {courseClass.end_date ?? "-"}</p>
               </div>
             </div>
@@ -154,7 +154,7 @@ export function CourseClassShowPage() {
               <GraduationCap className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Curso</p>
-                <p className="text-sm text-slate-700">{courseClass.course ? `${courseClass.course.name} (${courseClass.course.abbreviation})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{courseClass.course ? `${courseClass.course.name} (${courseClass.course.abbreviation})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>
@@ -162,36 +162,36 @@ export function CourseClassShowPage() {
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Responsaveis</CardTitle>
-            <CardDescription>Usuarios vinculados a autorizacao e acompanhamento da turma.</CardDescription>
+            <CardTitle>Responsáveis</CardTitle>
+            <CardDescription>Usuários vinculados a autorização e acompanhamento da turma.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Users2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Autorizado por</p>
-                <p className="text-sm text-slate-700">{courseClass.authorizer ? `${courseClass.authorizer.name} (${courseClass.authorizer.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{courseClass.authorizer ? `${courseClass.authorizer.name} (${courseClass.authorizer.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Users2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Coordenador</p>
-                <p className="text-sm text-slate-700">{courseClass.coordinator ? `${courseClass.coordinator.name} (${courseClass.coordinator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{courseClass.coordinator ? `${courseClass.coordinator.name} (${courseClass.coordinator.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Users2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Monitor</p>
-                <p className="text-sm text-slate-700">{courseClass.monitor ? `${courseClass.monitor.name} (${courseClass.monitor.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{courseClass.monitor ? `${courseClass.monitor.name} (${courseClass.monitor.email})` : "Não informado"}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <UserCircle2 className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
-                <p className="text-sm text-slate-700">{courseClass.creator ? `${courseClass.creator.name} (${courseClass.creator.email})` : "Nao informado"}</p>
+                <p className="text-sm text-slate-700">{courseClass.creator ? `${courseClass.creator.name} (${courseClass.creator.email})` : "Não informado"}</p>
               </div>
             </div>
           </CardContent>

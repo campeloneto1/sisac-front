@@ -35,7 +35,7 @@ export function CountriesListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `countries.viewAny` para visualizar paises.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `countries.viewAny` para visualizar países.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -45,15 +45,15 @@ export function CountriesListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Paises</h1>
-          <p className="text-sm text-slate-500">Gerencie o cadastro administrativo de paises usado por outros modulos.</p>
+          <h1 className="font-display text-3xl text-slate-900">Países</h1>
+          <p className="text-sm text-slate-500">Gerencie o cadastro administrativo de países usado por outros módulos.</p>
         </div>
 
         {permissions.canCreate ? (
           <Button asChild>
             <Link href="/countries/create">
               <Plus className="mr-2 h-4 w-4" />
-              Novo pais
+              Novo país
             </Link>
           </Button>
         ) : null}
@@ -79,15 +79,15 @@ export function CountriesListPage() {
       ) : countriesQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar paises</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardTitle>Erro ao carregar países</CardTitle>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !countriesQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhum pais encontrado</CardTitle>
-            <CardDescription>Crie um novo pais ou refine a busca.</CardDescription>
+            <CardTitle>Nenhum país encontrado</CardTitle>
+            <CardDescription>Crie um novo país ou refine a busca.</CardDescription>
           </CardHeader>
         </Card>
       ) : (

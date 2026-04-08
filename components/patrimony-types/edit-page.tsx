@@ -27,8 +27,8 @@ export function PatrimonyTypeEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `patrimony-types.update` para
-            editar tipos de patrimonio.
+            Você precisa de `administrator` e `patrimony-types.update` para
+            editar tipos de patrimônio.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -43,9 +43,9 @@ export function PatrimonyTypeEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar tipo de patrimonio</CardTitle>
+          <CardTitle>Erro ao carregar tipo de patrimônio</CardTitle>
           <CardDescription>
-            O tipo de patrimonio nao pode ser editado agora.
+            O tipo de patrimônio não pode ser editado agora.
           </CardDescription>
         </CardHeader>
       </Card>

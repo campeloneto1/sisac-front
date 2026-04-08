@@ -61,7 +61,7 @@ export function ServiceTypesFilters({
         <SelectContent>
           <SelectItem value="all">Qualquer aprovacao</SelectItem>
           <SelectItem value="true">Requer aprovacao</SelectItem>
-          <SelectItem value="false">Nao requer aprovacao</SelectItem>
+          <SelectItem value="false">Não requer aprovacao</SelectItem>
         </SelectContent>
       </Select>
 

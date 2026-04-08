@@ -51,7 +51,7 @@ export function MaterialUnitsPageShell({
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce nao possui permissao suficiente para acessar a gestao de unidades deste material.</CardDescription>
+          <CardDescription>Você não possui permissão suficiente para acessar a gestão de unidades deste material.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -62,7 +62,7 @@ export function MaterialUnitsPageShell({
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>O modulo de materiais depende da subunidade ativa para carregar o contexto operacional.</CardDescription>
+          <CardDescription>O módulo de materiais depende da subunidade ativa para carregar o contexto operacional.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -82,8 +82,8 @@ export function MaterialUnitsPageShell({
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Nao foi possivel carregar o material</CardTitle>
-          <CardDescription>Verifique se o cadastro existe e se voce possui acesso a ele.</CardDescription>
+          <CardTitle>Não foi possível carregar o material</CardTitle>
+          <CardDescription>Verifique se o cadastro existe e se você possui acesso a ele.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -133,15 +133,15 @@ export function MaterialUnitsPageShell({
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-amber-900">
               <ShieldAlert className="h-5 w-5" />
-              Integracao parcial com a API
+              Integração parcial com a API
             </CardTitle>
             <CardDescription className="text-amber-800">
-              O backend ja devolve unidades dentro do `Material.show`, mas ainda nao expoe endpoints dedicados para CRUD de `MaterialUnit`.
+              O backend já devolve unidades dentro do `Material.show`, mas ainda não expoe endpoints dedicados para CRUD de `MaterialUnit`.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-amber-900">
-            <p>Esta area ja consegue listar e detalhar unidades usando o payload do material.</p>
-            <p>Cadastro, edicao e exclusao dedicados dependem da publicacao dos endpoints da API.</p>
+            <p>Esta area já consegue listar e detalhar unidades usando o payload do material.</p>
+            <p>Cadastro, edição e exclusão dedicados dependem da publicação dos endpoints da API.</p>
           </CardContent>
         </Card>
       ) : null}

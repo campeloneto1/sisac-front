@@ -45,7 +45,7 @@ export function CoursesTable({ courses }: CoursesTableProps) {
               <tr>
                 <th className="px-4 py-3 font-medium">Curso</th>
                 <th className="px-4 py-3 font-medium">Sigla</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -54,7 +54,7 @@ export function CoursesTable({ courses }: CoursesTableProps) {
                   <td className="px-4 py-4">
                     <div>
                       <p className="font-medium text-slate-900">{course.name}</p>
-                      <p className="mt-1 text-slate-500">Cadastro base para turmas, disciplinas e historico de cursos dos policiais.</p>
+                      <p className="mt-1 text-slate-500">Cadastro base para turmas, disciplinas e histórico de cursos dos policiais.</p>
                     </div>
                   </td>
                   <td className="px-4 py-4">
@@ -97,7 +97,7 @@ export function CoursesTable({ courses }: CoursesTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir curso</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {courseToDelete?.name}? Se houver turmas, disciplinas ou historicos vinculados, a API pode bloquear a exclusao.
+              Tem certeza que deseja excluir {courseToDelete?.name}? Se houver turmas, disciplinas ou históricos vinculados, a API pode bloquear a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -105,7 +105,7 @@ export function CoursesTable({ courses }: CoursesTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

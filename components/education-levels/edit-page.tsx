@@ -21,7 +21,7 @@ export function EducationLevelEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `education-levels.update` para editar niveis de escolaridade.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `education-levels.update` para editar niveis de escolaridade.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function EducationLevelEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar nivel de escolaridade</CardTitle>
-          <CardDescription>O nivel de escolaridade nao pode ser editado agora.</CardDescription>
+          <CardDescription>O nivel de escolaridade não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

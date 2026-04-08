@@ -62,12 +62,12 @@ export function VehiclesTable({ vehicles }: VehiclesTableProps) {
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Veiculo</th>
-                <th className="px-4 py-3 font-medium">Classificacao</th>
+                <th className="px-4 py-3 font-medium">Veículo</th>
+                <th className="px-4 py-3 font-medium">Classificação</th>
                 <th className="px-4 py-3 font-medium">Subunidade</th>
                 <th className="px-4 py-3 font-medium">KM</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -90,20 +90,20 @@ export function VehiclesTable({ vehicles }: VehiclesTableProps) {
                   <td className="px-4 py-4 text-slate-700">
                     <div>
                       <p>
-                        {vehicle.vehicle_type?.name ?? "Tipo nao informado"}
+                        {vehicle.vehicle_type?.name ?? "Tipo não informado"}
                       </p>
                       <p className="mt-1 text-slate-500">
                         {vehicle.variant?.brand?.name
                           ? `${vehicle.variant.brand.name} • `
                           : ""}
-                        {vehicle.variant?.name ?? "Modelo nao informado"}
+                        {vehicle.variant?.name ?? "Modelo não informado"}
                       </p>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-700">
                     {vehicle.subunit?.abbreviation ??
                       vehicle.subunit?.name ??
-                      "Nao informada"}
+                      "Não informada"}
                   </td>
                   <td className="px-4 py-4 text-slate-700">
                     <div>
@@ -123,7 +123,7 @@ export function VehiclesTable({ vehicles }: VehiclesTableProps) {
                         {vehicle.operational_status_label ?? "Sem status"}
                       </Badge>
                       <Badge variant={vehicle.is_available ? "success" : "warning"}>
-                        {vehicle.is_available ? "Disponivel" : "Indisponivel"}
+                        {vehicle.is_available ? "Disponível" : "Indisponivel"}
                       </Badge>
                     </div>
                   </td>
@@ -169,10 +169,10 @@ export function VehiclesTable({ vehicles }: VehiclesTableProps) {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir veiculo</DialogTitle>
+            <DialogTitle>Excluir veículo</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir o veiculo{" "}
-              {vehicleToDelete?.license_plate}? Essa acao faz soft delete no
+              Tem certeza que deseja excluir o veículo{" "}
+              {vehicleToDelete?.license_plate}? Essa ação faz soft delete no
               backend.
             </DialogDescription>
           </DialogHeader>
@@ -185,7 +185,7 @@ export function VehiclesTable({ vehicles }: VehiclesTableProps) {
               disabled={deleteMutation.isPending}
               onClick={() => void handleDelete()}
             >
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

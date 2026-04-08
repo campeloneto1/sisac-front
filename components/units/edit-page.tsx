@@ -21,7 +21,7 @@ export function UnitEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `units.update` para editar unidades.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `units.update` para editar unidades.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function UnitEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar unidade</CardTitle>
-          <CardDescription>A unidade nao pode ser editada agora.</CardDescription>
+          <CardDescription>A unidade não pode ser editada agora.</CardDescription>
         </CardHeader>
       </Card>
     );

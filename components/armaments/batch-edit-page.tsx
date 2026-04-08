@@ -22,15 +22,15 @@ export function ArmamentBatchEditPage() {
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Edicao do lote #{params.batchId}</CardTitle>
+          <CardTitle>Edição do lote #{params.batchId}</CardTitle>
           <CardDescription>
-            Esta tela fica reservada para o formulario de edicao quando o
-            recurso estiver disponivel na API.
+            Esta tela fica reservada para o formulario de edição quando o
+            recurso estiver disponível na API.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
           <p>Atualizacoes previstas:</p>
-          <p>numero do lote;</p>
+          <p>número do lote;</p>
           <p>quantidade total;</p>
           <p>data de expiracao.</p>
         </CardContent>

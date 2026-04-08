@@ -24,14 +24,14 @@ export function ArmamentOccurrenceShowPage() {
         <CardHeader>
           <CardTitle>Ocorrencia #{params.id}</CardTitle>
           <CardDescription>
-            Esta rota ja esta pronta para receber o detalhe da ocorrencia.
+            Esta rota já esta pronta para receber o detalhe da ocorrencia.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
-          <p>Informacoes esperadas:</p>
+          <p>Informações esperadas:</p>
           <p>tipo, status, severidade e exigencia de BO;</p>
           <p>armamento, unidade ou lote relacionados;</p>
-          <p>descricao, data da ocorrencia, reportante e auditoria.</p>
+          <p>descrição, data da ocorrencia, reportante e auditoria.</p>
         </CardContent>
       </Card>
     </ArmamentOccurrencesPageShell>

@@ -48,7 +48,7 @@ export function PublicationTypesFilters({
               value={search}
               onChange={(event) => onSearchChange(event.target.value)}
               className="pl-9"
-              placeholder="Buscar por nome, slug ou descricao"
+              placeholder="Buscar por nome, slug ou descrição"
             />
           </div>
         </div>
@@ -77,7 +77,7 @@ export function PublicationTypesFilters({
             <SelectContent>
               <SelectItem value="all">Todos</SelectItem>
               <SelectItem value="true">Sim</SelectItem>
-              <SelectItem value="false">Nao</SelectItem>
+              <SelectItem value="false">Não</SelectItem>
             </SelectContent>
           </Select>
         </div>

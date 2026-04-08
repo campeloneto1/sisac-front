@@ -54,8 +54,8 @@ export function VehicleRentalsListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar locacoes de
-            veiculos.
+            Você precisa da permissão `viewAny` para visualizar locações de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -71,10 +71,10 @@ export function VehicleRentalsListPage() {
           </div>
           <div>
             <h1 className="font-display text-3xl text-slate-900">
-              Locacoes de veiculos
+              Locações de veículos
             </h1>
             <p className="text-sm text-slate-500">
-              Controle contratos, custos e devolucoes de veiculos alugados.
+              Controle contratos, custos e devolucoes de veículos alugados.
             </p>
           </div>
         </div>
@@ -83,7 +83,7 @@ export function VehicleRentalsListPage() {
           <Button asChild>
             <Link href="/vehicle-rentals/create">
               <Plus className="mr-2 h-4 w-4" />
-              Nova locacao
+              Nova locação
             </Link>
           </Button>
         ) : null}
@@ -129,9 +129,9 @@ export function VehicleRentalsListPage() {
       ) : rentalsQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar locacoes</CardTitle>
+            <CardTitle>Erro ao carregar locações</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario
+              Verifique a API, a subunidade ativa e as permissões do usuário
               autenticado.
             </CardDescription>
           </CardHeader>
@@ -139,9 +139,9 @@ export function VehicleRentalsListPage() {
       ) : !rentalsQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhuma locacao encontrada</CardTitle>
+            <CardTitle>Nenhuma locação encontrada</CardTitle>
             <CardDescription>
-              Crie uma nova locacao ou refine os filtros aplicados.
+              Crie uma nova locação ou refine os filtros aplicados.
             </CardDescription>
           </CardHeader>
         </Card>

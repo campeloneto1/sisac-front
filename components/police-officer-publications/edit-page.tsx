@@ -24,7 +24,7 @@ export function PoliceOfficerPublicationEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `update` para editar publicacoes.
+            Você precisa da permissão `update` para editar publicações.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -42,9 +42,9 @@ export function PoliceOfficerPublicationEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar publicacao</CardTitle>
+          <CardTitle>Erro ao carregar publicação</CardTitle>
           <CardDescription>
-            Os dados da publicacao nao estao disponiveis no momento.
+            Os dados da publicação não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>

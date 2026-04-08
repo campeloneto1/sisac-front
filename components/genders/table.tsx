@@ -42,8 +42,8 @@ export function GendersTable({ genders }: GendersTableProps) {
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Genero</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium">Gênero</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -52,7 +52,7 @@ export function GendersTable({ genders }: GendersTableProps) {
                   <td className="px-4 py-4">
                     <div>
                       <p className="font-medium text-slate-900">{gender.name}</p>
-                      <p className="mt-1 text-slate-500">Cadastro administrativo global de genero usado em outros modulos.</p>
+                      <p className="mt-1 text-slate-500">Cadastro administrativo global de gênero usado em outros módulos.</p>
                     </div>
                   </td>
                   <td className="px-4 py-4">
@@ -90,9 +90,9 @@ export function GendersTable({ genders }: GendersTableProps) {
       <Dialog open={Boolean(genderToDelete)} onOpenChange={(open) => !open && setGenderToDelete(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir genero</DialogTitle>
+            <DialogTitle>Excluir gênero</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {genderToDelete?.name}? Se houver policiais ou outros registros vinculados, a API pode bloquear a exclusao.
+              Tem certeza que deseja excluir {genderToDelete?.name}? Se houver policiais ou outros registros vinculados, a API pode bloquear a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -100,7 +100,7 @@ export function GendersTable({ genders }: GendersTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

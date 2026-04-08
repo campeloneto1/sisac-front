@@ -60,8 +60,8 @@ export function VehicleMaintenancesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar manutencoes de
-            veiculos.
+            Você precisa da permissão `viewAny` para visualizar manutencoes de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -77,7 +77,7 @@ export function VehicleMaintenancesListPage() {
           </div>
           <div>
             <h1 className="font-display text-3xl text-slate-900">
-              Manutencoes de veiculos
+              Manutencoes de veículos
             </h1>
             <p className="text-sm text-slate-500">
               Controle entradas em oficina, custos, previsoes e encerramentos.
@@ -89,7 +89,7 @@ export function VehicleMaintenancesListPage() {
           <Button asChild>
             <Link href="/vehicle-maintenances/create">
               <Plus className="mr-2 h-4 w-4" />
-              Nova manutencao
+              Nova manutenção
             </Link>
           </Button>
         ) : null}
@@ -143,7 +143,7 @@ export function VehicleMaintenancesListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar manutencoes</CardTitle>
             <CardDescription>
-              Verifique a API, a subunidade ativa e as permissoes do usuario
+              Verifique a API, a subunidade ativa e as permissões do usuário
               autenticado.
             </CardDescription>
           </CardHeader>
@@ -151,9 +151,9 @@ export function VehicleMaintenancesListPage() {
       ) : !maintenancesQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Nenhuma manutencao encontrada</CardTitle>
+            <CardTitle>Nenhuma manutenção encontrada</CardTitle>
             <CardDescription>
-              Crie uma nova manutencao ou refine os filtros aplicados.
+              Crie uma nova manutenção ou refine os filtros aplicados.
             </CardDescription>
           </CardHeader>
         </Card>

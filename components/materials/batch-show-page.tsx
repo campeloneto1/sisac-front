@@ -20,8 +20,8 @@ export function MaterialBatchShowPage() {
       {!batch ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Lote nao encontrado</CardTitle>
-            <CardDescription>Este lote nao foi retornado pelo payload atual do material.</CardDescription>
+            <CardTitle>Lote não encontrado</CardTitle>
+            <CardDescription>Este lote não foi retornado pelo payload atual do material.</CardDescription>
           </CardHeader>
         </Card>
       ) : (
@@ -32,7 +32,7 @@ export function MaterialBatchShowPage() {
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-2">
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Numero do lote</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Número do lote</p>
               <p className="mt-1 text-sm text-slate-700">{batch.batch_number}</p>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -40,7 +40,7 @@ export function MaterialBatchShowPage() {
               <p className="mt-1 text-sm text-slate-700">{batch.quantity}</p>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Disponivel</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Disponível</p>
               <p className="mt-1 text-sm text-slate-700">{batch.available_quantity ?? "-"}</p>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">

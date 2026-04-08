@@ -21,7 +21,7 @@ export function ContractTypeEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `contract-types.update` para editar tipos de contrato.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `contract-types.update` para editar tipos de contrato.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function ContractTypeEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar tipo de contrato</CardTitle>
-          <CardDescription>O tipo de contrato nao pode ser editado agora.</CardDescription>
+          <CardDescription>O tipo de contrato não pode ser editado agora.</CardDescription>
         </CardHeader>
       </Card>
     );

@@ -39,7 +39,7 @@ export function CompaniesListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `companies.viewAny` para visualizar empresas.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `companies.viewAny` para visualizar empresas.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -96,7 +96,7 @@ export function CompaniesListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar empresas</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !companiesQuery.data?.data.length ? (

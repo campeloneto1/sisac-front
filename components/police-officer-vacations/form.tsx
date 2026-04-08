@@ -19,12 +19,12 @@ import { Label } from "@/components/ui/label";
 
 const policeOfficerVacationFormSchema = z.object({
   police_officer_id: z.string().refine((value) => value !== "none", "Selecione o policial."),
-  reference_year: z.string().min(4, "Informe o ano de referencia."),
+  reference_year: z.string().min(4, "Informe o ano de referência."),
   total_days: z.string().min(1, "Informe o total de dias."),
   sold_days: z.string().optional(),
-  authorization_bulletin: z.string().max(50, "O boletim deve ter no maximo 50 caracteres.").optional(),
-  fractionation_bulletin: z.string().max(50, "O boletim deve ter no maximo 50 caracteres.").optional(),
-  sale_bulletin: z.string().max(50, "O boletim deve ter no maximo 50 caracteres.").optional(),
+  authorization_bulletin: z.string().max(50, "O boletim deve ter no máximo 50 caracteres.").optional(),
+  fractionation_bulletin: z.string().max(50, "O boletim deve ter no máximo 50 caracteres.").optional(),
+  sale_bulletin: z.string().max(50, "O boletim deve ter no máximo 50 caracteres.").optional(),
 }).superRefine((values, context) => {
   const totalDays = Number(values.total_days || 0);
   const soldDays = Number(values.sold_days || 0);
@@ -33,7 +33,7 @@ const policeOfficerVacationFormSchema = z.object({
     context.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["total_days"],
-      message: "Informe um total de dias valido.",
+      message: "Informe um total de dias válido.",
     });
   }
 
@@ -42,7 +42,7 @@ const policeOfficerVacationFormSchema = z.object({
       context.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["sold_days"],
-        message: "Informe um total vendido valido.",
+        message: "Informe um total vendido válido.",
       });
     }
 
@@ -50,7 +50,7 @@ const policeOfficerVacationFormSchema = z.object({
       context.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["sold_days"],
-        message: "Os dias vendidos nao podem ultrapassar o total de dias.",
+        message: "Os dias vendidos não podem ultrapassar o total de dias.",
       });
     }
   }
@@ -150,9 +150,9 @@ export function PoliceOfficerVacationForm({ mode, policeOfficerVacation }: Polic
   return (
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Novo registro de ferias" : "Editar registro de ferias"}</CardTitle>
+        <CardTitle>{mode === "create" ? "Novo registro de férias" : "Editar registro de férias"}</CardTitle>
         <CardDescription>
-          Cadastre o saldo anual de ferias do policial e ja deixe pronto o contexto para fracionamento em ate dois periodos ou venda de dias.
+          Cadastre o saldo anual de férias do policial e já deixe pronto o contexto para fracionamento em ate dois períodos ou venda de dias.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -160,7 +160,7 @@ export function PoliceOfficerVacationForm({ mode, policeOfficerVacation }: Polic
           <section className="space-y-4">
             <div>
               <h3 className="text-base font-semibold text-slate-900">Dados principais</h3>
-              <p className="text-sm text-slate-500">Policial, ano de referencia e quantidade total de dias disponiveis no registro.</p>
+              <p className="text-sm text-slate-500">Policial, ano de referência e quantidade total de dias disponíveis no registro.</p>
             </div>
 
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -183,14 +183,14 @@ export function PoliceOfficerVacationForm({ mode, policeOfficerVacation }: Polic
                   })}
                   selectedOption={selectedPoliceOfficerOption}
                   placeholder="Selecione"
-                  searchPlaceholder="Buscar policial por nome ou matricula"
+                  searchPlaceholder="Buscar policial por nome ou matrícula"
                   emptyMessage="Nenhum policial encontrado."
                 />
                 {errors.police_officer_id ? <p className="text-sm text-destructive">{errors.police_officer_id.message}</p> : null}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="vacation-reference-year">Ano de referencia</Label>
+                <Label htmlFor="vacation-reference-year">Ano de referência</Label>
                 <Input id="vacation-reference-year" inputMode="numeric" placeholder="Ex.: 2025" {...register("reference_year")} />
                 {errors.reference_year ? <p className="text-sm text-destructive">{errors.reference_year.message}</p> : null}
               </div>
@@ -216,12 +216,12 @@ export function PoliceOfficerVacationForm({ mode, policeOfficerVacation }: Polic
           <section className="space-y-4">
             <div>
               <h3 className="text-base font-semibold text-slate-900">Boletins</h3>
-              <p className="text-sm text-slate-500">Registre os boletins de autorizacao, fracionamento e venda quando houver.</p>
+              <p className="text-sm text-slate-500">Registre os boletins de autorização, fracionamento e venda quando houver.</p>
             </div>
 
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="authorization_bulletin">Boletim de autorizacao</Label>
+                <Label htmlFor="authorization_bulletin">Boletim de autorização</Label>
                 <Input id="authorization_bulletin" placeholder="Ex.: BG-2025/100" {...register("authorization_bulletin")} />
                 {errors.authorization_bulletin ? <p className="text-sm text-destructive">{errors.authorization_bulletin.message}</p> : null}
               </div>
@@ -243,7 +243,7 @@ export function PoliceOfficerVacationForm({ mode, policeOfficerVacation }: Polic
               <Link href={mode === "create" ? "/police-officer-vacations" : `/police-officer-vacations/${policeOfficerVacation?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar registro" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar registro" : "Salvar alterações"}
             </Button>
           </div>
         </form>

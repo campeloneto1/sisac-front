@@ -158,9 +158,9 @@ export const vehicleDamageDetectionMomentOptions: Array<{
   label: string;
 }> = [
   { value: "pickup", label: "Na retirada" },
-  { value: "return", label: "Na devolucao" },
-  { value: "maintenance", label: "Durante manutencao" },
-  { value: "inspection", label: "Durante inspecao" },
+  { value: "return", label: "Na devolução" },
+  { value: "maintenance", label: "Durante manutenção" },
+  { value: "inspection", label: "Durante inspeção" },
 ];
 
 export const vehicleDamageTypeOptions: Array<{
@@ -171,8 +171,8 @@ export const vehicleDamageTypeOptions: Array<{
   { value: "dent", label: "Amassado" },
   { value: "broken_part", label: "Peca quebrada" },
   { value: "paint_damage", label: "Dano na pintura" },
-  { value: "mechanical", label: "Mecanico" },
-  { value: "electrical", label: "Eletrico" },
+  { value: "mechanical", label: "Mecânico" },
+  { value: "electrical", label: "Elétrico" },
   { value: "other", label: "Outro" },
 ];
 
@@ -183,7 +183,7 @@ export const vehicleDamageSeverityOptions: Array<{
   { value: "minor", label: "Leve" },
   { value: "moderate", label: "Moderado" },
   { value: "severe", label: "Grave" },
-  { value: "critical", label: "Critico" },
+  { value: "critical", label: "Crítico" },
 ];
 
 export const vehicleDamageStatusOptions: Array<{
@@ -193,16 +193,16 @@ export const vehicleDamageStatusOptions: Array<{
   { value: "pending", label: "Pendente" },
   { value: "under_repair", label: "Em reparo" },
   { value: "repaired", label: "Reparado" },
-  { value: "not_repaired", label: "Nao reparado" },
+  { value: "not_repaired", label: "Não reparado" },
 ];
 
 export const vehicleDamageContextOptions: Array<{
   value: VehicleDamageContextType;
   label: string;
 }> = [
-  { value: "vehicle_loan", label: "Emprestimo" },
+  { value: "vehicle_loan", label: "Empréstimo" },
   { value: "vehicle_custody", label: "Cautela" },
-  { value: "vehicle_maintenance", label: "Manutencao" },
+  { value: "vehicle_maintenance", label: "Manutenção" },
 ];
 
 export function getVehicleDamageContextType(

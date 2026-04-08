@@ -21,7 +21,7 @@ export function BrandEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `brands.update` para editar marcas.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `brands.update` para editar marcas.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function BrandEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar marca</CardTitle>
-          <CardDescription>A marca nao pode ser editada agora.</CardDescription>
+          <CardDescription>A marca não pode ser editada agora.</CardDescription>
         </CardHeader>
       </Card>
     );

@@ -19,18 +19,18 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "Nao informado";
+  return date ? date.slice(0, 10) : "Não informado";
 }
 
 function formatCurrency(value?: number | string | null) {
   if (value === null || value === undefined || value === "") {
-    return "Nao informado";
+    return "Não informado";
   }
 
   const numericValue = Number(value);
 
   if (Number.isNaN(numericValue)) {
-    return "Nao informado";
+    return "Não informado";
   }
 
   return new Intl.NumberFormat("pt-BR", {
@@ -50,8 +50,8 @@ export function VehicleMaintenanceShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar manutencoes de
-            veiculos.
+            Você precisa da permissão `view` para visualizar manutencoes de
+            veículos.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -66,9 +66,9 @@ export function VehicleMaintenanceShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar manutencao</CardTitle>
+          <CardTitle>Erro ao carregar manutenção</CardTitle>
           <CardDescription>
-            Os dados da manutencao nao estao disponiveis no momento.
+            Os dados da manutenção não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -83,7 +83,7 @@ export function VehicleMaintenanceShowPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="font-display text-3xl text-slate-900">
-              {maintenance.vehicle?.license_plate ?? `Manutencao #${maintenance.id}`}
+              {maintenance.vehicle?.license_plate ?? `Manutenção #${maintenance.id}`}
             </h1>
             <Badge
               variant={getVehicleMaintenanceStatusVariant(maintenance.status)}
@@ -92,7 +92,7 @@ export function VehicleMaintenanceShowPage() {
             </Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            {maintenance.maintenance_type_label ?? "Tipo nao informado"} •
+            {maintenance.maintenance_type_label ?? "Tipo não informado"} •
             Entrada em {formatDate(maintenance.entry_date)}
           </p>
         </div>
@@ -109,9 +109,9 @@ export function VehicleMaintenanceShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Veiculo e oficina</CardTitle>
+            <CardTitle>Veículo e oficina</CardTitle>
             <CardDescription>
-              Contexto principal da manutencao.
+              Contexto principal da manutenção.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -119,7 +119,7 @@ export function VehicleMaintenanceShowPage() {
               <CarFront className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Veiculo
+                  Veículo
                 </p>
                 <p className="text-sm text-slate-700">
                   {maintenance.vehicle?.license_plate ?? `#${maintenance.vehicle_id}`}
@@ -133,13 +133,13 @@ export function VehicleMaintenanceShowPage() {
                   Oficina
                 </p>
                 <p className="text-sm text-slate-700">
-                  {maintenance.workshop?.name ?? "Nao informada"}
+                  {maintenance.workshop?.name ?? "Não informada"}
                 </p>
               </div>
             </div>
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Descricao
+                Descrição
               </p>
               <p className="mt-1 text-sm text-slate-700">
                 {maintenance.description}
@@ -178,7 +178,7 @@ export function VehicleMaintenanceShowPage() {
                   {maintenance.exit_time ? ` • ${maintenance.exit_time}` : ""}
                 </p>
                 <p className="text-sm text-slate-500">
-                  {maintenance.exit_km ?? "Nao informado"} km
+                  {maintenance.exit_km ?? "Não informado"} km
                 </p>
               </div>
             </div>
@@ -187,7 +187,7 @@ export function VehicleMaintenanceShowPage() {
               <CalendarDays className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Previsao de conclusao
+                  Previsao de conclusão
                 </p>
                 <p className="text-sm text-slate-700">
                   {formatDate(maintenance.expected_completion_date)}
@@ -237,7 +237,7 @@ export function VehicleMaintenanceShowPage() {
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Pecas e observacoes</CardTitle>
+            <CardTitle>Pecas e observações</CardTitle>
             <CardDescription>
               Itens substituidos e anotacoes operacionais.
             </CardDescription>
@@ -272,10 +272,10 @@ export function VehicleMaintenanceShowPage() {
               <Cog className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Observacoes
+                  Observações
                 </p>
                 <p className="text-sm text-slate-700">
-                  {maintenance.notes ?? "Nenhuma observacao informada."}
+                  {maintenance.notes ?? "Nenhuma observação informada."}
                 </p>
               </div>
             </div>

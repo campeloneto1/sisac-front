@@ -47,7 +47,7 @@ export function PublicationTypesListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `viewAny` para visualizar tipos de publicacao.</CardDescription>
+          <CardDescription>Você precisa da permissão `viewAny` para visualizar tipos de publicação.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -57,8 +57,8 @@ export function PublicationTypesListPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl text-slate-900">Tipos de publicacao</h1>
-          <p className="text-sm text-slate-500">Gerencie os tipos administrativos usados para classificar publicacoes dos policiais.</p>
+          <h1 className="font-display text-3xl text-slate-900">Tipos de publicação</h1>
+          <p className="text-sm text-slate-500">Gerencie os tipos administrativos usados para classificar publicações dos policiais.</p>
         </div>
 
         {permissions.canCreate ? (
@@ -103,15 +103,15 @@ export function PublicationTypesListPage() {
       ) : publicationTypesQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar tipos de publicacao</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardTitle>Erro ao carregar tipos de publicação</CardTitle>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !publicationTypesQuery.data?.data.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Nenhum tipo encontrado</CardTitle>
-            <CardDescription>Crie um novo tipo de publicacao ou refine os filtros aplicados.</CardDescription>
+            <CardDescription>Crie um novo tipo de publicação ou refine os filtros aplicados.</CardDescription>
           </CardHeader>
         </Card>
       ) : (

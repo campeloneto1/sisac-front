@@ -38,7 +38,7 @@ function getStatusLabel(status?: string | null) {
     case "ongoing":
       return "Em andamento";
     case "completed":
-      return "Concluida";
+      return "Concluída";
     case "cancelled":
       return "Cancelada";
     default:
@@ -74,9 +74,9 @@ export function CourseClassesTable({ courseClasses }: CourseClassesTableProps) {
                 <th className="px-4 py-3 font-medium">Turma</th>
                 <th className="px-4 py-3 font-medium">Curso</th>
                 <th className="px-4 py-3 font-medium">Planejamento</th>
-                <th className="px-4 py-3 font-medium">Execucao</th>
+                <th className="px-4 py-3 font-medium">Execução</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -89,7 +89,7 @@ export function CourseClassesTable({ courseClasses }: CourseClassesTableProps) {
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-700">
-                    {courseClass.course ? `${courseClass.course.name} (${courseClass.course.abbreviation})` : "Curso nao informado"}
+                    {courseClass.course ? `${courseClass.course.name} (${courseClass.course.abbreviation})` : "Curso não informado"}
                   </td>
                   <td className="px-4 py-4 text-slate-700">
                     <div>
@@ -141,7 +141,7 @@ export function CourseClassesTable({ courseClasses }: CourseClassesTableProps) {
           <DialogHeader>
             <DialogTitle>Excluir turma</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {courseClassToDelete?.name ?? `a turma #${courseClassToDelete?.id}`}? Se houver vinculos operacionais, a API pode bloquear a exclusao.
+              Tem certeza que deseja excluir {courseClassToDelete?.name ?? `a turma #${courseClassToDelete?.id}`}? Se houver vínculos operacionais, a API pode bloquear a exclusão.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -149,7 +149,7 @@ export function CourseClassesTable({ courseClasses }: CourseClassesTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

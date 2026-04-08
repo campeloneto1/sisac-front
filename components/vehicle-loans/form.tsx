@@ -57,28 +57,28 @@ const vehicleLoanFormSchema = z
     borrower_id: z.string(),
     external_borrower_name: z
       .string()
-      .max(255, "O nome do tomador externo deve ter no maximo 255 caracteres."),
+      .max(255, "O nome do tomador externo deve ter no máximo 255 caracteres."),
     external_borrower_document: z
       .string()
-      .max(20, "O documento deve ter no maximo 20 caracteres."),
+      .max(20, "O documento deve ter no máximo 20 caracteres."),
     external_borrower_phone: z
       .string()
       .refine(
         (value) => value.trim() === "" || value.replace(/\D/g, "").length >= 10,
-        "Informe um telefone com 10 ou 11 digitos.",
+        "Informe um telefone com 10 ou 11 dígitos.",
       ),
     city_id: z.string(),
     start_km: z.coerce.number().int().min(0, "A quilometragem inicial deve ser maior ou igual a 0."),
     start_notes: z
       .string()
-      .max(1000, "As observacoes de retirada devem ter no maximo 1000 caracteres."),
+      .max(1000, "As observações de retirada devem ter no máximo 1000 caracteres."),
   })
   .superRefine((values, context) => {
     if (!values.vehicle_id || values.vehicle_id === "none") {
       context.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["vehicle_id"],
-        message: "Selecione um veiculo.",
+        message: "Selecione um veículo.",
       });
     }
 
@@ -272,10 +272,10 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
     <Card className="border-slate-200/70 bg-white/80">
       <CardHeader>
         <CardTitle>
-          {mode === "create" ? "Novo emprestimo" : "Editar emprestimo"}
+          {mode === "create" ? "Novo empréstimo" : "Editar empréstimo"}
         </CardTitle>
         <CardDescription>
-          Esta tela gerencial registra a retirada do veiculo. A subunidade,
+          Esta tela gerencial registra a retirada do veículo. A subunidade,
           data, hora e status inicial sao assumidos automaticamente pelo
           sistema.
         </CardDescription>
@@ -284,7 +284,7 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-[1fr_0.9fr]">
             <div className="space-y-2">
-              <Label>Veiculo</Label>
+              <Label>Veículo</Label>
               <AsyncSearchableSelect
                 value={selectedVehicleId === "none" ? undefined : selectedVehicleId}
                 onValueChange={(value) =>
@@ -306,9 +306,9 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
                   label: formatVehicleOptionLabel(vehicle),
                 })}
                 selectedOption={selectedVehicleOption}
-                placeholder="Selecione um veiculo"
+                placeholder="Selecione um veículo"
                 searchPlaceholder="Buscar por placa, marca ou variante"
-                emptyMessage="Nenhum veiculo encontrado."
+                emptyMessage="Nenhum veículo encontrado."
               />
               {errors.vehicle_id ? (
                 <p className="text-sm text-destructive">
@@ -326,7 +326,7 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
                     : "Nenhuma subunidade ativa selecionada"}
                 </p>
                 <p className="mt-1 text-xs text-slate-500">
-                  O emprestimo sera registrado automaticamente nesta
+                  O empréstimo será registrado automaticamente nesta
                   subunidade.
                 </p>
               </div>
@@ -338,7 +338,7 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
               <h2 className="text-base font-semibold text-slate-900">Tomador</h2>
               <p className="text-sm text-slate-500">
                 Escolha se o tomador esta cadastrado no sistema ou se o
-                emprestimo foi entregue para uma pessoa externa.
+                empréstimo foi entregue para uma pessoa externa.
               </p>
             </div>
 
@@ -433,7 +433,7 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
                     })}
                     selectedOption={selectedBorrowerOption}
                     placeholder="Selecione o tomador"
-                    searchPlaceholder="Buscar policial por nome ou matricula"
+                    searchPlaceholder="Buscar policial por nome ou matrícula"
                     emptyMessage="Nenhum policial encontrado."
                   />
                 ) : borrowerType === "App\\Models\\User" ? (
@@ -459,8 +459,8 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
                     })}
                     selectedOption={selectedBorrowerOption}
                     placeholder="Selecione o tomador"
-                    searchPlaceholder="Buscar usuario por nome ou email"
-                    emptyMessage="Nenhum usuario encontrado."
+                    searchPlaceholder="Buscar usuário por nome ou email"
+                    emptyMessage="Nenhum usuário encontrado."
                   />
                 ) : (
                   <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-3 text-sm text-slate-500">
@@ -557,11 +557,11 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label>Saida automatica</Label>
+              <Label>Saida automática</Label>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <p className="text-sm text-slate-700">
                   A data e hora da retirada serao registradas automaticamente
-                  no momento da criacao.
+                  no momento da criação.
                 </p>
               </div>
             </div>
@@ -569,10 +569,10 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
 
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="start_notes">Observacoes de retirada</Label>
+              <Label htmlFor="start_notes">Observações de retirada</Label>
               <Textarea
                 id="start_notes"
-                placeholder="Anote o estado do veiculo no momento da saida."
+                placeholder="Anote o estado do veículo no momento da saida."
                 {...register("start_notes")}
               />
               {errors.start_notes ? (
@@ -583,16 +583,16 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="return_notes">Observacoes de devolucao</Label>
+              <Label htmlFor="return_notes">Observações de devolução</Label>
               <Textarea
                 id="return_notes"
                 disabled
-                placeholder="Preenchidas depois, no momento da devolucao."
+                placeholder="Preenchidas depois, no momento da devolução."
                 value=""
                 readOnly
               />
               <p className="text-xs text-slate-500">
-                Esta etapa sera preenchida apenas ao devolver o veiculo.
+                Esta etapa será preenchida apenas ao devolver o veículo.
               </p>
             </div>
           </section>
@@ -604,7 +604,7 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
               </Link>
             </Button>
             <Button type="submit" disabled={isPending || !activeSubunit}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar emprestimo" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar empréstimo" : "Salvar alterações"}
             </Button>
           </div>
         </form>

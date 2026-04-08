@@ -128,7 +128,7 @@ export function PatrimonyShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar patrimonios.
+            Você precisa da permissão `view` para visualizar patrimônios.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -141,7 +141,7 @@ export function PatrimonyShowPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O modulo de patrimonios depende da subunidade ativa para carregar o registro.
+            O módulo de patrimônios depende da subunidade ativa para carregar o registro.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -156,9 +156,9 @@ export function PatrimonyShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar patrimonio</CardTitle>
+          <CardTitle>Erro ao carregar patrimônio</CardTitle>
           <CardDescription>
-            Os dados do patrimonio nao estao disponiveis no momento.
+            Os dados do patrimônio não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -219,13 +219,13 @@ export function PatrimonyShowPage() {
             </Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            Tipo: {patrimony.patrimony_type?.name || "Nao informado"} • Setor atual:{" "}
+            Tipo: {patrimony.patrimony_type?.name || "Não informado"} • Setor atual:{" "}
             {patrimony.current_sector?.abbreviation ||
               patrimony.current_sector?.name ||
               "Sem setor"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            {patrimony.description || "Sem descricao detalhada para este patrimonio."}
+            {patrimony.description || "Sem descrição detalhada para este patrimônio."}
           </p>
         </div>
 
@@ -233,7 +233,7 @@ export function PatrimonyShowPage() {
           <Button asChild variant="outline">
             <Link href={`/patrimonies/${patrimony.id}/history`}>
               <History className="mr-2 h-4 w-4" />
-              Historico setorial
+              Histórico setorial
             </Link>
           </Button>
           {permissions.canTransfer && canOperate ? (
@@ -264,7 +264,7 @@ export function PatrimonyShowPage() {
           <CardHeader>
             <CardTitle>Resumo patrimonial</CardTitle>
             <CardDescription>
-              Identificacao, classificacao e localizacao atual do bem.
+              Identificação, classificação e localização atual do bem.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -328,7 +328,7 @@ export function PatrimonyShowPage() {
                 <p className="text-sm text-slate-700">
                   {patrimony.creator
                     ? `${patrimony.creator.name} (${patrimony.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -339,7 +339,7 @@ export function PatrimonyShowPage() {
                 <p className="text-sm text-slate-700">
                   {patrimony.updater
                     ? `${patrimony.updater.name} (${patrimony.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -360,7 +360,7 @@ export function PatrimonyShowPage() {
         <CardHeader>
           <CardTitle>Baixa</CardTitle>
           <CardDescription>
-            Informacoes preenchidas quando o patrimonio foi devolvido ao Estado ou inutilizado.
+            Informações preenchidas quando o patrimônio foi devolvido ao Estado ou inutilizado.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-2">
@@ -377,7 +377,7 @@ export function PatrimonyShowPage() {
             <p className="mt-1 text-sm text-slate-700">{patrimony.disposed_reason || "-"}</p>
           </div>
           <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-            <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Observacoes</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Observações</p>
             <p className="mt-1 text-sm text-slate-700">{patrimony.disposed_notes || "-"}</p>
           </div>
         </CardContent>
@@ -387,7 +387,7 @@ export function PatrimonyShowPage() {
         <CardHeader>
           <CardTitle>Ultimas movimentacoes setoriais</CardTitle>
           <CardDescription>
-            Preview do historico vinculado a esse patrimonio.
+            Preview do histórico vinculado a esse patrimônio.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -415,7 +415,7 @@ export function PatrimonyShowPage() {
                 <Button asChild variant="outline">
                   <Link href={`/patrimonies/${patrimony.id}/history`}>
                     <History className="mr-2 h-4 w-4" />
-                    Abrir historico completo
+                    Abrir histórico completo
                   </Link>
                 </Button>
               </div>
@@ -427,7 +427,7 @@ export function PatrimonyShowPage() {
       <Dialog open={isTransferOpen} onOpenChange={setIsTransferOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Transferir patrimonio</DialogTitle>
+            <DialogTitle>Transferir patrimônio</DialogTitle>
             <DialogDescription>
               Escolha o setor de destino para registrar uma nova movimentacao setorial.
             </DialogDescription>
@@ -494,9 +494,9 @@ export function PatrimonyShowPage() {
       <Dialog open={isDisposeOpen} onOpenChange={setIsDisposeOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Dar baixa no patrimonio</DialogTitle>
+            <DialogTitle>Dar baixa no patrimônio</DialogTitle>
             <DialogDescription>
-              Registre a devolucao ao Estado ou a inutilizacao do bem patrimonial.
+              Registre a devolução ao Estado ou a inutilizacao do bem patrimonial.
             </DialogDescription>
           </DialogHeader>
           <form
@@ -550,7 +550,7 @@ export function PatrimonyShowPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="patrimony-disposed-notes">Observacoes</Label>
+                <Label htmlFor="patrimony-disposed-notes">Observações</Label>
                 <Input
                   id="patrimony-disposed-notes"
                   {...disposeForm.register("disposed_notes")}

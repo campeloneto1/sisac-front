@@ -61,7 +61,7 @@ export function PoliceOfficerLeavesFilters({
             <Input
               id="police-officer-leave-search"
               className="pl-9"
-              placeholder="Policial, CRM, CID, hospital, observacoes..."
+              placeholder="Policial, CRM, CID, hospital, observações..."
               value={search}
               onChange={(event) => onSearchChange(event.target.value)}
             />
@@ -82,7 +82,7 @@ export function PoliceOfficerLeavesFilters({
               <SelectItem value="ongoing">Em andamento</SelectItem>
               <SelectItem value="awaiting_copem">Aguardando COPEM</SelectItem>
               <SelectItem value="copem_scheduled">COPEM agendada</SelectItem>
-              <SelectItem value="in_copem_evaluation">Em avaliacao COPEM</SelectItem>
+              <SelectItem value="in_copem_evaluation">Em avaliação COPEM</SelectItem>
               <SelectItem value="copem_approved">Aprovado pela COPEM</SelectItem>
               <SelectItem value="copem_rejected">Reprovado pela COPEM</SelectItem>
               <SelectItem value="completed">Concluido</SelectItem>
@@ -126,12 +126,12 @@ export function PoliceOfficerLeavesFilters({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="start_date_from">Inicio a partir de</Label>
+          <Label htmlFor="start_date_from">Início a partir de</Label>
           <Input id="start_date_from" type="date" value={startDateFrom} onChange={(event) => onStartDateFromChange(event.target.value)} />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="start_date_to">Inicio ate</Label>
+          <Label htmlFor="start_date_to">Início ate</Label>
           <Input id="start_date_to" type="date" value={startDateTo} onChange={(event) => onStartDateToChange(event.target.value)} />
         </div>
 

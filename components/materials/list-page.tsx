@@ -46,7 +46,7 @@ export function MaterialsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `viewAny` para visualizar materiais.</CardDescription>
+          <CardDescription>Você precisa da permissão `viewAny` para visualizar materiais.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -57,7 +57,7 @@ export function MaterialsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>O modulo de materiais depende da subunidade ativa para enviar `X-Active-Subunit`.</CardDescription>
+          <CardDescription>O módulo de materiais depende da subunidade ativa para enviar `X-Active-Subunit`.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -126,7 +126,7 @@ export function MaterialsListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar materiais</CardTitle>
-            <CardDescription>Verifique a API, a subunidade ativa e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API, a subunidade ativa e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !materialsQuery.data?.data.length ? (

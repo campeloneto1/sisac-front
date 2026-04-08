@@ -43,8 +43,8 @@ export function PatrimonyTypesListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `patrimony-types.viewAny` para
-            visualizar tipos de patrimonio.
+            Você precisa de `administrator` e `patrimony-types.viewAny` para
+            visualizar tipos de patrimônio.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -60,11 +60,11 @@ export function PatrimonyTypesListPage() {
           </div>
           <div>
             <h1 className="font-display text-3xl text-slate-900">
-              Tipos de patrimonio
+              Tipos de patrimônio
             </h1>
             <p className="text-sm text-slate-500">
-              Gerencie a classificacao administrativa global usada pelos
-              patrimonios do sistema.
+              Gerencie a classificação administrativa global usada pelos
+              patrimônios do sistema.
             </p>
           </div>
         </div>
@@ -99,9 +99,9 @@ export function PatrimonyTypesListPage() {
       ) : patrimonyTypesQuery.isError ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Erro ao carregar tipos de patrimonio</CardTitle>
+            <CardTitle>Erro ao carregar tipos de patrimônio</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

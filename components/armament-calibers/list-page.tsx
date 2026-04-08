@@ -40,7 +40,7 @@ export function ArmamentCalibersListPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `viewAny` para visualizar calibres de
+            Você precisa da permissão `viewAny` para visualizar calibres de
             armamento.
           </CardDescription>
         </CardHeader>
@@ -97,7 +97,7 @@ export function ArmamentCalibersListPage() {
           <CardHeader>
             <CardTitle>Erro ao carregar calibres de armamento</CardTitle>
             <CardDescription>
-              Verifique a API e as permissoes do usuario autenticado.
+              Verifique a API e as permissões do usuário autenticado.
             </CardDescription>
           </CardHeader>
         </Card>

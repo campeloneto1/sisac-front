@@ -24,7 +24,7 @@ export function StateShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `states.view` para visualizar estados.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `states.view` para visualizar estados.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -39,7 +39,7 @@ export function StateShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar estado</CardTitle>
-          <CardDescription>Os dados do estado nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do estado não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -56,7 +56,7 @@ export function StateShowPage() {
             <Badge variant="outline">{stateItem.abbreviation}</Badge>
           </div>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Estado cadastrado no modulo administrativo para uso em enderecos e estruturas territoriais.
+            Estado cadastrado no módulo administrativo para uso em enderecos e estruturas territoriais.
           </p>
         </div>
 
@@ -84,9 +84,9 @@ export function StateShowPage() {
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Globe2 className="h-4 w-4 text-primary" />
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Pais</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">País</p>
                 <p className="text-sm text-slate-700">
-                  {stateItem.country ? `${stateItem.country.name} (${stateItem.country.abbreviation})` : "Nao informado"}
+                  {stateItem.country ? `${stateItem.country.name} (${stateItem.country.abbreviation})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -95,7 +95,7 @@ export function StateShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                 <p className="text-sm text-slate-700">
-                  {stateItem.creator ? `${stateItem.creator.name} (${stateItem.creator.email})` : "Nao informado"}
+                  {stateItem.creator ? `${stateItem.creator.name} (${stateItem.creator.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -104,7 +104,7 @@ export function StateShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
                 <p className="text-sm text-slate-700">
-                  {stateItem.updater ? `${stateItem.updater.name} (${stateItem.updater.email})` : "Nao informado"}
+                  {stateItem.updater ? `${stateItem.updater.name} (${stateItem.updater.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -113,7 +113,7 @@ export function StateShowPage() {
 
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Pais vinculado</CardTitle>
+            <CardTitle>País vinculado</CardTitle>
             <CardDescription>Contexto carregado pelo `StateResource`.</CardDescription>
           </CardHeader>
           <CardContent>
@@ -123,7 +123,7 @@ export function StateShowPage() {
                 <p className="mt-1 text-xs text-slate-500">Sigla oficial: {stateItem.country.abbreviation}</p>
               </div>
             ) : (
-              <p className="text-sm text-slate-500">Este estado ainda nao possui pais vinculado.</p>
+              <p className="text-sm text-slate-500">Este estado ainda não possui país vinculado.</p>
             )}
           </CardContent>
         </Card>

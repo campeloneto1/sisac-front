@@ -18,7 +18,7 @@ export function PoliceOfficerVacationEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `update` para editar ferias.</CardDescription>
+          <CardDescription>Você precisa da permissão `update` para editar férias.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -32,8 +32,8 @@ export function PoliceOfficerVacationEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar ferias</CardTitle>
-          <CardDescription>Os dados do registro anual nao estao disponiveis no momento.</CardDescription>
+          <CardTitle>Erro ao carregar férias</CardTitle>
+          <CardDescription>Os dados do registro anual não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );

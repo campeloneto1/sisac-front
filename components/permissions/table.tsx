@@ -47,10 +47,10 @@ export function PermissionsTable({ permissionsList }: PermissionsTableProps) {
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="px-4 py-3 font-medium">Permissao</th>
+                <th className="px-4 py-3 font-medium">Permissão</th>
                 <th className="px-4 py-3 font-medium">Slug</th>
                 <th className="px-4 py-3 font-medium">Roles</th>
-                <th className="px-4 py-3 font-medium text-right">Acoes</th>
+                <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -62,7 +62,7 @@ export function PermissionsTable({ permissionsList }: PermissionsTableProps) {
                     <td className="px-4 py-4">
                       <div>
                         <p className="font-medium text-slate-900">{permission.name}</p>
-                        <p className="mt-1 text-slate-500">{permission.description || "Sem descricao"}</p>
+                        <p className="mt-1 text-slate-500">{permission.description || "Sem descrição"}</p>
                       </div>
                     </td>
                     <td className="px-4 py-4">
@@ -105,9 +105,9 @@ export function PermissionsTable({ permissionsList }: PermissionsTableProps) {
       <Dialog open={Boolean(permissionToDelete)} onOpenChange={(open) => !open && setPermissionToDelete(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Excluir permissao</DialogTitle>
+            <DialogTitle>Excluir permissão</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir {permissionToDelete?.name}? Permissoes vinculadas a roles nao podem ser
+              Tem certeza que deseja excluir {permissionToDelete?.name}? Permissões vinculadas a roles não podem ser
               removidas pela policy.
             </DialogDescription>
           </DialogHeader>
@@ -116,7 +116,7 @@ export function PermissionsTable({ permissionsList }: PermissionsTableProps) {
               Cancelar
             </Button>
             <Button variant="outline" disabled={deleteMutation.isPending} onClick={() => void handleDelete()}>
-              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusao"}
+              {deleteMutation.isPending ? "Excluindo..." : "Confirmar exclusão"}
             </Button>
           </DialogFooter>
         </DialogContent>

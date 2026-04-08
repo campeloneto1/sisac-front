@@ -40,7 +40,7 @@ export function PoliceOfficerPublicationShowPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa da permissao `view` para visualizar publicacoes.
+            Você precisa da permissão `view` para visualizar publicações.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -58,9 +58,9 @@ export function PoliceOfficerPublicationShowPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar publicacao</CardTitle>
+          <CardTitle>Erro ao carregar publicação</CardTitle>
           <CardDescription>
-            Os dados da publicacao nao estao disponiveis no momento.
+            Os dados da publicação não estão disponíveis no momento.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -94,7 +94,7 @@ export function PoliceOfficerPublicationShowPage() {
             • {publication.publication_date ?? "-"}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Registro completo da publicacao em boletim, incluindo tipo, conteudo
+            Registro completo da publicação em boletim, incluindo tipo, conteudo
             e auditoria.
           </p>
         </div>
@@ -111,9 +111,9 @@ export function PoliceOfficerPublicationShowPage() {
       <div className="grid gap-6 xl:grid-cols-2">
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
-            <CardTitle>Dados da publicacao</CardTitle>
+            <CardTitle>Dados da publicação</CardTitle>
             <CardDescription>
-              Informacoes principais do registro.
+              Informações principais do registro.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -131,7 +131,7 @@ export function PoliceOfficerPublicationShowPage() {
               <CalendarDays className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Data da publicacao
+                  Data da publicação
                 </p>
                 <p className="text-sm text-slate-700">
                   {publication.publication_date ?? "-"}
@@ -143,10 +143,10 @@ export function PoliceOfficerPublicationShowPage() {
               <FileText className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Tipo de publicacao
+                  Tipo de publicação
                 </p>
                 <p className="text-sm text-slate-700">
-                  {publication.publication_type?.name ?? "Nao informado"}
+                  {publication.publication_type?.name ?? "Não informado"}
                 </p>
               </div>
             </div>
@@ -185,7 +185,7 @@ export function PoliceOfficerPublicationShowPage() {
           <CardHeader>
             <CardTitle>Contexto e auditoria</CardTitle>
             <CardDescription>
-              Relacionamentos e responsaveis pela alteracao.
+              Relacionamentos e responsáveis pela alteração.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -199,15 +199,15 @@ export function PoliceOfficerPublicationShowPage() {
                   `Policial #${publication.police_officer_id}`}
               </p>
               <p className="mt-1 text-xs text-slate-500">
-                Matricula:{" "}
+                Matrícula:{" "}
                 {publication.police_officer?.registration_number ??
-                  "Nao informada"}
+                  "Não informada"}
               </p>
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                Tipo de publicacao
+                Tipo de publicação
               </p>
               {publication.publication_type ? (
                 <div className="mt-1">
@@ -231,7 +231,7 @@ export function PoliceOfficerPublicationShowPage() {
                   </div>
                 </div>
               ) : (
-                <p className="mt-1 text-sm text-slate-700">Nao informado</p>
+                <p className="mt-1 text-sm text-slate-700">Não informado</p>
               )}
             </div>
 
@@ -244,7 +244,7 @@ export function PoliceOfficerPublicationShowPage() {
                 <p className="text-sm text-slate-700">
                   {publication.creator
                     ? `${publication.creator.name} (${publication.creator.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>
@@ -258,7 +258,7 @@ export function PoliceOfficerPublicationShowPage() {
                 <p className="text-sm text-slate-700">
                   {publication.updater
                     ? `${publication.updater.name} (${publication.updater.email})`
-                    : "Nao informado"}
+                    : "Não informado"}
                 </p>
               </div>
             </div>

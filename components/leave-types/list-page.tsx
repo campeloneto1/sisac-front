@@ -46,7 +46,7 @@ export function LeaveTypesListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa da permissao `viewAny` para visualizar tipos de afastamento.</CardDescription>
+          <CardDescription>Você precisa da permissão `viewAny` para visualizar tipos de afastamento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -103,7 +103,7 @@ export function LeaveTypesListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar tipos de afastamento</CardTitle>
-            <CardDescription>Verifique a API e as permissoes do usuario autenticado.</CardDescription>
+            <CardDescription>Verifique a API e as permissões do usuário autenticado.</CardDescription>
           </CardHeader>
         </Card>
       ) : !leaveTypesQuery.data?.data.length ? (

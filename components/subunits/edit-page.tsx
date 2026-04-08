@@ -21,7 +21,7 @@ export function SubunitEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `subunits.update` para editar subunidades.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `subunits.update` para editar subunidades.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -36,7 +36,7 @@ export function SubunitEditPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar subunidade</CardTitle>
-          <CardDescription>A subunidade nao pode ser editada agora.</CardDescription>
+          <CardDescription>A subunidade não pode ser editada agora.</CardDescription>
         </CardHeader>
       </Card>
     );

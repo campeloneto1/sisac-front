@@ -15,7 +15,7 @@ export function EducationLevelCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `education-levels.create` para cadastrar niveis de escolaridade.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `education-levels.create` para cadastrar niveis de escolaridade.</CardDescription>
         </CardHeader>
       </Card>
     );

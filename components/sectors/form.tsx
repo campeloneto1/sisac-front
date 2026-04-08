@@ -19,10 +19,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const sectorFormSchema = z
   .object({
-    name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no maximo 100 caracteres."),
-    abbreviation: z.string().max(20, "A sigla deve ter no maximo 20 caracteres."),
-    phone: z.string().refine((value) => value.trim() === "" || [10, 11].includes(value.replace(/\D/g, "").length), "Informe um telefone com 10 ou 11 digitos."),
-    email: z.string().refine((value) => value.trim() === "" || z.email().safeParse(value.trim()).success, "Informe um email valido."),
+    name: z.string().min(2, "O nome precisa ter ao menos 2 caracteres.").max(100, "O nome deve ter no máximo 100 caracteres."),
+    abbreviation: z.string().max(20, "A sigla deve ter no máximo 20 caracteres."),
+    phone: z.string().refine((value) => value.trim() === "" || [10, 11].includes(value.replace(/\D/g, "").length), "Informe um telefone com 10 ou 11 dígitos."),
+    email: z.string().refine((value) => value.trim() === "" || z.email().safeParse(value.trim()).success, "Informe um email válido."),
     commander_id: z.string(),
     deputy_commander_id: z.string(),
   })
@@ -125,18 +125,18 @@ export function SectorForm({ mode, sector }: SectorFormProps) {
       <CardHeader>
         <CardTitle>{mode === "create" ? "Novo setor" : "Editar setor"}</CardTitle>
         <CardDescription>
-          Setores ficam dentro de Administrador, mas operam no contexto da subunidade ativa e influenciam alocacoes e fluxos internos.
+          Setores ficam dentro de Administrador, mas operam no contexto da subunidade ativa e influenciam alocações e fluxos internos.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="mb-5 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-          Subunidade ativa: <span className="font-medium text-slate-900">{activeSubunit?.name ?? "Nao selecionada"}</span>
+          Subunidade ativa: <span className="font-medium text-slate-900">{activeSubunit?.name ?? "Não selecionada"}</span>
         </div>
 
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="name">Nome</Label>
-            <Input id="name" placeholder="Ex.: Patrimonio, Logistica, Financeiro" {...register("name")} />
+            <Input id="name" placeholder="Ex.: Patrimônio, Logística, Financeiro" {...register("name")} />
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
 
@@ -201,13 +201,13 @@ export function SectorForm({ mode, sector }: SectorFormProps) {
             <p className="text-xs text-slate-500">
               {selectedDeputyCommander
                 ? `Subcomandante selecionado: ${getOfficerLabel(selectedDeputyCommander)}.`
-                : "Opcional. Nao pode ser a mesma pessoa do comandante."}
+                : "Opcional. Não pode ser a mesma pessoa do comandante."}
             </p>
             {errors.deputy_commander_id ? <p className="text-sm text-destructive">{errors.deputy_commander_id.message}</p> : null}
           </div>
 
           <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600 md:col-span-2">
-            Este cadastro e isolado por subunidade ativa. Ao trocar o contexto global, a listagem e os dados visiveis tambem mudam.
+            Este cadastro e isolado por subunidade ativa. Ao trocar o contexto global, a listagem e os dados visiveis também mudam.
           </div>
 
           <div className="flex justify-end gap-3 md:col-span-2">
@@ -215,7 +215,7 @@ export function SectorForm({ mode, sector }: SectorFormProps) {
               <Link href={mode === "create" ? "/sectors" : `/sectors/${sector?.id}`}>Cancelar</Link>
             </Button>
             <Button type="submit" disabled={isPending || !activeSubunit}>
-              {isPending ? "Salvando..." : mode === "create" ? "Criar setor" : "Salvar alteracoes"}
+              {isPending ? "Salvando..." : mode === "create" ? "Criar setor" : "Salvar alterações"}
             </Button>
           </div>
         </form>

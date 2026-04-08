@@ -18,7 +18,7 @@ export function WorkshopCreatePage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `manager` e `workshops.create` para cadastrar
+            Você precisa de `manager` e `workshops.create` para cadastrar
             oficinas.
           </CardDescription>
         </CardHeader>
@@ -35,7 +35,7 @@ export function WorkshopCreatePage() {
         <div>
           <h1 className="font-display text-3xl text-slate-900">Nova oficina</h1>
           <p className="text-sm text-slate-500">
-            Registre uma nova oficina para uso em fluxos de manutencao.
+            Registre uma nova oficina para uso em fluxos de manutenção.
           </p>
         </div>
       </div>

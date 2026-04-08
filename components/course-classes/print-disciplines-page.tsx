@@ -35,7 +35,7 @@ export function CourseClassPrintDisciplinesPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa das permissoes de visualizacao da turma e das disciplinas para imprimir a grade.</CardDescription>
+          <CardDescription>Você precisa das permissões de visualizacao da turma e das disciplinas para imprimir a grade.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -50,7 +50,7 @@ export function CourseClassPrintDisciplinesPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar grade</CardTitle>
-          <CardDescription>Os dados da turma ou das disciplinas nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados da turma ou das disciplinas não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -85,26 +85,26 @@ export function CourseClassPrintDisciplinesPage() {
           <div className="space-y-2">
             <CardTitle className="text-2xl text-slate-900">Grade da turma</CardTitle>
             <CardDescription className="text-sm text-slate-600">
-              {courseClass.name ?? `Turma #${courseClass.id}`} • {courseClass.course ? `${courseClass.course.name} (${courseClass.course.abbreviation})` : "Curso nao informado"}
+              {courseClass.name ?? `Turma #${courseClass.id}`} • {courseClass.course ? `${courseClass.course.name} (${courseClass.course.abbreviation})` : "Curso não informado"}
             </CardDescription>
           </div>
 
           <div className="grid gap-4 text-sm text-slate-700 md:grid-cols-2 print:grid-cols-2">
             <div>
-              <p className="font-medium text-slate-900">Periodo planejado</p>
+              <p className="font-medium text-slate-900">Período planejado</p>
               <p>{courseClass.planned_start_date ?? "-"} ate {courseClass.planned_end_date ?? "-"}</p>
             </div>
             <div>
-              <p className="font-medium text-slate-900">Periodo real</p>
+              <p className="font-medium text-slate-900">Período real</p>
               <p>{courseClass.start_date ?? "-"} ate {courseClass.end_date ?? "-"}</p>
             </div>
             <div>
               <p className="font-medium text-slate-900">Coordenador</p>
-              <p>{courseClass.coordinator?.name ?? "Nao informado"}</p>
+              <p>{courseClass.coordinator?.name ?? "Não informado"}</p>
             </div>
             <div>
               <p className="font-medium text-slate-900">Monitor</p>
-              <p>{courseClass.monitor?.name ?? "Nao informado"}</p>
+              <p>{courseClass.monitor?.name ?? "Não informado"}</p>
             </div>
           </div>
           <Separator />
@@ -130,7 +130,7 @@ export function CourseClassPrintDisciplinesPage() {
                       <td className="border-b border-slate-200 px-4 py-3 text-slate-700">
                         {discipline.workload_hours ? `${discipline.workload_hours}h` : "-"}
                       </td>
-                      <td className="border-b border-slate-200 px-4 py-3 text-slate-700">{discipline.instructor?.name ?? "Nao informado"}</td>
+                      <td className="border-b border-slate-200 px-4 py-3 text-slate-700">{discipline.instructor?.name ?? "Não informado"}</td>
                     </tr>
                   ))}
                 </tbody>

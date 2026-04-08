@@ -22,8 +22,8 @@ export function VehicleTypeEditPage() {
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
           <CardDescription>
-            Voce precisa de `administrator` e `vehicle-types.update` para editar
-            tipos de veiculo.
+            Você precisa de `administrator` e `vehicle-types.update` para editar
+            tipos de veículo.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -38,9 +38,9 @@ export function VehicleTypeEditPage() {
     return (
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Erro ao carregar tipo de veiculo</CardTitle>
+          <CardTitle>Erro ao carregar tipo de veículo</CardTitle>
           <CardDescription>
-            O tipo de veiculo nao pode ser editado agora.
+            O tipo de veículo não pode ser editado agora.
           </CardDescription>
         </CardHeader>
       </Card>

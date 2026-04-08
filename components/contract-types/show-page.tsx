@@ -25,7 +25,7 @@ export function ContractTypeShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Acesso negado</CardTitle>
-          <CardDescription>Voce precisa de `administrator` e `contract-types.view` para visualizar tipos de contrato.</CardDescription>
+          <CardDescription>Você precisa de `administrator` e `contract-types.view` para visualizar tipos de contrato.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -40,7 +40,7 @@ export function ContractTypeShowPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Erro ao carregar tipo de contrato</CardTitle>
-          <CardDescription>Os dados do tipo de contrato nao estao disponiveis no momento.</CardDescription>
+          <CardDescription>Os dados do tipo de contrato não estão disponíveis no momento.</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -87,7 +87,7 @@ export function ContractTypeShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Criado por</p>
                 <p className="text-sm text-slate-700">
-                  {contractType.creator ? `${contractType.creator.name} (${contractType.creator.email})` : "Nao informado"}
+                  {contractType.creator ? `${contractType.creator.name} (${contractType.creator.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -96,7 +96,7 @@ export function ContractTypeShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Atualizado por</p>
                 <p className="text-sm text-slate-700">
-                  {contractType.updater ? `${contractType.updater.name} (${contractType.updater.email})` : "Nao informado"}
+                  {contractType.updater ? `${contractType.updater.name} (${contractType.updater.email})` : "Não informado"}
                 </p>
               </div>
             </div>
@@ -112,7 +112,7 @@ export function ContractTypeShowPage() {
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
               <div className="flex items-center gap-2">
                 <ReceiptText className="h-4 w-4 text-primary" />
-                <p className="text-sm font-medium text-slate-900">Descricao do faturamento</p>
+                <p className="text-sm font-medium text-slate-900">Descrição do faturamento</p>
               </div>
               <p className="mt-2 text-sm text-slate-600">
                 {contractType.billing_model_description ?? getContractBillingModelDescription(contractType.billing_model)}
@@ -139,7 +139,7 @@ export function ContractTypeShowPage() {
 
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-4 py-3">
               <p className="text-sm text-slate-600">
-                Se este tipo ja estiver sendo usado em contratos, a exclusao pode ser recusada ou controlada pela API mesmo com `soft delete`.
+                Se este tipo já estiver sendo usado em contratos, a exclusão pode ser recusada ou controlada pela API mesmo com `soft delete`.
               </p>
             </div>
           </CardContent>
