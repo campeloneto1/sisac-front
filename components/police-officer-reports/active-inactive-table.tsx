@@ -1,7 +1,10 @@
 "use client";
 
+import Link from "next/link";
+
 import type { PoliceOfficerActiveInactiveItem } from "@/types/police-officer-report.type";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 function formatDate(value?: string | null) {
   if (!value) {
@@ -73,6 +76,13 @@ export function PoliceOfficerActiveInactiveTable({
                   <p className="text-xs text-slate-500">
                     Apresentação: {formatDate(officer.presentation_date)}
                   </p>
+                  <div className="mt-2">
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={`/police-officer-reports/functional-panel/${officer.id}`}>
+                        Painel funcional
+                      </Link>
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}

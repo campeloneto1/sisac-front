@@ -1,4 +1,10 @@
 import type { PaginatedMeta } from "@/types/brand.type";
+import type { PoliceOfficerAllocationItem } from "@/types/police-officer-allocation.type";
+import type { PoliceOfficerCourseItem } from "@/types/police-officer-course.type";
+import type { PoliceOfficerLeaveItem } from "@/types/police-officer-leave.type";
+import type { PoliceOfficerRankItem } from "@/types/police-officer-rank.type";
+import type { PoliceOfficerRetirementRequestItem } from "@/types/police-officer-retirement-request.type";
+import type { PoliceOfficerVacationItem } from "@/types/police-officer-vacation.type";
 
 export interface PoliceOfficerReportFilters {
   page?: number;
@@ -123,6 +129,110 @@ export interface PoliceOfficerRankDistributionItem {
   inactive_officers: number;
 }
 
+export interface PoliceOfficerLeaveTypeDurationItem {
+  leave_type: {
+    id: number | null;
+    name: string;
+    slug: string | null;
+  };
+  total_leaves: number;
+  total_days: number;
+  average_days: number;
+  requires_medical_report: boolean | null;
+  affects_salary: boolean | null;
+}
+
+export interface PoliceOfficerVacationBalanceItem {
+  id: number;
+  reference_year: number;
+  status?: {
+    value: string;
+    label: string;
+    color?: string | null;
+  } | null;
+  total_days: number;
+  used_days: number;
+  sold_days: number;
+  remaining_days: number;
+  available_days: number;
+  valid_from: string | null;
+  valid_until: string | null;
+  is_expired: boolean;
+  police_officer?: PoliceOfficerActiveInactiveItem | null;
+}
+
+export interface PoliceOfficerPromotionEligibilityItem {
+  id: number;
+  name: string | null;
+  war_name: string | null;
+  registration_number: string | null;
+  is_active: boolean;
+  eligible_for_promotion: boolean;
+  reference_date: string;
+  years_in_current_rank: number | null;
+  current_rank?: {
+    id: number;
+    name: string;
+    abbreviation: string | null;
+    interstice: number | null;
+    start_date: string | null;
+    minimum_time_completed: boolean | null;
+  } | null;
+  current_allocation?: {
+    sector?: {
+      id: number;
+      name: string;
+      abbreviation: string | null;
+    } | null;
+    assignment?: {
+      id: number;
+      name: string;
+      category: string | null;
+    } | null;
+  } | null;
+}
+
+export interface PoliceOfficerCourseStatusSummaryItem {
+  status: {
+    value: string;
+    label: string;
+    color?: string | null;
+  };
+  total_registrations: number;
+  total_workload_hours: number;
+}
+
+export interface PoliceOfficerRetirementStatusSummaryItem {
+  status: string;
+  total_requests: number;
+}
+
+export interface PoliceOfficerFunctionalPanelData {
+  officer: PoliceOfficerActiveInactiveItem;
+  summary: {
+    current_rank?: {
+      id: number;
+      name: string;
+      abbreviation: string | null;
+      interstice: number | null;
+    } | null;
+    eligible_for_promotion: boolean;
+    years_in_current_rank: number | null;
+    total_allocations: number;
+    total_rank_history: number;
+    total_leaves: number;
+    total_courses: number;
+    total_vacations: number;
+    total_retirement_requests: number;
+  };
+  allocations: PoliceOfficerAllocationItem[];
+  rank_history: PoliceOfficerRankItem[];
+  leaves: PoliceOfficerLeaveItem[];
+  courses: PoliceOfficerCourseItem[];
+  vacations: PoliceOfficerVacationItem[];
+  retirement_requests: PoliceOfficerRetirementRequestItem[];
+}
+
 export interface PaginatedPoliceOfficerReportResponse<T> {
   message: string;
   data: T[];
@@ -139,4 +249,40 @@ export interface PaginatedPoliceOfficerReportResponse<T> {
 export interface CollectionPoliceOfficerReportResponse<T> {
   message: string;
   data: T[];
+}
+
+export type PoliceOfficerLeavesReportResponse =
+  PaginatedPoliceOfficerReportResponse<PoliceOfficerLeaveItem>;
+
+export type PoliceOfficerVacationsOverviewReportResponse =
+  PaginatedPoliceOfficerReportResponse<PoliceOfficerVacationItem>;
+
+export type PoliceOfficerVacationBalancesReportResponse =
+  PaginatedPoliceOfficerReportResponse<PoliceOfficerVacationBalanceItem>;
+
+export type PoliceOfficerAllocationHistoryReportResponse =
+  PaginatedPoliceOfficerReportResponse<PoliceOfficerAllocationItem>;
+
+export type PoliceOfficerPromotionEligibilityReportResponse =
+  PaginatedPoliceOfficerReportResponse<PoliceOfficerPromotionEligibilityItem>;
+
+export type PoliceOfficerPromotionHistoryReportResponse =
+  PaginatedPoliceOfficerReportResponse<PoliceOfficerRankItem>;
+
+export type PoliceOfficerCoursesOverviewReportResponse =
+  PaginatedPoliceOfficerReportResponse<PoliceOfficerCourseItem> & {
+    summary?: PoliceOfficerCourseStatusSummaryItem[];
+  };
+
+export type PoliceOfficerPendingCertificatesReportResponse =
+  PaginatedPoliceOfficerReportResponse<PoliceOfficerCourseItem>;
+
+export type PoliceOfficerRetirementRequestsReportResponse =
+  PaginatedPoliceOfficerReportResponse<PoliceOfficerRetirementRequestItem> & {
+    summary?: PoliceOfficerRetirementStatusSummaryItem[];
+  };
+
+export interface PoliceOfficerFunctionalPanelResponse {
+  message: string;
+  data: PoliceOfficerFunctionalPanelData;
 }

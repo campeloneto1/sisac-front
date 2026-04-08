@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BarChart3, Layers3, Shield, Users } from "lucide-react";
+import { BarChart3, CalendarClock, FileHeart, Layers3, Shield, ShieldCheck, Users, Workflow } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { useSubunit } from "@/contexts/subunit-context";
@@ -30,6 +30,83 @@ const reportCards = [
     description: "Resumo analítico por graduação atual, com ativos e inativos.",
     href: "/police-officer-reports/rank-distribution",
     icon: BarChart3,
+    available: true,
+  },
+  {
+    title: "Afastamentos",
+    description: "Listagem operacional de afastamentos com filtros por tipo, status, COPEM e período.",
+    href: "/police-officer-reports/leaves",
+    icon: FileHeart,
+    available: true,
+  },
+  {
+    title: "Afastamentos por tipo",
+    description: "Visão gerencial do volume e duração média dos afastamentos por tipo.",
+    href: "/police-officer-reports/leaves-by-type-duration",
+    icon: BarChart3,
+    available: true,
+  },
+  {
+    title: "Férias",
+    description: "Acompanhamento paginado de férias por ano de referência, status e período de validade.",
+    href: "/police-officer-reports/vacations-overview",
+    icon: CalendarClock,
+    available: true,
+  },
+  {
+    title: "Saldo de férias",
+    description: "Visão consolidada dos saldos e disponibilidade de férias por policial.",
+    href: "/police-officer-reports/vacation-balances",
+    icon: CalendarClock,
+    available: true,
+  },
+  {
+    title: "Histórico de lotações",
+    description: "Consulta paginada das lotações por setor, função e período.",
+    href: "/police-officer-reports/allocation-history",
+    icon: Workflow,
+    available: true,
+  },
+  {
+    title: "Aptidão para promoção",
+    description: "Painel paginado de elegibilidade à promoção com base no interstício.",
+    href: "/police-officer-reports/promotion-eligibility",
+    icon: ShieldCheck,
+    available: true,
+  },
+  {
+    title: "Histórico de promoções",
+    description: "Consulta de promoções por tipo, graduação e período.",
+    href: "/police-officer-reports/promotion-history",
+    icon: ShieldCheck,
+    available: true,
+  },
+  {
+    title: "Pendências COPEM",
+    description: "Afastamentos pendentes de agenda, avaliação ou conclusão pela COPEM.",
+    href: "/police-officer-reports/pending-copem",
+    icon: FileHeart,
+    available: true,
+  },
+  {
+    title: "Cursos",
+    description: "Visão paginada dos cursos com resumo por status.",
+    href: "/police-officer-reports/courses-overview",
+    icon: BarChart3,
+    available: true,
+  },
+  {
+    title: "Certificados pendentes",
+    description: "Policiais aptos a receber certificado e ainda pendentes de emissão.",
+    href: "/police-officer-reports/pending-certificates",
+    icon: BarChart3,
+    available: true,
+  },
+  {
+    title: "Pedidos de aposentadoria",
+    description: "Fluxo de pedidos com resumo por status e datas principais.",
+    href: "/police-officer-reports/retirement-requests",
+    icon: CalendarClock,
     available: true,
   },
 ] as const;
