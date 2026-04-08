@@ -493,6 +493,14 @@ const managerItems: Array<{
       { type: "resource", resource: "workshops", action: "viewAny" },
     ],
   },
+  {
+    href: "/notices",
+    label: "Avisos",
+    icon: BellRing,
+    requirements: [
+      { type: "resource", resource: "notices", action: "viewAny" },
+    ],
+  },
 ];
 
 const reportsItems: Array<{
@@ -816,7 +824,7 @@ export function AppSidebar() {
   }
 
   return (
-    <aside className="hidden w-[228px] shrink-0 rounded-[24px] border border-white/60 bg-slate-950 px-3 py-4 text-white shadow-spotlight lg:flex lg:flex-col">
+    <aside className="hidden h-full min-h-0 w-[228px] shrink-0 overflow-hidden rounded-[24px] border border-white/60 bg-slate-950 px-3 py-4 text-white shadow-spotlight lg:flex lg:flex-col">
       <div className="border-b border-white/10 px-2 pb-4">
         <p className="text-xs uppercase tracking-[0.28em] text-slate-400">
           SISAC
@@ -824,7 +832,7 @@ export function AppSidebar() {
         <h2 className="mt-2 font-display text-xl">Painel</h2>
       </div>
 
-      <nav className="mt-4 space-y-4">
+      <nav className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto pr-1">
         <SidebarSection items={visibleGeneralItems} pathname={pathname} />
         {sections
           .filter((section) => section.visible)

@@ -193,15 +193,15 @@ export function PoliceOfficerShowPage() {
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
           <TabsTrigger value="summary">Resumo</TabsTrigger>
-          <TabsTrigger value="leaves">Leaves</TabsTrigger>
-          <TabsTrigger value="publications">Publications</TabsTrigger>
-          <TabsTrigger value="ranks">Ranks</TabsTrigger>
-          <TabsTrigger value="retirement">Retirement</TabsTrigger>
-          <TabsTrigger value="vacations">Vacations</TabsTrigger>
-          <TabsTrigger value="vehicle-loans">Vehicle Loans</TabsTrigger>
-          <TabsTrigger value="vehicle-custodies">Vehicle Custodies</TabsTrigger>
-          <TabsTrigger value="armament-loans">Armament Loans</TabsTrigger>
-          <TabsTrigger value="material-loans">Material Loans</TabsTrigger>
+          <TabsTrigger value="leaves">Licenças</TabsTrigger>
+          <TabsTrigger value="publications">Publicações</TabsTrigger>
+          <TabsTrigger value="ranks">Graduações</TabsTrigger>
+          <TabsTrigger value="retirement">Aposentadoria</TabsTrigger>
+          <TabsTrigger value="vacations">Férias</TabsTrigger>
+          <TabsTrigger value="vehicle-loans">Empréstimos de viaturas</TabsTrigger>
+          <TabsTrigger value="vehicle-custodies">Cautelas de viaturas</TabsTrigger>
+          <TabsTrigger value="armament-loans">Empréstimos de armamentos</TabsTrigger>
+          <TabsTrigger value="material-loans">Empréstimos de materiais</TabsTrigger>
         </TabsList>
 
         <TabsContent value="summary" className="space-y-6">

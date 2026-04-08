@@ -5,6 +5,7 @@ import { Search } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { SubunitSwitcher } from "@/components/layout/subunit-switcher";
+import { NoticeBell } from "@/components/notices/notice-bell";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,8 @@ export function AppHeader() {
           </div>
 
           <SubunitSwitcher />
+
+          <NoticeBell />
 
           <NotificationBell />
 

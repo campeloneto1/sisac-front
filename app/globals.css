@@ -36,6 +36,11 @@
       radial-gradient(circle at top left, rgba(253, 186, 116, 0.18), transparent 28%),
       radial-gradient(circle at bottom right, rgba(45, 212, 191, 0.12), transparent 24%);
   }
+
+  html,
+  body {
+    height: 100%;
+  }
 }
 
 @layer utilities {
