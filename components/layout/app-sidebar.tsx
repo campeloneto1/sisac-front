@@ -535,6 +535,24 @@ const reportsItems: Array<{
       { type: "resource", resource: "vehicles", action: "viewAny" },
     ],
   },
+  {
+    href: "/service-reports",
+    label: "Relatórios de serviços",
+    icon: Wrench,
+    requirements: [
+      { type: "slug", value: "reports" },
+      { type: "resource", resource: "services", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/patrimony-reports",
+    label: "Relatórios de patrimônios",
+    icon: Landmark,
+    requirements: [
+      { type: "slug", value: "reports" },
+      { type: "resource", resource: "patrimonies", action: "viewAny" },
+    ],
+  },
 ];
 
 type SidebarItem = {

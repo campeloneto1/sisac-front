@@ -121,6 +121,14 @@ export function ServiceShowPage() {
         </div>
 
         <div className="flex flex-wrap gap-2">
+          {(historyPermissions.canViewAny || historyPermissions.canView) && permissions.canView ? (
+            <Button asChild variant="outline">
+              <Link href={`/service-reports/service-panel/${service.id}`}>
+                <History className="mr-2 h-4 w-4" />
+                Painel do serviço
+              </Link>
+            </Button>
+          ) : null}
           {historyPermissions.canViewAny || historyPermissions.canView ? (
             <Button asChild variant="outline">
               <Link href={`/services/${service.id}/status-history`}>

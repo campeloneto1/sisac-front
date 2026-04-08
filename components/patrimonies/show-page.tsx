@@ -230,6 +230,14 @@ export function PatrimonyShowPage() {
         </div>
 
         <div className="flex flex-wrap gap-2">
+          {permissions.canView ? (
+            <Button asChild variant="outline">
+              <Link href={`/patrimony-reports/patrimony-panel/${patrimony.id}`}>
+                <History className="mr-2 h-4 w-4" />
+                Painel do patrimônio
+              </Link>
+            </Button>
+          ) : null}
           <Button asChild variant="outline">
             <Link href={`/patrimonies/${patrimony.id}/history`}>
               <History className="mr-2 h-4 w-4" />
