@@ -179,6 +179,11 @@ export function MaterialShowPage() {
           <CardDescription>Unidades individualizadas vinculadas a este material.</CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="mb-4 flex justify-end">
+            <Button asChild variant="outline">
+              <Link href={`/materials/${material.id}/units`}>Abrir modulo de unidades</Link>
+            </Button>
+          </div>
           {material.units?.length ? (
             <div className="overflow-x-auto">
               <table className="min-w-full text-left text-sm">
@@ -220,6 +225,11 @@ export function MaterialShowPage() {
           <CardDescription>Lotes e saldos disponiveis retornados pela API.</CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="mb-4 flex justify-end">
+            <Button asChild variant="outline">
+              <Link href={`/materials/${material.id}/batches`}>Abrir modulo de lotes</Link>
+            </Button>
+          </div>
           {material.batches?.length ? (
             <div className="overflow-x-auto">
               <table className="min-w-full text-left text-sm">
