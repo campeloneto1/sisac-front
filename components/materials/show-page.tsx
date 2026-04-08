@@ -175,6 +175,21 @@ export function MaterialShowPage() {
 
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
+          <CardTitle>Ocorrencias</CardTitle>
+          <CardDescription>Area preparada para extravios, danos, baixas e furtos vinculados ao material.</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <p className="text-sm text-slate-600">
+            Parte das ocorrencias ja nasce automaticamente no fluxo de emprestimos, mas o backend ainda nao expoe `MaterialOccurrence` como recurso REST dedicado.
+          </p>
+          <Button asChild variant="outline">
+            <Link href={`/materials/${material.id}/occurrences`}>Abrir modulo de ocorrencias</Link>
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card className="border-slate-200/70 bg-white/80">
+        <CardHeader>
           <CardTitle>Movimentacoes</CardTitle>
           <CardDescription>Area preparada para a trilha operacional de entradas, saidas, emprestimos e ajustes.</CardDescription>
         </CardHeader>
