@@ -5,10 +5,11 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { variantsService } from "@/services/variants/service";
 import type { VariantFilters } from "@/types/variant.type";
 
-export function useVariants(filters: VariantFilters) {
+export function useVariants(filters: VariantFilters, enabled = true) {
   return useQuery({
     queryKey: ["variants", filters],
     queryFn: () => variantsService.index(filters),
+    enabled,
     placeholderData: keepPreviousData,
   });
 }

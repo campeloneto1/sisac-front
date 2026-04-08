@@ -91,7 +91,7 @@ export interface CreateMaterialLoanItemDTO {
 export interface CreateMaterialLoanDTO {
   police_officer_id: number;
   kind?: MaterialLoanKind;
-  loaned_at: string;
+  loaned_at?: string | null;
   expected_return_at?: string | null;
   purpose?: string | null;
   approved_by?: number | null;
@@ -116,7 +116,7 @@ export interface ReturnMaterialLoanItemDTO {
 }
 
 export interface MarkMaterialLoanReturnedDTO {
-  returned_at: string;
+  returned_at?: string | null;
   return_notes?: string | null;
   approved_by?: number | null;
   items: ReturnMaterialLoanItemDTO[];

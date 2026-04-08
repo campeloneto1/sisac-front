@@ -8,6 +8,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useSubunit } from "@/contexts/subunit-context";
+import { useBrands } from "@/hooks/use-brands";
 import { useColors } from "@/hooks/use-colors";
 import { useSubunits } from "@/hooks/use-subunits";
 import { useUsers } from "@/hooks/use-users";
@@ -79,6 +80,7 @@ const vehicleFormSchema = z
     ownership_type: z.string(),
     color_id: z.string(),
     vehicle_type_id: z.string(),
+    brand_id: z.string().min(1, "Selecione a marca."),
     variant_id: z.string(),
     subunit_id: z.string(),
     assigned_to_user_id: z.string(),
@@ -139,7 +141,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
   const updateMutation = useUpdateVehicleMutation();
   const colorsQuery = useColors({ per_page: 100 });
   const vehicleTypesQuery = useVehicleTypes({ per_page: 100 });
-  const variantsQuery = useVariants({ per_page: 100 });
+  const brandsQuery = useBrands({ per_page: 100, type: "transport" });
   const usersQuery = useUsers({ per_page: 100 });
   const subunitsQuery = useSubunits({ per_page: 100 });
 
@@ -173,6 +175,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
       vehicle_type_id: vehicle?.vehicle_type_id
         ? String(vehicle.vehicle_type_id)
         : "none",
+      brand_id: vehicle?.variant?.brand?.id ? String(vehicle.variant.brand.id) : "",
       variant_id: vehicle?.variant_id ? String(vehicle.variant_id) : "none",
       subunit_id: vehicle?.subunit_id
         ? String(vehicle.subunit_id)
@@ -205,6 +208,10 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
     control,
     name: "vehicle_type_id",
   });
+  const selectedBrandId = useWatch({
+    control,
+    name: "brand_id",
+  });
   const selectedVariantId = useWatch({
     control,
     name: "variant_id",
@@ -229,6 +236,16 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
     control,
     name: "is_available_for_trip",
   });
+  const variantsQuery = useVariants(
+    {
+      per_page: 100,
+      brand_id:
+        selectedBrandId && selectedBrandId !== "none"
+          ? Number(selectedBrandId)
+          : null,
+    },
+    Boolean(selectedBrandId && selectedBrandId !== "none"),
+  );
 
   useEffect(() => {
     if (!vehicle) {
@@ -256,6 +273,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
       vehicle_type_id: vehicle.vehicle_type_id
         ? String(vehicle.vehicle_type_id)
         : "none",
+      brand_id: vehicle.variant?.brand?.id ? String(vehicle.variant.brand.id) : "",
       variant_id: vehicle.variant_id ? String(vehicle.variant_id) : "none",
       subunit_id: vehicle.subunit_id ? String(vehicle.subunit_id) : "none",
       assigned_to_user_id: vehicle.assigned_to_user_id
@@ -431,21 +449,59 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label>Modelo</Label>
+                <Label>Marca</Label>
                 <Select
-                  value={selectedVariantId}
-                  onValueChange={(value) =>
-                    setValue("variant_id", value, { shouldValidate: true })
-                  }
+                  value={selectedBrandId || "none"}
+                  onValueChange={(value) => {
+                    const nextBrandId = value === "none" ? "" : value;
+
+                    setValue("brand_id", nextBrandId, { shouldValidate: true });
+                    setValue("variant_id", "none", { shouldValidate: true });
+                  }}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="none">Nao informado</SelectItem>
+                    {(brandsQuery.data?.data ?? []).map((item) => (
+                      <SelectItem key={item.id} value={String(item.id)}>
+                        {item.abbreviation
+                          ? `${item.name} (${item.abbreviation})`
+                          : item.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.brand_id ? (
+                  <p className="text-sm text-destructive">
+                    {errors.brand_id.message}
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="space-y-2">
+                <Label>Modelo</Label>
+                <Select
+                  value={selectedVariantId}
+                  disabled={!selectedBrandId || selectedBrandId === "none"}
+                  onValueChange={(value) =>
+                    setValue("variant_id", value, { shouldValidate: true })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder={
+                        selectedBrandId && selectedBrandId !== "none"
+                          ? "Selecione"
+                          : "Selecione uma marca primeiro"
+                      }
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">Nao informado</SelectItem>
                     {(variantsQuery.data?.data ?? []).map((item) => (
                       <SelectItem key={item.id} value={String(item.id)}>
-                        {item.brand?.name ? `${item.brand.name} • ` : ""}
                         {item.name}
                       </SelectItem>
                     ))}

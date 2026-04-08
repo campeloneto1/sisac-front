@@ -9,6 +9,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useSubunit } from "@/contexts/subunit-context";
+import { useBrands } from "@/hooks/use-brands";
 import { useCreateMaterialMutation, useUpdateMaterialMutation } from "@/hooks/use-material-mutations";
 import { useMaterialTypes } from "@/hooks/use-material-types";
 import { useVariants } from "@/hooks/use-variants";
@@ -41,6 +42,7 @@ const batchRowSchema = z.object({
 
 const materialFormSchema = z.object({
   material_type_id: z.string().min(1, "Selecione o tipo de material."),
+  brand_id: z.string().min(1, "Selecione a marca."),
   variant_id: z.string().min(1, "Selecione a variante."),
   specifications_rows: z.array(specificationRowSchema),
   units: z.array(unitRowSchema),
@@ -86,7 +88,7 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
   const createMutation = useCreateMaterialMutation();
   const updateMutation = useUpdateMaterialMutation();
   const materialTypesQuery = useMaterialTypes({ per_page: 100 });
-  const variantsQuery = useVariants({ per_page: 100 });
+  const brandsQuery = useBrands({ per_page: 100, type: "logistics" });
 
   const {
     control,
@@ -99,6 +101,7 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
     resolver: zodResolver(materialFormSchema),
     defaultValues: {
       material_type_id: material?.material_type_id ? String(material.material_type_id) : "",
+      brand_id: material?.variant?.brand_id ? String(material.variant.brand_id) : "",
       variant_id: material?.variant_id ? String(material.variant_id) : "",
       specifications_rows: specificationRowsFromRecord(material?.specifications),
       units: [],
@@ -122,8 +125,16 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
   });
 
   const selectedMaterialTypeId = useWatch({ control, name: "material_type_id" });
+  const selectedBrandId = useWatch({ control, name: "brand_id" });
   const selectedVariantId = useWatch({ control, name: "variant_id" });
   const watchedUnits = useWatch({ control, name: "units" });
+  const variantsQuery = useVariants(
+    {
+      per_page: 100,
+      brand_id: selectedBrandId ? Number(selectedBrandId) : null,
+    },
+    Boolean(selectedBrandId),
+  );
 
   useEffect(() => {
     if (!material) {
@@ -132,6 +143,7 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
 
     reset({
       material_type_id: String(material.material_type_id),
+      brand_id: material.variant?.brand_id ? String(material.variant.brand_id) : "",
       variant_id: String(material.variant_id),
       specifications_rows: specificationRowsFromRecord(material.specifications),
       units: [],
@@ -236,9 +248,42 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
             </div>
 
             <div className="space-y-2">
+              <Label>Marca</Label>
+              <Select
+                value={selectedBrandId || "none"}
+                onValueChange={(value) => {
+                  const nextBrandId = value === "none" ? "" : value;
+
+                  setValue("brand_id", nextBrandId, {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  });
+                  setValue("variant_id", "", {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  });
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione a marca" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Selecione a marca</SelectItem>
+                  {(brandsQuery.data?.data ?? []).map((brand) => (
+                    <SelectItem key={brand.id} value={String(brand.id)}>
+                      {brand.abbreviation ? `${brand.name} (${brand.abbreviation})` : brand.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.brand_id ? <p className="text-sm text-destructive">{errors.brand_id.message}</p> : null}
+            </div>
+
+            <div className="space-y-2">
               <Label>Variante</Label>
               <Select
                 value={selectedVariantId || "none"}
+                disabled={!selectedBrandId}
                 onValueChange={(value) =>
                   setValue("variant_id", value === "none" ? "" : value, {
                     shouldDirty: true,
@@ -247,13 +292,13 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione a variante" />
+                  <SelectValue placeholder={selectedBrandId ? "Selecione a variante" : "Selecione uma marca primeiro"} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">Selecione a variante</SelectItem>
                   {(variantsQuery.data?.data ?? []).map((variant) => (
                     <SelectItem key={variant.id} value={String(variant.id)}>
-                      {variant.brand?.name ? `${variant.brand.name} - ${variant.name}` : variant.name}
+                      {variant.name}
                     </SelectItem>
                   ))}
                 </SelectContent>

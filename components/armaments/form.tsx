@@ -13,6 +13,7 @@ import {
   useUpdateArmamentMutation,
 } from "@/hooks/use-armament-mutations";
 import { useSubunit } from "@/contexts/subunit-context";
+import { useBrands } from "@/hooks/use-brands";
 import { useArmamentCalibers } from "@/hooks/use-armament-calibers";
 import { useArmamentSizes } from "@/hooks/use-armament-sizes";
 import { useArmamentTypes } from "@/hooks/use-armament-types";
@@ -49,6 +50,7 @@ const specificationRowSchema = z.object({
 
 const armamentFormSchema = z.object({
   armament_type_id: z.string().min(1, "Selecione o tipo de armamento."),
+  brand_id: z.string().min(1, "Selecione a marca."),
   variant_id: z.string().min(1, "Selecione a variante."),
   armament_caliber_id: z.string(),
   armament_size_id: z.string(),
@@ -99,7 +101,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
   const createMutation = useCreateArmamentMutation();
   const updateMutation = useUpdateArmamentMutation();
   const typesQuery = useArmamentTypes({ per_page: 100 });
-  const variantsQuery = useVariants({ per_page: 100 });
+  const brandsQuery = useBrands({ per_page: 100, type: "weapon" });
   const calibersQuery = useArmamentCalibers({ per_page: 100 });
   const sizesQuery = useArmamentSizes({ per_page: 100 });
   const gendersQuery = useGenders({ per_page: 100 });
@@ -117,6 +119,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
       armament_type_id: armament?.armament_type_id
         ? String(armament.armament_type_id)
         : "",
+      brand_id: armament?.variant?.brand_id ? String(armament.variant.brand_id) : "",
       variant_id: armament?.variant_id ? String(armament.variant_id) : "",
       armament_caliber_id: armament?.armament_caliber_id
         ? String(armament.armament_caliber_id)
@@ -135,10 +138,18 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
   });
 
   const selectedTypeId = useWatch({ control, name: "armament_type_id" });
+  const selectedBrandId = useWatch({ control, name: "brand_id" });
   const selectedVariantId = useWatch({ control, name: "variant_id" });
   const selectedCaliberId = useWatch({ control, name: "armament_caliber_id" });
   const selectedSizeId = useWatch({ control, name: "armament_size_id" });
   const selectedGenderId = useWatch({ control, name: "gender_id" });
+  const variantsQuery = useVariants(
+    {
+      per_page: 100,
+      brand_id: selectedBrandId ? Number(selectedBrandId) : null,
+    },
+    Boolean(selectedBrandId),
+  );
 
   useEffect(() => {
     if (!armament) {
@@ -147,6 +158,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
 
     reset({
       armament_type_id: String(armament.armament_type_id),
+      brand_id: armament.variant?.brand_id ? String(armament.variant.brand_id) : "",
       variant_id: String(armament.variant_id),
       armament_caliber_id: armament.armament_caliber_id
         ? String(armament.armament_caliber_id)
@@ -259,9 +271,46 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
             </div>
 
             <div className="space-y-2">
+              <Label>Marca</Label>
+              <Select
+                value={selectedBrandId || "none"}
+                onValueChange={(value) => {
+                  const nextBrandId = value === "none" ? "" : value;
+
+                  setValue("brand_id", nextBrandId, {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  });
+                  setValue("variant_id", "", {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  });
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione a marca" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Selecione a marca</SelectItem>
+                  {(brandsQuery.data?.data ?? []).map((brand) => (
+                    <SelectItem key={brand.id} value={String(brand.id)}>
+                      {brand.abbreviation ? `${brand.name} (${brand.abbreviation})` : brand.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.brand_id ? (
+                <p className="text-sm text-destructive">
+                  {errors.brand_id.message}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2">
               <Label>Variante</Label>
               <Select
                 value={selectedVariantId || "none"}
+                disabled={!selectedBrandId}
                 onValueChange={(value) =>
                   setValue("variant_id", value === "none" ? "" : value, {
                     shouldDirty: true,
@@ -270,15 +319,13 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione a variante" />
+                  <SelectValue placeholder={selectedBrandId ? "Selecione a variante" : "Selecione uma marca primeiro"} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">Selecione a variante</SelectItem>
                   {(variantsQuery.data?.data ?? []).map((variant) => (
                     <SelectItem key={variant.id} value={String(variant.id)}>
-                      {variant.brand?.name
-                        ? `${variant.brand.name} - ${variant.name}`
-                        : variant.name}
+                      {variant.name}
                     </SelectItem>
                   ))}
                 </SelectContent>

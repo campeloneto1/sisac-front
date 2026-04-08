@@ -314,7 +314,6 @@ export function MaterialLoanReturnPage() {
     const response = await returnMutation.mutateAsync({
       id: loan.id,
       payload: {
-        returned_at: new Date().toISOString(),
         approved_by:
           values.approved_by !== "none" ? Number(values.approved_by) : null,
         return_notes: values.return_notes.trim() || null,
@@ -357,8 +356,8 @@ export function MaterialLoanReturnPage() {
             Emprestimo de {loan.police_officer?.war_name || loan.police_officer?.name}
           </CardTitle>
           <CardDescription>
-            A data e hora da devolucao sao registradas automaticamente no envio
-            para manter o fluxo alinhado com o que foi ajustado em armamentos.
+            A data e hora da devolucao agora sao registradas automaticamente
+            pela API.
           </CardDescription>
         </CardHeader>
         <CardContent>

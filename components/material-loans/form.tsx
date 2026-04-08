@@ -246,7 +246,6 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
       const payload: CreateMaterialLoanDTO = {
         police_officer_id: Number(values.police_officer_id),
         kind: values.kind as MaterialLoanKind,
-        loaned_at: new Date().toISOString(),
         expected_return_at: values.expected_return_at
           ? new Date(values.expected_return_at).toISOString()
           : null,
@@ -453,9 +452,8 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
             </div>
 
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600 md:col-span-2">
-              A subunidade ativa e o horario inicial do emprestimo nao sao
-              informados manualmente aqui. O frontend envia o contexto ativo e
-              registra o horario atual para manter compatibilidade com a API.
+              A subunidade vem do contexto ativo e o horario inicial do
+              emprestimo agora e definido automaticamente pela API.
             </div>
 
             {mode === "edit" ? (
