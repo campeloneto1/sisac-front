@@ -113,11 +113,18 @@ export function ContractShowPage() {
           </p>
         </div>
 
-        {permissions.canUpdate ? (
-          <Button asChild variant="outline">
-            <Link href={`/contracts/${contract.id}/edit`}>Editar</Link>
-          </Button>
-        ) : null}
+        <div className="flex flex-wrap gap-2">
+          {permissions.canView ? (
+            <Button asChild variant="outline">
+              <Link href={`/contract-reports/contract-panel/${contract.id}`}>Painel do contrato</Link>
+            </Button>
+          ) : null}
+          {permissions.canUpdate ? (
+            <Button asChild variant="outline">
+              <Link href={`/contracts/${contract.id}/edit`}>Editar</Link>
+            </Button>
+          ) : null}
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2">

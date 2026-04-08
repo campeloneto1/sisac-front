@@ -553,6 +553,15 @@ const reportsItems: Array<{
       { type: "resource", resource: "patrimonies", action: "viewAny" },
     ],
   },
+  {
+    href: "/contract-reports",
+    label: "Relatórios de contratos",
+    icon: FileText,
+    requirements: [
+      { type: "slug", value: "reports" },
+      { type: "resource", resource: "contracts", action: "viewAny" },
+    ],
+  },
 ];
 
 type SidebarItem = {
