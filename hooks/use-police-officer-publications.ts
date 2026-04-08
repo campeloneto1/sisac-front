@@ -7,18 +7,20 @@ import type { PoliceOfficerPublicationFilters } from "@/types/police-officer-pub
 
 export function usePoliceOfficerPublications(
   filters: PoliceOfficerPublicationFilters,
+  enabled = true,
 ) {
   return useQuery({
     queryKey: ["police-officer-publications", filters],
     queryFn: () => policeOfficerPublicationsService.index(filters),
+    enabled,
     placeholderData: keepPreviousData,
   });
 }
 
-export function usePoliceOfficerPublication(id: number | string) {
+export function usePoliceOfficerPublication(id: number | string, enabled = true) {
   return useQuery({
     queryKey: ["police-officer-publications", id],
     queryFn: () => policeOfficerPublicationsService.show(id),
-    enabled: Boolean(id),
+    enabled: Boolean(id) && enabled,
   });
 }

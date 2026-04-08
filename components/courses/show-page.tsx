@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { BookOpen, UserCircle2 } from "lucide-react";
 
+import { useSubunit } from "@/contexts/subunit-context";
+import { useCourseClasses } from "@/hooks/use-course-classes";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useCourse } from "@/hooks/use-courses";
 import { Badge } from "@/components/ui/badge";
@@ -11,11 +13,23 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CourseDisciplinesSection } from "@/components/courses/disciplines-section";
+import { CourseClassesTable } from "@/components/course-classes/table";
 
 export function CourseShowPage() {
   const params = useParams<{ id: string }>();
   const permissions = usePermissions("courses");
+  const courseClassesPermissions = usePermissions("course-classes");
+  const { activeSubunit } = useSubunit();
   const courseQuery = useCourse(params.id);
+  const canViewCourseClasses =
+    courseClassesPermissions.canViewAny || courseClassesPermissions.canView;
+  const courseClassesQuery = useCourseClasses(
+    {
+      per_page: 100,
+      course_id: Number(params.id),
+    },
+    Boolean(activeSubunit) && canViewCourseClasses,
+  );
 
   if (!permissions.canView) {
     return (
@@ -120,6 +134,44 @@ export function CourseShowPage() {
       </div>
 
       <CourseDisciplinesSection courseId={course.id} courseName={course.name} />
+
+      {canViewCourseClasses ? (
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Turmas do curso</CardTitle>
+            <CardDescription>
+              Turmas vinculadas a este curso, exibidas no mesmo padrao em tabela dos outros modulos.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {!activeSubunit ? (
+              <p className="text-sm text-slate-500">
+                Selecione uma subunidade ativa para carregar as turmas deste curso.
+              </p>
+            ) : courseClassesQuery.isLoading ? (
+              <Skeleton className="h-24 w-full" />
+            ) : courseClassesQuery.isError ? (
+              <p className="text-sm text-slate-500">
+                Nao foi possivel carregar as turmas vinculadas a este curso.
+              </p>
+            ) : !courseClassesQuery.data?.data.length ? (
+              <p className="text-sm text-slate-500">
+                Nenhuma turma encontrada para este curso na subunidade ativa.
+              </p>
+            ) : (
+              <CourseClassesTable courseClasses={courseClassesQuery.data.data} />
+            )}
+
+            <div className="flex justify-end">
+              <Button asChild variant="outline">
+                <Link href={`/course-classes?course_id=${course.id}`}>
+                  Abrir modulo de turmas
+                </Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
     </div>
   );
 }

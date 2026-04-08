@@ -7,18 +7,23 @@ import type { PoliceOfficerRetirementRequestFilters } from "@/types/police-offic
 
 export function usePoliceOfficerRetirementRequests(
   filters: PoliceOfficerRetirementRequestFilters,
+  enabled = true,
 ) {
   return useQuery({
     queryKey: ["police-officer-retirement-requests", filters],
     queryFn: () => policeOfficerRetirementRequestsService.index(filters),
+    enabled,
     placeholderData: keepPreviousData,
   });
 }
 
-export function usePoliceOfficerRetirementRequest(id: number | string) {
+export function usePoliceOfficerRetirementRequest(
+  id: number | string,
+  enabled = true,
+) {
   return useQuery({
     queryKey: ["police-officer-retirement-requests", id],
     queryFn: () => policeOfficerRetirementRequestsService.show(id),
-    enabled: Boolean(id),
+    enabled: Boolean(id) && enabled,
   });
 }

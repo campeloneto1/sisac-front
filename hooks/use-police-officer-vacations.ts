@@ -5,19 +5,23 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { policeOfficerVacationsService } from "@/services/police-officer-vacations/service";
 import type { PoliceOfficerVacationFilters, PoliceOfficerVacationPeriodFilters } from "@/types/police-officer-vacation.type";
 
-export function usePoliceOfficerVacations(filters: PoliceOfficerVacationFilters) {
+export function usePoliceOfficerVacations(
+  filters: PoliceOfficerVacationFilters,
+  enabled = true,
+) {
   return useQuery({
     queryKey: ["police-officer-vacations", filters],
     queryFn: () => policeOfficerVacationsService.index(filters),
+    enabled,
     placeholderData: keepPreviousData,
   });
 }
 
-export function usePoliceOfficerVacation(id: number | string) {
+export function usePoliceOfficerVacation(id: number | string, enabled = true) {
   return useQuery({
     queryKey: ["police-officer-vacations", id],
     queryFn: () => policeOfficerVacationsService.show(id),
-    enabled: Boolean(id),
+    enabled: Boolean(id) && enabled,
   });
 }
 
