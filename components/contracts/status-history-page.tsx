@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, History, Plus } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
+import { useSubunit } from "@/contexts/subunit-context";
 import { useCreateContractStatusHistoryMutation } from "@/hooks/use-contract-status-history-mutations";
 import { useContractStatusHistories } from "@/hooks/use-contract-status-histories";
 import { useContract } from "@/hooks/use-contracts";
@@ -189,13 +190,16 @@ function StatusHistoryDialog({
 
 export function ContractStatusHistoryPage() {
   const { id } = useParams<{ id: string }>();
+  const { activeSubunit } = useSubunit();
   const permissions = usePermissions("contract-status-histories");
+  const canViewPage = permissions.canViewAny || permissions.canView;
   const [statusFilter, setStatusFilter] = useState("all");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [page, setPage] = useState(1);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const contractQuery = useContract(id, permissions.canViewAny);
+  const isPageEnabled = Boolean(activeSubunit) && canViewPage;
+  const contractQuery = useContract(id, isPageEnabled);
 
   const filters = useMemo(() => ({
     page,
@@ -206,15 +210,15 @@ export function ContractStatusHistoryPage() {
     date_to: dateTo || undefined,
   }), [dateFrom, dateTo, id, page, statusFilter]);
 
-  const historyQuery = useContractStatusHistories(filters, permissions.canViewAny);
+  const historyQuery = useContractStatusHistories(filters, isPageEnabled);
 
   return (
     <ContractSubpageShell
       title="Historico de status"
       description="Trilha de auditoria das mudancas de estado do contrato, com usuario responsavel, data e justificativa."
-      canView={permissions.canViewAny}
+      canView={canViewPage}
       permissionDeniedTitle="Acesso negado"
-      permissionDeniedDescription="Voce precisa da permissao `viewAny` para visualizar o historico de status do contrato."
+      permissionDeniedDescription="Voce precisa da permissao `view` ou `viewAny` para visualizar o historico de status do contrato."
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">

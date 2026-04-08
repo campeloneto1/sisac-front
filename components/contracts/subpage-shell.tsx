@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 
+import { useAuth } from "@/contexts/auth-context";
 import { useSubunit } from "@/contexts/subunit-context";
 import { useContract } from "@/hooks/use-contracts";
+import { can } from "@/lib/permissions";
 import { cn } from "@/lib/utils";
 import { getContractStatusBadgeVariant, getContractStatusLabel } from "@/types/contract.type";
 import { Badge } from "@/components/ui/badge";
@@ -12,13 +14,13 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 import { Skeleton } from "@/components/ui/skeleton";
 
 const subpages = [
-  { href: "", label: "Resumo" },
-  { href: "/roles", label: "Papeis" },
-  { href: "/status-history", label: "Status" },
-  { href: "/extensions", label: "Prorrogacoes" },
-  { href: "/amendments", label: "Aditivos" },
-  { href: "/transactions", label: "Transacoes" },
-  { href: "/alerts", label: "Alertas" },
+  { href: "", label: "Resumo", resource: "contracts" },
+  { href: "/roles", label: "Papeis", resource: "contract-roles" },
+  { href: "/status-history", label: "Status", resource: "contract-status-histories" },
+  { href: "/extensions", label: "Prorrogacoes", resource: "contract-extensions" },
+  { href: "/amendments", label: "Aditivos", resource: "contract-amendments" },
+  { href: "/transactions", label: "Transacoes", resource: "contract-transactions" },
+  { href: "/alerts", label: "Alertas", resource: "contract-alerts" },
 ];
 
 interface ContractSubpageShellProps {
@@ -40,8 +42,10 @@ export function ContractSubpageShell({
 }: ContractSubpageShellProps) {
   const { id } = useParams<{ id: string }>();
   const pathname = usePathname();
+  const { user } = useAuth();
   const { activeSubunit } = useSubunit();
   const contractQuery = useContract(id, Boolean(activeSubunit));
+  const visibleSubpages = subpages.filter((item) => can(user, "view", item.resource) || can(user, "viewAny", item.resource));
 
   if (!canView) {
     return (
@@ -105,7 +109,7 @@ export function ContractSubpageShell({
         </div>
 
         <div className="mt-6 flex flex-wrap gap-2">
-          {subpages.map((item) => {
+          {visibleSubpages.map((item) => {
             const href = `/contracts/${contract.id}${item.href}`;
             const isActive = pathname === href;
 

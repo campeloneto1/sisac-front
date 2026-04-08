@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangle, CheckCheck, Pencil, Plus, ShieldAlert, Trash2 } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
+import { useSubunit } from "@/contexts/subunit-context";
 import {
   useAcknowledgeContractAlertMutation,
   useCreateContractAlertMutation,
@@ -210,7 +211,9 @@ function AlertDialog({
 export function ContractAlertsPage() {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
+  const { activeSubunit } = useSubunit();
   const permissions = usePermissions("contract-alerts");
+  const canViewPage = permissions.canViewAny || permissions.canView;
   const canAcknowledge = hasPermission(user, "contract-alerts.acknowledge");
   const canResolve = hasPermission(user, "contract-alerts.resolve");
   const [search, setSearch] = useState("");
@@ -223,6 +226,7 @@ export function ContractAlertsPage() {
   const deleteMutation = useDeleteContractAlertMutation(id);
   const acknowledgeMutation = useAcknowledgeContractAlertMutation(id);
   const resolveMutation = useResolveContractAlertMutation(id);
+  const isPageEnabled = Boolean(activeSubunit) && canViewPage;
 
   const filters = useMemo(() => ({
     page,
@@ -233,7 +237,7 @@ export function ContractAlertsPage() {
     status: statusFilter !== "all" ? (statusFilter as ContractAlertStatus) : undefined,
   }), [id, page, search, statusFilter, typeFilter]);
 
-  const alertsQuery = useContractAlerts(filters, permissions.canViewAny);
+  const alertsQuery = useContractAlerts(filters, isPageEnabled);
 
   async function handleDelete() {
     if (!alertToDelete) {
@@ -248,9 +252,9 @@ export function ContractAlertsPage() {
     <ContractSubpageShell
       title="Alertas do contrato"
       description="Centralize alertas de execucao financeira e vencimento com acompanhamento de reconhecimento e resolucao."
-      canView={permissions.canViewAny}
+      canView={canViewPage}
       permissionDeniedTitle="Acesso negado"
-      permissionDeniedDescription="Voce precisa da permissao `viewAny` para visualizar os alertas do contrato."
+      permissionDeniedDescription="Voce precisa da permissao `view` ou `viewAny` para visualizar os alertas do contrato."
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
