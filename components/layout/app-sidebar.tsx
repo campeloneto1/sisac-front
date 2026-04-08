@@ -293,6 +293,14 @@ const administratorItems: Array<{
     ],
   },
   {
+    href: "/patrimony-types",
+    label: "Tipos de patrimonio",
+    icon: Landmark,
+    requirements: [
+      { type: "resource", resource: "patrimony-types", action: "viewAny" },
+    ],
+  },
+  {
     href: "/service-types",
     label: "Tipos de servico",
     icon: Wrench,
