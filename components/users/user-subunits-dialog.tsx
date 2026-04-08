@@ -87,7 +87,7 @@ export function UserSubunitsDialog({
         <DialogHeader>
           <DialogTitle>Subunidades com acesso</DialogTitle>
           <DialogDescription>
-            Defina quais subunidades {userName} pode selecionar na navbar. A subunidade ativa escolhida la será enviada no header `X-Active-Subunit`.
+            Defina quais subunidades {userName} pode selecionar na navbar. A subunidade ativa escolhida la será enviada no header `X-SUBUNIT-ACTIVE`.
           </DialogDescription>
         </DialogHeader>
 

@@ -17,6 +17,9 @@ export function useCreateVehicleDamageMutation() {
       queryClient.invalidateQueries({ queryKey: ["vehicle-loans"] });
       queryClient.invalidateQueries({ queryKey: ["vehicle-custodies"] });
       queryClient.invalidateQueries({ queryKey: ["vehicle-maintenances"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-reports"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-operations"] });
+      queryClient.invalidateQueries({ queryKey: ["home"] });
       toast.success(response.message);
     },
     onError(error) {
@@ -45,6 +48,9 @@ export function useUpdateVehicleDamageMutation() {
       queryClient.invalidateQueries({ queryKey: ["vehicle-loans"] });
       queryClient.invalidateQueries({ queryKey: ["vehicle-custodies"] });
       queryClient.invalidateQueries({ queryKey: ["vehicle-maintenances"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-reports"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-operations"] });
+      queryClient.invalidateQueries({ queryKey: ["home"] });
       toast.success(response.message);
     },
     onError(error) {
@@ -64,6 +70,9 @@ export function useDeleteVehicleDamageMutation() {
       queryClient.invalidateQueries({ queryKey: ["vehicle-loans"] });
       queryClient.invalidateQueries({ queryKey: ["vehicle-custodies"] });
       queryClient.invalidateQueries({ queryKey: ["vehicle-maintenances"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-reports"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-operations"] });
+      queryClient.invalidateQueries({ queryKey: ["home"] });
       toast.success(response.message);
     },
     onError(error) {

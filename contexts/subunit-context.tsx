@@ -38,8 +38,10 @@ export function SubunitProvider({ children }: { children: React.ReactNode }) {
   }, [activeSubunitId, subunits]);
 
   useEffect(() => {
-    setActiveSubunitResolver(() => activeSubunitId);
-  }, [activeSubunitId]);
+    setActiveSubunitResolver(() =>
+      activeSubunit ? String(activeSubunit.id) : null,
+    );
+  }, [activeSubunit]);
 
   useEffect(() => {
     if (activeSubunit) {

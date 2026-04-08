@@ -14,6 +14,9 @@ export function useCreateVehicleLoanMutation() {
     onSuccess(response) {
       queryClient.invalidateQueries({ queryKey: ["vehicle-loans"] });
       queryClient.invalidateQueries({ queryKey: ["vehicles"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-reports"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-operations"] });
+      queryClient.invalidateQueries({ queryKey: ["home"] });
       toast.success(response.message);
     },
     onError(error) {
@@ -37,6 +40,9 @@ export function useUpdateVehicleLoanMutation() {
       queryClient.invalidateQueries({ queryKey: ["vehicle-loans"] });
       queryClient.invalidateQueries({ queryKey: ["vehicle-loans", variables.id] });
       queryClient.invalidateQueries({ queryKey: ["vehicles"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-reports"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-operations"] });
+      queryClient.invalidateQueries({ queryKey: ["home"] });
       toast.success(response.message);
     },
     onError(error) {
@@ -53,6 +59,9 @@ export function useDeleteVehicleLoanMutation() {
     onSuccess(response) {
       queryClient.invalidateQueries({ queryKey: ["vehicle-loans"] });
       queryClient.invalidateQueries({ queryKey: ["vehicles"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-reports"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-operations"] });
+      queryClient.invalidateQueries({ queryKey: ["home"] });
       toast.success(response.message);
     },
     onError(error) {
@@ -77,6 +86,9 @@ export function useMarkVehicleLoanReturnedMutation() {
       queryClient.invalidateQueries({ queryKey: ["vehicle-loans", variables.id] });
       queryClient.invalidateQueries({ queryKey: ["vehicles"] });
       queryClient.invalidateQueries({ queryKey: ["vehicles", response.data.vehicle_id] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-reports"] });
+      queryClient.invalidateQueries({ queryKey: ["vehicle-operations"] });
+      queryClient.invalidateQueries({ queryKey: ["home"] });
       toast.success(response.message);
     },
     onError(error) {

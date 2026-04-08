@@ -122,7 +122,7 @@ export function NotificationResponsibilitiesListPage() {
           <CardHeader>
             <CardTitle>Selecione uma subunidade</CardTitle>
             <CardDescription>
-              Este módulo exige `X-Active-Subunit` em todas as requisicoes. Selecione uma subunidade no header para listar e editar as regras.
+              Este módulo exige `X-SUBUNIT-ACTIVE` em todas as requisicoes. Selecione uma subunidade no header para listar e editar as regras.
             </CardDescription>
           </CardHeader>
         </Card>

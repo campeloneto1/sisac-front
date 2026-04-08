@@ -60,7 +60,7 @@ export function MaterialLoansListPage() {
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
             O módulo de empréstimos de materiais depende da subunidade ativa
-            para enviar `X-Active-Subunit`.
+            para enviar `X-SUBUNIT-ACTIVE`.
           </CardDescription>
         </CardHeader>
       </Card>

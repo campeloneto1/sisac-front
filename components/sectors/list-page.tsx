@@ -82,7 +82,7 @@ export function SectorsListPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Selecione uma subunidade</CardTitle>
-            <CardDescription>O recurso de setores depende do contexto ativo para enviar `X-Active-Subunit` em todas as requisicoes.</CardDescription>
+            <CardDescription>O recurso de setores depende do contexto ativo para enviar `X-SUBUNIT-ACTIVE` em todas as requisicoes.</CardDescription>
           </CardHeader>
         </Card>
       ) : sectorsQuery.isLoading ? (

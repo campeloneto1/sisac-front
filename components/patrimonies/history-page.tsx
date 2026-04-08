@@ -55,7 +55,7 @@ export function PatrimonyHistoryPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O histórico setorial depende da subunidade ativa para enviar `X-Active-Subunit`.
+            O histórico setorial depende da subunidade ativa para enviar `X-SUBUNIT-ACTIVE`.
           </CardDescription>
         </CardHeader>
       </Card>

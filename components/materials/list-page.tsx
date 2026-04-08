@@ -57,7 +57,7 @@ export function MaterialsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>O módulo de materiais depende da subunidade ativa para enviar `X-Active-Subunit`.</CardDescription>
+          <CardDescription>O módulo de materiais depende da subunidade ativa para enviar `X-SUBUNIT-ACTIVE`.</CardDescription>
         </CardHeader>
       </Card>
     );

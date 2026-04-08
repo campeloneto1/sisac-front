@@ -63,7 +63,7 @@ export function PatrimoniesListPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O módulo de patrimônios depende da subunidade ativa para enviar `X-Active-Subunit`.
+            O módulo de patrimônios depende da subunidade ativa para enviar `X-SUBUNIT-ACTIVE`.
           </CardDescription>
         </CardHeader>
       </Card>

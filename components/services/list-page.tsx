@@ -87,7 +87,7 @@ export function ServicesListPage() {
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            O módulo de serviços depende da subunidade ativa para enviar `X-Active-Subunit`.
+            O módulo de serviços depende da subunidade ativa para enviar `X-SUBUNIT-ACTIVE`.
           </CardDescription>
         </CardHeader>
       </Card>

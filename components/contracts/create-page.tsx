@@ -25,7 +25,7 @@ export function ContractCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>O cadastro do contrato exige subunidade ativa para envio do header `X-Active-Subunit`.</CardDescription>
+          <CardDescription>O cadastro do contrato exige subunidade ativa para envio do header `X-SUBUNIT-ACTIVE`.</CardDescription>
         </CardHeader>
       </Card>
     );

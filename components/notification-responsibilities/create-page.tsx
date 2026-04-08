@@ -30,7 +30,7 @@ export function NotificationResponsibilityCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>O cadastro exige uma subunidade ativa para carregar os setores e enviar o header `X-Active-Subunit`.</CardDescription>
+          <CardDescription>O cadastro exige uma subunidade ativa para carregar os setores e enviar o header `X-SUBUNIT-ACTIVE`.</CardDescription>
         </CardHeader>
       </Card>
     );

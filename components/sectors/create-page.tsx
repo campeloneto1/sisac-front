@@ -28,7 +28,7 @@ export function SectorCreatePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>O cadastro de setor exige uma subunidade ativa para enviar o header `X-Active-Subunit`.</CardDescription>
+          <CardDescription>O cadastro de setor exige uma subunidade ativa para enviar o header `X-SUBUNIT-ACTIVE`.</CardDescription>
         </CardHeader>
       </Card>
     );

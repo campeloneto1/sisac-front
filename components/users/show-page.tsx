@@ -160,7 +160,7 @@ export function UserShowPage() {
         <CardHeader>
           <CardTitle>Subunidades</CardTitle>
           <CardDescription>
-            Estas subunidades definem o que o usuário pode selecionar na navbar e qual `X-Active-Subunit` pode ser enviado para a API.
+            Estas subunidades definem o que o usuário pode selecionar na navbar e qual `X-SUBUNIT-ACTIVE` pode ser enviado para a API.
           </CardDescription>
         </CardHeader>
         <CardContent>

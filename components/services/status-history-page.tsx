@@ -389,7 +389,7 @@ export function ServiceStatusHistoryPage() {
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
             O histórico de status depende da subunidade ativa para enviar
-            `X-Active-Subunit`.
+            `X-SUBUNIT-ACTIVE`.
           </CardDescription>
         </CardHeader>
       </Card>
