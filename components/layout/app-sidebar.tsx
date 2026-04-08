@@ -8,6 +8,7 @@ import {
   AlertTriangle,
   BarChart3,
   BellRing,
+  Boxes,
   BookOpen,
   BriefcaseBusiness,
   ShieldPlus,
@@ -154,6 +155,13 @@ const generalItems = [
     icon: Crosshair,
     visible: false,
     permissionResource: "armaments",
+  },
+  {
+    href: "/materials",
+    label: "Materiais",
+    icon: Boxes,
+    visible: false,
+    permissionResource: "materials",
   },
   {
     href: "/armament-loans",
@@ -631,6 +639,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "armaments") {
         return can(user, "viewAny", "armaments");
+      }
+
+      if (item.permissionResource === "materials") {
+        return can(user, "viewAny", "materials");
       }
 
       if (item.permissionResource === "armament-loans") {
