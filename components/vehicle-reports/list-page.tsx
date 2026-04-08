@@ -120,7 +120,7 @@ export function VehicleReportsListPage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>Os relatórios de veículos dependem da subunidade ativa para enviar `X-Active-Subunit`.</CardDescription>
+          <CardDescription>Os relatórios de veículos dependem da subunidade ativa para enviar `X-SUBUNIT-ACTIVE`.</CardDescription>
         </CardHeader>
       </Card>
     );

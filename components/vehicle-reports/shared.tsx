@@ -7,7 +7,6 @@ import { useAuth } from "@/contexts/auth-context";
 import { useSubunit } from "@/contexts/subunit-context";
 import { useCompanies } from "@/hooks/use-companies";
 import { usePermissions } from "@/hooks/use-permissions";
-import { useSubunits } from "@/hooks/use-subunits";
 import { useUsers } from "@/hooks/use-users";
 import { useVariants } from "@/hooks/use-variants";
 import { useVehicles } from "@/hooks/use-vehicles";
@@ -109,7 +108,7 @@ export function VehicleReportsGuard({
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
           <CardDescription>
-            Os relatórios de veículos dependem da subunidade ativa para enviar `X-Active-Subunit`.
+            Os relatórios de veículos dependem da subunidade ativa para enviar `X-SUBUNIT-ACTIVE`.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -476,32 +475,6 @@ export function CompanySelect({
         {(companiesQuery.data?.data ?? []).map((item) => (
           <SelectItem key={item.id} value={String(item.id)}>
             {item.trade_name ?? item.name}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-}
-
-export function SubunitSelect({
-  value,
-  onChange,
-}: {
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  const subunitsQuery = useSubunits({ per_page: 100 });
-
-  return (
-    <Select value={value} onValueChange={onChange}>
-      <SelectTrigger>
-        <SelectValue placeholder="Subunidade" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="all">Todas as subunidades</SelectItem>
-        {(subunitsQuery.data?.data ?? []).map((item) => (
-          <SelectItem key={item.id} value={String(item.id)}>
-            {item.abbreviation || item.name}
           </SelectItem>
         ))}
       </SelectContent>

@@ -518,6 +518,15 @@ const reportsItems: Array<{
     ],
   },
   {
+    href: "/armament-reports",
+    label: "Relatórios de armamentos",
+    icon: Crosshair,
+    requirements: [
+      { type: "slug", value: "reports" },
+      { type: "resource", resource: "armaments", action: "viewAny" },
+    ],
+  },
+  {
     href: "/vehicle-reports",
     label: "Relatórios de veículos",
     icon: Car,

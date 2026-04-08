@@ -26,7 +26,6 @@ import {
   OperationalStatusSelect,
   OwnershipTypeSelect,
   SearchField,
-  SubunitSelect,
   SummaryMetric,
   TableWrap,
   useVehicleReportsAccess,
@@ -43,7 +42,6 @@ function useFleetFilters() {
   const [search, setSearch] = useState("");
   const [vehicleTypeId, setVehicleTypeId] = useState("all");
   const [variantId, setVariantId] = useState("all");
-  const [subunitId, setSubunitId] = useState("all");
   const [assignedUserId, setAssignedUserId] = useState("all");
   const [operationalStatus, setOperationalStatus] = useState("all");
   const [ownershipType, setOwnershipType] = useState("all");
@@ -53,26 +51,23 @@ function useFleetFilters() {
       search: search || undefined,
       vehicle_type_id: vehicleTypeId !== "all" ? Number(vehicleTypeId) : undefined,
       variant_id: variantId !== "all" ? Number(variantId) : undefined,
-      subunit_id: subunitId !== "all" ? Number(subunitId) : undefined,
       assigned_to_user_id: assignedUserId !== "all" ? Number(assignedUserId) : undefined,
       operational_status: operationalStatus !== "all" ? operationalStatus as VehicleReportFilters["operational_status"] : undefined,
       ownership_type: ownershipType !== "all" ? ownershipType as VehicleReportFilters["ownership_type"] : undefined,
     }),
-    [assignedUserId, operationalStatus, ownershipType, search, subunitId, variantId, vehicleTypeId],
+    [assignedUserId, operationalStatus, ownershipType, search, variantId, vehicleTypeId],
   );
 
   return {
     search,
     vehicleTypeId,
     variantId,
-    subunitId,
     assignedUserId,
     operationalStatus,
     ownershipType,
     setSearch,
     setVehicleTypeId,
     setVariantId,
-    setSubunitId,
     setAssignedUserId,
     setOperationalStatus,
     setOwnershipType,
@@ -81,7 +76,6 @@ function useFleetFilters() {
       setSearch("");
       setVehicleTypeId("all");
       setVariantId("all");
-      setSubunitId("all");
       setAssignedUserId("all");
       setOperationalStatus("all");
       setOwnershipType("all");
@@ -116,7 +110,6 @@ export function VehicleFleetStatusReportPage() {
           <SearchField placeholder="Buscar por placa, placa especial, chassi ou RENAVAM" value={state.search} onChange={state.setSearch} />
           <VehicleTypeSelect value={state.vehicleTypeId} onChange={state.setVehicleTypeId} />
           <VariantSelect value={state.variantId} onChange={state.setVariantId} />
-          <SubunitSelect value={state.subunitId} onChange={state.setSubunitId} />
           <AssignedUserSelect value={state.assignedUserId} onChange={state.setAssignedUserId} />
           <OperationalStatusSelect value={state.operationalStatus} onChange={state.setOperationalStatus} />
           <OwnershipTypeSelect value={state.ownershipType} onChange={state.setOwnershipType} />
@@ -173,7 +166,6 @@ export function VehicleFleetCompositionReportPage() {
           <SearchField placeholder="Buscar por placa, placa especial, chassi ou RENAVAM" value={state.search} onChange={state.setSearch} />
           <VehicleTypeSelect value={state.vehicleTypeId} onChange={state.setVehicleTypeId} />
           <VariantSelect value={state.variantId} onChange={state.setVariantId} />
-          <SubunitSelect value={state.subunitId} onChange={state.setSubunitId} />
           <AssignedUserSelect value={state.assignedUserId} onChange={state.setAssignedUserId} />
           <OperationalStatusSelect value={state.operationalStatus} onChange={state.setOperationalStatus} />
           <OwnershipTypeSelect value={state.ownershipType} onChange={state.setOwnershipType} />

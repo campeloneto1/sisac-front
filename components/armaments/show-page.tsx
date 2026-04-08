@@ -99,11 +99,16 @@ export function ArmamentShowPage() {
           </div>
         </div>
 
-        {permissions.canUpdate ? (
-          <Button asChild>
-            <Link href={`/armaments/${armament.id}/edit`}>Editar armamento</Link>
+        <div className="flex gap-2">
+          <Button asChild variant="outline">
+            <Link href={`/armament-reports/armament-panel/${armament.id}`}>Painel do armamento</Link>
           </Button>
-        ) : null}
+          {permissions.canUpdate ? (
+            <Button asChild>
+              <Link href={`/armaments/${armament.id}/edit`}>Editar armamento</Link>
+            </Button>
+          ) : null}
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">

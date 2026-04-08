@@ -52,7 +52,7 @@ api.interceptors.request.use((config) => {
     );
   }
 
-  config.headers.set("X-Active-Subunit", activeSubunit);
+  config.headers.set("X-SUBUNIT-ACTIVE", activeSubunit);
 
   return config;
 });

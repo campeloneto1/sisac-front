@@ -16,7 +16,6 @@ export interface VehicleReportFilters {
   per_page?: number;
   search?: string;
   vehicle_id?: number;
-  subunit_id?: number;
   color_id?: number;
   vehicle_type_id?: number;
   variant_id?: number;
