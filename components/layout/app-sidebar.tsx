@@ -263,6 +263,14 @@ const administratorItems: Array<{
     ],
   },
   {
+    href: "/material-types",
+    label: "Tipos de material",
+    icon: Shapes,
+    requirements: [
+      { type: "resource", resource: "material-types", action: "viewAny" },
+    ],
+  },
+  {
     href: "/variants",
     label: "Modelos",
     icon: Shapes,
