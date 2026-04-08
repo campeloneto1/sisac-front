@@ -227,7 +227,6 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
           ? sanitizeDigits(values.external_borrower_phone)
           : null,
       city_id: values.city_id !== "none" ? Number(values.city_id) : null,
-      subunit_id: activeSubunit ? Number(activeSubunit.id) : null,
       start_km: values.start_km,
       start_notes: values.start_notes.trim() || null,
     };

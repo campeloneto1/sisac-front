@@ -110,7 +110,6 @@ export interface CreateVehicleLoanDTO {
   external_borrower_document?: string | null;
   external_borrower_phone?: string | null;
   city_id?: number | null;
-  subunit_id?: number | null;
   start_date?: string | null;
   start_time?: string | null;
   end_date?: string | null;
@@ -122,7 +121,7 @@ export interface CreateVehicleLoanDTO {
   status?: VehicleLoanStatus | null;
 }
 
-export interface UpdateVehicleLoanDTO extends Partial<CreateVehicleLoanDTO> {}
+export type UpdateVehicleLoanDTO = Partial<CreateVehicleLoanDTO>;
 
 export interface MarkVehicleLoanReturnedDTO {
   end_date: string;

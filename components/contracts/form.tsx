@@ -123,7 +123,6 @@ export function ContractForm({ mode, contract }: ContractFormProps) {
     }
 
     const payloadBase = {
-      subunit_id: Number(activeSubunit.id),
       company_id: Number(values.company_id),
       contract_type_id: values.contract_type_id !== "none" ? Number(values.contract_type_id) : null,
       contract_object_id: values.contract_object_id !== "none" ? Number(values.contract_object_id) : null,

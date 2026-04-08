@@ -37,7 +37,9 @@ function formatCurrency(value?: number | null) {
   }).format(value ?? 0);
 }
 
-function formatArmamentLabel(item: { type?: string | null; variant?: string | null; caliber?: string | null; size?: string | null }) {
+function formatArmamentLabel(item?: { type?: string | null; variant?: string | null; caliber?: string | null; size?: string | null } | null) {
+  if (!item) return "Armamento";
+
   return [item.type, item.variant, item.caliber, item.size].filter(Boolean).join(" • ") || "Armamento";
 }
 
@@ -291,8 +293,8 @@ export function DashboardHomePage() {
                 <CardDescription>Armamentos com maior volume de unidades disponíveis.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.armaments.inventory.slice(0, 6).map((item) => (
-                  <div key={item.armament.id} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                {home.armaments.inventory.slice(0, 6).map((item, index) => (
+                  <div key={item.armament?.id ?? `inventory-${index}`} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                     <div className="flex items-center justify-between gap-3">
                       <p className="font-medium text-slate-900">{formatArmamentLabel(item.armament)}</p>
                       <Badge variant="outline">{formatNumber(item.total_units)}</Badge>

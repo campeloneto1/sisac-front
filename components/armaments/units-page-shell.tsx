@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ArrowLeft, Boxes, Crosshair, ShieldAlert } from "lucide-react";
 
+import { useSubunit } from "@/contexts/subunit-context";
 import { useArmament } from "@/hooks/use-armaments";
 import { usePermissions } from "@/hooks/use-permissions";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ interface ArmamentUnitsPageShellProps {
   title: string;
   description: string;
   requiredPermission: "view" | "create" | "update";
+  showIntegrationNotice?: boolean;
   children?: React.ReactNode;
 }
 
@@ -27,18 +29,19 @@ export function ArmamentUnitsPageShell({
   title,
   description,
   requiredPermission,
+  showIntegrationNotice = true,
   children,
 }: ArmamentUnitsPageShellProps) {
   const params = useParams<{ id: string }>();
+  const { activeSubunit } = useSubunit();
   const permissions = usePermissions("armaments");
-  const armamentQuery = useArmament(params.id);
-
   const hasPermission =
     requiredPermission === "view"
       ? permissions.canView
       : requiredPermission === "create"
         ? permissions.canCreate
         : permissions.canUpdate;
+  const armamentQuery = useArmament(params.id, hasPermission && Boolean(activeSubunit));
 
   if (!hasPermission) {
     return (
@@ -48,6 +51,20 @@ export function ArmamentUnitsPageShell({
           <CardDescription>
             Você não possui permissão suficiente para acessar a gestão de
             unidades deste armamento.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
+
+  if (!activeSubunit) {
+    return (
+      <Card className="border-slate-200/70 bg-white/80">
+        <CardHeader>
+          <CardTitle>Selecione uma subunidade</CardTitle>
+          <CardDescription>
+            O módulo de unidades de armamento depende da subunidade ativa para
+            enviar o header `X-SUBUNIT-ACTIVE`.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -116,25 +133,28 @@ export function ArmamentUnitsPageShell({
         </div>
       </div>
 
-      <Card className="border-amber-200/80 bg-amber-50/80">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-amber-900">
-            <ShieldAlert className="h-5 w-5" />
-            Integração pendente com a API
-          </CardTitle>
-          <CardDescription className="text-amber-800">
-            A estrutura de navegação e gestão das unidades foi preparada dentro
-            do CRUD de armamentos, mas o backend ainda não expoe endpoints
-            dedicados para `ArmamentUnit`.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-2 text-sm text-amber-900">
-          <p>Assim que a API publicar o recurso, esta tela pode receber:</p>
-          <p>listagem por serie, status e vencimento;</p>
-          <p>cadastro, edição e visualizacao de cada unidade;</p>
-          <p>indicadores de disponibilidade, manutenção, cessao e extravio.</p>
-        </CardContent>
-      </Card>
+      {showIntegrationNotice ? (
+        <Card className="border-amber-200/80 bg-amber-50/80">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-amber-900">
+              <ShieldAlert className="h-5 w-5" />
+              Integração parcial com a API
+            </CardTitle>
+            <CardDescription className="text-amber-800">
+              O backend já expõe dados de consulta via `armament-panel` e
+              relatórios, mas ainda não publica endpoints dedicados de CRUD para
+              `ArmamentUnit`.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm text-amber-900">
+            <p>Esta área já consegue listar indicadores e visualizar unidades.</p>
+            <p>
+              Cadastro, edição persistida e exclusão ainda dependem da
+              publicação dos endpoints de mutation na API.
+            </p>
+          </CardContent>
+        </Card>
+      ) : null}
 
       {children}
     </div>

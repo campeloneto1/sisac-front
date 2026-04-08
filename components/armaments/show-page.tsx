@@ -13,6 +13,8 @@ import {
   Tag,
 } from "lucide-react";
 
+import { useSubunit } from "@/contexts/subunit-context";
+import { useArmamentPanelReport } from "@/hooks/use-armament-reports";
 import { useArmament } from "@/hooks/use-armaments";
 import { usePermissions } from "@/hooks/use-permissions";
 import { Button } from "@/components/ui/button";
@@ -38,8 +40,10 @@ function formatDate(value?: string | null) {
 
 export function ArmamentShowPage() {
   const params = useParams<{ id: string }>();
+  const { activeSubunit } = useSubunit();
   const permissions = usePermissions("armaments");
   const armamentQuery = useArmament(params.id);
+  const panelQuery = useArmamentPanelReport(params.id, Boolean(activeSubunit && permissions.canView));
 
   if (!permissions.canView) {
     return (
@@ -79,6 +83,7 @@ export function ArmamentShowPage() {
 
   const armament = armamentQuery.data.data;
   const specifications = Object.entries(armament.specifications ?? {});
+  const unitsSummary = panelQuery.data?.data.summary;
 
   return (
     <div className="space-y-6">
@@ -230,19 +235,31 @@ export function ArmamentShowPage() {
                 <p className="text-sm font-medium text-slate-600">
                   Disponíveis
                 </p>
-                <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+                <p className="mt-2 text-3xl font-display text-slate-900">
+                  {unitsSummary?.available_units ?? "--"}
+                </p>
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
                 <p className="text-sm font-medium text-slate-600">
                   Vencendo / vencidas
                 </p>
-                <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+                <p className="mt-2 text-3xl font-display text-slate-900">
+                  {panelQuery.data
+                    ? panelQuery.data.data.units.filter(
+                        (unit) => unit.is_expired || unit.is_expiring_soon,
+                      ).length
+                    : "--"}
+                </p>
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
                 <p className="text-sm font-medium text-slate-600">
                   Indisponiveis
                 </p>
-                <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+                <p className="mt-2 text-3xl font-display text-slate-900">
+                  {unitsSummary
+                    ? unitsSummary.total_units - unitsSummary.available_units
+                    : "--"}
+                </p>
               </div>
             </CardContent>
           </Card>

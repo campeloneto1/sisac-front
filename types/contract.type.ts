@@ -158,7 +158,6 @@ export interface ContractFilters {
 }
 
 export interface CreateContractDTO {
-  subunit_id: number;
   company_id: number;
   contract_type_id?: number | null;
   contract_object_id?: number | null;
@@ -175,7 +174,6 @@ export interface CreateContractDTO {
 }
 
 export interface UpdateContractDTO {
-  subunit_id?: number;
   company_id?: number;
   contract_type_id?: number | null;
   contract_object_id?: number | null;

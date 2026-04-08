@@ -88,13 +88,13 @@ export interface HomeArmamentAvailabilityItem {
 }
 
 export interface HomeArmamentInventoryItem {
-  armament: {
+  armament?: {
     id: number;
     type?: string | null;
     variant?: string | null;
     caliber?: string | null;
     size?: string | null;
-  };
+  } | null;
   total_units: number;
   available_units: number;
   loaned_units: number;

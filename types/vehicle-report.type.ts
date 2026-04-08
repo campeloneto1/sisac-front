@@ -36,7 +36,6 @@ export interface VehicleReportFilters {
   detection_moment?: "pickup" | "return" | "maintenance" | "inspection";
   rental_status?: "active" | "returned" | "renewed" | "cancelled";
   is_armored?: boolean;
-  is_organic?: boolean;
   is_available_for_trip?: boolean;
   is_available?: boolean;
   only_overdue?: boolean;

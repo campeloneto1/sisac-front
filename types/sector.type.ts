@@ -39,7 +39,6 @@ export interface CreateSectorDTO {
   abbreviation?: string | null;
   phone?: string | null;
   email?: string | null;
-  subunit_id?: number | null;
   commander_id?: number | null;
   deputy_commander_id?: number | null;
 }
@@ -49,7 +48,6 @@ export interface UpdateSectorDTO {
   abbreviation?: string | null;
   phone?: string | null;
   email?: string | null;
-  subunit_id?: number | null;
   commander_id?: number | null;
   deputy_commander_id?: number | null;
 }

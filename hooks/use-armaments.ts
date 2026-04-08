@@ -11,10 +11,10 @@ export function useArmaments(filters: ArmamentFilters) {
   });
 }
 
-export function useArmament(id: number | string) {
+export function useArmament(id: number | string, enabled = true) {
   return useQuery({
     queryKey: ["armaments", id],
     queryFn: () => armamentsService.show(id),
-    enabled: Boolean(id),
+    enabled: Boolean(id) && enabled,
   });
 }

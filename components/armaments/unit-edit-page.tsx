@@ -24,12 +24,12 @@ export function ArmamentUnitEditPage() {
         <CardHeader>
           <CardTitle>Edição da unidade #{params.unitId}</CardTitle>
           <CardDescription>
-            Esta tela fica reservada para o formulario de edição quando o
-            recurso estiver disponível na API.
+            Os dados de consulta já estão integrados, mas a API ainda não
+            publica um endpoint de atualização para `ArmamentUnit`.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
-          <p>Atualizacoes previstas:</p>
+          <p>Atualizações previstas quando a mutation estiver disponível:</p>
           <p>serial number;</p>
           <p>datas de aquisicao e expiracao;</p>
           <p>mudança controlada de status.</p>

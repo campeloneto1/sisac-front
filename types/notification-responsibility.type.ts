@@ -65,13 +65,11 @@ export interface NotificationResponsibilityFilters {
 
 export interface CreateNotificationResponsibilityDTO {
   domain: NotificationResponsibilityDomain;
-  subunit_id: number;
   sector_id: number;
 }
 
 export interface UpdateNotificationResponsibilityDTO {
   domain?: NotificationResponsibilityDomain;
-  subunit_id?: number;
   sector_id?: number;
 }
 

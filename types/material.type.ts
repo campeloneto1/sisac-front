@@ -92,7 +92,6 @@ export interface CreateMaterialBatchDTO {
 }
 
 export interface CreateMaterialDTO {
-  subunit_id: number;
   material_type_id: number;
   variant_id: number;
   specifications?: MaterialSpecifications | null;
@@ -101,7 +100,6 @@ export interface CreateMaterialDTO {
 }
 
 export interface UpdateMaterialDTO {
-  subunit_id?: number;
   material_type_id?: number;
   variant_id?: number;
   specifications?: MaterialSpecifications | null;

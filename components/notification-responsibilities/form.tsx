@@ -81,7 +81,6 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
 
     const payloadBase = {
       domain: values.domain,
-      subunit_id: Number(activeSubunit.id),
       sector_id: Number(values.sector_id),
     };
 

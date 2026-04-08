@@ -157,7 +157,6 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
     }
 
     const payloadBase = {
-      subunit_id: Number(activeSubunit.id),
       material_type_id: Number(values.material_type_id),
       variant_id: Number(values.variant_id),
       specifications: specificationRecordFromRows(values.specifications_rows),

@@ -301,21 +301,13 @@ export function VehicleShowPage() {
               </div>
             </div>
 
-            <div className="grid gap-3 md:grid-cols-3">
+            <div className="grid gap-3 md:grid-cols-2">
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Blindado
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
                   {vehicle.is_armored ? "Sim" : "Não"}
-                </p>
-              </div>
-              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Organico
-                </p>
-                <p className="mt-1 text-sm text-slate-700">
-                  {vehicle.is_organic ? "Sim" : "Não"}
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">

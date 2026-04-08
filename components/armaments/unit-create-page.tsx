@@ -18,14 +18,14 @@ export function ArmamentUnitCreatePage() {
     >
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
-          <CardTitle>Formulario aguardando endpoints</CardTitle>
+          <CardTitle>Cadastro ainda depende da API</CardTitle>
           <CardDescription>
-            Assim que o backend expuser o CRUD de `ArmamentUnit`, esta tela pode
-            receber o formulario completo.
+            A consulta de unidades já está integrada, mas a API ainda não expõe
+            um endpoint de criação para `ArmamentUnit`.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm text-slate-600">
-          <p>Campos previstos:</p>
+          <p>Payload esperado quando o backend publicar a mutation:</p>
           <p>serial number;</p>
           <p>data de aquisicao;</p>
           <p>data de expiracao;</p>

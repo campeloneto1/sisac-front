@@ -23,7 +23,6 @@ export interface VehicleItem {
   manufacture_year?: number | null;
   model_year?: number | null;
   is_armored: boolean;
-  is_organic: boolean;
   is_available_for_trip: boolean;
   operational_status?: VehicleOperationalStatus | null;
   operational_status_label?: string | null;
@@ -87,7 +86,6 @@ export interface CreateVehicleDTO {
   manufacture_year?: number | null;
   model_year?: number | null;
   is_armored?: boolean;
-  is_organic?: boolean;
   is_available_for_trip?: boolean;
   operational_status?: VehicleOperationalStatus | null;
   ownership_type?: VehicleOwnershipType | null;
@@ -102,10 +100,9 @@ export interface CreateVehicleDTO {
   color_id?: number | null;
   vehicle_type_id?: number | null;
   variant_id?: number | null;
-  subunit_id?: number | null;
 }
 
-export interface UpdateVehicleDTO extends Partial<CreateVehicleDTO> {}
+export type UpdateVehicleDTO = Partial<CreateVehicleDTO>;
 
 export interface VehicleResponse {
   message: string;

@@ -36,7 +36,6 @@ export interface CompanyItem {
 }
 
 export interface CreateCompanyDTO {
-  subunit_id: number;
   name: string;
   trade_name?: string;
   cnpj?: string;
@@ -52,7 +51,6 @@ export interface CreateCompanyDTO {
 }
 
 export interface UpdateCompanyDTO {
-  subunit_id?: number;
   name?: string;
   trade_name?: string;
   cnpj?: string;

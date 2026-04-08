@@ -7,10 +7,8 @@ import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useSubunit } from "@/contexts/subunit-context";
 import { useBrands } from "@/hooks/use-brands";
 import { useColors } from "@/hooks/use-colors";
-import { useSubunits } from "@/hooks/use-subunits";
 import { useUsers } from "@/hooks/use-users";
 import { useVariants } from "@/hooks/use-variants";
 import {
@@ -82,10 +80,8 @@ const vehicleFormSchema = z
     vehicle_type_id: z.string(),
     brand_id: z.string().min(1, "Selecione a marca."),
     variant_id: z.string(),
-    subunit_id: z.string(),
     assigned_to_user_id: z.string(),
     is_armored: z.boolean(),
-    is_organic: z.boolean(),
     is_available_for_trip: z.boolean(),
     notes: z
       .string()
@@ -136,14 +132,12 @@ function parseOptionalNumber(value?: string) {
 
 export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
   const router = useRouter();
-  const { activeSubunit } = useSubunit();
   const createMutation = useCreateVehicleMutation();
   const updateMutation = useUpdateVehicleMutation();
   const colorsQuery = useColors({ per_page: 100 });
   const vehicleTypesQuery = useVehicleTypes({ per_page: 100 });
   const brandsQuery = useBrands({ per_page: 100, type: "transport" });
   const usersQuery = useUsers({ per_page: 100 });
-  const subunitsQuery = useSubunits({ per_page: 100 });
 
   const {
     register,
@@ -177,16 +171,10 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
         : "none",
       brand_id: vehicle?.variant?.brand?.id ? String(vehicle.variant.brand.id) : "",
       variant_id: vehicle?.variant_id ? String(vehicle.variant_id) : "none",
-      subunit_id: vehicle?.subunit_id
-        ? String(vehicle.subunit_id)
-        : activeSubunit
-          ? String(activeSubunit.id)
-          : "none",
       assigned_to_user_id: vehicle?.assigned_to_user_id
         ? String(vehicle.assigned_to_user_id)
         : "none",
       is_armored: vehicle?.is_armored ?? false,
-      is_organic: vehicle?.is_organic ?? false,
       is_available_for_trip: vehicle?.is_available_for_trip ?? false,
       notes: vehicle?.notes ?? "",
     },
@@ -216,10 +204,6 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
     control,
     name: "variant_id",
   });
-  const selectedSubunitId = useWatch({
-    control,
-    name: "subunit_id",
-  });
   const selectedAssignedTo = useWatch({
     control,
     name: "assigned_to_user_id",
@@ -227,10 +211,6 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
   const isArmored = useWatch({
     control,
     name: "is_armored",
-  });
-  const isOrganic = useWatch({
-    control,
-    name: "is_organic",
   });
   const isAvailableForTrip = useWatch({
     control,
@@ -275,27 +255,14 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
         : "none",
       brand_id: vehicle.variant?.brand?.id ? String(vehicle.variant.brand.id) : "",
       variant_id: vehicle.variant_id ? String(vehicle.variant_id) : "none",
-      subunit_id: vehicle.subunit_id ? String(vehicle.subunit_id) : "none",
       assigned_to_user_id: vehicle.assigned_to_user_id
         ? String(vehicle.assigned_to_user_id)
         : "none",
       is_armored: vehicle.is_armored ?? false,
-      is_organic: vehicle.is_organic ?? false,
       is_available_for_trip: vehicle.is_available_for_trip ?? false,
       notes: vehicle.notes ?? "",
     });
   }, [vehicle, reset]);
-
-  useEffect(() => {
-    if (vehicle || !activeSubunit) {
-      return;
-    }
-
-    setValue("subunit_id", String(activeSubunit.id), {
-      shouldDirty: false,
-      shouldValidate: true,
-    });
-  }, [activeSubunit, setValue, vehicle]);
 
   async function onSubmit(values: VehicleFormValues) {
     const payloadBase = {
@@ -306,7 +273,6 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
       manufacture_year: parseOptionalNumber(values.manufacture_year),
       model_year: parseOptionalNumber(values.model_year),
       is_armored: values.is_armored,
-      is_organic: values.is_organic,
       is_available_for_trip: values.is_available_for_trip,
       operational_status:
         values.operational_status as CreateVehicleDTO["operational_status"],
@@ -326,7 +292,6 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
       vehicle_type_id:
         values.vehicle_type_id !== "none" ? Number(values.vehicle_type_id) : null,
       variant_id: values.variant_id !== "none" ? Number(values.variant_id) : null,
-      subunit_id: values.subunit_id !== "none" ? Number(values.subunit_id) : null,
     };
 
     if (mode === "create") {
@@ -422,7 +387,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                 Classificação
               </h3>
               <p className="text-sm text-slate-500">
-                Tipo, modelo, cor, subunidade e contexto operacional.
+                Tipo, modelo, cor e contexto operacional.
               </p>
             </div>
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -525,30 +490,6 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                     {(colorsQuery.data?.data ?? []).map((item) => (
                       <SelectItem key={item.id} value={String(item.id)}>
                         {item.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Subunidade</Label>
-                <Select
-                  value={selectedSubunitId}
-                  onValueChange={(value) =>
-                    setValue("subunit_id", value, { shouldValidate: true })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">Não informado</SelectItem>
-                    {(subunitsQuery.data?.data ?? []).map((item) => (
-                      <SelectItem key={item.id} value={String(item.id)}>
-                        {item.abbreviation
-                          ? `${item.abbreviation} • ${item.name}`
-                          : item.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -753,26 +694,6 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                   </span>
                   <span className="block text-sm text-slate-500">
                     Marque se o veículo possuir blindagem.
-                  </span>
-                </span>
-              </label>
-
-              <label className="flex items-start gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4">
-                <Checkbox
-                  checked={isOrganic}
-                  onCheckedChange={(checked) =>
-                    setValue("is_organic", checked === true, {
-                      shouldValidate: true,
-                      shouldDirty: true,
-                    })
-                  }
-                />
-                <span className="space-y-1">
-                  <span className="block text-sm font-medium text-slate-900">
-                    Organico
-                  </span>
-                  <span className="block text-sm text-slate-500">
-                    Indica veículo próprio da estrutura organica.
                   </span>
                 </span>
               </label>

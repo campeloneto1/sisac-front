@@ -92,7 +92,6 @@ export function SectorForm({ mode, sector }: SectorFormProps) {
       abbreviation: values.abbreviation.trim() ? values.abbreviation.trim().toUpperCase() : null,
       phone: values.phone.trim() ? values.phone.replace(/\D/g, "") : null,
       email: values.email.trim() ? values.email.trim().toLowerCase() : null,
-      subunit_id: activeSubunit ? Number(activeSubunit.id) : null,
       commander_id: values.commander_id !== "none" ? Number(values.commander_id) : null,
       deputy_commander_id: values.deputy_commander_id !== "none" ? Number(values.deputy_commander_id) : null,
     };

@@ -7,9 +7,9 @@ import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useSubunit } from "@/contexts/subunit-context";
 import { useCreateCompanyMutation, useUpdateCompanyMutation } from "@/hooks/use-company-mutations";
 import { useCities } from "@/hooks/use-cities";
-import { useSubunits } from "@/hooks/use-subunits";
 import type { CreateCompanyDTO, CompanyItem, UpdateCompanyDTO } from "@/types/company.type";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,7 +30,6 @@ const companyFormSchema = z.object({
   neighborhood: z.string().max(100, "O bairro deve ter no máximo 100 caracteres."),
   postal_code: z.string().refine((value) => value.trim() === "" || value.replace(/\D/g, "").length === 8, "Informe um CEP com 8 dígitos."),
   city_id: z.string(),
-  subunit_id: z.string(),
 });
 
 type CompanyFormValues = z.infer<typeof companyFormSchema>;
@@ -42,10 +41,10 @@ interface CompanyFormProps {
 
 export function CompanyForm({ mode, company }: CompanyFormProps) {
   const router = useRouter();
+  const { activeSubunit } = useSubunit();
   const createMutation = useCreateCompanyMutation();
   const updateMutation = useUpdateCompanyMutation();
   const citiesQuery = useCities({});
-  const subunitsQuery = useSubunits({});
   const {
     register,
     handleSubmit,
@@ -68,7 +67,6 @@ export function CompanyForm({ mode, company }: CompanyFormProps) {
       neighborhood: company?.neighborhood ?? "",
       postal_code: company?.postal_code ?? "",
       city_id: company?.city_id ? String(company.city_id) : "none",
-      subunit_id: company?.subunit_id ? String(company.subunit_id) : "none",
     },
   });
 
@@ -90,11 +88,14 @@ export function CompanyForm({ mode, company }: CompanyFormProps) {
       neighborhood: company.neighborhood ?? "",
       postal_code: company.postal_code ?? "",
       city_id: company.city_id ? String(company.city_id) : "none",
-      subunit_id: company.subunit_id ? String(company.subunit_id) : "none",
     });
   }, [reset, company]);
 
   async function onSubmit(values: CompanyFormValues) {
+    if (!activeSubunit) {
+      return;
+    }
+
     const payloadBase = {
       name: values.name.trim(),
       trade_name: values.trade_name.trim() || undefined,
@@ -108,7 +109,6 @@ export function CompanyForm({ mode, company }: CompanyFormProps) {
       neighborhood: values.neighborhood.trim() || undefined,
       postal_code: values.postal_code.trim() ? values.postal_code.replace(/\D/g, "") : undefined,
       city_id: values.city_id !== "none" ? Number(values.city_id) : undefined,
-      subunit_id: values.subunit_id !== "none" ? Number(values.subunit_id) : undefined,
     };
 
     if (mode === "create") {
@@ -129,9 +129,7 @@ export function CompanyForm({ mode, company }: CompanyFormProps) {
   }
 
   const selectedCityId = useWatch({ control, name: "city_id" });
-  const selectedSubunitId = useWatch({ control, name: "subunit_id" });
   const selectedCity = (citiesQuery.data?.data ?? []).find((city) => String(city.id) === selectedCityId);
-  const selectedSubunit = (subunitsQuery.data?.data ?? []).find((subunit) => String(subunit.id) === selectedSubunitId);
   const isPending = createMutation.isPending || updateMutation.isPending;
 
   return (
@@ -139,10 +137,14 @@ export function CompanyForm({ mode, company }: CompanyFormProps) {
       <CardHeader>
         <CardTitle>{mode === "create" ? "Nova empresa" : "Editar empresa"}</CardTitle>
         <CardDescription>
-          Empresas ficam dentro do painel Gestor e representam as organizacoes cadastradas no sistema.
+          Empresas ficam dentro do painel Gestor e representam as organizacoes cadastradas no sistema no contexto da subunidade ativa.
         </CardDescription>
       </CardHeader>
       <CardContent>
+        <div className="mb-5 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+          Subunidade ativa: <span className="font-medium text-slate-900">{activeSubunit?.name ?? "Não selecionada"}</span>
+        </div>
+
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
             <Label htmlFor="name">Nome</Label>
@@ -211,27 +213,6 @@ export function CompanyForm({ mode, company }: CompanyFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label>Subunidade</Label>
-            <Select value={selectedSubunitId} onValueChange={(value) => setValue("subunit_id", value, { shouldValidate: true })}>
-              <SelectTrigger>
-                <SelectValue placeholder="Selecione uma subunidade" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">Sem subunidade vinculada</SelectItem>
-                {(subunitsQuery.data?.data ?? []).map((subunit) => (
-                  <SelectItem key={subunit.id} value={String(subunit.id)}>
-                    {subunit.name} • {subunit.abbreviation}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <p className="text-xs text-slate-500">
-              {selectedSubunit ? `Subunidade selecionada: ${selectedSubunit.name} (${selectedSubunit.abbreviation}).` : "Opcional. Vincula a empresa a uma subunidade."}
-            </p>
-            {errors.subunit_id ? <p className="text-sm text-destructive">{errors.subunit_id.message}</p> : null}
-          </div>
-
-          <div className="space-y-2">
             <Label>Cidade</Label>
             <Select value={selectedCityId} onValueChange={(value) => setValue("city_id", value, { shouldValidate: true })}>
               <SelectTrigger>
@@ -256,7 +237,7 @@ export function CompanyForm({ mode, company }: CompanyFormProps) {
             <Button asChild variant="ghost">
               <Link href={mode === "create" ? "/companies" : `/companies/${company?.id}`}>Cancelar</Link>
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={isPending || !activeSubunit}>
               {isPending ? "Salvando..." : mode === "create" ? "Criar empresa" : "Salvar alterações"}
             </Button>
           </div>
