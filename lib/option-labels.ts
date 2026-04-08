@@ -35,6 +35,19 @@ interface ArmamentOptionShape {
   } | null;
 }
 
+interface MaterialOptionShape {
+  id: number;
+  type?: {
+    name?: string | null;
+  } | null;
+  variant?: {
+    name?: string | null;
+    brand?: {
+      name?: string | null;
+    } | null;
+  } | null;
+}
+
 interface PoliceOfficerOptionShape {
   id: number;
   name?: string | null;
@@ -72,6 +85,18 @@ export function formatArmamentOptionLabel(armament: ArmamentOptionShape) {
     armament.gender?.name ? `Gen.: ${armament.gender.name}` : null,
     !armament.variant?.name && !armament.variant?.brand?.name && !armament.caliber?.name && !armament.size?.name && !armament.gender?.name
       ? `Armamento #${armament.id}`
+      : null,
+  ]).join(" • ");
+}
+
+export function formatMaterialOptionLabel(material: MaterialOptionShape) {
+  return compactParts([
+    material.type?.name,
+    compactParts([material.variant?.brand?.name, material.variant?.name]).join(
+      " / ",
+    ),
+    !material.type?.name && !material.variant?.name && !material.variant?.brand?.name
+      ? `Material #${material.id}`
       : null,
   ]).join(" • ");
 }

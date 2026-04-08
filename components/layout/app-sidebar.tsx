@@ -164,6 +164,13 @@ const generalItems = [
     permissionResource: "materials",
   },
   {
+    href: "/material-loans",
+    label: "Emprestimos de materiais",
+    icon: Boxes,
+    visible: false,
+    permissionResource: "material-loans",
+  },
+  {
     href: "/armament-loans",
     label: "Emprestimos de armamentos",
     icon: Crosshair,
@@ -643,6 +650,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "materials") {
         return can(user, "viewAny", "materials");
+      }
+
+      if (item.permissionResource === "material-loans") {
+        return can(user, "viewAny", "material-loans");
       }
 
       if (item.permissionResource === "armament-loans") {
