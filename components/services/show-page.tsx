@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { BriefcaseBusiness, CalendarDays, DollarSign, FileText, MapPin, Pencil, ShieldCheck, Star, UserCircle2 } from "lucide-react";
+import { BriefcaseBusiness, CalendarDays, DollarSign, FileText, History, MapPin, Pencil, ShieldCheck, Star, UserCircle2 } from "lucide-react";
 
 import { useSubunit } from "@/contexts/subunit-context";
 import { usePermissions } from "@/hooks/use-permissions";
@@ -45,6 +45,7 @@ export function ServiceShowPage() {
   const params = useParams<{ id: string }>();
   const { activeSubunit } = useSubunit();
   const permissions = usePermissions("services");
+  const historyPermissions = usePermissions("service-status-history");
   const serviceQuery = useService(params.id, Boolean(activeSubunit) && permissions.canView);
 
   if (!permissions.canView) {
@@ -119,14 +120,25 @@ export function ServiceShowPage() {
           </p>
         </div>
 
-        {permissions.canUpdate ? (
-          <Button asChild variant="outline">
-            <Link href={`/services/${service.id}/edit`}>
-              <Pencil className="mr-2 h-4 w-4" />
-              Editar
-            </Link>
-          </Button>
-        ) : null}
+        <div className="flex flex-wrap gap-2">
+          {historyPermissions.canViewAny || historyPermissions.canView ? (
+            <Button asChild variant="outline">
+              <Link href={`/services/${service.id}/status-history`}>
+                <History className="mr-2 h-4 w-4" />
+                Historico de status
+              </Link>
+            </Button>
+          ) : null}
+
+          {permissions.canUpdate ? (
+            <Button asChild variant="outline">
+              <Link href={`/services/${service.id}/edit`}>
+                <Pencil className="mr-2 h-4 w-4" />
+                Editar
+              </Link>
+            </Button>
+          ) : null}
+        </div>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
@@ -279,6 +291,25 @@ export function ServiceShowPage() {
           </div>
         </CardContent>
       </Card>
+
+      {(historyPermissions.canViewAny || historyPermissions.canView) ? (
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Historico de status</CardTitle>
+            <CardDescription>
+              Acompanhe a trilha de auditoria das transicoes de estado desse servico.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild variant="outline">
+              <Link href={`/services/${service.id}/status-history`}>
+                <History className="mr-2 h-4 w-4" />
+                Abrir historico
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      ) : null}
 
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>

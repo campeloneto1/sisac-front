@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
@@ -153,8 +154,7 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
   const selectedRequestedBy = useWatch({ control, name: "requested_by" });
   const selectedSectorId = useWatch({ control, name: "sector_id" });
   const selectedPriority = useWatch({ control, name: "priority" });
-  const selectedStatus =
-    mode === "edit" ? useWatch({ control, name: "status" as never }) : undefined;
+  const selectedStatus = useWatch({ control, name: "status" as never });
   const selectedCompanyNumber =
     selectedCompanyId && selectedCompanyId !== "none" ? Number(selectedCompanyId) : null;
   const companiesQuery = useCompanies({ per_page: 100 }, isEnabled);
@@ -583,7 +583,7 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
                 Cancelar
               </Link>
             </Button>
-            <Button type="submit" disabled={isPending || !activeSubunit || !permissions.canViewAny}>
+            <Button type="submit" disabled={isPending || !activeSubunit}>
               {isPending
                 ? "Salvando..."
                 : mode === "create"
