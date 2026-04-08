@@ -143,10 +143,19 @@ export function VehicleShowPage() {
         </div>
 
         {permissions.canUpdate ? (
+          <div className="flex gap-2">
+            <Button asChild variant="outline">
+              <Link href={`/vehicle-reports/vehicle-panel/${vehicle.id}`}>Painel do veículo</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href={`/vehicles/${vehicle.id}/edit`}>Editar</Link>
+            </Button>
+          </div>
+        ) : (
           <Button asChild variant="outline">
-            <Link href={`/vehicles/${vehicle.id}/edit`}>Editar</Link>
+            <Link href={`/vehicle-reports/vehicle-panel/${vehicle.id}`}>Painel do veículo</Link>
           </Button>
-        ) : null}
+        )}
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">

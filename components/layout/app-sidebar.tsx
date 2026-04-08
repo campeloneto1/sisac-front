@@ -517,6 +517,15 @@ const reportsItems: Array<{
       { type: "resource", resource: "police-officers", action: "viewAny" },
     ],
   },
+  {
+    href: "/vehicle-reports",
+    label: "Relatórios de veículos",
+    icon: Car,
+    requirements: [
+      { type: "slug", value: "reports" },
+      { type: "resource", resource: "vehicles", action: "viewAny" },
+    ],
+  },
 ];
 
 type SidebarItem = {
