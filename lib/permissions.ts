@@ -1,6 +1,15 @@
 import type { AuthUser } from "@/types/auth.type";
 
-export type PermissionAction = "viewAny" | "view" | "create" | "update" | "delete" | "resetPassword" | "bulkPromote";
+export type PermissionAction =
+  | "viewAny"
+  | "view"
+  | "create"
+  | "update"
+  | "delete"
+  | "resetPassword"
+  | "bulkPromote"
+  | "transfer"
+  | "dispose";
 export type PermissionRequirement =
   | { type: "slug"; value: string }
   | { type: "resource"; resource: string; action: PermissionAction };

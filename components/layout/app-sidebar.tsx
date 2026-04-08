@@ -164,6 +164,13 @@ const generalItems = [
     permissionResource: "materials",
   },
   {
+    href: "/patrimonies",
+    label: "Patrimonios",
+    icon: Landmark,
+    visible: false,
+    permissionResource: "patrimonies",
+  },
+  {
     href: "/material-loans",
     label: "Emprestimos de materiais",
     icon: Boxes,
@@ -253,14 +260,6 @@ const administratorItems: Array<{
     requirements: [{ type: "resource", resource: "colors", action: "viewAny" }],
   },
   {
-    href: "/contract-types",
-    label: "Tipos de contrato",
-    icon: ScrollText,
-    requirements: [
-      { type: "resource", resource: "contract-types", action: "viewAny" },
-    ],
-  },
-  {
     href: "/contract-objects",
     label: "Objetos de contrato",
     icon: FileHeart,
@@ -274,38 +273,6 @@ const administratorItems: Array<{
     icon: Sparkles,
     requirements: [
       { type: "resource", resource: "contract-features", action: "viewAny" },
-    ],
-  },
-  {
-    href: "/vehicle-types",
-    label: "Tipos de veiculo",
-    icon: CarFront,
-    requirements: [
-      { type: "resource", resource: "vehicle-types", action: "viewAny" },
-    ],
-  },
-  {
-    href: "/material-types",
-    label: "Tipos de material",
-    icon: Shapes,
-    requirements: [
-      { type: "resource", resource: "material-types", action: "viewAny" },
-    ],
-  },
-  {
-    href: "/patrimony-types",
-    label: "Tipos de patrimonio",
-    icon: Landmark,
-    requirements: [
-      { type: "resource", resource: "patrimony-types", action: "viewAny" },
-    ],
-  },
-  {
-    href: "/service-types",
-    label: "Tipos de servico",
-    icon: Wrench,
-    requirements: [
-      { type: "resource", resource: "service-types", action: "viewAny" },
     ],
   },
   {
@@ -379,14 +346,6 @@ const administratorItems: Array<{
     requirements: [{ type: "resource", resource: "ranks", action: "viewAny" }],
   },
   {
-    href: "/leave-types",
-    label: "Tipos de afastamento",
-    icon: BriefcaseBusiness,
-    requirements: [
-      { type: "resource", resource: "leave-types", action: "viewAny" },
-    ],
-  },
-  {
     href: "/sectors",
     label: "Setores",
     icon: Spline,
@@ -415,22 +374,6 @@ const administratorItems: Array<{
     ],
   },
   {
-    href: "/publication-types",
-    label: "Tipos de publicacao",
-    icon: FileHeart,
-    requirements: [
-      { type: "resource", resource: "publication-types", action: "viewAny" },
-    ],
-  },
-  {
-    href: "/armament-types",
-    label: "Tipos de armamento",
-    icon: ShieldPlus,
-    requirements: [
-      { type: "resource", resource: "armament-types", action: "viewAny" },
-    ],
-  },
-  {
     href: "/armament-sizes",
     label: "Tamanhos de armamento",
     icon: Shield,
@@ -444,6 +387,78 @@ const administratorItems: Array<{
     icon: Crosshair,
     requirements: [
       { type: "resource", resource: "armament-calibers", action: "viewAny" },
+    ],
+  },
+];
+
+const administratorTypeItems: Array<{
+  href: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  requirements: PermissionRequirement[];
+}> = [
+  {
+    href: "/contract-types",
+    label: "Tipos de contrato",
+    icon: ScrollText,
+    requirements: [
+      { type: "resource", resource: "contract-types", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/vehicle-types",
+    label: "Tipos de veiculo",
+    icon: CarFront,
+    requirements: [
+      { type: "resource", resource: "vehicle-types", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/material-types",
+    label: "Tipos de material",
+    icon: Shapes,
+    requirements: [
+      { type: "resource", resource: "material-types", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/patrimony-types",
+    label: "Tipos de patrimonio",
+    icon: Landmark,
+    requirements: [
+      { type: "resource", resource: "patrimony-types", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/service-types",
+    label: "Tipos de servico",
+    icon: Wrench,
+    requirements: [
+      { type: "resource", resource: "service-types", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/leave-types",
+    label: "Tipos de afastamento",
+    icon: BriefcaseBusiness,
+    requirements: [
+      { type: "resource", resource: "leave-types", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/publication-types",
+    label: "Tipos de publicacao",
+    icon: FileHeart,
+    requirements: [
+      { type: "resource", resource: "publication-types", action: "viewAny" },
+    ],
+  },
+  {
+    href: "/armament-types",
+    label: "Tipos de armamento",
+    icon: ShieldPlus,
+    requirements: [
+      { type: "resource", resource: "armament-types", action: "viewAny" },
     ],
   },
 ];
@@ -601,6 +616,51 @@ function SidebarAccordionSection({
   );
 }
 
+function SidebarNestedAccordionSection({
+  title,
+  items,
+  pathname,
+  isOpen,
+  onToggle,
+}: {
+  title: string;
+  items: SidebarItem[];
+  pathname: string;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-xs uppercase tracking-[0.18em] text-slate-500 transition hover:bg-white/5 hover:text-white"
+      >
+        <span>{title}</span>
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 transition-transform",
+            isOpen ? "rotate-180" : "rotate-0",
+          )}
+        />
+      </button>
+
+      {isOpen ? (
+        <div className="space-y-2 border-l border-white/10 pl-2">
+          {items.map((item) => (
+            <SidebarLink
+              key={`${title}-${item.label}`}
+              item={item}
+              pathname={pathname}
+              nested
+            />
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export function AppSidebar() {
   const { user } = useAuth();
   const pathname = usePathname();
@@ -675,6 +735,10 @@ export function AppSidebar() {
         return can(user, "viewAny", "materials");
       }
 
+      if (item.permissionResource === "patrimonies") {
+        return can(user, "viewAny", "patrimonies");
+      }
+
       if (item.permissionResource === "material-loans") {
         return can(user, "viewAny", "material-loans");
       }
@@ -720,10 +784,16 @@ export function AppSidebar() {
   const visibleAdministratorItems = administratorItems
     .filter((item) => hasAllPermissions(user, item.requirements))
     .map(({ href, label, icon }) => ({ href, label, icon }));
+  const visibleAdministratorTypeItems = administratorTypeItems
+    .filter((item) => hasAllPermissions(user, item.requirements))
+    .map(({ href, label, icon }) => ({ href, label, icon }));
   const sections = [
     {
       key: "Administrador",
-      visible: canSeeAdministratorMenu && visibleAdministratorItems.length > 0,
+      visible:
+        canSeeAdministratorMenu &&
+        (visibleAdministratorItems.length > 0 ||
+          visibleAdministratorTypeItems.length > 0),
       items: visibleAdministratorItems,
     },
     {
@@ -759,20 +829,43 @@ export function AppSidebar() {
         {sections
           .filter((section) => section.visible)
           .map((section) => {
-            const hasActiveChild = section.items.some((item) =>
-              isItemActive(pathname, item.href),
-            );
+            const hasActiveChild =
+              section.items.some((item) => isItemActive(pathname, item.href)) ||
+              (section.key === "Administrador" &&
+                visibleAdministratorTypeItems.some((item) =>
+                  isItemActive(pathname, item.href),
+                ));
             const isOpen = openSections[section.key] ?? hasActiveChild;
 
             return (
-              <SidebarAccordionSection
-                key={section.key}
-                title={section.key}
-                items={section.items}
-                pathname={pathname}
-                isOpen={isOpen}
-                onToggle={() => toggleSection(section.key)}
-              />
+              <div key={section.key}>
+                <SidebarAccordionSection
+                  title={section.key}
+                  items={section.items}
+                  pathname={pathname}
+                  isOpen={isOpen}
+                  onToggle={() => toggleSection(section.key)}
+                />
+
+                {section.key === "Administrador" &&
+                isOpen &&
+                visibleAdministratorTypeItems.length > 0 ? (
+                  <div className="-mt-2 border-l border-white/10 pl-2">
+                    <SidebarNestedAccordionSection
+                      title="Tipos"
+                      items={visibleAdministratorTypeItems}
+                      pathname={pathname}
+                      isOpen={
+                        openSections.Tipos ??
+                        visibleAdministratorTypeItems.some((item) =>
+                          isItemActive(pathname, item.href),
+                        )
+                      }
+                      onToggle={() => toggleSection("Tipos")}
+                    />
+                  </div>
+                ) : null}
+              </div>
             );
           })}
       </nav>
