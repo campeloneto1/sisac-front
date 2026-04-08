@@ -213,6 +213,13 @@ const generalItems = [
     permissionResource: "contracts",
   },
   {
+    href: "/services",
+    label: "Servicos",
+    icon: BriefcaseBusiness,
+    visible: false,
+    permissionResource: "services",
+  },
+  {
     href: "/contract-types",
     label: "Tipos de contrato",
     icon: ScrollText,
@@ -686,6 +693,10 @@ export function AppSidebar() {
 
       if (item.permissionResource === "contracts") {
         return can(user, "viewAny", "contracts");
+      }
+
+      if (item.permissionResource === "services") {
+        return can(user, "viewAny", "services");
       }
 
       if (item.permissionResource === "contract-types") {
