@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,9 +13,11 @@ import { useMarkArmamentLoanReturnedMutation } from "@/hooks/use-armament-loan-m
 import { usePermissions } from "@/hooks/use-permissions";
 import { useUsers } from "@/hooks/use-users";
 import type {
+  ArmamentLoanConfirmationDTO,
   ArmamentLoanItem,
   ReturnArmamentLoanItemDTO,
 } from "@/types/armament-loan.type";
+import { ArmamentLoanConfirmationDialog } from "@/components/armament-loans/confirmation-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -163,6 +165,10 @@ export function ArmamentLoanReturnPage() {
   const loanQuery = useArmamentLoan(params.id);
   const usersQuery = useUsers({ per_page: 100 });
   const returnMutation = useMarkArmamentLoanReturnedMutation();
+  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
+    useState(false);
+  const [pendingReturnValues, setPendingReturnValues] =
+    useState<ReturnFormValues | null>(null);
   const {
     control,
     register,
@@ -188,6 +194,7 @@ export function ArmamentLoanReturnPage() {
     name: "items",
   });
   const watchedItems = useWatch({ control, name: "items" }) as ReturnFormValues["items"];
+  const selectedApprovedBy = useWatch({ control, name: "approved_by" });
 
   useEffect(() => {
     const loan = loanQuery.data?.data;
@@ -270,6 +277,18 @@ export function ArmamentLoanReturnPage() {
   }
 
   async function onSubmit(values: ReturnFormValues) {
+    setPendingReturnValues(values);
+    setIsConfirmationDialogOpen(true);
+  }
+
+  async function handleReturnConfirmation(
+    confirmation: ArmamentLoanConfirmationDTO,
+  ) {
+    if (!pendingReturnValues) {
+      return;
+    }
+
+    const values = pendingReturnValues;
     const changedItems = values.items.reduce<ReturnArmamentLoanItemDTO[]>(
       (accumulator, item) => {
         const returned_quantity =
@@ -313,15 +332,19 @@ export function ArmamentLoanReturnPage() {
           values.approved_by !== "none" ? Number(values.approved_by) : null,
         return_notes: values.return_notes.trim() || null,
         items: changedItems,
+        confirmation,
       },
     });
 
+    setIsConfirmationDialogOpen(false);
+    setPendingReturnValues(null);
     router.push(`/armament-loans/${response.data.id}`);
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
+    <>
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
         <div className="rounded-2xl border border-slate-200/70 bg-white p-3 text-primary shadow-sm">
           <RotateCcw className="h-5 w-5" />
         </div>
@@ -336,16 +359,16 @@ export function ArmamentLoanReturnPage() {
         </div>
       </div>
 
-      <Card className="border-slate-200/70 bg-white/80">
-        <CardHeader>
-          <CardTitle>Empréstimo de {loan.police_officer?.war_name || loan.police_officer?.name}</CardTitle>
-          <CardDescription>
-            Exemplo comum: o policial devolve a municao, mas permanece com a arma
-            cautelada. Nesse caso, baixe apenas os itens correspondentes.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Empréstimo de {loan.police_officer?.war_name || loan.police_officer?.name}</CardTitle>
+            <CardDescription>
+              Exemplo comum: o policial devolve a municao, mas permanece com a arma
+              cautelada. Nesse caso, baixe apenas os itens correspondentes.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
             <section className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
                 <Label>Data e hora da devolução</Label>
@@ -360,7 +383,7 @@ export function ArmamentLoanReturnPage() {
               <div className="space-y-2">
                 <Label>Aprovado por</Label>
                 <Select
-                  value={useWatch({ control, name: "approved_by" })}
+                  value={selectedApprovedBy}
                   onValueChange={(value) =>
                     setValue("approved_by", value, {
                       shouldDirty: true,
@@ -582,9 +605,34 @@ export function ArmamentLoanReturnPage() {
                   : "Registrar devolução"}
               </Button>
             </div>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+
+      {loan.police_officer?.user_id ? (
+        <ArmamentLoanConfirmationDialog
+          open={isConfirmationDialogOpen}
+          onOpenChange={(open) => {
+            setIsConfirmationDialogOpen(open);
+            if (!open) {
+              setPendingReturnValues(null);
+            }
+          }}
+          title="Confirmar devolução de armamento"
+          description="O próprio policial vinculado ao empréstimo deve confirmar a devolução com a senha dele."
+          officerLabel={
+            loan.police_officer?.war_name ||
+            loan.police_officer?.name ||
+            `Policial #${loan.police_officer_id}`
+          }
+          confirmerName={loan.police_officer?.name || loan.police_officer?.war_name}
+          confirmerEmail={loan.police_officer?.user?.email || loan.police_officer?.email}
+          confirmedByUserId={loan.police_officer.user_id}
+          isPending={returnMutation.isPending}
+          onConfirm={handleReturnConfirmation}
+        />
+      ) : null}
+    </>
   );
 }

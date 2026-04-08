@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Plus, Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,11 +22,13 @@ import { usersService } from "@/services/users/service";
 import type {
   ArmamentLoanRecord,
   ArmamentLoanKind,
+  ArmamentLoanConfirmationDTO,
   CreateArmamentLoanDTO,
   UpdateArmamentLoanDTO,
 } from "@/types/armament-loan.type";
 import { armamentLoanKindOptions } from "@/types/armament-loan.type";
 import type { ArmamentItem } from "@/types/armament.type";
+import { ArmamentLoanConfirmationDialog } from "@/components/armament-loans/confirmation-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -186,6 +188,16 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
   const createMutation = useCreateArmamentLoanMutation();
   const updateMutation = useUpdateArmamentLoanMutation();
   const schema = buildArmamentLoanSchema(mode);
+  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
+    useState(false);
+  const [pendingCreateValues, setPendingCreateValues] =
+    useState<CreateFormValues | null>(null);
+  const [confirmationOfficer, setConfirmationOfficer] = useState<{
+    policeOfficerId: number;
+    userId: number;
+    label: string;
+    email?: string | null;
+  } | null>(null);
 
   const {
     control,
@@ -269,32 +281,18 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
 
   async function onSubmit(values: CreateFormValues) {
     if (mode === "create") {
-      const payload: CreateArmamentLoanDTO = {
-        police_officer_id: Number(values.police_officer_id),
-        kind: values.kind as ArmamentLoanKind,
-        loaned_at: new Date(values.loaned_at).toISOString(),
-        expected_return_at: values.expected_return_at
-          ? new Date(values.expected_return_at).toISOString()
-          : null,
-        purpose: values.purpose.trim() || null,
-        approved_by:
-          values.approved_by !== "none" ? Number(values.approved_by) : null,
-        items: values.items.map((item) => ({
-          armament_id: Number(item.armament_id),
-          armament_unit_id:
-            item.item_mode === "unit" && item.armament_unit_id.trim()
-              ? Number(item.armament_unit_id)
-              : null,
-          armament_batch_id:
-            item.item_mode === "batch" && item.armament_batch_id.trim()
-              ? Number(item.armament_batch_id)
-              : null,
-          quantity: item.item_mode === "unit" ? 1 : item.quantity,
-        })),
-      };
+      const policeOfficerId = Number(values.police_officer_id);
+      const policeOfficerResponse = await policeOfficersService.show(policeOfficerId);
+      const policeOfficer = policeOfficerResponse.data;
 
-      const response = await createMutation.mutateAsync(payload);
-      router.push(`/armament-loans/${response.data.id}`);
+      setPendingCreateValues(values);
+      setConfirmationOfficer({
+        policeOfficerId,
+        userId: policeOfficer.user_id,
+        label: formatPoliceOfficerOptionLabel(policeOfficer),
+        email: policeOfficer.user?.email ?? policeOfficer.email ?? null,
+      });
+      setIsConfirmationDialogOpen(true);
       return;
     }
 
@@ -340,22 +338,64 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
       }
     : null;
 
+  async function handleCreateConfirmation(
+    confirmation: ArmamentLoanConfirmationDTO,
+  ) {
+    if (!pendingCreateValues) {
+      return;
+    }
+
+    const payload: CreateArmamentLoanDTO = {
+      police_officer_id: Number(pendingCreateValues.police_officer_id),
+      kind: pendingCreateValues.kind as ArmamentLoanKind,
+      loaned_at: new Date(pendingCreateValues.loaned_at).toISOString(),
+      expected_return_at: pendingCreateValues.expected_return_at
+        ? new Date(pendingCreateValues.expected_return_at).toISOString()
+        : null,
+      purpose: pendingCreateValues.purpose.trim() || null,
+      approved_by:
+        pendingCreateValues.approved_by !== "none"
+          ? Number(pendingCreateValues.approved_by)
+          : null,
+      items: pendingCreateValues.items.map((item) => ({
+        armament_id: Number(item.armament_id),
+        armament_unit_id:
+          item.item_mode === "unit" && item.armament_unit_id.trim()
+            ? Number(item.armament_unit_id)
+            : null,
+        armament_batch_id:
+          item.item_mode === "batch" && item.armament_batch_id.trim()
+            ? Number(item.armament_batch_id)
+            : null,
+        quantity: item.item_mode === "unit" ? 1 : item.quantity,
+      })),
+      confirmation,
+    };
+
+    const response = await createMutation.mutateAsync(payload);
+    setIsConfirmationDialogOpen(false);
+    setPendingCreateValues(null);
+    setConfirmationOfficer(null);
+    router.push(`/armament-loans/${response.data.id}`);
+  }
+
   return (
-    <Card className="border-slate-200/70 bg-white/80">
-      <CardHeader>
-        <CardTitle>
-          {mode === "create"
-            ? "Novo empréstimo de armamento"
-            : "Editar empréstimo de armamento"}
-        </CardTitle>
-        <CardDescription>
-          {mode === "create"
-            ? "Cadastre o policial, o contexto do empréstimo e os itens emprestados."
-            : "Atualize apenas os dados do cabecalho. Itens e devolucoes seguem fluxo próprio."}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+    <>
+      <Card className="border-slate-200/70 bg-white/80">
+        <CardHeader>
+          <CardTitle>
+            {mode === "create"
+              ? "Novo empréstimo de armamento"
+              : "Editar empréstimo de armamento"}
+          </CardTitle>
+          <CardDescription>
+            {mode === "create"
+              ? "Cadastre o policial, o contexto do empréstimo e os itens emprestados."
+              : "Atualize apenas os dados do cabecalho. Itens e devolucoes seguem fluxo próprio."}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
               <Label>Policial</Label>
@@ -770,8 +810,30 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                   : "Salvar alterações"}
             </Button>
           </div>
-        </form>
-      </CardContent>
-    </Card>
+          </form>
+        </CardContent>
+      </Card>
+
+      {mode === "create" && confirmationOfficer ? (
+        <ArmamentLoanConfirmationDialog
+          open={isConfirmationDialogOpen}
+          onOpenChange={(open) => {
+            setIsConfirmationDialogOpen(open);
+            if (!open) {
+              setPendingCreateValues(null);
+              setConfirmationOfficer(null);
+            }
+          }}
+          title="Confirmar retirada de armamento"
+          description="O próprio policial vinculado ao empréstimo deve confirmar a operação com a senha dele."
+          officerLabel={confirmationOfficer.label}
+          confirmerName={confirmationOfficer.label}
+          confirmerEmail={confirmationOfficer.email}
+          confirmedByUserId={confirmationOfficer.userId}
+          isPending={createMutation.isPending}
+          onConfirm={handleCreateConfirmation}
+        />
+      ) : null}
+    </>
   );
 }

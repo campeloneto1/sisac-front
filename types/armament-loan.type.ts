@@ -5,6 +5,18 @@ import type { UserListItem } from "@/types/user.type";
 
 export type ArmamentLoanKind = "temporary" | "cautela";
 export type ArmamentLoanStatus = "open" | "partial" | "returned" | "overdue";
+export type ArmamentLoanConfirmationMethod = "password";
+export type ArmamentLoanConfirmationOperation =
+  | "loan_created"
+  | "partial_return"
+  | "full_return";
+
+export interface ArmamentLoanConfirmationDTO {
+  confirmed_by_user_id: number;
+  method: ArmamentLoanConfirmationMethod;
+  credential: string;
+  agreed: boolean;
+}
 
 export interface ArmamentLoanUnitSummary {
   id: number;
@@ -43,6 +55,27 @@ export interface ArmamentLoanItem {
   updated_at?: string | null;
 }
 
+export interface ArmamentLoanConfirmationRecord {
+  id: number;
+  armament_loan_id: number;
+  operation_type?: ArmamentLoanConfirmationOperation | null;
+  operation_type_label?: string | null;
+  confirmation_method?: ArmamentLoanConfirmationMethod | null;
+  confirmation_method_label?: string | null;
+  operator_user_id?: number | null;
+  confirmed_by_user_id: number;
+  subunit_id?: number | null;
+  agreed: boolean;
+  ip_address?: string | null;
+  user_agent?: string | null;
+  payload_snapshot?: Record<string, unknown> | null;
+  confirmed_at?: string | null;
+  operator_user?: Pick<UserListItem, "id" | "name" | "email"> | null;
+  confirmed_by_user?: Pick<UserListItem, "id" | "name" | "email"> | null;
+  created_at?: string | null;
+  updated_at?: string | null;
+}
+
 export interface ArmamentLoanRecord {
   id: number;
   police_officer_id: number;
@@ -67,6 +100,7 @@ export interface ArmamentLoanRecord {
   police_officer?: PoliceOfficerItem | null;
   approved_by_user?: Pick<UserListItem, "id" | "name" | "email"> | null;
   items?: ArmamentLoanItem[];
+  confirmations?: ArmamentLoanConfirmationRecord[];
   creator?: Pick<UserListItem, "id" | "name" | "email"> | null;
   updater?: Pick<UserListItem, "id" | "name" | "email"> | null;
   created_at?: string | null;
@@ -100,6 +134,7 @@ export interface CreateArmamentLoanDTO {
   purpose?: string | null;
   approved_by?: number | null;
   items: CreateArmamentLoanItemDTO[];
+  confirmation: ArmamentLoanConfirmationDTO;
 }
 
 export interface UpdateArmamentLoanDTO {
@@ -125,6 +160,7 @@ export interface MarkArmamentLoanReturnedDTO {
   return_notes?: string | null;
   approved_by?: number | null;
   items: ReturnArmamentLoanItemDTO[];
+  confirmation: ArmamentLoanConfirmationDTO;
 }
 
 export interface ArmamentLoanResponse {
@@ -160,6 +196,11 @@ export const armamentLoanStatusOptions: Array<{
   { value: "returned", label: "Devolvido" },
   { value: "overdue", label: "Em atraso" },
 ];
+
+export const armamentLoanConfirmationMethodOptions: Array<{
+  value: ArmamentLoanConfirmationMethod;
+  label: string;
+}> = [{ value: "password", label: "Senha" }];
 
 export function getArmamentLoanStatusVariant(status?: string | null) {
   if (status === "returned") {

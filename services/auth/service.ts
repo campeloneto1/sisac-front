@@ -3,6 +3,7 @@ import type {
   ApiMessageResponse,
   AuthLoginResponse,
   AuthMeResponse,
+  ChangeOwnPasswordDTO,
   ForgotPasswordDTO,
   LoginDTO,
   ResetPasswordDTO,
@@ -53,6 +54,17 @@ export const authService = {
     const { data } = await api.put<AuthMeResponse>(`/users/${userId}`, payload, {
       skipSubunit: true,
     });
+
+    return data;
+  },
+  async changePassword(payload: ChangeOwnPasswordDTO): Promise<ApiMessageResponse> {
+    const { data } = await api.post<ApiMessageResponse>(
+      "/auth/change-password",
+      payload,
+      {
+        skipSubunit: true,
+      },
+    );
 
     return data;
   },

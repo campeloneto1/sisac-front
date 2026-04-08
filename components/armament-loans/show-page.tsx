@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { CalendarDays, Crosshair, Shield, UserCircle2 } from "lucide-react";
+import { CalendarDays, Crosshair, Shield, ShieldCheck, UserCircle2 } from "lucide-react";
 
 import { useArmamentLoan } from "@/hooks/use-armament-loans";
 import { usePermissions } from "@/hooks/use-permissions";
@@ -240,6 +240,57 @@ export function ArmamentLoanShowPage() {
                 </div>
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Confirmações</CardTitle>
+            <CardDescription>
+              Histórico de aceite formal do policial para retirada e devoluções.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {!loan.confirmations?.length ? (
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-500">
+                Nenhuma confirmação registrada até o momento.
+              </div>
+            ) : (
+              loan.confirmations.map((confirmation) => (
+                <div
+                  key={confirmation.id}
+                  className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3">
+                      <ShieldCheck className="mt-0.5 h-4 w-4 text-primary" />
+                      <div>
+                        <p className="font-medium text-slate-900">
+                          {confirmation.operation_type_label ||
+                            confirmation.operation_type ||
+                            "Operação confirmada"}
+                        </p>
+                        <p className="text-sm text-slate-500">
+                          Confirmante:{" "}
+                          {confirmation.confirmed_by_user?.name ||
+                            `#${confirmation.confirmed_by_user_id}`}
+                        </p>
+                        <p className="text-sm text-slate-500">
+                          Operador:{" "}
+                          {confirmation.operator_user?.name || "Não informado"} •{" "}
+                          {formatDateTime(confirmation.confirmed_at)}
+                        </p>
+                      </div>
+                    </div>
+                    <Badge variant="outline">
+                      {confirmation.confirmation_method_label ||
+                        confirmation.confirmation_method ||
+                        "Método"}
+                    </Badge>
+                  </div>
+                </div>
+              ))
+            )}
           </CardContent>
         </Card>
       </div>

@@ -67,6 +67,12 @@ export interface UpdateProfileDTO {
   phone?: string | null;
 }
 
+export interface ChangeOwnPasswordDTO {
+  current_password: string;
+  password: string;
+  password_confirmation: string;
+}
+
 export interface AuthLoginResponse {
   message: string;
   data: {

@@ -432,32 +432,6 @@ export function DashboardHomePage() {
   return (
     <div className="space-y-6">
       <MyVehicleCard />
-      <section className="hidden overflow-hidden rounded-[24px] border border-slate-200/70 bg-slate-950 text-white md:block">
-        <div className="grid gap-8 px-6 py-8 md:grid-cols-[1.2fr_0.8fr] md:px-8">
-          <div className="space-y-4">
-            <span className="inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-slate-200">
-              Dashboard operacional
-            </span>
-            <div className="space-y-3">
-              <h1 className="font-display text-3xl leading-tight md:text-4xl">
-                Panorama inicial da subunidade para policiais, veículos e armamentos.
-              </h1>
-              <p className="max-w-2xl text-sm text-slate-300 md:text-base">
-                Assim que você entra, a home já resume o contexto ativo e mostra os indicadores mais úteis das frentes operacionais liberadas para o seu perfil.
-              </p>
-            </div>
-          </div>
-          <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
-            <p className="text-sm text-slate-300">Resumo da atualização</p>
-            <ul className="mt-4 space-y-3 text-sm text-slate-100">
-              <li>Subunidade ativa: {activeSubunit.name}</li>
-              <li>Abas visíveis: {visibleTabs.length}</li>
-              <li>Gerado em: {formatDateTime(home.generated_at)}</li>
-              <li>Dados respeitando permissões e contexto atual.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
 
       {!visibleTabs.length ? (
         <Card className="border-slate-200/70 bg-white/80">

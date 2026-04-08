@@ -890,7 +890,12 @@ export function AppSidebar({
   }
 
   return (
-    <aside className={cn("flex h-full min-h-0 w-[228px] shrink-0 flex-col overflow-hidden rounded-[24px] border border-white/60 bg-slate-950 px-3 py-4 text-white shadow-spotlight", className)}>
+    <aside
+      className={cn(
+        "flex h-full min-h-0 w-[228px] shrink-0 flex-col overflow-hidden rounded-[24px] border border-white/60 bg-slate-950 px-3 py-4 text-white shadow-spotlight",
+        className,
+      )}
+    >
       <div className="border-b border-white/10 px-2 pb-4">
         <p className="text-xs uppercase tracking-[0.28em] text-slate-400">
           SISAC
@@ -899,7 +904,11 @@ export function AppSidebar({
       </div>
 
       <nav className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto pr-1">
-        <SidebarSection items={visibleGeneralItems} pathname={pathname} onNavigate={onNavigate} />
+        <SidebarSection
+          items={visibleGeneralItems}
+          pathname={pathname}
+          onNavigate={onNavigate}
+        />
         {sections
           .filter((section) => section.visible)
           .map((section) => {
@@ -945,12 +954,6 @@ export function AppSidebar({
             );
           })}
       </nav>
-
-      <div className="mt-auto rounded-[20px] border border-white/10 bg-white/5 px-4 py-3">
-        <p className="text-xs text-slate-300">
-          Estrutura pronta para receber os módulos da operação.
-        </p>
-      </div>
     </aside>
   );
 }

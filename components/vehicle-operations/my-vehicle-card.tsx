@@ -203,10 +203,20 @@ function formatDateLabel(value?: string | null) {
     return "Nao informado";
   }
 
+  const normalizedValue =
+    /^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00:00` : value;
+  const parsedDate = new Date(normalizedValue);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return "Nao informado";
+  }
+
+  const hasTime = /T\d{2}:\d{2}/.test(normalizedValue);
+
   return new Intl.DateTimeFormat("pt-BR", {
     dateStyle: "short",
-    timeStyle: "short",
-  }).format(new Date(value));
+    ...(hasTime ? { timeStyle: "short" as const } : {}),
+  }).format(parsedDate);
 }
 
 async function invalidateOperationalQueries(queryClient: ReturnType<typeof useQueryClient>) {
