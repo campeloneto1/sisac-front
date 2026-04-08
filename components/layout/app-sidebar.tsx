@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import {
   Award,
   AlertTriangle,
-  BarChart3,
   BellRing,
   Boxes,
   BookOpen,
@@ -510,10 +509,13 @@ const reportsItems: Array<{
   requirements: PermissionRequirement[];
 }> = [
   {
-    href: "#",
-    label: "Relatórios gerais",
-    icon: BarChart3,
-    requirements: [{ type: "slug", value: "reports" }],
+    href: "/police-officer-reports",
+    label: "Relatórios de policiais",
+    icon: Shield,
+    requirements: [
+      { type: "slug", value: "reports" },
+      { type: "resource", resource: "police-officers", action: "viewAny" },
+    ],
   },
 ];
 
