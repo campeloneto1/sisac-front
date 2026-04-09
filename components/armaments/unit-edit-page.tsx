@@ -3,38 +3,53 @@
 import { useParams } from "next/navigation";
 
 import { ArmamentUnitsPageShell } from "@/components/armaments/units-page-shell";
+import { ArmamentUnitForm } from "@/components/armaments/unit-form";
+import { useArmamentUnit } from "@/hooks/use-armament-units";
+import { usePermissions } from "@/hooks/use-permissions";
+import { useSubunit } from "@/contexts/subunit-context";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function ArmamentUnitEditPage() {
-  const params = useParams<{ unitId: string }>();
+  const params = useParams<{ id: string; unitId: string }>();
+  const permissions = usePermissions("armaments");
+  const { activeSubunit } = useSubunit();
+  const unitQuery = useArmamentUnit(
+    params.id,
+    params.unitId,
+    Boolean(activeSubunit && permissions.canUpdate),
+  );
 
   return (
     <ArmamentUnitsPageShell
       title="Editar unidade"
       description="Atualize os dados operacionais da unidade vinculada ao armamento."
       requiredPermission="update"
+      showIntegrationNotice={false}
     >
-      <Card className="border-slate-200/70 bg-white/80">
-        <CardHeader>
-          <CardTitle>Edição da unidade #{params.unitId}</CardTitle>
-          <CardDescription>
-            Os dados de consulta já estão integrados, mas a API ainda não
-            publica um endpoint de atualização para `ArmamentUnit`.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-2 text-sm text-slate-600">
-          <p>Atualizações previstas quando a mutation estiver disponível:</p>
-          <p>serial number;</p>
-          <p>datas de aquisicao e expiracao;</p>
-          <p>mudança controlada de status.</p>
-        </CardContent>
-      </Card>
+      {unitQuery.isLoading ? (
+        <Skeleton className="h-[420px] w-full" />
+      ) : unitQuery.isError || !unitQuery.data?.data ? (
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Não foi possível carregar a unidade</CardTitle>
+            <CardDescription>
+              Verifique se a unidade existe e se pertence ao armamento selecionado.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      ) : (
+        <ArmamentUnitForm
+          armamentId={params.id}
+          mode="edit"
+          unit={unitQuery.data.data}
+        />
+      )}
     </ArmamentUnitsPageShell>
   );
 }

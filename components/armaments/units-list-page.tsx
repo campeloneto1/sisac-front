@@ -1,17 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { Eye, Pencil, Plus } from "lucide-react";
+import { useState } from "react";
+import { Eye, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { useSubunit } from "@/contexts/subunit-context";
 import { ArmamentUnitsPageShell } from "@/components/armaments/units-page-shell";
 import { formatDate } from "@/components/armament-reports/shared";
 import { Pagination } from "@/components/ui/pagination";
 import { useArmamentPanelReport } from "@/hooks/use-armament-reports";
+import { useArmamentUnits } from "@/hooks/use-armament-units";
+import { useDeleteArmamentUnitMutation } from "@/hooks/use-armament-unit-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useParams } from "next/navigation";
-import { getArmamentUnitBadgeVariant } from "@/types/armament-unit.type";
+import {
+  type ArmamentUnitItem,
+  type ArmamentUnitStatus,
+  getArmamentUnitBadgeVariant,
+} from "@/types/armament-unit.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +27,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -40,46 +54,33 @@ export function ArmamentUnitsListPage() {
   const [status, setStatus] = useState("all");
   const [expiration, setExpiration] = useState("all");
   const [page, setPage] = useState(1);
+  const [unitToDelete, setUnitToDelete] = useState<ArmamentUnitItem | null>(null);
+  const deleteMutation = useDeleteArmamentUnitMutation(params.id);
   const panelQuery = useArmamentPanelReport(
     params.id,
     Boolean(activeSubunit && permissions.canView),
   );
-  const units = panelQuery.data?.data.units ?? [];
-
-  const filteredUnits = useMemo(() => {
-    const normalizedSearch = search.trim().toLowerCase();
-
-    return units.filter((unit) => {
-      const matchesSearch = normalizedSearch
-        ? [
-            unit.serial_number,
-            unit.status?.label,
-            unit.status?.value,
-            unit.expiration_date,
-          ]
-            .filter(Boolean)
-            .some((value) => value?.toLowerCase().includes(normalizedSearch))
-        : true;
-
-      const matchesStatus = status === "all" ? true : unit.status?.value === status;
-      const matchesExpiration =
+  const unitsQuery = useArmamentUnits(
+    params.id,
+    {
+      page,
+      per_page: PAGE_SIZE,
+      search: search.trim() || undefined,
+      status: status === "all" ? null : (status as ArmamentUnitStatus),
+      expiration:
         expiration === "all"
-          ? true
-          : expiration === "expired"
-            ? unit.is_expired
-            : expiration === "expiring"
-              ? unit.is_expiring_soon && !unit.is_expired
-              : !unit.is_expired && !unit.is_expiring_soon;
-
-      return matchesSearch && matchesStatus && matchesExpiration;
-    });
-  }, [expiration, search, status, units]);
-
-  const currentPage = Math.min(page, Math.max(1, Math.ceil(filteredUnits.length / PAGE_SIZE)));
-  const paginatedUnits = filteredUnits.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
+          ? null
+          : (expiration as "expired" | "expiring" | "regular"),
+    },
+    Boolean(activeSubunit && permissions.canView),
   );
+  const units = panelQuery.data?.data.units ?? [];
+  const paginatedUnits = unitsQuery.data?.data ?? [];
+  const currentPage = unitsQuery.data?.meta.current_page ?? page;
+  const totalUnits = unitsQuery.data?.meta.total ?? 0;
+  const from = unitsQuery.data?.meta.from ?? 0;
+  const to = unitsQuery.data?.meta.to ?? 0;
+  const lastPage = unitsQuery.data?.meta.last_page ?? 1;
 
   const availableUnits = units.filter((unit) => unit.status?.value === "available").length;
   const expiringUnits = units.filter((unit) => unit.is_expired || unit.is_expiring_soon).length;
@@ -97,6 +98,7 @@ export function ArmamentUnitsListPage() {
       title="Gestão de unidades"
       description="Acompanhe e organize as unidades fisicas vinculadas a este armamento."
       requiredPermission="view"
+      showIntegrationNotice={false}
     >
       <div className="flex justify-end">
         {permissions.canCreate ? (
@@ -157,7 +159,7 @@ export function ArmamentUnitsListPage() {
         <CardHeader>
           <CardTitle>Unidades cadastradas</CardTitle>
           <CardDescription>
-            Consulta montada a partir do endpoint `armament-panel/{`{id}`}`.
+            Consulta e gestão persistida das unidades vinculadas a este armamento.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -215,9 +217,9 @@ export function ArmamentUnitsListPage() {
             </Button>
           </div>
 
-          {panelQuery.isLoading ? (
+          {unitsQuery.isLoading ? (
             <p className="text-sm text-slate-500">Carregando unidades...</p>
-          ) : panelQuery.isError ? (
+          ) : unitsQuery.isError ? (
             <p className="text-sm text-rose-600">
               Não foi possível carregar as unidades deste armamento.
             </p>
@@ -279,6 +281,16 @@ export function ArmamentUnitsListPage() {
                                 </Link>
                               </Button>
                             ) : null}
+                            {permissions.canDelete ? (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => setUnitToDelete(unit)}
+                              >
+                                <Trash2 className="mr-2 h-4 w-4" />
+                                Excluir
+                              </Button>
+                            ) : null}
                           </div>
                         </td>
                       </tr>
@@ -289,10 +301,10 @@ export function ArmamentUnitsListPage() {
 
               <Pagination
                 currentPage={currentPage}
-                lastPage={Math.max(1, Math.ceil(filteredUnits.length / PAGE_SIZE))}
-                total={filteredUnits.length}
-                from={filteredUnits.length ? (currentPage - 1) * PAGE_SIZE + 1 : 0}
-                to={Math.min(currentPage * PAGE_SIZE, filteredUnits.length)}
+                lastPage={lastPage}
+                total={totalUnits}
+                from={from}
+                to={to}
                 onPageChange={setPage}
               />
             </>
@@ -303,6 +315,52 @@ export function ArmamentUnitsListPage() {
           )}
         </CardContent>
       </Card>
+
+      <Dialog
+        open={Boolean(unitToDelete)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setUnitToDelete(null);
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Excluir unidade</DialogTitle>
+            <DialogDescription>
+              Confirme a exclusão da unidade
+              {unitToDelete?.serial_number
+                ? ` "${unitToDelete.serial_number}"`
+                : ` #${unitToDelete?.id ?? ""}`}
+              . Se houver vínculos operacionais, a API pode recusar a remoção.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setUnitToDelete(null)}
+            >
+              Cancelar
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={deleteMutation.isPending || !unitToDelete}
+              onClick={async () => {
+                if (!unitToDelete) {
+                  return;
+                }
+
+                await deleteMutation.mutateAsync(unitToDelete.id);
+                setUnitToDelete(null);
+              }}
+            >
+              {deleteMutation.isPending ? "Excluindo..." : "Excluir"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </ArmamentUnitsPageShell>
   );
 }

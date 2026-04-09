@@ -6,6 +6,7 @@ import { AlertTriangle, CalendarClock, FileWarning, History, ShieldCheck } from 
 import { formatArmamentLabel, formatDate, formatDateTime } from "@/components/armament-reports/shared";
 import { ArmamentUnitsPageShell } from "@/components/armaments/units-page-shell";
 import { useSubunit } from "@/contexts/subunit-context";
+import { useArmamentUnit } from "@/hooks/use-armament-units";
 import { useArmamentPanelReport } from "@/hooks/use-armament-reports";
 import { usePermissions } from "@/hooks/use-permissions";
 import { getArmamentUnitBadgeVariant } from "@/types/armament-unit.type";
@@ -22,11 +23,16 @@ export function ArmamentUnitShowPage() {
   const params = useParams<{ id: string; unitId: string }>();
   const { activeSubunit } = useSubunit();
   const permissions = usePermissions("armaments");
+  const unitQuery = useArmamentUnit(
+    params.id,
+    params.unitId,
+    Boolean(activeSubunit && permissions.canView),
+  );
   const panelQuery = useArmamentPanelReport(
     params.id,
     Boolean(activeSubunit && permissions.canView),
   );
-  const unit = panelQuery.data?.data.units.find((item) => String(item.id) === params.unitId);
+  const unit = unitQuery.data?.data;
   const movements = panelQuery.data?.data.movements.filter(
     (item) => String(item.unit?.id) === params.unitId,
   ) ?? [];
@@ -42,8 +48,9 @@ export function ArmamentUnitShowPage() {
       title="Detalhe da unidade"
       description="Visualize o contexto da unidade fisica vinculada ao armamento."
       requiredPermission="view"
+      showIntegrationNotice={false}
     >
-      {panelQuery.isLoading ? (
+      {unitQuery.isLoading ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Carregando unidade</CardTitle>
@@ -57,8 +64,7 @@ export function ArmamentUnitShowPage() {
           <CardHeader>
             <CardTitle>Unidade não encontrada</CardTitle>
             <CardDescription>
-              Esta unidade não foi retornada pelo endpoint consolidado do
-              armamento.
+              Esta unidade não foi encontrada para o armamento selecionado.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -68,7 +74,7 @@ export function ArmamentUnitShowPage() {
             <CardHeader>
               <CardTitle>Unidade #{unit.id}</CardTitle>
               <CardDescription>
-                Detalhe montado a partir do painel consolidado do armamento.
+                Dados persistidos da unidade e histórico operacional relacionado.
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4 md:grid-cols-2">

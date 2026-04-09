@@ -57,6 +57,7 @@ export function AsyncSearchableSelect<T>({
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [cachedSelectedOption, setCachedSelectedOption] = useState<AsyncSelectOption | null>(selectedOption ?? null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -94,9 +95,10 @@ export function AsyncSearchableSelect<T>({
   const options = useMemo(() => {
     const mapped = (query.data?.pages ?? []).flatMap((page) => page.data.map(mapOption));
     const deduped = new Map<string, AsyncSelectOption>();
+    const resolvedSelectedOption = selectedOption ?? cachedSelectedOption;
 
-    if (selectedOption) {
-      deduped.set(selectedOption.value, selectedOption);
+    if (resolvedSelectedOption) {
+      deduped.set(resolvedSelectedOption.value, resolvedSelectedOption);
     }
 
     mapped.forEach((option) => {
@@ -104,7 +106,7 @@ export function AsyncSearchableSelect<T>({
     });
 
     return Array.from(deduped.values());
-  }, [mapOption, query.data?.pages, selectedOption]);
+  }, [cachedSelectedOption, mapOption, query.data?.pages, selectedOption]);
 
   const selectedLabel = options.find((option) => option.value === value)?.label;
 
@@ -130,7 +132,16 @@ export function AsyncSearchableSelect<T>({
         }
       }}
       value={value}
-      onValueChange={onValueChange}
+      onValueChange={(nextValue) => {
+        const nextSelectedOption =
+          options.find((option) => option.value === nextValue) ?? null;
+
+        if (nextSelectedOption) {
+          setCachedSelectedOption(nextSelectedOption);
+        }
+
+        onValueChange(nextValue);
+      }}
     >
       <SelectTrigger className={triggerClassName}>
         <SelectValue placeholder={placeholder}>{selectedLabel}</SelectValue>

@@ -29,7 +29,7 @@ export function ArmamentUnitsPageShell({
   title,
   description,
   requiredPermission,
-  showIntegrationNotice = true,
+  showIntegrationNotice = false,
   children,
 }: ArmamentUnitsPageShellProps) {
   const params = useParams<{ id: string }>();
