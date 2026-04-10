@@ -18,7 +18,7 @@ export interface ArmamentItem {
   gender_id?: number | null;
   specifications?: ArmamentSpecifications | null;
   subunit?: Pick<SubunitItem, "id" | "name" | "abbreviation"> | null;
-  type?: Pick<ArmamentTypeItem, "id" | "name" | "slug"> | null;
+  type?: Pick<ArmamentTypeItem, "id" | "name" | "slug" | "control_type"> | null;
   variant?: VariantItem | null;
   caliber?: Pick<ArmamentCaliberItem, "id" | "name" | "slug"> | null;
   size?: Pick<ArmamentSizeItem, "id" | "name" | "slug"> | null;

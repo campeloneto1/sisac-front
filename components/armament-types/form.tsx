@@ -12,6 +12,7 @@ import {
   useUpdateArmamentTypeMutation,
 } from "@/hooks/use-armament-type-mutations";
 import type {
+  ArmamentControlType,
   ArmamentTypeItem,
   CreateArmamentTypeDTO,
   UpdateArmamentTypeDTO,
@@ -26,7 +27,31 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+
+const CONTROL_TYPE_OPTIONS: {
+  value: ArmamentControlType;
+  label: string;
+  description: string;
+}[] = [
+  {
+    value: "unit",
+    label: "Unidade",
+    description: "Controle individual por unidade (ex: armas de fogo)",
+  },
+  {
+    value: "batch",
+    label: "Lote",
+    description: "Controle por lote/quantidade (ex: munição)",
+  },
+];
 
 const armamentTypeFormSchema = z.object({
   name: z
@@ -44,6 +69,9 @@ const armamentTypeFormSchema = z.object({
   description: z
     .string()
     .max(5000, "A descrição deve ter no máximo 5000 caracteres."),
+  control_type: z.enum(["unit", "batch"], {
+    required_error: "Selecione o tipo de controle.",
+  }),
 });
 
 type ArmamentTypeFormValues = z.infer<typeof armamentTypeFormSchema>;
@@ -85,11 +113,13 @@ export function ArmamentTypeForm({
       name: armamentType?.name ?? "",
       slug: armamentType?.slug ?? "",
       description: armamentType?.description ?? "",
+      control_type: armamentType?.control_type ?? undefined,
     },
   });
 
   const watchedName = useWatch({ control, name: "name" });
   const watchedSlug = useWatch({ control, name: "slug" });
+  const watchedControlType = useWatch({ control, name: "control_type" });
 
   useEffect(() => {
     if (!armamentType) {
@@ -101,6 +131,7 @@ export function ArmamentTypeForm({
       name: armamentType.name,
       slug: armamentType.slug,
       description: armamentType.description ?? "",
+      control_type: armamentType.control_type,
     });
   }, [armamentType, reset]);
 
@@ -116,16 +147,15 @@ export function ArmamentTypeForm({
   }, [setValue, watchedName]);
 
   async function onSubmit(values: ArmamentTypeFormValues) {
-    const payload = {
-      name: values.name.trim(),
-      slug: values.slug.trim() || null,
-      description: values.description.trim() || null,
-    };
-
     if (mode === "create") {
-      const response = await createMutation.mutateAsync(
-        payload satisfies CreateArmamentTypeDTO,
-      );
+      const payload: CreateArmamentTypeDTO = {
+        name: values.name.trim(),
+        slug: values.slug.trim() || null,
+        description: values.description.trim() || null,
+        control_type: values.control_type,
+      };
+
+      const response = await createMutation.mutateAsync(payload);
       router.push(`/armament-types/${response.data.id}`);
       return;
     }
@@ -134,9 +164,16 @@ export function ArmamentTypeForm({
       return;
     }
 
+    const payload: UpdateArmamentTypeDTO = {
+      name: values.name.trim(),
+      slug: values.slug.trim() || null,
+      description: values.description.trim() || null,
+      control_type: values.control_type,
+    };
+
     const response = await updateMutation.mutateAsync({
       id: armamentType.id,
-      payload: payload satisfies UpdateArmamentTypeDTO,
+      payload,
     });
     router.push(`/armament-types/${response.data.id}`);
   }
@@ -204,6 +241,43 @@ export function ArmamentTypeForm({
               {errors.description ? (
                 <p className="text-sm text-destructive">
                   {errors.description.message}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="armament-type-control-type">
+                Tipo de controle *
+              </Label>
+              <Select
+                value={watchedControlType}
+                onValueChange={(value: ArmamentControlType) =>
+                  setValue("control_type", value, { shouldValidate: true })
+                }
+              >
+                <SelectTrigger id="armament-type-control-type">
+                  <SelectValue placeholder="Selecione o tipo de controle" />
+                </SelectTrigger>
+                <SelectContent>
+                  {CONTROL_TYPE_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      <div className="flex flex-col">
+                        <span>{option.label}</span>
+                        <span className="text-xs text-slate-500">
+                          {option.description}
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-slate-500">
+                Define como os armamentos deste tipo serão controlados no
+                estoque.
+              </p>
+              {errors.control_type ? (
+                <p className="text-sm text-destructive">
+                  {errors.control_type.message}
                 </p>
               ) : null}
             </div>
