@@ -3,7 +3,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import { noticesService, type PublicNoticeFilters } from "@/services/notices/service";
-import type { MyNoticeFilters, NoticeFilters } from "@/types/notice.type";
+import type { MyNoticeFilters, NoticeFilters, NoticeReadFilters, NoticeTargetFilters } from "@/types/notice.type";
 
 export function usePublicNotices(filters: PublicNoticeFilters = {}, enabled = true) {
   return useQuery({
@@ -54,5 +54,23 @@ export function useUnreadMyNoticesCount(enabled = true) {
     },
     enabled,
     refetchInterval: 60_000,
+  });
+}
+
+export function useNoticeReads(noticeId: number | string, filters: NoticeReadFilters = {}, enabled = true) {
+  return useQuery({
+    queryKey: ["notices", noticeId, "reads", filters],
+    queryFn: () => noticesService.reads(noticeId, filters),
+    enabled: Boolean(noticeId) && enabled,
+    placeholderData: keepPreviousData,
+  });
+}
+
+export function useNoticeTargets(noticeId: number | string, filters: NoticeTargetFilters = {}, enabled = true) {
+  return useQuery({
+    queryKey: ["notices", noticeId, "targets", filters],
+    queryFn: () => noticesService.targets(noticeId, filters),
+    enabled: Boolean(noticeId) && enabled,
+    placeholderData: keepPreviousData,
   });
 }

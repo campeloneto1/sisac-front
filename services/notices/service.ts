@@ -5,7 +5,11 @@ import type {
   MyNoticeFilters,
   NoticeFilters,
   NoticeItem,
+  NoticeReadFilters,
+  NoticeReadResponse,
   NoticeResponse,
+  NoticeTargetFilters,
+  NoticeTargetResponse,
   PaginatedResponse,
   UpdateNoticeDTO,
 } from "@/types/notice.type";
@@ -67,6 +71,20 @@ export const noticesService = {
   },
   async acknowledge(id: number | string): Promise<NoticeResponse> {
     const { data } = await api.post<NoticeResponse>(`/notices/${id}/acknowledge`);
+
+    return data;
+  },
+  async reads(noticeId: number | string, filters: NoticeReadFilters = {}): Promise<NoticeReadResponse> {
+    const { data } = await api.get<NoticeReadResponse>(`/notices/${noticeId}/readers`, {
+      params: filters,
+    });
+
+    return data;
+  },
+  async targets(noticeId: number | string, filters: NoticeTargetFilters = {}): Promise<NoticeTargetResponse> {
+    const { data } = await api.get<NoticeTargetResponse>(`/notices/${noticeId}/targets`, {
+      params: filters,
+    });
 
     return data;
   },

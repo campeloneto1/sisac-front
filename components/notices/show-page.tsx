@@ -2,21 +2,22 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { BellRing, CalendarClock, Pin, ShieldCheck, UserCircle2, Users } from "lucide-react";
 
 import { useSubunit } from "@/contexts/subunit-context";
-import { useNotice } from "@/hooks/use-notices";
+import { useNotice, useNoticeReads, useNoticeTargets } from "@/hooks/use-notices";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useRoles } from "@/hooks/use-roles";
 import { useSectors } from "@/hooks/use-sectors";
 import { useUsers } from "@/hooks/use-users";
+import { NoticeReadTable } from "@/components/notices/notice-read-table";
+import { NoticeTargetTable } from "@/components/notices/notice-target-table";
 import {
   getNoticePriorityBadgeVariant,
   getNoticePriorityLabel,
   getNoticeStatusBadgeVariant,
   getNoticeStatusLabel,
-  getNoticeTargetTypeLabel,
   getNoticeTypeBadgeVariant,
   getNoticeTypeLabel,
   getNoticeVisibilityLabel,
@@ -24,6 +25,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Pagination } from "@/components/ui/pagination";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -38,39 +42,41 @@ function formatDateTime(value?: string | null) {
   }).format(new Date(value));
 }
 
-function resolveTargetLabel(
-  targetType: "all" | "sector" | "user" | "role",
-  targetId: number | null,
-  options: {
-    sectors: Array<{ id: number; label: string }>;
-    users: Array<{ id: number; label: string }>;
-    roles: Array<{ id: number; label: string }>;
-  },
-) {
-  if (targetType === "all") {
-    return "Todos os usuários alcançados pela subunidade ativa";
-  }
-
-  if (targetType === "sector") {
-    return options.sectors.find((sector) => sector.id === targetId)?.label ?? `Setor #${targetId}`;
-  }
-
-  if (targetType === "user") {
-    return options.users.find((user) => user.id === targetId)?.label ?? `Usuário #${targetId}`;
-  }
-
-  return options.roles.find((role) => role.id === targetId)?.label ?? `Perfil #${targetId}`;
-}
-
 export function NoticeShowPage() {
   const { id } = useParams<{ id: string }>();
   const { activeSubunit } = useSubunit();
   const permissions = usePermissions("notices");
   const [activeTab, setActiveTab] = useState("summary");
+  const [readsPage, setReadsPage] = useState(1);
+  const [readsSearch, setReadsSearch] = useState("");
+  const [readsAckFilter, setReadsAckFilter] = useState("all");
+  const [targetsPage, setTargetsPage] = useState(1);
+  const [targetsSearch, setTargetsSearch] = useState("");
+  const [targetsTypeFilter, setTargetsTypeFilter] = useState("all");
+
+  const readsFilters = useMemo(
+    () => ({
+      page: readsPage,
+      per_page: 20,
+      search: readsSearch || undefined,
+      acknowledged: readsAckFilter === "all" ? undefined : readsAckFilter === "acknowledged",
+    }),
+    [readsPage, readsSearch, readsAckFilter],
+  );
+
+  const targetsFilters = useMemo(
+    () => ({
+      page: targetsPage,
+      per_page: 20,
+      search: targetsSearch || undefined,
+      target_type: targetsTypeFilter === "all" ? undefined : (targetsTypeFilter as "user" | "sector" | "role"),
+    }),
+    [targetsPage, targetsSearch, targetsTypeFilter],
+  );
+
   const noticeQuery = useNotice(id, Boolean(activeSubunit) && permissions.canView);
-  const sectorsQuery = useSectors({ per_page: 100 }, Boolean(activeSubunit) && permissions.canView);
-  const usersQuery = useUsers({ per_page: 100 });
-  const rolesQuery = useRoles({ per_page: 100 });
+  const noticeReadsQuery = useNoticeReads(id, readsFilters, Boolean(activeSubunit) && permissions.canView && activeTab === "reads");
+  const noticeTargetsQuery = useNoticeTargets(id, targetsFilters, Boolean(activeSubunit) && permissions.canView && activeTab === "targets");
 
   if (!permissions.canView) {
     return (
@@ -110,21 +116,6 @@ export function NoticeShowPage() {
   }
 
   const notice = noticeQuery.data.data;
-  const activeSubunitId = Number(activeSubunit.id);
-  const sectors = (sectorsQuery.data?.data ?? []).map((sector) => ({
-    id: sector.id,
-    label: sector.abbreviation ? `${sector.name} (${sector.abbreviation})` : sector.name,
-  }));
-  const users = (usersQuery.data?.data ?? [])
-    .filter((user) => user.subunits?.some((subunit) => Number(subunit.id) === activeSubunitId))
-    .map((user) => ({
-      id: user.id,
-      label: `${user.name} (${user.email})`,
-    }));
-  const roles = (rolesQuery.data?.data ?? []).map((role) => ({
-    id: role.id,
-    label: `${role.name} (${role.slug})`,
-  }));
 
   return (
     <div className="space-y-6">
@@ -273,50 +264,117 @@ export function NoticeShowPage() {
           </div>
         </TabsContent>
 
-        <TabsContent value="targets">
-          <Card className="border-slate-200/70 bg-white/80">
-            <CardHeader>
-              <CardTitle>NoticeTarget</CardTitle>
-              <CardDescription>
-                Os destinatários do aviso são geridos como sub-recurso interno do `Notice`, respeitando a subunidade ativa.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {notice.targets?.length ? (
-                <div className="space-y-4">
-                  <div className="flex flex-wrap gap-2">
-                    {notice.targets.map((target) => (
-                      <Badge key={target.id} variant="outline" className="max-w-full whitespace-normal px-3 py-2">
-                        {getNoticeTargetTypeLabel(target.target_type)}: {resolveTargetLabel(target.target_type, target.target_id, { sectors, users, roles })}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  <p className="text-sm text-slate-500">
-                    Para alterar este conjunto de `NoticeTarget`, use a edição do aviso. A API atual trata targets dentro do payload de `Notice`.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  <p className="text-sm text-slate-500">
-                    Sem targets explícitos. O aviso está configurado como geral da subunidade ativa.
-                  </p>
-                  <p className="text-sm text-slate-500">
-                    Se precisar segmentar por setor, usuário ou perfil, edite este aviso e adicione os destinatários no formulário.
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="reads">
-          <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+        <TabsContent value="targets" className="space-y-6">
+          <div className="grid gap-6 xl:grid-cols-[1fr_1fr]">
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
-                <CardTitle>NoticeRead</CardTitle>
+                <CardTitle>Resumo de destinatários</CardTitle>
                 <CardDescription>
-                  O histórico de leitura e ciência é mantido como sub-recurso interno do aviso e atualizado pelas ações da API.
+                  Estatísticas gerais sobre os destinatários deste aviso.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <Users className="h-4 w-4 text-primary" />
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Total de destinatários</p>
+                    <p className="text-sm text-slate-700">{notice.targets_count ?? 0}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-slate-200/70 bg-white/80">
+              <CardHeader>
+                <CardTitle>NoticeTarget</CardTitle>
+                <CardDescription>
+                  Os destinatários são geridos como sub-recurso do aviso, respeitando a subunidade ativa.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm text-slate-600">
+                <p>
+                  Este endpoint lista todos os destinatários configurados para o aviso, incluindo usuários individuais, setores, perfis ou configuração geral.
+                </p>
+                <p>
+                  Para editar os destinatários, use o formulário de edição do aviso.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {!noticeTargetsQuery.isError && (
+            <Card className="border-slate-200/70 bg-white/80">
+              <CardContent className="grid gap-3 pt-6 md:grid-cols-2">
+                <Input
+                  placeholder="Buscar por nome"
+                  value={targetsSearch}
+                  onChange={(event) => {
+                    setTargetsSearch(event.target.value);
+                    setTargetsPage(1);
+                  }}
+                />
+
+                <Select
+                  value={targetsTypeFilter}
+                  onValueChange={(value) => {
+                    setTargetsTypeFilter(value);
+                    setTargetsPage(1);
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Filtrar por tipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todos os tipos</SelectItem>
+                    <SelectItem value="user">Usuário</SelectItem>
+                    <SelectItem value="sector">Setor</SelectItem>
+                    <SelectItem value="role">Perfil</SelectItem>
+                  </SelectContent>
+                </Select>
+              </CardContent>
+            </Card>
+          )}
+
+          <div>
+            {noticeTargetsQuery.isLoading ? (
+              <div className="rounded-[24px] border border-slate-200/70 bg-white/80 p-8 text-center">
+                <p className="text-sm text-slate-500">Carregando destinatários...</p>
+              </div>
+            ) : noticeTargetsQuery.isError ? (
+              <Card className="border-slate-200/70 bg-white/80">
+                <CardHeader>
+                  <CardTitle>Erro ao carregar destinatários</CardTitle>
+                  <CardDescription>
+                    Não foi possível carregar os destinatários deste aviso.
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            ) : (
+              <>
+                <NoticeTargetTable targets={noticeTargetsQuery.data?.data ?? []} />
+                {noticeTargetsQuery.data?.meta && noticeTargetsQuery.data.meta.last_page > 1 ? (
+                  <Pagination
+                    currentPage={noticeTargetsQuery.data.meta.current_page}
+                    lastPage={noticeTargetsQuery.data.meta.last_page}
+                    total={noticeTargetsQuery.data.meta.total}
+                    from={noticeTargetsQuery.data.meta.from}
+                    to={noticeTargetsQuery.data.meta.to}
+                    onPageChange={setTargetsPage}
+                    isDisabled={noticeTargetsQuery.isLoading}
+                  />
+                ) : null}
+              </>
+            )}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="reads" className="space-y-6">
+          <div className="grid gap-6 xl:grid-cols-[1fr_1fr]">
+            <Card className="border-slate-200/70 bg-white/80">
+              <CardHeader>
+                <CardTitle>Resumo de leituras</CardTitle>
+                <CardDescription>
+                  Estatísticas gerais sobre as leituras e ciências deste aviso.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -350,9 +408,9 @@ export function NoticeShowPage() {
 
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
-                <CardTitle>Limites atuais da API</CardTitle>
+                <CardTitle>NoticeRead</CardTitle>
                 <CardDescription>
-                  A API atual expõe contadores e o status do usuário autenticado, mas ainda não retorna a lista completa de registros `NoticeRead`.
+                  O histórico de leitura e ciência é mantido como sub-recurso interno do aviso e atualizado pelas ações da API.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3 text-sm text-slate-600">
@@ -360,13 +418,138 @@ export function NoticeShowPage() {
                   O fluxo operacional já existe por meio das ações `markAsRead` e `acknowledge`, então o sub-recurso faz parte do módulo `Notice`.
                 </p>
                 <p>
-                  Para um CRUD administrativo completo de leituras, o backend ainda precisaria expor endpoints ou incluir a coleção detalhada no `NoticeResource`.
-                </p>
-                <p>
-                  Enquanto isso, esta aba concentra o acompanhamento disponível hoje sem criar telas artificiais sem suporte real da API.
+                  A tabela abaixo exibe a lista completa de usuários que leram este aviso, incluindo os timestamps de leitura e confirmação de ciência.
                 </p>
               </CardContent>
             </Card>
+          </div>
+
+          {!noticeReadsQuery.isError && (
+            <Card className="border-slate-200/70 bg-white/80">
+              <CardContent className="grid gap-3 pt-6 md:grid-cols-2">
+                <Input
+                  placeholder="Buscar por nome ou email do usuário"
+                  value={readsSearch}
+                  onChange={(event) => {
+                    setReadsSearch(event.target.value);
+                    setReadsPage(1);
+                  }}
+                />
+
+                <Select
+                  value={readsAckFilter}
+                  onValueChange={(value) => {
+                    setReadsAckFilter(value);
+                    setReadsPage(1);
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Filtrar por ciência" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todos</SelectItem>
+                    <SelectItem value="acknowledged">Ciente</SelectItem>
+                    <SelectItem value="not_acknowledged">Sem confirmação</SelectItem>
+                  </SelectContent>
+                </Select>
+              </CardContent>
+            </Card>
+          )}
+
+          <div>
+            {noticeReadsQuery.isLoading ? (
+              <div className="rounded-[24px] border border-slate-200/70 bg-white/80 p-8 text-center">
+                <p className="text-sm text-slate-500">Carregando leituras...</p>
+              </div>
+            ) : noticeReadsQuery.isError ? (
+              <Card className="border-slate-200/70 bg-white/80">
+                <CardHeader>
+                  <CardTitle>Endpoint não disponível</CardTitle>
+                  <CardDescription>
+                    O backend ainda não implementou o endpoint necessário para listar as leituras detalhadas.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="rounded-lg bg-slate-50 p-4">
+                    <p className="text-sm font-medium text-slate-900">Endpoint necessário:</p>
+                    <code className="mt-2 block rounded bg-slate-800 px-3 py-2 font-mono text-xs text-slate-100">
+                      GET /api/notices/{`{id}`}/readers
+                    </code>
+                  </div>
+
+                  <div className="space-y-2 text-sm text-slate-600">
+                    <p className="font-medium text-slate-900">Parâmetros esperados:</p>
+                    <ul className="list-inside list-disc space-y-1 pl-2">
+                      <li>
+                        <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs">page</code> - Página atual (padrão: 1)
+                      </li>
+                      <li>
+                        <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs">per_page</code> - Registros por página (padrão: 20)
+                      </li>
+                      <li>
+                        <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs">search</code> - Busca por nome/email do usuário
+                      </li>
+                      <li>
+                        <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs">acknowledged</code> - Filtro booleano (true/false)
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="space-y-2 text-sm text-slate-600">
+                    <p className="font-medium text-slate-900">Resposta esperada (paginada):</p>
+                    <pre className="overflow-x-auto rounded bg-slate-800 p-3 font-mono text-xs text-slate-100">
+{`{
+  "data": [
+    {
+      "id": 1,
+      "notice_id": 1,
+      "user_id": 1,
+      "has_acknowledged": true,
+      "read_at": "2024-01-01T10:00:00",
+      "acknowledged_at": "2024-01-01T10:05:00",
+      "user": {
+        "id": 1,
+        "name": "Nome do Usuário",
+        "email": "usuario@exemplo.com"
+      }
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "last_page": 1,
+    "per_page": 20,
+    "total": 1,
+    "from": 1,
+    "to": 1
+  }
+}`}
+                    </pre>
+                  </div>
+
+                  <div className="rounded-lg border-l-4 border-blue-500 bg-blue-50 p-4">
+                    <p className="text-sm text-blue-900">
+                      <span className="font-semibold">Enquanto isso:</span> O resumo estatístico acima mostra o contador de leituras e o status do
+                      usuário atual, que já estão disponíveis na API.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <>
+                <NoticeReadTable reads={noticeReadsQuery.data?.data ?? []} />
+                {noticeReadsQuery.data?.meta && noticeReadsQuery.data.meta.last_page > 1 ? (
+                  <Pagination
+                    currentPage={noticeReadsQuery.data.meta.current_page}
+                    lastPage={noticeReadsQuery.data.meta.last_page}
+                    total={noticeReadsQuery.data.meta.total}
+                    from={noticeReadsQuery.data.meta.from}
+                    to={noticeReadsQuery.data.meta.to}
+                    onPageChange={setReadsPage}
+                    isDisabled={noticeReadsQuery.isLoading}
+                  />
+                ) : null}
+              </>
+            )}
           </div>
         </TabsContent>
       </Tabs>

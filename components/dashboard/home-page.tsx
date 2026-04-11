@@ -13,13 +13,22 @@ import { getContractStatusBadgeVariant } from "@/types/contract.type";
 import { MyVehicleCard } from "@/components/vehicle-operations/my-vehicle-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function formatDateTime(value?: string | null) {
   if (!value) return "-";
-  return new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(value));
+  return new Intl.DateTimeFormat("pt-BR", {
+    dateStyle: "short",
+    timeStyle: "short",
+  }).format(new Date(value));
 }
 
 function formatNumber(value?: number | null) {
@@ -37,10 +46,21 @@ function formatCurrency(value?: number | null) {
   }).format(value ?? 0);
 }
 
-function formatArmamentLabel(item?: { type?: string | null; variant?: string | null; caliber?: string | null; size?: string | null } | null) {
+function formatArmamentLabel(
+  item?: {
+    type?: string | null;
+    variant?: string | null;
+    caliber?: string | null;
+    size?: string | null;
+  } | null,
+) {
   if (!item) return "Armamento";
 
-  return [item.type, item.variant, item.caliber, item.size].filter(Boolean).join(" • ") || "Armamento";
+  return (
+    [item.type, item.variant, item.caliber, item.size]
+      .filter(Boolean)
+      .join(" • ") || "Armamento"
+  );
 }
 
 function SummaryGrid({
@@ -72,9 +92,16 @@ function SummaryGrid({
       <CardContent className="space-y-4">
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {items.map((item) => (
-            <div key={item.label} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">{item.label}</p>
-              <p className="mt-2 text-2xl font-semibold text-slate-900">{formatNumber(item.value)}</p>
+            <div
+              key={item.label}
+              className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+            >
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                {item.label}
+              </p>
+              <p className="mt-2 text-2xl font-semibold text-slate-900">
+                {formatNumber(item.value)}
+              </p>
             </div>
           ))}
         </div>
@@ -102,7 +129,10 @@ export function DashboardHomePage() {
       <Card className="border-slate-200/70 bg-white/80">
         <CardHeader>
           <CardTitle>Selecione uma subunidade</CardTitle>
-          <CardDescription>A dashboard inicial depende da subunidade ativa para carregar o resumo operacional.</CardDescription>
+          <CardDescription>
+            A dashboard inicial depende da subunidade ativa para carregar o
+            resumo operacional.
+          </CardDescription>
         </CardHeader>
       </Card>
     );
@@ -129,7 +159,9 @@ export function DashboardHomePage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Erro ao carregar a dashboard</CardTitle>
-            <CardDescription>Não foi possível buscar o resumo inicial da home no momento.</CardDescription>
+            <CardDescription>
+              Não foi possível buscar o resumo inicial da home no momento.
+            </CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -149,45 +181,88 @@ export function DashboardHomePage() {
             icon={Shield}
             href="/police-officer-reports"
             items={[
-              { label: "Cadastrados", value: home.police_officers.summary.total_registered },
+              {
+                label: "Cadastrados",
+                value: home.police_officers.summary.total_registered,
+              },
               { label: "Ativos", value: home.police_officers.summary.active },
-              { label: "Afastados", value: home.police_officers.summary.on_leave },
-              { label: "COPEM pendente", value: home.police_officers.summary.pending_copem },
+              {
+                label: "Inativos",
+                value: home.police_officers.summary.inactive,
+              },
+              {
+                label: "De férias",
+                value: home.police_officers.summary.vacations_active,
+              },
+              {
+                label: "Afastados",
+                value: home.police_officers.summary.on_leave,
+              },
             ]}
           />
           <div className="grid gap-4 xl:grid-cols-2">
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Efetivo por setor</CardTitle>
-                <CardDescription>Leitura rápida da distribuição do efetivo na subunidade ativa.</CardDescription>
+                <CardDescription>
+                  Leitura rápida da distribuição do efetivo na subunidade ativa.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.police_officers.by_sector.slice(0, 6).map((item, index) => (
-                  <div key={`${item.sector?.id ?? index}-${item.sector?.name ?? "Sem setor"}`} className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                    <div>
-                      <p className="font-medium text-slate-900">{item.sector?.abbreviation || item.sector?.name || "Sem setor"}</p>
-                      <p className="text-sm text-slate-500">{formatNumber(item.active_police_officers)} ativos</p>
+                {home.police_officers.by_sector
+                  .slice(0, 6)
+                  .map((item, index) => (
+                    <div
+                      key={`${item.sector?.id ?? index}-${item.sector?.name ?? "Sem setor"}`}
+                      className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                    >
+                      <div>
+                        <p className="font-medium text-slate-900">
+                          {item.sector?.abbreviation ||
+                            item.sector?.name ||
+                            "Sem setor"}
+                        </p>
+                        <p className="text-sm text-slate-500">
+                          {formatNumber(item.active_police_officers)} ativos
+                        </p>
+                      </div>
+                      <Badge variant="outline">
+                        {formatNumber(item.total_police_officers)}
+                      </Badge>
                     </div>
-                    <Badge variant="outline">{formatNumber(item.total_police_officers)}</Badge>
-                  </div>
-                ))}
+                  ))}
               </CardContent>
             </Card>
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Distribuição por graduação</CardTitle>
-                <CardDescription>As graduações mais presentes no efetivo atual.</CardDescription>
+                <CardDescription>
+                  As graduações mais presentes no efetivo atual.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.police_officers.rank_distribution.slice(0, 6).map((item, index) => (
-                  <div key={`${item.rank?.id ?? index}-${item.rank?.name ?? "Sem graduação"}`} className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                    <div>
-                      <p className="font-medium text-slate-900">{item.rank?.abbreviation || item.rank?.name || "Sem graduação"}</p>
-                      <p className="text-sm text-slate-500">{formatNumber(item.active_police_officers)} ativos</p>
+                {home.police_officers.rank_distribution
+                  .slice(0, 6)
+                  .map((item, index) => (
+                    <div
+                      key={`${item.rank?.id ?? index}-${item.rank?.name ?? "Sem graduação"}`}
+                      className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                    >
+                      <div>
+                        <p className="font-medium text-slate-900">
+                          {item.rank?.abbreviation ||
+                            item.rank?.name ||
+                            "Sem graduação"}
+                        </p>
+                        <p className="text-sm text-slate-500">
+                          {formatNumber(item.active_police_officers)} ativos
+                        </p>
+                      </div>
+                      <Badge variant="outline">
+                        {formatNumber(item.total_police_officers)}
+                      </Badge>
                     </div>
-                    <Badge variant="outline">{formatNumber(item.total_police_officers)}</Badge>
-                  </div>
-                ))}
+                  ))}
               </CardContent>
             </Card>
           </div>
@@ -206,7 +281,10 @@ export function DashboardHomePage() {
             icon={CarFront}
             href="/vehicle-reports"
             items={[
-              { label: "Cadastrados", value: home.vehicles.summary.total_registered },
+              {
+                label: "Cadastrados",
+                value: home.vehicles.summary.total_registered,
+              },
               { label: "Disponíveis", value: home.vehicles.summary.available },
               { label: "Em uso", value: home.vehicles.summary.in_use },
               { label: "Manutenção", value: home.vehicles.summary.maintenance },
@@ -216,16 +294,29 @@ export function DashboardHomePage() {
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Status da frota</CardTitle>
-                <CardDescription>Combinação de status operacional com tipo de posse.</CardDescription>
+                <CardDescription>
+                  Combinação de status operacional com tipo de posse.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 {home.vehicles.fleet_status.slice(0, 6).map((item, index) => (
-                  <div key={`${item.status.operational_status}-${item.status.ownership_type}-${index}`} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <div
+                    key={`${item.status.operational_status}-${item.status.ownership_type}-${index}`}
+                    className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                  >
                     <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900">{item.status.operational_status_label}</p>
-                      <Badge variant="outline">{formatNumber(item.total_vehicles)}</Badge>
+                      <p className="font-medium text-slate-900">
+                        {item.status.operational_status_label}
+                      </p>
+                      <Badge variant="outline">
+                        {formatNumber(item.total_vehicles)}
+                      </Badge>
                     </div>
-                    <p className="mt-1 text-sm text-slate-500">{item.status.ownership_type_label} • {formatNumber(item.travel_ready_vehicles)} aptos para viagem</p>
+                    <p className="mt-1 text-sm text-slate-500">
+                      {item.status.ownership_type_label} •{" "}
+                      {formatNumber(item.travel_ready_vehicles)} aptos para
+                      viagem
+                    </p>
                   </div>
                 ))}
               </CardContent>
@@ -233,18 +324,33 @@ export function DashboardHomePage() {
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Composição da frota</CardTitle>
-                <CardDescription>Tipos e variantes mais presentes no contexto atual.</CardDescription>
+                <CardDescription>
+                  Tipos e variantes mais presentes no contexto atual.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.vehicles.fleet_composition.slice(0, 6).map((item, index) => (
-                  <div key={`${item.type?.id ?? index}-${item.variant?.id ?? index}`} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900">{item.type?.name || "Sem tipo"} • {item.variant?.name || "Sem variante"}</p>
-                      <Badge variant="outline">{formatNumber(item.total_vehicles)}</Badge>
+                {home.vehicles.fleet_composition
+                  .slice(0, 6)
+                  .map((item, index) => (
+                    <div
+                      key={`${item.type?.id ?? index}-${item.variant?.id ?? index}`}
+                      className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-medium text-slate-900">
+                          {item.type?.name || "Sem tipo"} •{" "}
+                          {item.variant?.name || "Sem variante"}
+                        </p>
+                        <Badge variant="outline">
+                          {formatNumber(item.total_vehicles)}
+                        </Badge>
+                      </div>
+                      <p className="mt-1 text-sm text-slate-500">
+                        {formatNumber(item.owned_vehicles)} próprios •{" "}
+                        {formatNumber(item.rented_vehicles)} locados
+                      </p>
                     </div>
-                    <p className="mt-1 text-sm text-slate-500">{formatNumber(item.owned_vehicles)} próprios • {formatNumber(item.rented_vehicles)} locados</p>
-                  </div>
-                ))}
+                  ))}
               </CardContent>
             </Card>
           </div>
@@ -263,26 +369,42 @@ export function DashboardHomePage() {
             icon={Crosshair}
             href="/armament-reports"
             items={[
-              { label: "Cadastrados", value: home.armaments.summary.total_registered },
+              {
+                label: "Cadastrados",
+                value: home.armaments.summary.total_registered,
+              },
               { label: "Unidades", value: home.armaments.summary.total_units },
-              { label: "Disponíveis", value: home.armaments.summary.available_units },
-              { label: "Ocorrências críticas", value: home.armaments.summary.critical_occurrences },
+              {
+                label: "Disponíveis",
+                value: home.armaments.summary.available_units,
+              },
+              {
+                label: "Ocorrências críticas",
+                value: home.armaments.summary.critical_occurrences,
+              },
             ]}
           />
           <div className="grid gap-4 xl:grid-cols-2">
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Disponibilidade</CardTitle>
-                <CardDescription>Distribuição das unidades por status operacional.</CardDescription>
+                <CardDescription>
+                  Distribuição das unidades por status operacional.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 {home.armaments.availability.slice(0, 6).map((item) => (
-                  <div key={item.status} className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <div
+                    key={item.status}
+                    className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                  >
                     <div className="flex items-center gap-3">
                       <span className="h-2.5 w-2.5 rounded-full bg-slate-300" />
                       <p className="font-medium text-slate-900">{item.label}</p>
                     </div>
-                    <Badge variant="outline">{formatNumber(item.total_units)}</Badge>
+                    <Badge variant="outline">
+                      {formatNumber(item.total_units)}
+                    </Badge>
                   </div>
                 ))}
               </CardContent>
@@ -290,16 +412,28 @@ export function DashboardHomePage() {
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Inventário</CardTitle>
-                <CardDescription>Armamentos com maior volume de unidades disponíveis.</CardDescription>
+                <CardDescription>
+                  Armamentos com maior volume de unidades disponíveis.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 {home.armaments.inventory.slice(0, 6).map((item, index) => (
-                  <div key={item.armament?.id ?? `inventory-${index}`} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <div
+                    key={item.armament?.id ?? `inventory-${index}`}
+                    className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                  >
                     <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900">{formatArmamentLabel(item.armament)}</p>
-                      <Badge variant="outline">{formatNumber(item.total_units)}</Badge>
+                      <p className="font-medium text-slate-900">
+                        {formatArmamentLabel(item.armament)}
+                      </p>
+                      <Badge variant="outline">
+                        {formatNumber(item.total_units)}
+                      </Badge>
                     </div>
-                    <p className="mt-1 text-sm text-slate-500">{formatNumber(item.available_units)} disponíveis • {formatNumber(item.loaned_units)} emprestadas</p>
+                    <p className="mt-1 text-sm text-slate-500">
+                      {formatNumber(item.available_units)} disponíveis •{" "}
+                      {formatNumber(item.loaned_units)} emprestadas
+                    </p>
                   </div>
                 ))}
               </CardContent>
@@ -307,23 +441,40 @@ export function DashboardHomePage() {
             <Card className="border-slate-200/70 bg-white/80 xl:col-span-2">
               <CardHeader>
                 <CardTitle>Armamentos perto de vencer</CardTitle>
-                <CardDescription>Unidades com vencimento próximo dentro da janela de 30 dias.</CardDescription>
+                <CardDescription>
+                  Unidades com vencimento próximo dentro da janela de 30 dias.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 {!home.armaments.expiring_units.length ? (
-                  <p className="text-sm text-slate-500">Nenhuma unidade próxima do vencimento no momento.</p>
+                  <p className="text-sm text-slate-500">
+                    Nenhuma unidade próxima do vencimento no momento.
+                  </p>
                 ) : (
                   home.armaments.expiring_units.slice(0, 8).map((item) => (
-                    <div key={item.id} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                    <div
+                      key={item.id}
+                      className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                    >
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="font-medium text-slate-900">{formatArmamentLabel(item.armament ?? {})}</p>
-                          <p className="text-sm text-slate-500">Série: {item.serial_number || "-"}</p>
+                          <p className="font-medium text-slate-900">
+                            {formatArmamentLabel(item.armament ?? {})}
+                          </p>
+                          <p className="text-sm text-slate-500">
+                            Série: {item.serial_number || "-"}
+                          </p>
                         </div>
-                        <Badge variant="warning">{item.days_until_expiration ?? 0} dias</Badge>
+                        <Badge variant="warning">
+                          {item.days_until_expiration ?? 0} dias
+                        </Badge>
                       </div>
                       <p className="mt-2 text-sm text-slate-600">
-                        Validade: {formatDateTime(item.expiration_date)} • Status: {item.status?.label || "-"} • Subunidade: {item.armament?.subunit?.abbreviation || item.armament?.subunit?.name || "-"}
+                        Validade: {formatDateTime(item.expiration_date)} •
+                        Status: {item.status?.label || "-"} • Subunidade:{" "}
+                        {item.armament?.subunit?.abbreviation ||
+                          item.armament?.subunit?.name ||
+                          "-"}
                       </p>
                     </div>
                   ))
@@ -346,26 +497,48 @@ export function DashboardHomePage() {
             icon={FileText}
             href="/contract-reports"
             items={[
-              { label: "Cadastrados", value: home.contracts.summary.total_registered },
+              {
+                label: "Cadastrados",
+                value: home.contracts.summary.total_registered,
+              },
               { label: "Ativos", value: home.contracts.summary.active },
-              { label: "A vencer", value: home.contracts.summary.expiring_30_days },
-              { label: "Alertas críticos", value: home.contracts.summary.critical_alerts },
+              {
+                label: "A vencer",
+                value: home.contracts.summary.expiring_30_days,
+              },
+              {
+                label: "Alertas críticos",
+                value: home.contracts.summary.critical_alerts,
+              },
             ]}
           />
           <div className="grid gap-4 xl:grid-cols-2">
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Status dos contratos</CardTitle>
-                <CardDescription>Distribuição contratual por status no contexto ativo.</CardDescription>
+                <CardDescription>
+                  Distribuição contratual por status no contexto ativo.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 {home.contracts.status_overview.slice(0, 6).map((item) => (
-                  <div key={item.status.value} className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <div
+                    key={item.status.value}
+                    className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                  >
                     <div>
-                      <p className="font-medium text-slate-900">{item.status.label}</p>
-                      <p className="text-sm text-slate-500">{formatCurrency(item.executed_amount)} executado</p>
+                      <p className="font-medium text-slate-900">
+                        {item.status.label}
+                      </p>
+                      <p className="text-sm text-slate-500">
+                        {formatCurrency(item.executed_amount)} executado
+                      </p>
                     </div>
-                    <Badge variant={getContractStatusBadgeVariant(item.status.value)}>{formatNumber(item.total_contracts)}</Badge>
+                    <Badge
+                      variant={getContractStatusBadgeVariant(item.status.value)}
+                    >
+                      {formatNumber(item.total_contracts)}
+                    </Badge>
                   </div>
                 ))}
               </CardContent>
@@ -373,33 +546,63 @@ export function DashboardHomePage() {
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Execução por empresa</CardTitle>
-                <CardDescription>Maiores volumes de execução financeira por empresa.</CardDescription>
+                <CardDescription>
+                  Maiores volumes de execução financeira por empresa.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.contracts.execution_overview.slice(0, 6).map((item, index) => (
-                  <div key={`${item.company.id ?? index}-${item.company.name}`} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900">{item.company.name}</p>
-                      <Badge variant="outline">{formatPercent(item.executed_percentage)}</Badge>
+                {home.contracts.execution_overview
+                  .slice(0, 6)
+                  .map((item, index) => (
+                    <div
+                      key={`${item.company.id ?? index}-${item.company.name}`}
+                      className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-medium text-slate-900">
+                          {item.company.name}
+                        </p>
+                        <Badge variant="outline">
+                          {formatPercent(item.executed_percentage)}
+                        </Badge>
+                      </div>
+                      <p className="mt-1 text-sm text-slate-500">
+                        {formatCurrency(item.executed_amount)} executado •{" "}
+                        {formatCurrency(item.remaining_amount)} restante
+                      </p>
                     </div>
-                    <p className="mt-1 text-sm text-slate-500">{formatCurrency(item.executed_amount)} executado • {formatCurrency(item.remaining_amount)} restante</p>
-                  </div>
-                ))}
+                  ))}
               </CardContent>
             </Card>
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Contratos a vencer</CardTitle>
-                <CardDescription>Contratos ativos com vencimento próximo.</CardDescription>
+                <CardDescription>
+                  Contratos ativos com vencimento próximo.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 {home.contracts.expiring_contracts.slice(0, 6).map((item) => (
-                  <div key={item.id} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <div
+                    key={item.id}
+                    className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                  >
                     <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900">{item.contract_number}</p>
-                      <Badge variant={getContractStatusBadgeVariant(item.status?.value ?? "closed")}>{item.days_until_end ?? 0} dias</Badge>
+                      <p className="font-medium text-slate-900">
+                        {item.contract_number}
+                      </p>
+                      <Badge
+                        variant={getContractStatusBadgeVariant(
+                          item.status?.value ?? "closed",
+                        )}
+                      >
+                        {item.days_until_end ?? 0} dias
+                      </Badge>
                     </div>
-                    <p className="mt-1 text-sm text-slate-500">{item.company || "Sem empresa"} • {formatPercent(item.executed_percentage)}</p>
+                    <p className="mt-1 text-sm text-slate-500">
+                      {item.company || "Sem empresa"} •{" "}
+                      {formatPercent(item.executed_percentage)}
+                    </p>
                   </div>
                 ))}
               </CardContent>
@@ -407,17 +610,34 @@ export function DashboardHomePage() {
             <Card className="border-slate-200/70 bg-white/80">
               <CardHeader>
                 <CardTitle>Alertas críticos</CardTitle>
-                <CardDescription>Alertas contratuais mais sensíveis para acompanhamento imediato.</CardDescription>
+                <CardDescription>
+                  Alertas contratuais mais sensíveis para acompanhamento
+                  imediato.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 {home.contracts.critical_alerts.slice(0, 6).map((item) => (
-                  <div key={item.id} className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <div
+                    key={item.id}
+                    className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                  >
                     <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900">{item.contract?.contract_number || "Contrato"}</p>
-                      <Badge variant={getContractAlertBadgeVariant(item.type?.color)}>{item.type?.label || "Alerta"}</Badge>
+                      <p className="font-medium text-slate-900">
+                        {item.contract?.contract_number || "Contrato"}
+                      </p>
+                      <Badge
+                        variant={getContractAlertBadgeVariant(item.type?.color)}
+                      >
+                        {item.type?.label || "Alerta"}
+                      </Badge>
                     </div>
-                    <p className="mt-1 text-sm text-slate-500">{item.contract?.company || "Sem empresa"} • {formatDateTime(item.alert_date)}</p>
-                    <p className="mt-2 text-sm text-slate-600">{item.message}</p>
+                    <p className="mt-1 text-sm text-slate-500">
+                      {item.contract?.company || "Sem empresa"} •{" "}
+                      {formatDateTime(item.alert_date)}
+                    </p>
+                    <p className="mt-2 text-sm text-slate-600">
+                      {item.message}
+                    </p>
                   </div>
                 ))}
               </CardContent>
@@ -429,7 +649,9 @@ export function DashboardHomePage() {
   ].filter((section) => section.visible);
 
   const visibleTabs = tabs;
-  const currentTab = visibleTabs.some((tab) => tab.key === activeTab) ? activeTab : (visibleTabs[0]?.key ?? "");
+  const currentTab = visibleTabs.some((tab) => tab.key === activeTab)
+    ? activeTab
+    : (visibleTabs[0]?.key ?? "");
 
   return (
     <div className="space-y-6">
@@ -439,7 +661,10 @@ export function DashboardHomePage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Nenhum painel disponível</CardTitle>
-            <CardDescription>Seu perfil não possui acesso às frentes retornadas pela home para a subunidade ativa.</CardDescription>
+            <CardDescription>
+              Seu perfil não possui acesso às frentes retornadas pela home para
+              a subunidade ativa.
+            </CardDescription>
           </CardHeader>
         </Card>
       ) : (

@@ -1,5 +1,6 @@
 import type { PaginatedMeta } from "@/types/brand.type";
 import type { SubunitItem } from "@/types/subunit.type";
+import type { UserListItem } from "@/types/user.type";
 
 export type NoticeType = "info" | "warning" | "error" | "success";
 export type NoticePriority = 0 | 1 | 2;
@@ -76,6 +77,43 @@ export interface NoticeTargetPayload {
   target_id: number | null;
 }
 
+export interface NoticeReadItem {
+  id: number;
+  user: UserListItem;
+  read_at: string;
+  acknowledged_at: string | null;
+  has_acknowledged: boolean;
+}
+
+export interface NoticeReadFilters {
+  page?: number;
+  per_page?: number;
+  search?: string;
+  acknowledged?: boolean | null;
+}
+
+export interface NoticeTargetWithData {
+  id: number;
+  target_type: NoticeTargetType;
+  target_id: number | null;
+  target_data: {
+    id?: number;
+    name: string;
+    email?: string;
+    abbreviation?: string;
+    slug?: string;
+  } | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface NoticeTargetFilters {
+  page?: number;
+  per_page?: number;
+  search?: string;
+  target_type?: NoticeTargetType;
+}
+
 export interface CreateNoticeDTO {
   title: string;
   content: string;
@@ -119,6 +157,9 @@ export interface PaginatedResponse<T> {
   };
   meta: PaginatedMeta;
 }
+
+export type NoticeReadResponse = PaginatedResponse<NoticeReadItem>;
+export type NoticeTargetResponse = PaginatedResponse<NoticeTargetWithData>;
 
 export const noticeTypeOptions = [
   { value: "info", label: "Informativo" },
