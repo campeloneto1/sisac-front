@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { CalendarDays, FileText, ShieldPlus, Tag } from "lucide-react";
+import { CalendarDays, FileText, Layers, ShieldPlus, Tag } from "lucide-react";
 
 import { useArmamentType } from "@/hooks/use-armament-types";
 import { usePermissions } from "@/hooks/use-permissions";
@@ -105,6 +105,31 @@ export function ArmamentTypeShowPage() {
                   Slug
                 </p>
                 <p className="text-sm text-slate-700">{armamentType.slug}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+              <Layers className="h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                  Tipo de Controle
+                </p>
+                <div className="mt-1 flex items-center gap-2">
+                  <span
+                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                      armamentType.control_type === "unit"
+                        ? "bg-blue-100 text-blue-800"
+                        : "bg-amber-100 text-amber-800"
+                    }`}
+                  >
+                    {armamentType.control_type_label}
+                  </span>
+                  <span className="text-xs text-slate-500">
+                    {armamentType.control_type === "unit"
+                      ? "(Controle individual por unidade)"
+                      : "(Controle por lote/quantidade)"}
+                  </span>
+                </div>
               </div>
             </div>
 

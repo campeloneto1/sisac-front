@@ -299,6 +299,10 @@ export function PoliceOfficerSelect({ value, onChange }: { value: string; onChan
   );
 }
 
+export const armamentControlTypeReportOptions = [
+  { value: "unit", label: "Unidade" },
+  { value: "batch", label: "Lote" },
+];
 export const armamentLoanKindReportOptions = [
   { value: "temporary", label: "Temporário" },
   { value: "cautela", label: "Cautela" },
@@ -341,6 +345,9 @@ export const armamentOccurrenceStatusReportOptions = [
   { value: "closed", label: "Encerrado" },
 ];
 
+export function ControlTypeSelect(props: { value: string; onChange: (value: string) => void }) {
+  return <GenericSelect value={props.value} placeholder="Tipo de controle" allLabel="Todos os controles" options={armamentControlTypeReportOptions} onChange={props.onChange} />;
+}
 export function LoanKindSelect(props: { value: string; onChange: (value: string) => void }) {
   return <GenericSelect value={props.value} placeholder="Tipo" allLabel="Todos os tipos" options={armamentLoanKindReportOptions} onChange={props.onChange} />;
 }

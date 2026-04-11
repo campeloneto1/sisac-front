@@ -30,6 +30,7 @@ import {
   ArmamentSizeSelect,
   ArmamentTypeSelect,
   ClearFiltersButton,
+  ControlTypeSelect,
   DateField,
   EmptyCard,
   ErrorCard,
@@ -60,6 +61,7 @@ function useBaseFilters() {
   const [search, setSearch] = useState("");
   const [armamentId, setArmamentId] = useState("all");
   const [armamentTypeId, setArmamentTypeId] = useState("all");
+  const [controlType, setControlType] = useState("all");
   const [caliberId, setCaliberId] = useState("all");
   const [sizeId, setSizeId] = useState("all");
 
@@ -68,21 +70,24 @@ function useBaseFilters() {
       search: search || undefined,
       armament_id: armamentId !== "all" ? Number(armamentId) : undefined,
       armament_type_id: armamentTypeId !== "all" ? Number(armamentTypeId) : undefined,
+      control_type: controlType !== "all" ? controlType as "unit" | "batch" : undefined,
       armament_caliber_id: caliberId !== "all" ? Number(caliberId) : undefined,
       armament_size_id: sizeId !== "all" ? Number(sizeId) : undefined,
     }),
-    [armamentId, armamentTypeId, caliberId, search, sizeId],
+    [armamentId, armamentTypeId, controlType, caliberId, search, sizeId],
   );
 
   return {
     search,
     armamentId,
     armamentTypeId,
+    controlType,
     caliberId,
     sizeId,
     setSearch,
     setArmamentId,
     setArmamentTypeId,
+    setControlType,
     setCaliberId,
     setSizeId,
     filters,
@@ -90,6 +95,7 @@ function useBaseFilters() {
       setSearch("");
       setArmamentId("all");
       setArmamentTypeId("all");
+      setControlType("all");
       setCaliberId("all");
       setSizeId("all");
     },
@@ -108,6 +114,7 @@ export function ArmamentInventoryReportPage() {
           <SearchField value={state.search} onChange={state.setSearch} />
           <ArmamentSelect value={state.armamentId} onChange={state.setArmamentId} />
           <ArmamentTypeSelect value={state.armamentTypeId} onChange={state.setArmamentTypeId} />
+          <ControlTypeSelect value={state.controlType} onChange={state.setControlType} />
           <ArmamentCaliberSelect value={state.caliberId} onChange={state.setCaliberId} />
           <ArmamentSizeSelect value={state.sizeId} onChange={state.setSizeId} />
           <ClearFiltersButton onClick={state.clear} />
@@ -144,6 +151,7 @@ export function ArmamentAvailabilityReportPage() {
           <SearchField value={state.search} onChange={state.setSearch} />
           <ArmamentSelect value={state.armamentId} onChange={state.setArmamentId} />
           <ArmamentTypeSelect value={state.armamentTypeId} onChange={state.setArmamentTypeId} />
+          <ControlTypeSelect value={state.controlType} onChange={state.setControlType} />
           <ArmamentCaliberSelect value={state.caliberId} onChange={state.setCaliberId} />
           <ArmamentSizeSelect value={state.sizeId} onChange={state.setSizeId} />
           <ClearFiltersButton onClick={state.clear} />
@@ -188,6 +196,7 @@ function UnitStatusPage({ mode, title, description }: { mode: "available" | "exp
           <SearchField value={state.search} onChange={(value) => { state.setSearch(value); setPage(1); }} />
           <ArmamentSelect value={state.armamentId} onChange={(value) => { state.setArmamentId(value); setPage(1); }} />
           <ArmamentTypeSelect value={state.armamentTypeId} onChange={(value) => { state.setArmamentTypeId(value); setPage(1); }} />
+          <ControlTypeSelect value={state.controlType} onChange={(value) => { state.setControlType(value); setPage(1); }} />
           <ArmamentCaliberSelect value={state.caliberId} onChange={(value) => { state.setCaliberId(value); setPage(1); }} />
           <ArmamentSizeSelect value={state.sizeId} onChange={(value) => { state.setSizeId(value); setPage(1); }} />
           <UnitStatusSelect value={unitStatus} onChange={(value) => { setUnitStatus(value); setPage(1); }} />
@@ -233,6 +242,7 @@ function BatchStatusPage({ mode, title, description }: { mode: "available" | "ex
           <SearchField value={state.search} onChange={(value) => { state.setSearch(value); setPage(1); }} />
           <ArmamentSelect value={state.armamentId} onChange={(value) => { state.setArmamentId(value); setPage(1); }} />
           <ArmamentTypeSelect value={state.armamentTypeId} onChange={(value) => { state.setArmamentTypeId(value); setPage(1); }} />
+          <ControlTypeSelect value={state.controlType} onChange={(value) => { state.setControlType(value); setPage(1); }} />
           <ArmamentCaliberSelect value={state.caliberId} onChange={(value) => { state.setCaliberId(value); setPage(1); }} />
           <ArmamentSizeSelect value={state.sizeId} onChange={(value) => { state.setSizeId(value); setPage(1); }} />
           {mode === "expiring" ? <InputDays value={days} onChange={(value) => { setDays(value); setPage(1); }} /> : null}

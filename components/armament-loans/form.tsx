@@ -27,7 +27,7 @@ import type {
   UpdateArmamentLoanDTO,
 } from "@/types/armament-loan.type";
 import { armamentLoanKindOptions } from "@/types/armament-loan.type";
-import type { ArmamentItem } from "@/types/armament.type";
+import type { ArmamentItem, ArmamentResponse } from "@/types/armament.type";
 import { ArmamentLoanConfirmationDialog } from "@/components/armament-loans/confirmation-dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -198,6 +198,7 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
     label: string;
     email?: string | null;
   } | null>(null);
+  const [selectedArmaments, setSelectedArmaments] = useState<Record<number, ArmamentItem>>({});
 
   const {
     control,
@@ -618,12 +619,32 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                             <Label>Armamento</Label>
                             <AsyncSearchableSelect
                               value={item?.armament_id === "none" ? undefined : item?.armament_id}
-                              onValueChange={(value) =>
+                              onValueChange={async (value) => {
                                 setValue(`items.${index}.armament_id`, value, {
                                   shouldDirty: true,
                                   shouldValidate: true,
-                                })
-                              }
+                                });
+
+                                // Busca o armamento para obter o control_type e auto-selecionar o modo
+                                try {
+                                  const response: ArmamentResponse = await armamentsService.show(Number(value));
+                                  const armamentData = response.data;
+                                  setSelectedArmaments((prev) => ({ ...prev, [index]: armamentData }));
+
+                                  // Auto-seleciona o item_mode baseado no control_type
+                                  const controlType = armamentData.type?.control_type;
+                                  if (controlType === "unit") {
+                                    setValue(`items.${index}.item_mode`, "unit", { shouldDirty: true });
+                                    setValue(`items.${index}.armament_batch_id`, "");
+                                    setValue(`items.${index}.quantity`, 1);
+                                  } else if (controlType === "batch") {
+                                    setValue(`items.${index}.item_mode`, "batch", { shouldDirty: true });
+                                    setValue(`items.${index}.armament_unit_id`, "");
+                                  }
+                                } catch {
+                                  // Ignora erros de busca
+                                }
+                              }}
                               queryKey={["armament-loan", "armaments", index]}
                               loadPage={({ page, search }) =>
                                 armamentsService.index({
@@ -657,33 +678,49 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
 
                           <div className="space-y-2">
                             <Label>Modo do item</Label>
-                            <Select
-                              value={item?.item_mode ?? "unit"}
-                              onValueChange={(value) => {
-                                setValue(
-                                  `items.${index}.item_mode`,
-                                  value as "unit" | "batch",
-                                  {
-                                    shouldDirty: true,
-                                    shouldValidate: true,
-                                  },
-                                );
-                                if (value === "unit") {
-                                  setValue(`items.${index}.armament_batch_id`, "");
-                                  setValue(`items.${index}.quantity`, 1);
-                                } else {
-                                  setValue(`items.${index}.armament_unit_id`, "");
-                                }
-                              }}
-                            >
-                              <SelectTrigger>
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="unit">Unidade</SelectItem>
-                                <SelectItem value="batch">Lote</SelectItem>
-                              </SelectContent>
-                            </Select>
+                            {(() => {
+                              const selectedArmament = selectedArmaments[index];
+                              const controlType = selectedArmament?.type?.control_type;
+                              const isControlled = controlType === "unit" || controlType === "batch";
+
+                              return (
+                                <>
+                                  <Select
+                                    value={item?.item_mode ?? "unit"}
+                                    disabled={isControlled}
+                                    onValueChange={(value) => {
+                                      setValue(
+                                        `items.${index}.item_mode`,
+                                        value as "unit" | "batch",
+                                        {
+                                          shouldDirty: true,
+                                          shouldValidate: true,
+                                        },
+                                      );
+                                      if (value === "unit") {
+                                        setValue(`items.${index}.armament_batch_id`, "");
+                                        setValue(`items.${index}.quantity`, 1);
+                                      } else {
+                                        setValue(`items.${index}.armament_unit_id`, "");
+                                      }
+                                    }}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="unit">Unidade</SelectItem>
+                                      <SelectItem value="batch">Lote</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                  {isControlled ? (
+                                    <p className="text-xs text-slate-500">
+                                      Modo definido pelo tipo de armamento ({controlType === "unit" ? "Unidade" : "Lote"})
+                                    </p>
+                                  ) : null}
+                                </>
+                              );
+                            })()}
                           </div>
 
                           <div className="space-y-2">

@@ -7,6 +7,7 @@ export interface ArmamentReportFilters {
   search?: string;
   armament_id?: number;
   armament_type_id?: number;
+  control_type?: "unit" | "batch";
   variant_id?: number;
   armament_caliber_id?: number;
   armament_size_id?: number;
