@@ -10,7 +10,22 @@ import type {
   UpdateNoticeDTO,
 } from "@/types/notice.type";
 
+export interface PublicNoticeFilters {
+  page?: number;
+  per_page?: number;
+  search?: string;
+  type?: string;
+}
+
 export const noticesService = {
+  async publicNotices(filters: PublicNoticeFilters = {}): Promise<PaginatedResponse<NoticeItem>> {
+    const { data } = await api.get<PaginatedResponse<NoticeItem>>("/public-notices", {
+      params: filters,
+      skipSubunit: true,
+    });
+
+    return data;
+  },
   async index(filters: NoticeFilters = {}): Promise<PaginatedResponse<NoticeItem>> {
     const { data } = await api.get<PaginatedResponse<NoticeItem>>("/notices", {
       params: filters,

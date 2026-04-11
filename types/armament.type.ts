@@ -17,6 +17,11 @@ export interface ArmamentItem {
   armament_size_id?: number | null;
   gender_id?: number | null;
   specifications?: ArmamentSpecifications | null;
+  // Contadores de disponibilidade (condicional baseado no control_type)
+  total_units_count?: number | null;
+  available_units_count?: number | null;
+  total_batches_quantity?: number | null;
+  available_batches_quantity?: number | null;
   subunit?: Pick<SubunitItem, "id" | "name" | "abbreviation"> | null;
   type?: Pick<ArmamentTypeItem, "id" | "name" | "slug" | "control_type"> | null;
   variant?: VariantItem | null;

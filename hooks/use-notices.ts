@@ -2,8 +2,18 @@
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-import { noticesService } from "@/services/notices/service";
+import { noticesService, type PublicNoticeFilters } from "@/services/notices/service";
 import type { MyNoticeFilters, NoticeFilters } from "@/types/notice.type";
+
+export function usePublicNotices(filters: PublicNoticeFilters = {}, enabled = true) {
+  return useQuery({
+    queryKey: ["public-notices", filters],
+    queryFn: () => noticesService.publicNotices(filters),
+    enabled,
+    placeholderData: keepPreviousData,
+    staleTime: 60_000,
+  });
+}
 
 export function useNotices(filters: NoticeFilters, enabled = true) {
   return useQuery({

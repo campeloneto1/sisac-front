@@ -5,13 +5,15 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, LockKeyhole, ShieldCheck } from "lucide-react";
+import { AlertTriangle, ArrowRight, Bell, CheckCircle, Info, LockKeyhole, ShieldCheck, XCircle } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
+import { usePublicNotices } from "@/hooks/use-notices";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import type { NoticeType } from "@/types/notice.type";
 
 const loginSchema = z.object({
   email: z.string().email("Informe um e-mail válido."),
@@ -21,9 +23,20 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
+const noticeTypeConfig: Record<NoticeType, { icon: typeof Info; color: string }> = {
+  info: { icon: Info, color: "text-blue-400" },
+  warning: { icon: AlertTriangle, color: "text-amber-400" },
+  error: { icon: XCircle, color: "text-red-400" },
+  success: { icon: CheckCircle, color: "text-emerald-400" },
+};
+
 export function LoginForm() {
   const { login } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const publicNoticesQuery = usePublicNotices({ per_page: 5 });
+  const publicNotices = publicNoticesQuery.data?.data ?? [];
+  const hasPublicNotices = publicNotices.length > 0;
+
   const {
     register,
     handleSubmit,
@@ -55,27 +68,59 @@ export function LoginForm() {
             <span className="inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-slate-200">
               SISAC Platform
             </span>
-            <div className="space-y-4">
-              <h1 className="font-display text-5xl leading-[1.05]">
-                Controle institucional com uma base moderna e preparada para escalar.
-              </h1>
-              <p className="max-w-xl text-base text-slate-300">
-                A area publica de login e a area autenticada já nascem separadas para acomodar RBAC, contexto
-                de subunidade e os proximos CRUDs do sistema.
-              </p>
-            </div>
+            {hasPublicNotices ? (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Bell className="h-6 w-6 text-slate-300" />
+                  <h1 className="font-display text-3xl leading-[1.05]">Avisos</h1>
+                </div>
+                <div className="space-y-3">
+                  {publicNotices.map((notice) => {
+                    const config = noticeTypeConfig[notice.type];
+                    const Icon = config.icon;
+
+                    return (
+                      <div
+                        key={notice.id}
+                        className="rounded-2xl border border-white/10 bg-white/5 p-4"
+                      >
+                        <div className="flex items-start gap-3">
+                          <Icon className={`mt-0.5 h-5 w-5 shrink-0 ${config.color}`} />
+                          <div className="min-w-0 flex-1">
+                            <p className="font-medium text-slate-100">{notice.title}</p>
+                            <p className="mt-1 line-clamp-2 text-sm text-slate-300">{notice.content}</p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <h1 className="font-display text-5xl leading-[1.05]">
+                  Controle institucional com uma base moderna e preparada para escalar.
+                </h1>
+                <p className="max-w-xl text-base text-slate-300">
+                  A area publica de login e a area autenticada já nascem separadas para acomodar RBAC, contexto
+                  de subunidade e os proximos CRUDs do sistema.
+                </p>
+              </div>
+            )}
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-              <ShieldCheck className="h-5 w-5 text-orange-300" />
-              <p className="mt-4 text-sm text-slate-200">Permissões reativas prontas para integrar com Policies.</p>
+          {!hasPublicNotices && (
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                <ShieldCheck className="h-5 w-5 text-orange-300" />
+                <p className="mt-4 text-sm text-slate-200">Permissões reativas prontas para integrar com Policies.</p>
+              </div>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                <LockKeyhole className="h-5 w-5 text-teal-300" />
+                <p className="mt-4 text-sm text-slate-200">Fluxo de autenticacao inicial pronto para evoluir ao backend.</p>
+              </div>
             </div>
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-              <LockKeyhole className="h-5 w-5 text-teal-300" />
-              <p className="mt-4 text-sm text-slate-200">Fluxo de autenticacao inicial pronto para evoluir ao backend.</p>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 

@@ -210,7 +210,8 @@ export function NoticeForm({ mode, notice }: NoticeFormProps) {
 
   const watchedValues = useWatch({ control });
   const isPending = createMutation.isPending || updateMutation.isPending;
-  const customModeEnabled = watchedValues.target_mode === "custom";
+  const isPublicVisibility = watchedValues.visibility === "public";
+  const customModeEnabled = watchedValues.target_mode === "custom" && !isPublicVisibility;
   const activeSubunitId = activeSubunit ? Number(activeSubunit.id) : null;
   const filteredUsers = (usersQuery.data?.data ?? []).filter((user) =>
     user.subunits?.some((subunit) => Number(subunit.id) === activeSubunitId),
@@ -341,7 +342,18 @@ export function NoticeForm({ mode, notice }: NoticeFormProps) {
 
             <div className="space-y-2">
               <Label>Visibilidade</Label>
-              <Select value={watchedValues.visibility} onValueChange={(value) => setValue("visibility", value as NoticeFormValues["visibility"], { shouldValidate: true })}>
+              <Select
+                value={watchedValues.visibility}
+                onValueChange={(value) => {
+                  setValue("visibility", value as NoticeFormValues["visibility"], { shouldValidate: true });
+                  if (value === "public") {
+                    setValue("target_mode", "general", { shouldValidate: true });
+                    setValue("sector_ids", [], { shouldValidate: true });
+                    setValue("user_ids", [], { shouldValidate: true });
+                    setValue("role_ids", [], { shouldValidate: true });
+                  }
+                }}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione a visibilidade" />
                 </SelectTrigger>
@@ -353,6 +365,11 @@ export function NoticeForm({ mode, notice }: NoticeFormProps) {
                   ))}
                 </SelectContent>
               </Select>
+              <p className="text-xs text-slate-500">
+                {watchedValues.visibility === "public"
+                  ? "Avisos públicos aparecem na tela de login para todos os visitantes."
+                  : "Avisos autenticados são visíveis apenas para usuários logados."}
+              </p>
               {errors.visibility ? <p className="text-sm text-destructive">{errors.visibility.message}</p> : null}
             </div>
 
@@ -405,66 +422,74 @@ export function NoticeForm({ mode, notice }: NoticeFormProps) {
               <p className="text-sm text-slate-500">Defina se o aviso é geral, para todos explicitamente ou segmentado por setores, usuários e perfis.</p>
             </div>
 
-            <div className="grid gap-3 md:grid-cols-3">
-              {[
-                {
-                  value: "general",
-                  title: "Geral da subunidade",
-                  description: "Não envia targets. O aviso vale para a subunidade ativa inteira.",
-                },
-                {
-                  value: "all",
-                  title: "Todos explicitamente",
-                  description: "Envia um target `all`, deixando a abrangência explícita na API.",
-                },
-                {
-                  value: "custom",
-                  title: "Segmentado",
-                  description: "Permite escolher setores, usuários e perfis específicos.",
-                },
-              ].map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={`rounded-2xl border p-4 text-left transition ${watchedValues.target_mode === option.value ? "border-primary bg-primary/5" : "border-slate-200/70 bg-slate-50 hover:border-slate-300"}`}
-                  onClick={() => setValue("target_mode", option.value as NoticeFormValues["target_mode"], { shouldValidate: true })}
-                >
-                  <p className="font-medium text-slate-900">{option.title}</p>
-                  <p className="mt-1 text-sm text-slate-500">{option.description}</p>
-                </button>
-              ))}
-            </div>
+            {isPublicVisibility ? (
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                Avisos públicos são exibidos na tela de login e não podem ser segmentados. Para segmentar, altere a visibilidade para &quot;Autenticado&quot;.
+              </div>
+            ) : (
+              <>
+                <div className="grid gap-3 md:grid-cols-3">
+                  {[
+                    {
+                      value: "general",
+                      title: "Geral da subunidade",
+                      description: "Não envia targets. O aviso vale para a subunidade ativa inteira.",
+                    },
+                    {
+                      value: "all",
+                      title: "Todos explicitamente",
+                      description: "Envia um target `all`, deixando a abrangência explícita na API.",
+                    },
+                    {
+                      value: "custom",
+                      title: "Segmentado",
+                      description: "Permite escolher setores, usuários e perfis específicos.",
+                    },
+                  ].map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      className={`rounded-2xl border p-4 text-left transition ${watchedValues.target_mode === option.value ? "border-primary bg-primary/5" : "border-slate-200/70 bg-slate-50 hover:border-slate-300"}`}
+                      onClick={() => setValue("target_mode", option.value as NoticeFormValues["target_mode"], { shouldValidate: true })}
+                    >
+                      <p className="font-medium text-slate-900">{option.title}</p>
+                      <p className="mt-1 text-sm text-slate-500">{option.description}</p>
+                    </button>
+                  ))}
+                </div>
 
-            {errors.target_mode ? <p className="text-sm text-destructive">{errors.target_mode.message}</p> : null}
+                {errors.target_mode ? <p className="text-sm text-destructive">{errors.target_mode.message}</p> : null}
 
-            <div className="grid gap-4">
-              <SelectionGroup
-                title="Setores"
-                description="Setores da subunidade ativa que receberão o aviso."
-                options={sectorOptions}
-                selectedValues={watchedValues.sector_ids}
-                disabled={!customModeEnabled}
-                onToggle={(value, checked) => setValue("sector_ids", toggleSelection(watchedValues.sector_ids, value, checked), { shouldValidate: true })}
-              />
+                <div className="grid gap-4">
+                  <SelectionGroup
+                    title="Setores"
+                    description="Setores da subunidade ativa que receberão o aviso."
+                    options={sectorOptions}
+                    selectedValues={watchedValues.sector_ids}
+                    disabled={!customModeEnabled}
+                    onToggle={(value, checked) => setValue("sector_ids", toggleSelection(watchedValues.sector_ids, value, checked), { shouldValidate: true })}
+                  />
 
-              <SelectionGroup
-                title="Usuários"
-                description="Usuários vinculados à subunidade ativa que devem receber o aviso."
-                options={userOptions}
-                selectedValues={watchedValues.user_ids}
-                disabled={!customModeEnabled}
-                onToggle={(value, checked) => setValue("user_ids", toggleSelection(watchedValues.user_ids, value, checked), { shouldValidate: true })}
-              />
+                  <SelectionGroup
+                    title="Usuários"
+                    description="Usuários vinculados à subunidade ativa que devem receber o aviso."
+                    options={userOptions}
+                    selectedValues={watchedValues.user_ids}
+                    disabled={!customModeEnabled}
+                    onToggle={(value, checked) => setValue("user_ids", toggleSelection(watchedValues.user_ids, value, checked), { shouldValidate: true })}
+                  />
 
-              <SelectionGroup
-                title="Perfis"
-                description="Perfis globais do sistema para segmentação por RBAC."
-                options={roleOptions}
-                selectedValues={watchedValues.role_ids}
-                disabled={!customModeEnabled}
-                onToggle={(value, checked) => setValue("role_ids", toggleSelection(watchedValues.role_ids, value, checked), { shouldValidate: true })}
-              />
-            </div>
+                  <SelectionGroup
+                    title="Perfis"
+                    description="Perfis globais do sistema para segmentação por RBAC."
+                    options={roleOptions}
+                    selectedValues={watchedValues.role_ids}
+                    disabled={!customModeEnabled}
+                    onToggle={(value, checked) => setValue("role_ids", toggleSelection(watchedValues.role_ids, value, checked), { shouldValidate: true })}
+                  />
+                </div>
+              </>
+            )}
           </div>
 
           <div className="flex justify-end gap-3">
