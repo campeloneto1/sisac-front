@@ -17,6 +17,8 @@ import {
   formatPoliceOfficerOptionLabel,
 } from "@/lib/option-labels";
 import { armamentsService } from "@/services/armaments/service";
+import { armamentUnitsService } from "@/services/armament-units/service";
+import { armamentBatchesService } from "@/services/armament-batches/service";
 import { policeOfficersService } from "@/services/police-officers/service";
 import { usersService } from "@/services/users/service";
 import type {
@@ -533,13 +535,6 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                   </Button>
                 </div>
 
-                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-                  Ainda não existe endpoint no backend para listar unidades e
-                  lotes disponíveis no formulario. Por isso, nesta primeira
-                  versao o preenchimento usa o ID da unidade ou do lote, e a API
-                  confirma disponibilidade, vencimento e subunidade.
-                </div>
-
                 <div className="space-y-4">
                   {fields.map((field, index) => {
                     const item = watchedItems?.[index];
@@ -701,16 +696,43 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
 
                           {item?.item_mode === "unit" ? (
                             <div className="space-y-2 md:col-span-2">
-                              <Label>ID da unidade</Label>
-                              <Input
-                                inputMode="numeric"
-                                placeholder="Ex.: 12"
-                                {...register(`items.${index}.armament_unit_id`)}
+                              <Label>Unidade</Label>
+                              <AsyncSearchableSelect
+                                value={item?.armament_unit_id || undefined}
+                                onValueChange={(value) =>
+                                  setValue(`items.${index}.armament_unit_id`, value, {
+                                    shouldDirty: true,
+                                    shouldValidate: true,
+                                  })
+                                }
+                                queryKey={["armament-units", item?.armament_id, index]}
+                                loadPage={({ page, search }) => {
+                                  if (!item?.armament_id || item.armament_id === "none") {
+                                    return Promise.resolve({ data: [], meta: { last_page: 1, current_page: 1, total: 0, from: 0, to: 0, per_page: 20, path: "", links: [] }, links: {} });
+                                  }
+                                  return armamentUnitsService.index(Number(item.armament_id), {
+                                    page,
+                                    per_page: 20,
+                                    search: search || undefined,
+                                    status: "available",
+                                  });
+                                }}
+                                mapOption={(unit) => ({
+                                  value: String(unit.id),
+                                  label: unit.serial_number
+                                    ? `${unit.serial_number} (${unit.status?.name || ""})`
+                                    : `Unidade #${unit.id}`,
+                                })}
+                                selectedOption={null}
+                                placeholder="Selecione a unidade"
+                                searchPlaceholder="Buscar por número de série"
+                                emptyMessage={
+                                  !item?.armament_id || item.armament_id === "none"
+                                    ? "Selecione um armamento primeiro"
+                                    : "Nenhuma unidade disponível"
+                                }
+                                disabled={!item?.armament_id || item.armament_id === "none"}
                               />
-                              <p className="text-xs text-slate-500">
-                                A API bloqueia unidade já emprestada, vencida ou
-                                vinculada a outro armamento.
-                              </p>
                               {errors.items?.[index]?.armament_unit_id ? (
                                 <p className="text-sm text-destructive">
                                   {errors.items[index]?.armament_unit_id?.message}
@@ -719,16 +741,42 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                             </div>
                           ) : (
                             <div className="space-y-2 md:col-span-2">
-                              <Label>ID do lote</Label>
-                              <Input
-                                inputMode="numeric"
-                                placeholder="Ex.: 34"
-                                {...register(`items.${index}.armament_batch_id`)}
+                              <Label>Lote</Label>
+                              <AsyncSearchableSelect
+                                value={item?.armament_batch_id || undefined}
+                                onValueChange={(value) =>
+                                  setValue(`items.${index}.armament_batch_id`, value, {
+                                    shouldDirty: true,
+                                    shouldValidate: true,
+                                  })
+                                }
+                                queryKey={["armament-batches", item?.armament_id, index]}
+                                loadPage={({ page, search }) => {
+                                  if (!item?.armament_id || item.armament_id === "none") {
+                                    return Promise.resolve({ data: [], meta: { last_page: 1, current_page: 1, total: 0, from: 0, to: 0, per_page: 20, path: "", links: [] }, links: {} });
+                                  }
+                                  return armamentBatchesService.index({
+                                    page,
+                                    per_page: 20,
+                                    search: search || undefined,
+                                    armament_id: Number(item.armament_id),
+                                    only_available: true,
+                                  });
+                                }}
+                                mapOption={(batch) => ({
+                                  value: String(batch.id),
+                                  label: `${batch.batch_number} - Disponível: ${batch.available_quantity}/${batch.quantity}`,
+                                })}
+                                selectedOption={null}
+                                placeholder="Selecione o lote"
+                                searchPlaceholder="Buscar por número do lote"
+                                emptyMessage={
+                                  !item?.armament_id || item.armament_id === "none"
+                                    ? "Selecione um armamento primeiro"
+                                    : "Nenhum lote disponível"
+                                }
+                                disabled={!item?.armament_id || item.armament_id === "none"}
                               />
-                              <p className="text-xs text-slate-500">
-                                Para lotes, o backend verifica saldo disponível
-                                antes de confirmar o empréstimo.
-                              </p>
                               {errors.items?.[index]?.armament_batch_id ? (
                                 <p className="text-sm text-destructive">
                                   {errors.items[index]?.armament_batch_id?.message}

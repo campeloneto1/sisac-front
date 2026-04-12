@@ -11,6 +11,7 @@ import {
   getArmamentLoanKindVariant,
   getArmamentLoanStatusVariant,
 } from "@/types/armament-loan.type";
+import { ArmamentLoanPrintReport } from "@/components/armament-loans/print-report";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -100,7 +101,8 @@ export function ArmamentLoanShowPage() {
           </p>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
+          <ArmamentLoanPrintReport loan={loan} />
           {canUpdateHeader ? (
             <Button asChild variant="outline">
               <Link href={`/armament-loans/${loan.id}/edit`}>Editar</Link>

@@ -108,8 +108,6 @@ export function AsyncSearchableSelect<T>({
     return Array.from(deduped.values());
   }, [cachedSelectedOption, mapOption, query.data?.pages, selectedOption]);
 
-  const selectedLabel = options.find((option) => option.value === value)?.label;
-
   function handleViewportScroll(event: React.UIEvent<HTMLDivElement>) {
     const target = event.currentTarget;
     const remaining = target.scrollHeight - target.scrollTop - target.clientHeight;
@@ -144,7 +142,7 @@ export function AsyncSearchableSelect<T>({
       }}
     >
       <SelectTrigger className={triggerClassName}>
-        <SelectValue placeholder={placeholder}>{selectedLabel}</SelectValue>
+        <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent
         withSearch={false}
