@@ -1,11 +1,15 @@
 import type { ApiMessageResponse } from "@/types/auth.type";
 import type { PaginatedMeta } from "@/types/brand.type";
 
+export type MaterialControlType = "unit" | "batch";
+
 export interface MaterialTypeItem {
   id: number;
   name: string;
   slug: string;
   description?: string | null;
+  control_type: MaterialControlType;
+  control_type_label: string;
   creator?: {
     id: number;
     name: string;
@@ -28,8 +32,9 @@ export interface MaterialTypeFilters {
 
 export interface CreateMaterialTypeDTO {
   name: string;
-  slug: string;
+  slug?: string | null;
   description?: string | null;
+  control_type: MaterialControlType;
 }
 
 export type UpdateMaterialTypeDTO = Partial<CreateMaterialTypeDTO>;

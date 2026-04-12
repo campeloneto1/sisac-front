@@ -25,6 +25,8 @@ export interface MaterialUnitItem {
   status?: MaterialUnitStatus | null;
   status_label?: string | null;
   status_color?: string | null;
+  is_expired: boolean;
+  is_expiring_soon: boolean;
   created_at?: string | null;
   updated_at?: string | null;
 }
@@ -36,7 +38,11 @@ export interface MaterialBatchItem {
   quantity: number;
   available_quantity?: number | null;
   used_quantity?: number | null;
+  permanently_out_quantity?: number | null;
+  available_percentage?: number | null;
   expiration_date?: string | null;
+  is_expired: boolean;
+  is_expiring_soon: boolean;
   created_at?: string | null;
   updated_at?: string | null;
 }
@@ -47,7 +53,12 @@ export interface MaterialItem {
   material_type_id: number;
   variant_id: number;
   specifications?: MaterialSpecifications | null;
-  type?: Pick<MaterialTypeItem, "id" | "name" | "slug"> | null;
+  // Contadores de disponibilidade (condicional baseado no control_type)
+  total_units_count?: number | null;
+  available_units_count?: number | null;
+  total_batches_quantity?: number | null;
+  available_batches_quantity?: number | null;
+  type?: Pick<MaterialTypeItem, "id" | "name" | "slug" | "control_type"> | null;
   variant?: VariantItem | null;
   subunit?: Pick<SubunitItem, "id" | "name" | "abbreviation"> | null;
   units?: MaterialUnitItem[];

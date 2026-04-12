@@ -13,6 +13,7 @@ import {
 } from "@/hooks/use-material-type-mutations";
 import type {
   CreateMaterialTypeDTO,
+  MaterialControlType,
   MaterialTypeItem,
   UpdateMaterialTypeDTO,
 } from "@/types/material-type.type";
@@ -26,7 +27,31 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+
+const CONTROL_TYPE_OPTIONS: {
+  value: MaterialControlType;
+  label: string;
+  description: string;
+}[] = [
+  {
+    value: "unit",
+    label: "Unidade",
+    description: "Controle individual por unidade (ex: computadores, veículos)",
+  },
+  {
+    value: "batch",
+    label: "Lote",
+    description: "Controle por lote/quantidade (ex: material de expediente)",
+  },
+];
 
 const materialTypeFormSchema = z.object({
   name: z
@@ -42,6 +67,9 @@ const materialTypeFormSchema = z.object({
     .max(1000, "A descrição deve ter no máximo 1000 caracteres.")
     .optional()
     .or(z.literal("")),
+  control_type: z.enum(["unit", "batch"], {
+    required_error: "Selecione o tipo de controle.",
+  }),
 });
 
 type MaterialTypeFormValues = z.infer<typeof materialTypeFormSchema>;
@@ -83,6 +111,7 @@ export function MaterialTypeForm({
       name: materialType?.name ?? "",
       slug: materialType?.slug ?? "",
       description: materialType?.description ?? "",
+      control_type: materialType?.control_type ?? undefined,
     },
   });
 
@@ -92,6 +121,7 @@ export function MaterialTypeForm({
     control,
     name: "name",
   });
+  const watchedControlType = useWatch({ control, name: "control_type" });
 
   useEffect(() => {
     if (!materialType) {
@@ -102,6 +132,7 @@ export function MaterialTypeForm({
       name: materialType.name,
       slug: materialType.slug,
       description: materialType.description ?? "",
+      control_type: materialType.control_type,
     });
   }, [materialType, reset]);
 
@@ -119,8 +150,9 @@ export function MaterialTypeForm({
   async function onSubmit(values: MaterialTypeFormValues) {
     const payloadBase = {
       name: values.name.trim(),
-      slug: slugify(values.slug),
+      slug: slugify(values.slug) || null,
       description: values.description?.trim() || null,
+      control_type: values.control_type,
     };
 
     if (mode === "create") {
@@ -208,6 +240,43 @@ export function MaterialTypeForm({
               {errors.description ? (
                 <p className="text-sm text-destructive">
                   {errors.description.message}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="material-type-control-type">
+                Tipo de controle *
+              </Label>
+              <Select
+                value={watchedControlType}
+                onValueChange={(value: MaterialControlType) =>
+                  setValue("control_type", value, { shouldValidate: true })
+                }
+              >
+                <SelectTrigger id="material-type-control-type">
+                  <SelectValue placeholder="Selecione o tipo de controle" />
+                </SelectTrigger>
+                <SelectContent>
+                  {CONTROL_TYPE_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      <div className="flex flex-col">
+                        <span>{option.label}</span>
+                        <span className="text-xs text-slate-500">
+                          {option.description}
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-slate-500">
+                Define como os materiais deste tipo serão controlados no
+                estoque.
+              </p>
+              {errors.control_type ? (
+                <p className="text-sm text-destructive">
+                  {errors.control_type.message}
                 </p>
               ) : null}
             </div>

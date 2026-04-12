@@ -47,6 +47,7 @@ export function MaterialTypesTable({
               <tr>
                 <th className="px-4 py-3 font-medium">Tipo</th>
                 <th className="px-4 py-3 font-medium">Slug</th>
+                <th className="px-4 py-3 font-medium">Tipo de Controle</th>
                 <th className="px-4 py-3 font-medium">Descrição</th>
                 <th className="px-4 py-3 font-medium">Atualização</th>
                 <th className="px-4 py-3 font-medium text-right">Ações</th>
@@ -70,6 +71,17 @@ export function MaterialTypesTable({
                   </td>
                   <td className="px-4 py-4 text-slate-600">
                     {materialType.slug}
+                  </td>
+                  <td className="px-4 py-4">
+                    <span
+                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                        materialType.control_type === "unit"
+                          ? "bg-blue-100 text-blue-800"
+                          : "bg-amber-100 text-amber-800"
+                      }`}
+                    >
+                      {materialType.control_type_label}
+                    </span>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
                     {materialType.description?.trim() || "-"}

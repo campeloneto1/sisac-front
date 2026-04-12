@@ -106,20 +106,41 @@ export function MaterialShowPage() {
                 <p className="text-sm text-slate-700">{material.type?.name ?? "-"}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <Package className="h-4 w-4 text-primary" />
-              <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Unidades cadastradas</p>
-                <p className="text-sm text-slate-700">{material.units?.length ?? material.units_count ?? 0}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-              <Layers3 className="h-4 w-4 text-primary" />
-              <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Lotes cadastrados</p>
-                <p className="text-sm text-slate-700">{material.batches?.length ?? material.batches_count ?? 0}</p>
-              </div>
-            </div>
+            {material.type?.control_type === "unit" ? (
+              <>
+                <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <Package className="h-4 w-4 text-primary" />
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Unidades disponíveis</p>
+                    <p className="text-sm text-slate-700">{material.available_units_count ?? 0}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <Package className="h-4 w-4 text-primary" />
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Total de unidades</p>
+                    <p className="text-sm text-slate-700">{material.total_units_count ?? material.units?.length ?? 0}</p>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <Layers3 className="h-4 w-4 text-primary" />
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Quantidade disponível</p>
+                    <p className="text-sm text-slate-700">{material.available_batches_quantity ?? 0}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                  <Layers3 className="h-4 w-4 text-primary" />
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Quantidade total</p>
+                    <p className="text-sm text-slate-700">{material.total_batches_quantity ?? 0}</p>
+                  </div>
+                </div>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -203,93 +224,131 @@ export function MaterialShowPage() {
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200/70 bg-white/80">
-        <CardHeader>
-          <CardTitle>Unidades</CardTitle>
-          <CardDescription>Unidades individualizadas vinculadas a este material.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-4 flex justify-end">
-            <Button asChild variant="outline">
-              <Link href={`/materials/${material.id}/units`}>Abrir módulo de unidades</Link>
-            </Button>
-          </div>
-          {material.units?.length ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-left text-sm">
-                <thead className="bg-slate-50 text-slate-500">
-                  <tr>
-                    <th className="px-4 py-3 font-medium">Patrimônio 1</th>
-                    <th className="px-4 py-3 font-medium">Patrimônio 2</th>
-                    <th className="px-4 py-3 font-medium">Status</th>
-                    <th className="px-4 py-3 font-medium">Aquisicao</th>
-                    <th className="px-4 py-3 font-medium">Vencimento</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {material.units.map((unit) => (
-                    <tr key={unit.id} className="border-t border-slate-200/70">
-                      <td className="px-4 py-4 text-slate-600">{unit.patrimony_number_1 ?? "-"}</td>
-                      <td className="px-4 py-4 text-slate-600">{unit.patrimony_number_2 ?? "-"}</td>
-                      <td className="px-4 py-4">
-                        <Badge variant={getMaterialUnitBadgeVariant(unit.status_color)}>
-                          {unit.status_label ?? getMaterialUnitStatusLabel(unit.status)}
-                        </Badge>
-                      </td>
-                      <td className="px-4 py-4 text-slate-600">{formatDate(unit.acquisition_date)}</td>
-                      <td className="px-4 py-4 text-slate-600">{formatDate(unit.expiration_date)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      {material.type?.control_type === "unit" ? (
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Unidades</CardTitle>
+            <CardDescription>Unidades individualizadas vinculadas a este material.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="mb-4 flex justify-end">
+              <Button asChild variant="outline">
+                <Link href={`/materials/${material.id}/units`}>Gerenciar unidades</Link>
+              </Button>
             </div>
-          ) : (
-            <p className="text-sm text-slate-500">Nenhuma unidade cadastrada.</p>
-          )}
-        </CardContent>
-      </Card>
+            <div className="mb-4 grid gap-4 md:grid-cols-3">
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">Disponíveis</p>
+                <p className="mt-2 text-3xl font-display text-slate-900">
+                  {material.available_units_count ?? 0}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">Total cadastradas</p>
+                <p className="mt-2 text-3xl font-display text-slate-900">
+                  {material.total_units_count ?? material.units?.length ?? 0}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">Indisponíveis</p>
+                <p className="mt-2 text-3xl font-display text-slate-900">
+                  {(material.total_units_count ?? 0) - (material.available_units_count ?? 0)}
+                </p>
+              </div>
+            </div>
+            {material.units?.length ? (
+              <div className="overflow-x-auto">
+                <table className="min-w-full text-left text-sm">
+                  <thead className="bg-slate-50 text-slate-500">
+                    <tr>
+                      <th className="px-4 py-3 font-medium">Patrimônio 1</th>
+                      <th className="px-4 py-3 font-medium">Patrimônio 2</th>
+                      <th className="px-4 py-3 font-medium">Status</th>
+                      <th className="px-4 py-3 font-medium">Aquisicao</th>
+                      <th className="px-4 py-3 font-medium">Vencimento</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {material.units.map((unit) => (
+                      <tr key={unit.id} className="border-t border-slate-200/70">
+                        <td className="px-4 py-4 text-slate-600">{unit.patrimony_number_1 ?? "-"}</td>
+                        <td className="px-4 py-4 text-slate-600">{unit.patrimony_number_2 ?? "-"}</td>
+                        <td className="px-4 py-4">
+                          <Badge variant={getMaterialUnitBadgeVariant(unit.status_color)}>
+                            {unit.status_label ?? getMaterialUnitStatusLabel(unit.status)}
+                          </Badge>
+                        </td>
+                        <td className="px-4 py-4 text-slate-600">{formatDate(unit.acquisition_date)}</td>
+                        <td className="px-4 py-4 text-slate-600">{formatDate(unit.expiration_date)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500">Nenhuma unidade cadastrada.</p>
+            )}
+          </CardContent>
+        </Card>
+      ) : null}
 
-      <Card className="border-slate-200/70 bg-white/80">
-        <CardHeader>
-          <CardTitle>Lotes</CardTitle>
-          <CardDescription>Lotes e saldos disponíveis retornados pela API.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-4 flex justify-end">
-            <Button asChild variant="outline">
-              <Link href={`/materials/${material.id}/batches`}>Abrir módulo de lotes</Link>
-            </Button>
-          </div>
-          {material.batches?.length ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-left text-sm">
-                <thead className="bg-slate-50 text-slate-500">
-                  <tr>
-                    <th className="px-4 py-3 font-medium">Lote</th>
-                    <th className="px-4 py-3 font-medium">Quantidade</th>
-                    <th className="px-4 py-3 font-medium">Disponível</th>
-                    <th className="px-4 py-3 font-medium">Em uso</th>
-                    <th className="px-4 py-3 font-medium">Vencimento</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {material.batches.map((batch) => (
-                    <tr key={batch.id} className="border-t border-slate-200/70">
-                      <td className="px-4 py-4 text-slate-600">{batch.batch_number}</td>
-                      <td className="px-4 py-4 text-slate-600">{batch.quantity}</td>
-                      <td className="px-4 py-4 text-slate-600">{batch.available_quantity ?? "-"}</td>
-                      <td className="px-4 py-4 text-slate-600">{batch.used_quantity ?? "-"}</td>
-                      <td className="px-4 py-4 text-slate-600">{formatDate(batch.expiration_date)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      {material.type?.control_type === "batch" ? (
+        <Card className="border-slate-200/70 bg-white/80">
+          <CardHeader>
+            <CardTitle>Lotes</CardTitle>
+            <CardDescription>Lotes e saldos disponíveis retornados pela API.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="mb-4 flex justify-end">
+              <Button asChild variant="outline">
+                <Link href={`/materials/${material.id}/batches`}>Gerenciar lotes</Link>
+              </Button>
             </div>
-          ) : (
-            <p className="text-sm text-slate-500">Nenhum lote cadastrado.</p>
-          )}
-        </CardContent>
-      </Card>
+            <div className="mb-4 grid gap-4 md:grid-cols-2">
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">Quantidade total</p>
+                <p className="mt-2 text-3xl font-display text-slate-900">
+                  {material.total_batches_quantity ?? 0}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
+                <p className="text-sm font-medium text-slate-600">Quantidade disponível</p>
+                <p className="mt-2 text-3xl font-display text-slate-900">
+                  {material.available_batches_quantity ?? 0}
+                </p>
+              </div>
+            </div>
+            {material.batches?.length ? (
+              <div className="overflow-x-auto">
+                <table className="min-w-full text-left text-sm">
+                  <thead className="bg-slate-50 text-slate-500">
+                    <tr>
+                      <th className="px-4 py-3 font-medium">Lote</th>
+                      <th className="px-4 py-3 font-medium">Quantidade</th>
+                      <th className="px-4 py-3 font-medium">Disponível</th>
+                      <th className="px-4 py-3 font-medium">Em uso</th>
+                      <th className="px-4 py-3 font-medium">Vencimento</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {material.batches.map((batch) => (
+                      <tr key={batch.id} className="border-t border-slate-200/70">
+                        <td className="px-4 py-4 text-slate-600">{batch.batch_number}</td>
+                        <td className="px-4 py-4 text-slate-600">{batch.quantity}</td>
+                        <td className="px-4 py-4 text-slate-600">{batch.available_quantity ?? "-"}</td>
+                        <td className="px-4 py-4 text-slate-600">{batch.used_quantity ?? "-"}</td>
+                        <td className="px-4 py-4 text-slate-600">{formatDate(batch.expiration_date)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500">Nenhum lote cadastrado.</p>
+            )}
+          </CardContent>
+        </Card>
+      ) : null}
     </div>
   );
 }

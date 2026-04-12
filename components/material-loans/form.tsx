@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Plus, Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,7 +27,7 @@ import type {
   UpdateMaterialLoanDTO,
 } from "@/types/material-loan.type";
 import { materialLoanKindOptions } from "@/types/material-loan.type";
-import type { MaterialItem } from "@/types/material.type";
+import type { MaterialItem, MaterialResponse } from "@/types/material.type";
 import { AsyncSearchableSelect } from "@/components/ui/async-searchable-select";
 import { Button } from "@/components/ui/button";
 import {
@@ -166,6 +166,7 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
   const createMutation = useCreateMaterialLoanMutation();
   const updateMutation = useUpdateMaterialLoanMutation();
   const schema = buildMaterialLoanSchema(mode);
+  const [selectedMaterials, setSelectedMaterials] = useState<Record<number, MaterialItem>>({});
 
   const {
     control,
@@ -547,12 +548,32 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                             <Label>Material</Label>
                             <AsyncSearchableSelect
                               value={item?.material_id === "none" ? undefined : item?.material_id}
-                              onValueChange={(value) =>
+                              onValueChange={async (value) => {
                                 setValue(`items.${index}.material_id`, value, {
                                   shouldDirty: true,
                                   shouldValidate: true,
-                                })
-                              }
+                                });
+
+                                // Busca o material para obter o control_type e auto-selecionar o modo
+                                try {
+                                  const response: MaterialResponse = await materialsService.show(Number(value));
+                                  const materialData = response.data;
+                                  setSelectedMaterials((prev) => ({ ...prev, [index]: materialData }));
+
+                                  // Auto-seleciona o item_mode baseado no control_type
+                                  const controlType = materialData.type?.control_type;
+                                  if (controlType === "unit") {
+                                    setValue(`items.${index}.item_mode`, "unit", { shouldDirty: true });
+                                    setValue(`items.${index}.material_batch_id`, "");
+                                    setValue(`items.${index}.quantity`, 1);
+                                  } else if (controlType === "batch") {
+                                    setValue(`items.${index}.item_mode`, "batch", { shouldDirty: true });
+                                    setValue(`items.${index}.material_unit_id`, "");
+                                  }
+                                } catch {
+                                  // Ignora erros de busca
+                                }
+                              }}
                               queryKey={["material-loan", "materials", index]}
                               loadPage={({ page, search }) =>
                                 materialsService.index({
@@ -586,33 +607,49 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
 
                           <div className="space-y-2">
                             <Label>Modo do item</Label>
-                            <Select
-                              value={item?.item_mode ?? "unit"}
-                              onValueChange={(value) => {
-                                setValue(
-                                  `items.${index}.item_mode`,
-                                  value as "unit" | "batch",
-                                  {
-                                    shouldDirty: true,
-                                    shouldValidate: true,
-                                  },
-                                );
-                                if (value === "unit") {
-                                  setValue(`items.${index}.material_batch_id`, "");
-                                  setValue(`items.${index}.quantity`, 1);
-                                } else {
-                                  setValue(`items.${index}.material_unit_id`, "");
-                                }
-                              }}
-                            >
-                              <SelectTrigger>
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="unit">Unidade</SelectItem>
-                                <SelectItem value="batch">Lote</SelectItem>
-                              </SelectContent>
-                            </Select>
+                            {(() => {
+                              const selectedMaterial = selectedMaterials[index];
+                              const controlType = selectedMaterial?.type?.control_type;
+                              const isControlled = controlType === "unit" || controlType === "batch";
+
+                              return (
+                                <>
+                                  <Select
+                                    value={item?.item_mode ?? "unit"}
+                                    disabled={isControlled}
+                                    onValueChange={(value) => {
+                                      setValue(
+                                        `items.${index}.item_mode`,
+                                        value as "unit" | "batch",
+                                        {
+                                          shouldDirty: true,
+                                          shouldValidate: true,
+                                        },
+                                      );
+                                      if (value === "unit") {
+                                        setValue(`items.${index}.material_batch_id`, "");
+                                        setValue(`items.${index}.quantity`, 1);
+                                      } else {
+                                        setValue(`items.${index}.material_unit_id`, "");
+                                      }
+                                    }}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="unit">Unidade</SelectItem>
+                                      <SelectItem value="batch">Lote</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                  {isControlled && (
+                                    <p className="text-xs text-slate-500">
+                                      Auto-selecionado baseado no tipo de controle do material
+                                    </p>
+                                  )}
+                                </>
+                              );
+                            })()}
                           </div>
 
                           <div className="space-y-2">
