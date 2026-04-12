@@ -53,6 +53,7 @@ export interface ArmamentFilters {
   armament_caliber_id?: number | null;
   armament_size_id?: number | null;
   gender_id?: number | null;
+  with_counts?: boolean;
 }
 
 export interface CreateArmamentDTO {

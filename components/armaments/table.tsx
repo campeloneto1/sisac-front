@@ -41,6 +41,8 @@ export function ArmamentsTable({ armaments }: ArmamentsTableProps) {
                 <th className="px-4 py-3 font-medium">Armamento</th>
                 <th className="px-4 py-3 font-medium">Classificação</th>
                 <th className="px-4 py-3 font-medium">Subunidade</th>
+                <th className="px-4 py-3 font-medium text-center">Unidades</th>
+                <th className="px-4 py-3 font-medium text-center">Lotes</th>
                 <th className="px-4 py-3 font-medium text-right">Ações</th>
               </tr>
             </thead>
@@ -68,6 +70,22 @@ export function ArmamentsTable({ armaments }: ArmamentsTableProps) {
                   </td>
                   <td className="px-4 py-4 text-slate-600">
                     {armament.subunit?.abbreviation || armament.subunit?.name || "-"}
+                  </td>
+                  <td className="px-4 py-4 text-center text-slate-600">
+                    <p className="font-medium text-slate-900">
+                      {armament.available_units_count ?? 0}
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      de {armament.total_units_count ?? 0}
+                    </p>
+                  </td>
+                  <td className="px-4 py-4 text-center text-slate-600">
+                    <p className="font-medium text-slate-900">
+                      {armament.available_batches_quantity ?? 0}
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      de {armament.total_batches_quantity ?? 0}
+                    </p>
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex justify-end gap-2">

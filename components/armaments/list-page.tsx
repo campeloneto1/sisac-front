@@ -47,6 +47,7 @@ export function ArmamentsListPage() {
       armament_caliber_id: caliberId !== "all" ? Number(caliberId) : null,
       armament_size_id: sizeId !== "all" ? Number(sizeId) : null,
       gender_id: genderId !== "all" ? Number(genderId) : null,
+      with_counts: true,
     }),
     [caliberId, genderId, page, search, sizeId, subunitId, typeId, variantId],
   );

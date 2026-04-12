@@ -40,7 +40,6 @@ import { Textarea } from "@/components/ui/textarea";
 
 const returnSchema = z
   .object({
-    returned_at: z.string().min(1, "Informe a data e hora da devolução."),
     approved_by: z.string(),
     return_notes: z
       .string()
@@ -183,7 +182,6 @@ export function ArmamentLoanReturnPage() {
   >({
     resolver: zodResolver(returnSchema),
     defaultValues: {
-      returned_at: formatDateTimeLocal(),
       approved_by: "none",
       return_notes: "",
       items: [],
@@ -204,7 +202,6 @@ export function ArmamentLoanReturnPage() {
     }
 
     reset({
-      returned_at: formatDateTimeLocal(),
       approved_by: loan.approved_by ? String(loan.approved_by) : "none",
       return_notes: loan.return_notes ?? "",
       items: (loan.items ?? []).map((item) => ({
@@ -327,7 +324,6 @@ export function ArmamentLoanReturnPage() {
     const response = await returnMutation.mutateAsync({
       id: loan.id,
       payload: {
-        returned_at: new Date(values.returned_at).toISOString(),
         approved_by:
           values.approved_by !== "none" ? Number(values.approved_by) : null,
         return_notes: values.return_notes.trim() || null,
@@ -370,16 +366,6 @@ export function ArmamentLoanReturnPage() {
           <CardContent>
             <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
             <section className="grid gap-5 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label>Data e hora da devolução</Label>
-                <Input type="datetime-local" {...register("returned_at")} />
-                {errors.returned_at ? (
-                  <p className="text-sm text-destructive">
-                    {errors.returned_at.message}
-                  </p>
-                ) : null}
-              </div>
-
               <div className="space-y-2">
                 <Label>Aprovado por</Label>
                 <Select

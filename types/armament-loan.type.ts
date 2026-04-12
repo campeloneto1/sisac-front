@@ -129,7 +129,6 @@ export interface CreateArmamentLoanItemDTO {
 export interface CreateArmamentLoanDTO {
   police_officer_id: number;
   kind?: ArmamentLoanKind;
-  loaned_at: string;
   expected_return_at?: string | null;
   purpose?: string | null;
   approved_by?: number | null;
@@ -156,7 +155,6 @@ export interface ReturnArmamentLoanItemDTO {
 }
 
 export interface MarkArmamentLoanReturnedDTO {
-  returned_at: string;
   return_notes?: string | null;
   approved_by?: number | null;
   items: ReturnArmamentLoanItemDTO[];

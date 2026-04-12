@@ -57,7 +57,6 @@ function buildArmamentLoanSchema(mode: "create" | "edit") {
     .object({
       police_officer_id: z.string(),
       kind: z.enum(["temporary", "cautela"]),
-      loaned_at: z.string(),
       expected_return_at: z.string(),
       approved_by: z.string(),
       purpose: z
@@ -89,14 +88,6 @@ function buildArmamentLoanSchema(mode: "create" | "edit") {
           });
         }
 
-        if (!values.loaned_at) {
-          context.addIssue({
-            code: z.ZodIssueCode.custom,
-            path: ["loaned_at"],
-            message: "Informe a data e hora do empréstimo.",
-          });
-        }
-
         if (values.items.length === 0) {
           context.addIssue({
             code: z.ZodIssueCode.custom,
@@ -104,19 +95,6 @@ function buildArmamentLoanSchema(mode: "create" | "edit") {
             message: "Adicione ao menos um item ao empréstimo.",
           });
         }
-      }
-
-      if (
-        values.expected_return_at &&
-        values.loaned_at &&
-        values.expected_return_at < values.loaned_at
-      ) {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["expected_return_at"],
-          message:
-            "A previsao de devolução deve ser igual ou posterior ao empréstimo.",
-        });
       }
 
       values.items.forEach((item, index) => {
@@ -218,7 +196,6 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
         ? String(loan.police_officer_id)
         : "none",
       kind: loan?.kind ?? "temporary",
-      loaned_at: formatDateTimeLocal(loan?.loaned_at),
       expected_return_at: formatDateTimeLocal(loan?.expected_return_at),
       approved_by: loan?.approved_by ? String(loan.approved_by) : "none",
       purpose: loan?.purpose ?? "",
@@ -260,7 +237,6 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
     reset({
       police_officer_id: String(loan.police_officer_id),
       kind: loan.kind,
-      loaned_at: formatDateTimeLocal(loan.loaned_at),
       expected_return_at: formatDateTimeLocal(loan.expected_return_at),
       approved_by: loan.approved_by ? String(loan.approved_by) : "none",
       purpose: loan.purpose ?? "",
@@ -349,7 +325,6 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
     const payload: CreateArmamentLoanDTO = {
       police_officer_id: Number(pendingCreateValues.police_officer_id),
       kind: pendingCreateValues.kind as ArmamentLoanKind,
-      loaned_at: new Date(pendingCreateValues.loaned_at).toISOString(),
       expected_return_at: pendingCreateValues.expected_return_at
         ? new Date(pendingCreateValues.expected_return_at).toISOString()
         : null,
@@ -455,20 +430,6 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                   ))}
                 </SelectContent>
               </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Emprestado em</Label>
-              <Input
-                type="datetime-local"
-                disabled={mode === "edit"}
-                {...register("loaned_at")}
-              />
-              {errors.loaned_at ? (
-                <p className="text-sm text-destructive">
-                  {errors.loaned_at.message}
-                </p>
-              ) : null}
             </div>
 
             <div className="space-y-2">

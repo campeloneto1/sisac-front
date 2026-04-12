@@ -288,19 +288,29 @@ export function ArmamentShowPage() {
                   <p className="text-sm font-medium text-slate-600">
                     Quantidade total
                   </p>
-                  <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+                  <p className="mt-2 text-3xl font-display text-slate-900">
+                    {unitsSummary?.total_batch_quantity ?? "--"}
+                  </p>
                 </div>
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
                   <p className="text-sm font-medium text-slate-600">
                     Disponível
                   </p>
-                  <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+                  <p className="mt-2 text-3xl font-display text-slate-900">
+                    {unitsSummary?.available_batch_quantity ?? "--"}
+                  </p>
                 </div>
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
                   <p className="text-sm font-medium text-slate-600">
                     Vencendo / vencidos
                   </p>
-                  <p className="mt-2 text-3xl font-display text-slate-900">--</p>
+                  <p className="mt-2 text-3xl font-display text-slate-900">
+                    {panelQuery.data
+                      ? panelQuery.data.data.batches.filter(
+                          (batch) => batch.is_expired || batch.is_expiring_soon,
+                        ).length
+                      : "--"}
+                  </p>
                 </div>
               </CardContent>
             </Card>
