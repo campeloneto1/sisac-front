@@ -4,15 +4,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { getApiErrorMessage } from "@/lib/api";
-import { policeOfficerCoursesService } from "@/services/police-officer-courses/service";
+import { courseEnrollmentsService } from "@/services/course-enrollments/service";
 
-export function useCreatePoliceOfficerCourseMutation() {
+export function useCreateCourseEnrollmentMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: policeOfficerCoursesService.create,
+    mutationFn: courseEnrollmentsService.create,
     onSuccess(response) {
-      queryClient.invalidateQueries({ queryKey: ["police-officer-courses"] });
+      queryClient.invalidateQueries({ queryKey: ["course-enrollments"] });
       queryClient.invalidateQueries({ queryKey: ["course-classes"] });
       toast.success(response.message);
     },
@@ -22,15 +22,15 @@ export function useCreatePoliceOfficerCourseMutation() {
   });
 }
 
-export function useUpdatePoliceOfficerCourseMutation() {
+export function useUpdateCourseEnrollmentMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, payload }: { id: number | string; payload: Parameters<typeof policeOfficerCoursesService.update>[1] }) =>
-      policeOfficerCoursesService.update(id, payload),
+    mutationFn: ({ id, payload }: { id: number | string; payload: Parameters<typeof courseEnrollmentsService.update>[1] }) =>
+      courseEnrollmentsService.update(id, payload),
     onSuccess(response, variables) {
-      queryClient.invalidateQueries({ queryKey: ["police-officer-courses"] });
-      queryClient.invalidateQueries({ queryKey: ["police-officer-courses", variables.id] });
+      queryClient.invalidateQueries({ queryKey: ["course-enrollments"] });
+      queryClient.invalidateQueries({ queryKey: ["course-enrollments", variables.id] });
       queryClient.invalidateQueries({ queryKey: ["course-classes"] });
       toast.success(response.message);
     },
@@ -40,13 +40,13 @@ export function useUpdatePoliceOfficerCourseMutation() {
   });
 }
 
-export function useDeletePoliceOfficerCourseMutation() {
+export function useDeleteCourseEnrollmentMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: policeOfficerCoursesService.remove,
+    mutationFn: courseEnrollmentsService.remove,
     onSuccess(response) {
-      queryClient.invalidateQueries({ queryKey: ["police-officer-courses"] });
+      queryClient.invalidateQueries({ queryKey: ["course-enrollments"] });
       queryClient.invalidateQueries({ queryKey: ["course-classes"] });
       toast.success(response.message);
     },

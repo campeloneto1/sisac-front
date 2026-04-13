@@ -44,7 +44,7 @@ export function CourseClassShowPage() {
   const params = useParams<{ id: string }>();
   const permissions = usePermissions("course-classes");
   const disciplinesPermissions = usePermissions("course-class-disciplines");
-  const studentsPermissions = usePermissions("police-officer-courses");
+  const studentsPermissions = usePermissions("course-enrollments");
   const courseClassQuery = useCourseClass(params.id);
 
   if (!permissions.canView) {

@@ -7,35 +7,16 @@ import { ArrowLeft, Printer } from "lucide-react";
 
 import { useCourseClass } from "@/hooks/use-course-classes";
 import { usePermissions } from "@/hooks/use-permissions";
-import { usePoliceOfficerCourses } from "@/hooks/use-police-officer-courses";
+import { useCourseEnrollments } from "@/hooks/use-course-enrollments";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 
-function getStatusLabel(status?: string | null) {
-  switch (status) {
-    case "enrolled":
-      return "Inscrito";
-    case "in_progress":
-      return "Em andamento";
-    case "completed":
-      return "Concluido";
-    case "failed":
-      return "Reprovado";
-    case "dropped":
-      return "Desistente";
-    case "cancelled":
-      return "Cancelado";
-    default:
-      return "-";
-  }
-}
-
 export function CourseClassPrintStudentsPage() {
   const params = useParams<{ id: string }>();
   const classPermissions = usePermissions("course-classes");
-  const studentsPermissions = usePermissions("police-officer-courses");
+  const studentsPermissions = usePermissions("course-enrollments");
   const courseClassQuery = useCourseClass(params.id);
   const filters = useMemo(
     () => ({
@@ -44,7 +25,7 @@ export function CourseClassPrintStudentsPage() {
     }),
     [params.id],
   );
-  const studentsQuery = usePoliceOfficerCourses(filters, studentsPermissions.canViewAny || studentsPermissions.canView);
+  const studentsQuery = useCourseEnrollments(filters, studentsPermissions.canViewAny || studentsPermissions.canView);
 
   if (!classPermissions.canView || (!studentsPermissions.canViewAny && !studentsPermissions.canView)) {
     return (
@@ -134,8 +115,8 @@ export function CourseClassPrintStudentsPage() {
                   <tr>
                     <th className="border-b border-slate-200 px-4 py-3 font-semibold">#</th>
                     <th className="border-b border-slate-200 px-4 py-3 font-semibold">Aluno</th>
-                    <th className="border-b border-slate-200 px-4 py-3 font-semibold">Nome de guerra</th>
-                    <th className="border-b border-slate-200 px-4 py-3 font-semibold">Matrícula</th>
+                    <th className="border-b border-slate-200 px-4 py-3 font-semibold">Email</th>
+                    <th className="border-b border-slate-200 px-4 py-3 font-semibold">Número de Matrícula</th>
                     <th className="border-b border-slate-200 px-4 py-3 font-semibold">Status</th>
                   </tr>
                 </thead>
@@ -144,13 +125,13 @@ export function CourseClassPrintStudentsPage() {
                     <tr key={student.id} className="align-top">
                       <td className="border-b border-slate-200 px-4 py-3 text-slate-700">{index + 1}</td>
                       <td className="border-b border-slate-200 px-4 py-3 font-medium text-slate-900">
-                        {student.police_officer?.name ?? student.police_officer?.user?.name ?? `Policial #${student.police_officer_id}`}
+                        {student.user?.name ?? `Usuário #${student.user_id}`}
                       </td>
-                      <td className="border-b border-slate-200 px-4 py-3 text-slate-700">{student.police_officer?.war_name ?? "-"}</td>
+                      <td className="border-b border-slate-200 px-4 py-3 text-slate-700">{student.user?.email ?? "-"}</td>
                       <td className="border-b border-slate-200 px-4 py-3 text-slate-700">
-                        {student.police_officer?.registration_number ?? "-"}
+                        {student.enrollment_number ?? "-"}
                       </td>
-                      <td className="border-b border-slate-200 px-4 py-3 text-slate-700">{getStatusLabel(student.status)}</td>
+                      <td className="border-b border-slate-200 px-4 py-3 text-slate-700">{student.status_label}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -1,6 +1,6 @@
 import type { PaginatedMeta } from "@/types/brand.type";
 import type { PoliceOfficerAllocationItem } from "@/types/police-officer-allocation.type";
-import type { PoliceOfficerCourseItem } from "@/types/police-officer-course.type";
+import type { CourseEnrollmentItem } from "@/types/course-enrollment.type";
 import type { PoliceOfficerLeaveItem } from "@/types/police-officer-leave.type";
 import type { PoliceOfficerRankItem } from "@/types/police-officer-rank.type";
 import type { PoliceOfficerRetirementRequestItem } from "@/types/police-officer-retirement-request.type";
@@ -228,7 +228,7 @@ export interface PoliceOfficerFunctionalPanelData {
   allocations: PoliceOfficerAllocationItem[];
   rank_history: PoliceOfficerRankItem[];
   leaves: PoliceOfficerLeaveItem[];
-  courses: PoliceOfficerCourseItem[];
+  courses: CourseEnrollmentItem[];
   vacations: PoliceOfficerVacationItem[];
   retirement_requests: PoliceOfficerRetirementRequestItem[];
 }
@@ -270,12 +270,12 @@ export type PoliceOfficerPromotionHistoryReportResponse =
   PaginatedPoliceOfficerReportResponse<PoliceOfficerRankItem>;
 
 export type PoliceOfficerCoursesOverviewReportResponse =
-  PaginatedPoliceOfficerReportResponse<PoliceOfficerCourseItem> & {
+  PaginatedPoliceOfficerReportResponse<CourseEnrollmentItem> & {
     summary?: PoliceOfficerCourseStatusSummaryItem[];
   };
 
 export type PoliceOfficerPendingCertificatesReportResponse =
-  PaginatedPoliceOfficerReportResponse<PoliceOfficerCourseItem>;
+  PaginatedPoliceOfficerReportResponse<CourseEnrollmentItem>;
 
 export type PoliceOfficerRetirementRequestsReportResponse =
   PaginatedPoliceOfficerReportResponse<PoliceOfficerRetirementRequestItem> & {

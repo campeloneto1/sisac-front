@@ -2,7 +2,7 @@
 
 import { Search, X } from "lucide-react";
 
-import { POLICE_OFFICER_COURSE_STATUS_OPTIONS } from "@/types/police-officer-course.type";
+import { COURSE_ENROLLMENT_STATUS_OPTIONS } from "@/types/course-enrollment.type";
 import { useCourseClasses } from "@/hooks/use-course-classes";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,7 +46,7 @@ export function PoliceOfficerCoursesFilters(props: PoliceOfficerCoursesFiltersPr
         <SelectTrigger><SelectValue placeholder="Status" /></SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todos os status</SelectItem>
-          {POLICE_OFFICER_COURSE_STATUS_OPTIONS.map((option) => (
+          {COURSE_ENROLLMENT_STATUS_OPTIONS.map((option) => (
             <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
           ))}
         </SelectContent>

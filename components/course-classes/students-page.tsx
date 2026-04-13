@@ -5,11 +5,12 @@ import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { GraduationCap, Pencil, Plus, Trash2, Users2 } from "lucide-react";
 
-import { useDeletePoliceOfficerCourseMutation } from "@/hooks/use-police-officer-course-mutations";
-import { usePoliceOfficerCourses } from "@/hooks/use-police-officer-courses";
+import { useDeleteCourseEnrollmentMutation } from "@/hooks/use-course-enrollment-mutations";
+import { useCourseEnrollments } from "@/hooks/use-course-enrollments";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useCourseClass } from "@/hooks/use-course-classes";
-import type { PoliceOfficerCourseItem } from "@/types/police-officer-course.type";
+import type { CourseEnrollmentItem } from "@/types/course-enrollment.type";
+import { getCourseEnrollmentStatusLabel, getCourseEnrollmentStatusColor } from "@/types/course-enrollment.type";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -24,49 +25,30 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { CourseClassStudentsDialog } from "@/components/course-classes/students-dialog";
 
-function getStatusVariant(status?: string | null) {
-  switch (status) {
-    case "completed":
+function getStatusVariant(color: string) {
+  switch (color) {
+    case "green":
       return "success";
-    case "failed":
+    case "red":
       return "danger";
-    case "in_progress":
+    case "yellow":
       return "warning";
-    case "dropped":
-    case "cancelled":
+    case "gray":
       return "secondary";
+    case "blue":
     default:
       return "info";
-  }
-}
-
-function getStatusLabel(status?: string | null) {
-  switch (status) {
-    case "enrolled":
-      return "Inscrito";
-    case "in_progress":
-      return "Em andamento";
-    case "completed":
-      return "Concluido";
-    case "failed":
-      return "Reprovado";
-    case "dropped":
-      return "Desistente";
-    case "cancelled":
-      return "Cancelado";
-    default:
-      return "Sem status";
   }
 }
 
 export function CourseClassStudentsPage() {
   const params = useParams<{ id: string }>();
   const courseClassQuery = useCourseClass(params.id);
-  const permissions = usePermissions("police-officer-courses");
-  const deleteMutation = useDeletePoliceOfficerCourseMutation();
+  const permissions = usePermissions("course-enrollments");
+  const deleteMutation = useDeleteCourseEnrollmentMutation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingEnrollment, setEditingEnrollment] = useState<PoliceOfficerCourseItem | null>(null);
-  const [enrollmentToDelete, setEnrollmentToDelete] = useState<PoliceOfficerCourseItem | null>(null);
+  const [editingEnrollment, setEditingEnrollment] = useState<CourseEnrollmentItem | null>(null);
+  const [enrollmentToDelete, setEnrollmentToDelete] = useState<CourseEnrollmentItem | null>(null);
   const filters = useMemo(
     () => ({
       course_class_id: Number(params.id),
@@ -74,7 +56,7 @@ export function CourseClassStudentsPage() {
     }),
     [params.id],
   );
-  const studentsQuery = usePoliceOfficerCourses(filters, permissions.canViewAny || permissions.canView);
+  const studentsQuery = useCourseEnrollments(filters, permissions.canViewAny || permissions.canView);
 
   async function handleDelete() {
     if (!enrollmentToDelete) {
@@ -145,7 +127,7 @@ export function CourseClassStudentsPage() {
               }}
             >
               <Plus className="mr-2 h-4 w-4" />
-              Matricular policial
+              Matricular aluno
             </Button>
           ) : null}
         </div>
@@ -172,26 +154,33 @@ export function CourseClassStudentsPage() {
                     <div className="space-y-3">
                       <div className="flex flex-wrap items-center gap-2">
                         <p className="text-sm font-medium text-slate-900">
-                          {student.police_officer?.name ?? student.police_officer?.user?.name ?? student.police_officer?.war_name ?? `Policial #${student.police_officer_id}`}
+                          {student.user?.name ?? `Usuário #${student.user_id}`}
                         </p>
-                        <Badge variant={getStatusVariant(student.status)}>{getStatusLabel(student.status)}</Badge>
-                        {student.can_receive_certificate ? <Badge variant="success">Pode emitir certificado</Badge> : null}
+                        <Badge variant={getStatusVariant(student.status_color)}>{student.status_label}</Badge>
+                        {student.has_certificate ? <Badge variant="success">Certificado emitido</Badge> : null}
                       </div>
 
                       <div className="grid gap-3 md:grid-cols-2">
                         <div className="flex items-center gap-2 text-sm text-slate-600">
                           <GraduationCap className="h-4 w-4 text-primary" />
-                          <span>Matrícula: {student.police_officer?.registration_number ?? "Não informada"}</span>
+                          <span>Matrícula: {student.enrollment_number ?? "Não informada"}</span>
                         </div>
                         <div className="text-sm text-slate-600">
                           Início: {student.start_date ?? "-"} • Término: {student.end_date ?? "-"}
                         </div>
+                        {student.final_grade ? (
+                          <div className="text-sm text-slate-600">
+                            Nota final: {student.final_grade}
+                          </div>
+                        ) : null}
                         <div className="text-sm text-slate-600">
-                          Carga horaria: {student.workload_hours ?? 0}h
+                          Boletim: {student.bulletin ?? "Não informado"} {student.bulletin_date ? `(${student.bulletin_date})` : ""}
                         </div>
-                        <div className="text-sm text-slate-600">
-                          Boletim: {student.bulletin ?? "Não informado"}
-                        </div>
+                        {student.certificate_number ? (
+                          <div className="text-sm text-slate-600">
+                            Certificado: {student.certificate_number} {student.certificate_issued_at ? `(${student.certificate_issued_at})` : ""}
+                          </div>
+                        ) : null}
                       </div>
                     </div>
 
@@ -230,6 +219,7 @@ export function CourseClassStudentsPage() {
         onOpenChange={setIsDialogOpen}
         courseClassId={courseClass.id}
         courseClassName={courseClass.name ?? `Turma #${courseClass.id}`}
+        courseId={courseClass.course_id ?? 0}
         studentCourse={editingEnrollment}
       />
 
@@ -239,7 +229,7 @@ export function CourseClassStudentsPage() {
             <DialogTitle>Remover matrícula</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja remover a matrícula de{" "}
-              {enrollmentToDelete?.police_officer?.name ?? enrollmentToDelete?.police_officer?.user?.name ?? enrollmentToDelete?.police_officer?.war_name}
+              {enrollmentToDelete?.user?.name ?? `Usuário #${enrollmentToDelete?.user_id}`}
               {" "}desta turma?
             </DialogDescription>
           </DialogHeader>

@@ -302,11 +302,11 @@ export function PoliceOfficerCoursesOverviewReportPage() {
         <TableWrap headers={["Policial","Curso/Turma","Status","Período","Certificado"]}>
           {reportQuery.data.data.map((item) => (
             <tr key={item.id} className="border-t border-slate-200/70">
-              <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.police_officer?.name ?? item.police_officer?.war_name ?? "Sem nome"}</p></td>
-              <td className="px-4 py-4 text-slate-700">{item.course_class?.course?.name ?? item.course_class?.name ?? "-"}</td>
-              <td className="px-4 py-4"><Badge variant="outline">{item.status ?? "-"}</Badge></td>
+              <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.user?.name ?? "Sem nome"}</p></td>
+              <td className="px-4 py-4 text-slate-700">{item.course?.name ?? item.course_class?.name ?? "-"}</td>
+              <td className="px-4 py-4"><Badge variant="outline">{item.status_label ?? "-"}</Badge></td>
               <td className="px-4 py-4 text-slate-700">{item.start_date ?? "-"} até {item.end_date ?? "-"}</td>
-              <td className="px-4 py-4 text-slate-700">{item.certificate_issued_at ?? (item.can_receive_certificate ? "Pendente" : "-")}</td>
+              <td className="px-4 py-4 text-slate-700">{item.certificate_issued_at ?? (item.has_certificate ? "Emitido" : "Não emitido")}</td>
             </tr>
           ))}
         </TableWrap>
@@ -340,10 +340,10 @@ export function PoliceOfficerPendingCertificatesReportPage() {
         <TableWrap headers={["Policial","Curso/Turma","Encerramento","Carga horária","Situação"]}>
           {reportQuery.data.data.map((item) => (
             <tr key={item.id} className="border-t border-slate-200/70">
-              <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.police_officer?.name ?? item.police_officer?.war_name ?? "Sem nome"}</p></td>
-              <td className="px-4 py-4 text-slate-700">{item.course_class?.course?.name ?? item.course_class?.name ?? "-"}</td>
+              <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.user?.name ?? "Sem nome"}</p></td>
+              <td className="px-4 py-4 text-slate-700">{item.course?.name ?? item.course_class?.name ?? "-"}</td>
               <td className="px-4 py-4 text-slate-700">{item.end_date ?? "-"}</td>
-              <td className="px-4 py-4 text-slate-700">{item.workload_hours ?? 0}h</td>
+              <td className="px-4 py-4 text-slate-700">{item.course?.workload ?? 0}h</td>
               <td className="px-4 py-4"><Badge variant="warning">Pendente</Badge></td>
             </tr>
           ))}
@@ -429,7 +429,7 @@ export function PoliceOfficerFunctionalPanelReportPage() {
         <MiniListCard title="Lotações" items={reportQuery.data.data.allocations.map((item) => `${item.start_date} • ${item.sector?.name ?? "-"} • ${item.assignment?.name ?? "-"}`)} />
         <MiniListCard title="Promoções" items={reportQuery.data.data.rank_history.map((item) => `${item.promotion_date ?? item.start_date} • ${item.rank?.name ?? "-"} • ${item.promotion_type ?? "-"}`)} />
         <MiniListCard title="Afastamentos" items={reportQuery.data.data.leaves.map((item) => `${item.start_date ?? "-"} até ${item.end_date ?? "-"} • ${item.leave_type?.name ?? "-"}`)} />
-        <MiniListCard title="Cursos" items={reportQuery.data.data.courses.map((item) => `${item.course_class?.course?.name ?? item.course_class?.name ?? "-"} • ${item.status ?? "-"}`)} />
+        <MiniListCard title="Cursos" items={reportQuery.data.data.courses.map((item) => `${item.course?.name ?? item.course_class?.name ?? "-"} • ${item.status_label ?? "-"}`)} />
         <MiniListCard title="Férias" items={reportQuery.data.data.vacations.map((item) => `${item.reference_year} • ${item.status?.label ?? "-"} • disponível ${item.available_days ?? 0}`)} />
         <MiniListCard title="Aposentadoria" items={reportQuery.data.data.retirement_requests.map((item) => `${item.requested_at ?? "-"} • ${item.status}`)} />
       </div>
