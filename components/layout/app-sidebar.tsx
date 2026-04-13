@@ -226,13 +226,6 @@ const generalItems = [
     visible: false,
     permissionResource: "services",
   },
-  {
-    href: "/contract-types",
-    label: "Tipos de contrato",
-    icon: ScrollText,
-    visible: false,
-    permissionResource: "contract-types",
-  },
 ];
 
 const administratorItems: Array<{

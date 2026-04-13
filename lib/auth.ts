@@ -36,6 +36,10 @@ function normalizePermissionAction(action: string): PermissionAction | null {
     case "bulk-promote":
     case "bulkpromote":
       return "bulkPromote";
+    case "transfer":
+      return "transfer";
+    case "dispose":
+      return "dispose";
     default:
       return null;
   }
@@ -61,6 +65,8 @@ function extractPermissionParts(slug: string) {
     "create",
     "update",
     "delete",
+    "transfer",
+    "dispose",
   ] as const;
 
   for (const suffix of knownSuffixes) {

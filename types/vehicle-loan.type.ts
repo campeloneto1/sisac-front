@@ -21,9 +21,6 @@ export interface VehicleLoanItem {
   vehicle_id: number;
   borrower_id?: number | null;
   borrower_type?: VehicleLoanBorrowerType | null;
-  external_borrower_name?: string | null;
-  external_borrower_document?: string | null;
-  external_borrower_phone?: string | null;
   city_id?: number | null;
   subunit_id?: number | null;
   start_date: string;
@@ -95,7 +92,6 @@ export interface VehicleLoanFilters {
   status?: VehicleLoanStatus;
   borrower_type?: VehicleLoanBorrowerType | null;
   borrower_id?: number | null;
-  external_borrower_name?: string;
   start_date_from?: string;
   start_date_to?: string;
   city_id?: number | null;
@@ -106,9 +102,6 @@ export interface CreateVehicleLoanDTO {
   vehicle_id: number;
   borrower_id?: number | null;
   borrower_type?: VehicleLoanBorrowerType | null;
-  external_borrower_name?: string | null;
-  external_borrower_document?: string | null;
-  external_borrower_phone?: string | null;
   city_id?: number | null;
   start_date?: string | null;
   start_time?: string | null;
@@ -176,7 +169,7 @@ export function getVehicleLoanBorrowerLabel(loan: VehicleLoanItem) {
     return loan.borrower.name ?? loan.borrower.email ?? "Usuário vinculado";
   }
 
-  return loan.external_borrower_name ?? "Tomador externo";
+  return "Sem tomador vinculado";
 }
 
 export function getVehicleLoanStatusVariant(status?: VehicleLoanStatus | null) {

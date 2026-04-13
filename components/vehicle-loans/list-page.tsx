@@ -26,7 +26,6 @@ export function VehicleLoansListPage() {
   const [vehicleId, setVehicleId] = useState("all");
   const [status, setStatus] = useState("all");
   const [borrowerType, setBorrowerType] = useState("all");
-  const [externalBorrowerName, setExternalBorrowerName] = useState("");
   const [cityId, setCityId] = useState("all");
   const [subunitId, setSubunitId] = useState("all");
   const [startDateFrom, setStartDateFrom] = useState("");
@@ -40,7 +39,6 @@ export function VehicleLoansListPage() {
       vehicle_id: vehicleId !== "all" ? Number(vehicleId) : null,
       status: status !== "all" ? status : undefined,
       borrower_type: borrowerType !== "all" ? borrowerType : undefined,
-      external_borrower_name: externalBorrowerName || undefined,
       city_id: cityId !== "all" ? Number(cityId) : null,
       subunit_id: subunitId !== "all" ? Number(subunitId) : null,
       start_date_from: startDateFrom || undefined,
@@ -49,7 +47,6 @@ export function VehicleLoansListPage() {
     [
       borrowerType,
       cityId,
-      externalBorrowerName,
       page,
       startDateFrom,
       startDateTo,
@@ -109,7 +106,6 @@ export function VehicleLoansListPage() {
         vehicleId={vehicleId}
         status={status}
         borrowerType={borrowerType}
-        externalBorrowerName={externalBorrowerName}
         cityId={cityId}
         subunitId={subunitId}
         startDateFrom={startDateFrom}
@@ -127,10 +123,6 @@ export function VehicleLoansListPage() {
         }}
         onBorrowerTypeChange={(value) => {
           setBorrowerType(value);
-          setPage(1);
-        }}
-        onExternalBorrowerNameChange={(value) => {
-          setExternalBorrowerName(value);
           setPage(1);
         }}
         onCityChange={(value) => {
@@ -153,7 +145,6 @@ export function VehicleLoansListPage() {
           setVehicleId("all");
           setStatus("all");
           setBorrowerType("all");
-          setExternalBorrowerName("");
           setCityId("all");
           setSubunitId("all");
           setStartDateFrom("");

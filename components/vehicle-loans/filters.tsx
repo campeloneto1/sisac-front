@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 
 import {
   vehicleLoanBorrowerTypeOptions,
@@ -25,7 +25,6 @@ interface VehicleLoansFiltersProps {
   vehicleId: string;
   status: string;
   borrowerType: string;
-  externalBorrowerName: string;
   cityId: string;
   subunitId: string;
   startDateFrom: string;
@@ -36,7 +35,6 @@ interface VehicleLoansFiltersProps {
   onVehicleChange: (value: string) => void;
   onStatusChange: (value: string) => void;
   onBorrowerTypeChange: (value: string) => void;
-  onExternalBorrowerNameChange: (value: string) => void;
   onCityChange: (value: string) => void;
   onSubunitChange: (value: string) => void;
   onStartDateFromChange: (value: string) => void;
@@ -48,7 +46,6 @@ export function VehicleLoansFilters({
   vehicleId,
   status,
   borrowerType,
-  externalBorrowerName,
   cityId,
   subunitId,
   startDateFrom,
@@ -59,7 +56,6 @@ export function VehicleLoansFilters({
   onVehicleChange,
   onStatusChange,
   onBorrowerTypeChange,
-  onExternalBorrowerNameChange,
   onCityChange,
   onSubunitChange,
   onStartDateFromChange,
@@ -74,7 +70,7 @@ export function VehicleLoansFilters({
           Filtros
         </CardTitle>
       </CardHeader>
-      <CardContent className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <CardContent className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <div className="space-y-2">
           <Label>Veículo</Label>
           <Select value={vehicleId} onValueChange={onVehicleChange}>
@@ -124,22 +120,6 @@ export function VehicleLoansFilters({
               ))}
             </SelectContent>
           </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="externalBorrowerName">Tomador externo</Label>
-          <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <Input
-              id="externalBorrowerName"
-              className="pl-9"
-              placeholder="Nome do tomador externo"
-              value={externalBorrowerName}
-              onChange={(event) =>
-                onExternalBorrowerNameChange(event.target.value)
-              }
-            />
-          </div>
         </div>
 
         <div className="space-y-2">

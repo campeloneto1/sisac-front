@@ -86,11 +86,6 @@ export function ResetPasswordDialog({ userId, userName }: ResetPasswordDialogPro
         </DialogHeader>
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <div className="rounded-2xl bg-secondary p-4 text-sm text-slate-700">
-            A ação depende da permissão `resetPassword` no frontend. No backend atual, o endpoint ainda usa a policy
-            de `update`.
-          </div>
-
           <div className="space-y-2">
             <Label htmlFor="reset-password">Nova senha</Label>
             <Input id="reset-password" type="password" {...register("password")} />

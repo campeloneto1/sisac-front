@@ -32,6 +32,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
@@ -193,26 +194,10 @@ export function VehicleLoanShowPage() {
                   <p className="text-sm text-slate-500">
                     {loan.borrower_type === "App\\Models\\PoliceOfficer"
                       ? "Policial"
-                      : loan.borrower_type === "App\\Models\\User"
-                        ? "Usuário"
-                        : "Externo"}
+                      : "Usuário"}
                   </p>
                 </div>
               </div>
-
-              {!loan.borrower ? (
-                <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                    Dados externos
-                  </p>
-                  <p className="mt-1 text-sm text-slate-700">
-                    Documento: {loan.external_borrower_document ?? "Não informado"}
-                  </p>
-                  <p className="text-sm text-slate-700">
-                    Telefone: {loan.external_borrower_phone ?? "Não informado"}
-                  </p>
-                </div>
-              ) : null}
 
               <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
                 <MapPin className="h-4 w-4 text-primary" />

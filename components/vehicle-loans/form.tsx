@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, CheckCircle2, Clock } from "lucide-react";
 
 import { useSubunit } from "@/contexts/subunit-context";
 import { useCities } from "@/hooks/use-cities";
@@ -47,26 +48,11 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-const borrowerModeValues = ["internal", "external"] as const;
-
 const vehicleLoanFormSchema = z
   .object({
     vehicle_id: z.string(),
-    borrower_mode: z.enum(borrowerModeValues),
     borrower_type: z.string(),
     borrower_id: z.string(),
-    external_borrower_name: z
-      .string()
-      .max(255, "O nome do tomador externo deve ter no máximo 255 caracteres."),
-    external_borrower_document: z
-      .string()
-      .max(20, "O documento deve ter no máximo 20 caracteres."),
-    external_borrower_phone: z
-      .string()
-      .refine(
-        (value) => value.trim() === "" || value.replace(/\D/g, "").length >= 10,
-        "Informe um telefone com 10 ou 11 dígitos.",
-      ),
     city_id: z.string(),
     start_km: z.coerce.number().int().min(0, "A quilometragem inicial deve ser maior ou igual a 0."),
     start_notes: z
@@ -82,29 +68,19 @@ const vehicleLoanFormSchema = z
       });
     }
 
-    if (values.borrower_mode === "internal") {
-      if (!values.borrower_type || values.borrower_type === "none") {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["borrower_type"],
-          message: "Selecione o tipo do tomador interno.",
-        });
-      }
-
-      if (!values.borrower_id || values.borrower_id === "none") {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["borrower_id"],
-          message: "Selecione o tomador interno.",
-        });
-      }
-    }
-
-    if (values.borrower_mode === "external" && values.external_borrower_name.trim().length < 3) {
+    if (!values.borrower_type || values.borrower_type === "none") {
       context.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["external_borrower_name"],
-        message: "Informe o nome do tomador externo com ao menos 3 caracteres.",
+        path: ["borrower_type"],
+        message: "Selecione o tipo do tomador.",
+      });
+    }
+
+    if (!values.borrower_id || values.borrower_id === "none") {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["borrower_id"],
+        message: "Selecione o tomador.",
       });
     }
   });
@@ -116,17 +92,6 @@ interface VehicleLoanFormProps {
   loan?: VehicleLoanItem;
 }
 
-function sanitizeDigits(value: string) {
-  return value.replace(/\D/g, "");
-}
-
-function inferBorrowerMode(loan?: VehicleLoanItem) {
-  if (!loan) {
-    return "internal";
-  }
-
-  return loan.borrower_id ? "internal" : "external";
-}
 
 export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
   const router = useRouter();
@@ -134,6 +99,13 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
   const createMutation = useCreateVehicleLoanMutation();
   const updateMutation = useUpdateVehicleLoanMutation();
   const citiesQuery = useCities({ per_page: 100 });
+  const [selectedUserData, setSelectedUserData] = useState<{
+    id: number;
+    name: string;
+    type: string | null;
+    authorized_until: string | null;
+    status: string | null;
+  } | null>(null);
 
   const {
     register,
@@ -150,21 +122,12 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
     resolver: zodResolver(vehicleLoanFormSchema),
     defaultValues: {
       vehicle_id: loan?.vehicle_id ? String(loan.vehicle_id) : "none",
-      borrower_mode: inferBorrowerMode(loan),
       borrower_type: loan?.borrower_type ?? "none",
       borrower_id: loan?.borrower_id ? String(loan.borrower_id) : "none",
-      external_borrower_name: loan?.external_borrower_name ?? "",
-      external_borrower_document: loan?.external_borrower_document ?? "",
-      external_borrower_phone: loan?.external_borrower_phone ?? "",
       city_id: loan?.city_id ? String(loan.city_id) : "none",
       start_km: loan?.start_km ?? 0,
       start_notes: loan?.start_notes ?? "",
     },
-  });
-
-  const borrowerMode = useWatch({
-    control,
-    name: "borrower_mode",
   });
   const borrowerType = useWatch({
     control,
@@ -190,42 +153,42 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
 
     reset({
       vehicle_id: String(loan.vehicle_id),
-      borrower_mode: inferBorrowerMode(loan),
       borrower_type: loan.borrower_type ?? "none",
       borrower_id: loan.borrower_id ? String(loan.borrower_id) : "none",
-      external_borrower_name: loan.external_borrower_name ?? "",
-      external_borrower_document: loan.external_borrower_document ?? "",
-      external_borrower_phone: loan.external_borrower_phone ?? "",
       city_id: loan.city_id ? String(loan.city_id) : "none",
       start_km: loan.start_km,
       start_notes: loan.start_notes ?? "",
     });
   }, [loan, reset]);
 
+  useEffect(() => {
+    async function fetchUserData() {
+      if (borrowerType === "App\\Models\\User" && selectedBorrowerId && selectedBorrowerId !== "none") {
+        try {
+          const response = await usersService.show(Number(selectedBorrowerId));
+          setSelectedUserData({
+            id: response.data.id,
+            name: response.data.name,
+            type: response.data.type,
+            authorized_until: response.data.authorized_until,
+            status: response.data.status,
+          });
+        } catch (error) {
+          setSelectedUserData(null);
+        }
+      } else {
+        setSelectedUserData(null);
+      }
+    }
+
+    fetchUserData();
+  }, [borrowerType, selectedBorrowerId]);
+
   async function onSubmit(values: VehicleLoanFormValues) {
     const payloadBase = {
       vehicle_id: Number(values.vehicle_id),
-      borrower_id:
-        values.borrower_mode === "internal" && values.borrower_id !== "none"
-          ? Number(values.borrower_id)
-          : null,
-      borrower_type:
-        values.borrower_mode === "internal" &&
-        values.borrower_type !== "none"
-          ? (values.borrower_type as VehicleLoanBorrowerType)
-          : null,
-      external_borrower_name:
-        values.borrower_mode === "external"
-          ? values.external_borrower_name.trim() || null
-          : null,
-      external_borrower_document:
-        values.borrower_mode === "external" && values.external_borrower_document.trim()
-          ? sanitizeDigits(values.external_borrower_document)
-          : null,
-      external_borrower_phone:
-        values.borrower_mode === "external" && values.external_borrower_phone.trim()
-          ? sanitizeDigits(values.external_borrower_phone)
-          : null,
+      borrower_id: values.borrower_id !== "none" ? Number(values.borrower_id) : null,
+      borrower_type: values.borrower_type !== "none" ? (values.borrower_type as VehicleLoanBorrowerType) : null,
       city_id: values.city_id !== "none" ? Number(values.city_id) : null,
       start_km: values.start_km,
       start_notes: values.start_notes.trim() || null,
@@ -266,6 +229,32 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
             : [loan.borrower.name, loan.borrower.email].filter(Boolean).join(" • "),
       }
     : null;
+
+  function getAuthorizationStatus() {
+    if (!selectedUserData?.authorized_until) {
+      return null;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const authorizedUntil = new Date(selectedUserData.authorized_until);
+    authorizedUntil.setHours(0, 0, 0, 0);
+
+    const diffTime = authorizedUntil.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) {
+      return { type: "expired", days: Math.abs(diffDays) };
+    } else if (diffDays === 0) {
+      return { type: "expires_today", days: 0 };
+    } else if (diffDays <= 7) {
+      return { type: "expires_soon", days: diffDays };
+    } else {
+      return { type: "valid", days: diffDays };
+    }
+  }
+
+  const authStatus = getAuthorizationStatus();
 
   return (
     <Card className="border-slate-200/70 bg-white/80">
@@ -336,79 +325,44 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
             <div>
               <h2 className="text-base font-semibold text-slate-900">Tomador</h2>
               <p className="text-sm text-slate-500">
-                Escolha se o tomador esta cadastrado no sistema ou se o
-                empréstimo foi entregue para uma pessoa externa.
+                Selecione o tipo e o tomador cadastrado no sistema.
               </p>
             </div>
 
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
-                <Label>Modo do tomador</Label>
+                <Label>Tipo de tomador</Label>
                 <Select
-                  value={borrowerMode}
+                  value={borrowerType}
                   onValueChange={(value) => {
-                    setValue("borrower_mode", value as "internal" | "external", {
+                    setValue("borrower_type", value, {
                       shouldValidate: true,
                       shouldDirty: true,
                     });
-
-                    if (value === "internal") {
-                      setValue("external_borrower_name", "");
-                      setValue("external_borrower_document", "");
-                      setValue("external_borrower_phone", "");
-                    } else {
-                      setValue("borrower_type", "none");
-                      setValue("borrower_id", "none");
-                    }
+                    setValue("borrower_id", "none");
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione o modo do tomador" />
+                    <SelectValue placeholder="Selecione o tipo" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="internal">Tomador interno</SelectItem>
-                    <SelectItem value="external">Tomador externo</SelectItem>
+                    <SelectItem value="none">Selecione o tipo</SelectItem>
+                    {vehicleLoanBorrowerTypeOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
+                {errors.borrower_type ? (
+                  <p className="text-sm text-destructive">
+                    {errors.borrower_type.message}
+                  </p>
+                ) : null}
               </div>
 
-              {borrowerMode === "internal" ? (
-                <div className="space-y-2">
-                  <Label>Tipo de tomador</Label>
-                  <Select
-                    value={borrowerType}
-                    onValueChange={(value) => {
-                      setValue("borrower_type", value, {
-                        shouldValidate: true,
-                        shouldDirty: true,
-                      });
-                      setValue("borrower_id", "none");
-                    }}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o tipo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="none">Selecione o tipo</SelectItem>
-                      {vehicleLoanBorrowerTypeOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errors.borrower_type ? (
-                    <p className="text-sm text-destructive">
-                      {errors.borrower_type.message}
-                    </p>
-                  ) : null}
-                </div>
-              ) : null}
-            </div>
-
-            {borrowerMode === "internal" ? (
               <div className="space-y-2">
-                <Label>Tomador interno</Label>
+                <Label>Tomador</Label>
                 {borrowerType === "App\\Models\\PoliceOfficer" ? (
                   <AsyncSearchableSelect
                     value={selectedBorrowerId === "none" ? undefined : selectedBorrowerId}
@@ -436,31 +390,84 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
                     emptyMessage="Nenhum policial encontrado."
                   />
                 ) : borrowerType === "App\\Models\\User" ? (
-                  <AsyncSearchableSelect
-                    value={selectedBorrowerId === "none" ? undefined : selectedBorrowerId}
-                    onValueChange={(value) =>
-                      setValue("borrower_id", value, {
-                        shouldValidate: true,
-                        shouldDirty: true,
-                      })
-                    }
-                    queryKey={["vehicle-loan", "borrowers", "users"]}
-                    loadPage={({ page, search }) =>
-                      usersService.index({
-                        page,
-                        per_page: 20,
-                        search: search || undefined,
-                      })
-                    }
-                    mapOption={(borrower) => ({
-                      value: String(borrower.id),
-                      label: [borrower.name, borrower.email].filter(Boolean).join(" • "),
-                    })}
-                    selectedOption={selectedBorrowerOption}
-                    placeholder="Selecione o tomador"
-                    searchPlaceholder="Buscar usuário por nome ou email"
-                    emptyMessage="Nenhum usuário encontrado."
-                  />
+                  <>
+                    <AsyncSearchableSelect
+                      value={selectedBorrowerId === "none" ? undefined : selectedBorrowerId}
+                      onValueChange={(value) =>
+                        setValue("borrower_id", value, {
+                          shouldValidate: true,
+                          shouldDirty: true,
+                        })
+                      }
+                      queryKey={["vehicle-loan", "borrowers", "users"]}
+                      loadPage={({ page, search }) =>
+                        usersService.index({
+                          page,
+                          per_page: 20,
+                          search: search || undefined,
+                        })
+                      }
+                      mapOption={(borrower) => ({
+                        value: String(borrower.id),
+                        label: [borrower.name, borrower.email].filter(Boolean).join(" • "),
+                      })}
+                      selectedOption={selectedBorrowerOption}
+                      placeholder="Selecione o tomador"
+                      searchPlaceholder="Buscar usuário por nome ou email"
+                      emptyMessage="Nenhum usuário encontrado."
+                    />
+                    {selectedUserData?.authorized_until && authStatus ? (
+                      <div
+                        className={`mt-2 flex items-start gap-2 rounded-2xl border px-3 py-2 ${
+                          authStatus.type === "expired"
+                            ? "border-red-200 bg-red-50"
+                            : authStatus.type === "expires_today"
+                              ? "border-orange-200 bg-orange-50"
+                              : authStatus.type === "expires_soon"
+                                ? "border-yellow-200 bg-yellow-50"
+                                : "border-green-200 bg-green-50"
+                        }`}
+                      >
+                        {authStatus.type === "expired" ? (
+                          <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-red-600" />
+                        ) : authStatus.type === "expires_today" || authStatus.type === "expires_soon" ? (
+                          <Clock className="mt-0.5 h-4 w-4 flex-shrink-0 text-yellow-600" />
+                        ) : (
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-green-600" />
+                        )}
+                        <div className="flex-1">
+                          <p
+                            className={`text-sm font-medium ${
+                              authStatus.type === "expired"
+                                ? "text-red-900"
+                                : authStatus.type === "expires_today" || authStatus.type === "expires_soon"
+                                  ? "text-yellow-900"
+                                  : "text-green-900"
+                            }`}
+                          >
+                            {authStatus.type === "expired"
+                              ? "Autorização expirada"
+                              : authStatus.type === "expires_today"
+                                ? "Autorização expira hoje"
+                                : authStatus.type === "expires_soon"
+                                  ? `Autorização expira em ${authStatus.days} dia${authStatus.days > 1 ? "s" : ""}`
+                                  : "Autorização válida"}
+                          </p>
+                          <p
+                            className={`mt-0.5 text-xs ${
+                              authStatus.type === "expired"
+                                ? "text-red-700"
+                                : authStatus.type === "expires_today" || authStatus.type === "expires_soon"
+                                  ? "text-yellow-700"
+                                  : "text-green-700"
+                            }`}
+                          >
+                            Válido até: {new Date(selectedUserData.authorized_until).toLocaleDateString("pt-BR")}
+                          </p>
+                        </div>
+                      </div>
+                    ) : null}
+                  </>
                 ) : (
                   <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-3 text-sm text-slate-500">
                     Selecione primeiro o tipo do tomador para habilitar a busca.
@@ -472,51 +479,7 @@ export function VehicleLoanForm({ mode, loan }: VehicleLoanFormProps) {
                   </p>
                 ) : null}
               </div>
-            ) : (
-              <div className="grid gap-5 md:grid-cols-3">
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="external_borrower_name">Nome externo</Label>
-                  <Input
-                    id="external_borrower_name"
-                    placeholder="Ex.: Joao de Souza"
-                    {...register("external_borrower_name")}
-                  />
-                  {errors.external_borrower_name ? (
-                    <p className="text-sm text-destructive">
-                      {errors.external_borrower_name.message}
-                    </p>
-                  ) : null}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="external_borrower_document">Documento</Label>
-                  <Input
-                    id="external_borrower_document"
-                    placeholder="CPF ou RG"
-                    {...register("external_borrower_document")}
-                  />
-                  {errors.external_borrower_document ? (
-                    <p className="text-sm text-destructive">
-                      {errors.external_borrower_document.message}
-                    </p>
-                  ) : null}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="external_borrower_phone">Telefone</Label>
-                  <Input
-                    id="external_borrower_phone"
-                    placeholder="83999998888"
-                    {...register("external_borrower_phone")}
-                  />
-                  {errors.external_borrower_phone ? (
-                    <p className="text-sm text-destructive">
-                      {errors.external_borrower_phone.message}
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-            )}
+            </div>
           </section>
 
           <section className="grid gap-5 md:grid-cols-[1fr_1fr_0.9fr]">

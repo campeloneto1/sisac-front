@@ -159,7 +159,9 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
       model_year: vehicle?.model_year ? String(vehicle.model_year) : "",
       initial_km: vehicle ? String(vehicle.initial_km) : "0",
       current_km: vehicle ? String(vehicle.current_km) : "0",
-      oil_change_km: vehicle?.oil_change_km ? String(vehicle.oil_change_km) : "",
+      oil_change_km: vehicle?.oil_change_km
+        ? String(vehicle.oil_change_km)
+        : "",
       revision_km: vehicle?.revision_km ? String(vehicle.revision_km) : "",
       revision_date: formatDateForInput(vehicle?.revision_date),
       decommission_date: formatDateForInput(vehicle?.decommission_date),
@@ -169,7 +171,9 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
       vehicle_type_id: vehicle?.vehicle_type_id
         ? String(vehicle.vehicle_type_id)
         : "none",
-      brand_id: vehicle?.variant?.brand?.id ? String(vehicle.variant.brand.id) : "",
+      brand_id: vehicle?.variant?.brand?.id
+        ? String(vehicle.variant.brand.id)
+        : "",
       variant_id: vehicle?.variant_id ? String(vehicle.variant_id) : "none",
       assigned_to_user_id: vehicle?.assigned_to_user_id
         ? String(vehicle.assigned_to_user_id)
@@ -253,7 +257,9 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
       vehicle_type_id: vehicle.vehicle_type_id
         ? String(vehicle.vehicle_type_id)
         : "none",
-      brand_id: vehicle.variant?.brand?.id ? String(vehicle.variant.brand.id) : "",
+      brand_id: vehicle.variant?.brand?.id
+        ? String(vehicle.variant.brand.id)
+        : "",
       variant_id: vehicle.variant_id ? String(vehicle.variant_id) : "none",
       assigned_to_user_id: vehicle.assigned_to_user_id
         ? String(vehicle.assigned_to_user_id)
@@ -276,7 +282,8 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
       is_available_for_trip: values.is_available_for_trip,
       operational_status:
         values.operational_status as CreateVehicleDTO["operational_status"],
-      ownership_type: values.ownership_type as CreateVehicleDTO["ownership_type"],
+      ownership_type:
+        values.ownership_type as CreateVehicleDTO["ownership_type"],
       assigned_to_user_id:
         values.assigned_to_user_id !== "none"
           ? Number(values.assigned_to_user_id)
@@ -290,8 +297,11 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
       notes: values.notes?.trim() || null,
       color_id: values.color_id !== "none" ? Number(values.color_id) : null,
       vehicle_type_id:
-        values.vehicle_type_id !== "none" ? Number(values.vehicle_type_id) : null,
-      variant_id: values.variant_id !== "none" ? Number(values.variant_id) : null,
+        values.vehicle_type_id !== "none"
+          ? Number(values.vehicle_type_id)
+          : null,
+      variant_id:
+        values.variant_id !== "none" ? Number(values.variant_id) : null,
     };
 
     if (mode === "create") {
@@ -344,6 +354,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                   id="license_plate"
                   placeholder="Ex.: ABC1234"
                   {...register("license_plate")}
+                  maxLength={7}
                 />
                 {errors.license_plate ? (
                   <p className="text-sm text-destructive">
@@ -358,6 +369,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
                   id="special_plate"
                   placeholder="Opcional"
                   {...register("special_plate")}
+                  maxLength={7}
                 />
               </div>
 
@@ -737,7 +749,11 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
 
           <div className="flex justify-end gap-3">
             <Button asChild variant="ghost">
-              <Link href={mode === "create" ? "/vehicles" : `/vehicles/${vehicle?.id}`}>
+              <Link
+                href={
+                  mode === "create" ? "/vehicles" : `/vehicles/${vehicle?.id}`
+                }
+              >
                 Cancelar
               </Link>
             </Button>
