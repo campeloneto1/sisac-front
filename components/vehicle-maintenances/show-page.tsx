@@ -83,7 +83,8 @@ export function VehicleMaintenanceShowPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="font-display text-3xl text-slate-900">
-              {maintenance.vehicle?.license_plate ?? `Manutenção #${maintenance.id}`}
+              {maintenance.vehicle?.license_plate ??
+                `Manutenção #${maintenance.id}`}
             </h1>
             <Badge
               variant={getVehicleMaintenanceStatusVariant(maintenance.status)}
@@ -110,9 +111,7 @@ export function VehicleMaintenanceShowPage() {
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Veículo e oficina</CardTitle>
-            <CardDescription>
-              Contexto principal da manutenção.
-            </CardDescription>
+            <CardDescription>Contexto principal da manutenção.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
@@ -122,7 +121,8 @@ export function VehicleMaintenanceShowPage() {
                   Veículo
                 </p>
                 <p className="text-sm text-slate-700">
-                  {maintenance.vehicle?.license_plate ?? `#${maintenance.vehicle_id}`}
+                  {maintenance.vehicle?.license_plate ??
+                    `#${maintenance.vehicle_id}`}
                 </p>
               </div>
             </div>
@@ -263,7 +263,7 @@ export function VehicleMaintenanceShowPage() {
                 </div>
               ) : (
                 <p className="mt-1 text-sm text-slate-700">
-                  Nenhuma peca registrada.
+                  Nenhuma peça registrada.
                 </p>
               )}
             </div>

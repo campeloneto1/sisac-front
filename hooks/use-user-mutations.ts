@@ -66,3 +66,36 @@ export function useResetUserPasswordMutation() {
   });
 }
 
+export function useRevokeAccessMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number | string) => usersService.revokeAccess(id),
+    onSuccess(response, variables) {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ["users", variables] });
+      toast.success(response.message);
+    },
+    onError(error) {
+      toast.error(getApiErrorMessage(error));
+    },
+  });
+}
+
+export function useRenewAccessMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, authorized_until }: { id: number | string; authorized_until?: string }) =>
+      usersService.renewAccess(id, authorized_until),
+    onSuccess(response, variables) {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ["users", variables.id] });
+      toast.success(response.message);
+    },
+    onError(error) {
+      toast.error(getApiErrorMessage(error));
+    },
+  });
+}
+

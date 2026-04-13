@@ -16,6 +16,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Skeleton } from "@/components/ui/skeleton";
 import { ResetPasswordDialog } from "@/components/users/reset-password-dialog";
 import { UserSubunitsDialog } from "@/components/users/user-subunits-dialog";
+import { RevokeAccessDialog } from "@/components/users/revoke-access-dialog";
+import { RenewAccessDialog } from "@/components/users/renew-access-dialog";
 
 function InfoRow({ icon: Icon, label, value }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string }) {
   return (
@@ -105,6 +107,12 @@ export function UserShowPage() {
             <UserSubunitsDialog userId={user.id} userName={user.name} />
           ) : null}
           {permissions.canResetPassword ? <ResetPasswordDialog userId={user.id} userName={user.name} /> : null}
+          {permissions.canUpdate && user.type === "external" && user.authorized_until ? (
+            <RenewAccessDialog userId={user.id} userName={user.name} currentAuthorizedUntil={user.authorized_until} />
+          ) : null}
+          {permissions.canUpdate && user.type === "external" && user.status === "temporarily_authorized" ? (
+            <RevokeAccessDialog userId={user.id} userName={user.name} />
+          ) : null}
         </div>
       </div>
 

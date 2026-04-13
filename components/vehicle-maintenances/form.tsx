@@ -44,7 +44,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 const replacedPartSchema = z.object({
-  part: z.string().min(1, "Informe a peca."),
+  part: z.string().min(1, "Informe a peça."),
   quantity: z.coerce.number().int().min(1, "A quantidade deve ser ao menos 1."),
   cost: z.union([z.coerce.number().min(0), z.literal("")]).optional(),
 });
@@ -60,15 +60,17 @@ const vehicleMaintenanceFormSchema = z.object({
   entry_date: z.string().min(1, "Informe a data de entrada."),
   entry_time: z.string(),
   entry_km: z.coerce.number().int().min(0, "Informe uma quilometragem válida."),
-  exit_date: z.string(),
-  exit_time: z.string(),
+  exit_date: z.string().optional().or(z.literal("")),
+  exit_time: z.string().optional().or(z.literal("")),
   exit_km: z.union([z.coerce.number().int().min(0), z.literal("")]),
-  expected_completion_date: z.string(),
+  expected_completion_date: z.string().optional().or(z.literal("")),
   cost: z.union([z.coerce.number().min(0), z.literal("")]),
   parts_cost: z.union([z.coerce.number().min(0), z.literal("")]),
   labor_cost: z.union([z.coerce.number().min(0), z.literal("")]),
   status: z.string(),
-  notes: z.string().max(2000, "As observações devem ter no máximo 2000 caracteres."),
+  notes: z
+    .string()
+    .max(2000, "As observações devem ter no máximo 2000 caracteres."),
   replaced_parts: z.array(replacedPartSchema),
 });
 
@@ -109,7 +111,9 @@ export function VehicleMaintenanceForm({
     resolver: zodResolver(vehicleMaintenanceFormSchema),
     defaultValues: {
       vehicle_id: maintenance?.vehicle_id ? String(maintenance.vehicle_id) : "",
-      workshop_id: maintenance?.workshop_id ? String(maintenance.workshop_id) : "none",
+      workshop_id: maintenance?.workshop_id
+        ? String(maintenance.workshop_id)
+        : "none",
       maintenance_type: maintenance?.maintenance_type ?? "",
       description: maintenance?.description ?? "",
       entry_date: maintenance?.entry_date ?? "",
@@ -186,7 +190,8 @@ export function VehicleMaintenanceForm({
         values.workshop_id && values.workshop_id !== "none"
           ? Number(values.workshop_id)
           : null,
-      maintenance_type: values.maintenance_type as CreateVehicleMaintenanceDTO["maintenance_type"],
+      maintenance_type:
+        values.maintenance_type as CreateVehicleMaintenanceDTO["maintenance_type"],
       description: values.description.trim(),
       entry_date: values.entry_date,
       entry_time: values.entry_time || null,
@@ -234,7 +239,10 @@ export function VehicleMaintenanceForm({
   const selectedVehicleOption = maintenance?.vehicle
     ? {
         value: String(maintenance.vehicle_id),
-        label: formatVehicleOptionLabel({ ...maintenance.vehicle, id: maintenance.vehicle_id }),
+        label: formatVehicleOptionLabel({
+          ...maintenance.vehicle,
+          id: maintenance.vehicle_id,
+        }),
       }
     : null;
 
@@ -245,8 +253,8 @@ export function VehicleMaintenanceForm({
           {mode === "create" ? "Nova manutenção" : "Editar manutenção"}
         </CardTitle>
         <CardDescription>
-          Veículos indisponiveis por empréstimo, cautela ou manutenção ativa
-          não aparecem na criação.
+          Veículos indisponiveis por empréstimo, cautela ou manutenção ativa não
+          aparecem na criação.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -264,7 +272,9 @@ export function VehicleMaintenanceForm({
                 }
                 queryKey={["vehicle-maintenances", "vehicles", mode]}
                 loadPage={({ page, search }) =>
-                  (mode === "create" ? vehiclesService.available : vehiclesService.index)({
+                  (mode === "create"
+                    ? vehiclesService.available
+                    : vehiclesService.index)({
                     page,
                     per_page: 20,
                     search: search || undefined,
@@ -370,11 +380,7 @@ export function VehicleMaintenanceForm({
 
           <section className="space-y-2">
             <Label htmlFor="description">Descrição</Label>
-            <Textarea
-              id="description"
-              rows={4}
-              {...register("description")}
-            />
+            <Textarea id="description" rows={4} {...register("description")} />
             {errors.description ? (
               <p className="text-sm text-destructive">
                 {errors.description.message}
@@ -393,25 +399,40 @@ export function VehicleMaintenanceForm({
             </div>
             <div className="space-y-2">
               <Label htmlFor="entry_km">KM de entrada</Label>
-              <Input id="entry_km" type="number" min={0} {...register("entry_km")} />
+              <Input
+                id="entry_km"
+                type="number"
+                min={0}
+                {...register("entry_km")}
+              />
             </div>
           </section>
 
           <section className="grid gap-5 md:grid-cols-4">
             <div className="space-y-2">
-              <Label htmlFor="exit_date">Data de saida</Label>
+              <Label htmlFor="exit_date">Data de saida (opcional)</Label>
               <Input id="exit_date" type="date" {...register("exit_date")} />
+              <p className="text-xs text-slate-500">
+                Preencher quando a manutenção for concluída.
+              </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="exit_time">Hora de saida</Label>
+              <Label htmlFor="exit_time">Hora de saida (opcional)</Label>
               <Input id="exit_time" type="time" {...register("exit_time")} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="exit_km">KM de saida</Label>
-              <Input id="exit_km" type="number" min={0} {...register("exit_km")} />
+              <Label htmlFor="exit_km">KM de saida (opcional)</Label>
+              <Input
+                id="exit_km"
+                type="number"
+                min={0}
+                {...register("exit_km")}
+              />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="expected_completion_date">Previsao de conclusão</Label>
+              <Label htmlFor="expected_completion_date">
+                Previsao de conclusão (opcional)
+              </Label>
               <Input
                 id="expected_completion_date"
                 type="date"
@@ -423,7 +444,13 @@ export function VehicleMaintenanceForm({
           <section className="grid gap-5 md:grid-cols-3">
             <div className="space-y-2">
               <Label htmlFor="cost">Custo total</Label>
-              <Input id="cost" type="number" step="0.01" min={0} {...register("cost")} />
+              <Input
+                id="cost"
+                type="number"
+                step="0.01"
+                min={0}
+                {...register("cost")}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="parts_cost">Custo de pecas</Label>
@@ -460,7 +487,7 @@ export function VehicleMaintenanceForm({
                 variant="outline"
                 onClick={() => append({ part: "", quantity: 1, cost: "" })}
               >
-                Adicionar peca
+                Adicionar peça
               </Button>
             </div>
 
@@ -472,7 +499,7 @@ export function VehicleMaintenanceForm({
                     className="grid gap-4 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-[1.6fr_0.7fr_0.9fr_auto]"
                   >
                     <Input
-                      placeholder="Nome da peca"
+                      placeholder="Nome da peça"
                       {...register(`replaced_parts.${index}.part`)}
                     />
                     <Input
@@ -499,7 +526,7 @@ export function VehicleMaintenanceForm({
                 ))
               ) : (
                 <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-5 text-sm text-slate-500">
-                  Nenhuma peca adicionada.
+                  Nenhuma peça adicionada.
                 </div>
               )}
             </div>

@@ -66,5 +66,22 @@ export const usersService = {
 
     return data;
   },
+  async revokeAccess(id: number | string): Promise<ApiMessageResponse> {
+    const { data } = await api.post<ApiMessageResponse>(`/users/${id}/revoke`, {}, {
+      skipSubunit: true,
+    });
+
+    return data;
+  },
+  async renewAccess(id: number | string, authorized_until?: string): Promise<ApiMessageResponse> {
+    const { data } = await api.post<ApiMessageResponse>(`/users/${id}/renew`,
+      { authorized_until },
+      {
+        skipSubunit: true,
+      }
+    );
+
+    return data;
+  },
 };
 
