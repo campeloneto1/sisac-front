@@ -18,6 +18,8 @@ import {
   formatPoliceOfficerOptionLabel,
 } from "@/lib/option-labels";
 import { materialsService } from "@/services/materials/service";
+import { materialUnitsService } from "@/services/material-units/service";
+import { materialBatchesService } from "@/services/material-batches/service";
 import { policeOfficersService } from "@/services/police-officers/service";
 import { usersService } from "@/services/users/service";
 import type {
@@ -480,8 +482,8 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                       Itens do empréstimo
                     </h2>
                     <p className="text-sm text-slate-500">
-                      Informe uma unidade ou um lote por item. A API válida
-                      disponibilidade, vencimento e coerencia com o material.
+                      Informe uma unidade ou um lote por item. A API válida se a
+                      unidade já esta emprestada ou se o lote ainda tem saldo.
                     </p>
                   </div>
                   <Button
@@ -500,13 +502,6 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                     <Plus className="mr-2 h-4 w-4" />
                     Adicionar item
                   </Button>
-                </div>
-
-                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-                  Ainda não existe endpoint dedicado para listar apenas unidades
-                  e lotes disponíveis no formulario. Nesta primeira versao, o
-                  preenchimento usa o ID da unidade ou do lote e a API confirma
-                  saldo, vencimento e subunidade.
                 </div>
 
                 <div className="space-y-4">
@@ -610,29 +605,12 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                             {(() => {
                               const selectedMaterial = selectedMaterials[index];
                               const controlType = selectedMaterial?.type?.control_type;
-                              const isControlled = controlType === "unit" || controlType === "batch";
 
                               return (
                                 <>
                                   <Select
                                     value={item?.item_mode ?? "unit"}
-                                    disabled={isControlled}
-                                    onValueChange={(value) => {
-                                      setValue(
-                                        `items.${index}.item_mode`,
-                                        value as "unit" | "batch",
-                                        {
-                                          shouldDirty: true,
-                                          shouldValidate: true,
-                                        },
-                                      );
-                                      if (value === "unit") {
-                                        setValue(`items.${index}.material_batch_id`, "");
-                                        setValue(`items.${index}.quantity`, 1);
-                                      } else {
-                                        setValue(`items.${index}.material_unit_id`, "");
-                                      }
-                                    }}
+                                    disabled
                                   >
                                     <SelectTrigger>
                                       <SelectValue />
@@ -642,11 +620,11 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                                       <SelectItem value="batch">Lote</SelectItem>
                                     </SelectContent>
                                   </Select>
-                                  {isControlled && (
-                                    <p className="text-xs text-slate-500">
-                                      Auto-selecionado baseado no tipo de controle do material
-                                    </p>
-                                  )}
+                                  <p className="text-xs text-slate-500">
+                                    {controlType
+                                      ? `Definido pelo tipo de material (${controlType === "unit" ? "Unidade" : "Lote"})`
+                                      : "Selecione um material"}
+                                  </p>
                                 </>
                               );
                             })()}
@@ -669,16 +647,43 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
 
                           {item?.item_mode === "unit" ? (
                             <div className="space-y-2 md:col-span-2">
-                              <Label>ID da unidade</Label>
-                              <Input
-                                inputMode="numeric"
-                                placeholder="Ex.: 12"
-                                {...register(`items.${index}.material_unit_id`)}
+                              <Label>Unidade</Label>
+                              <AsyncSearchableSelect
+                                value={item?.material_unit_id || undefined}
+                                onValueChange={(value) =>
+                                  setValue(`items.${index}.material_unit_id`, value, {
+                                    shouldDirty: true,
+                                    shouldValidate: true,
+                                  })
+                                }
+                                queryKey={["material-units", item?.material_id, index]}
+                                loadPage={({ page, search }) => {
+                                  if (!item?.material_id || item.material_id === "none") {
+                                    return Promise.resolve({ data: [], meta: { last_page: 1, current_page: 1, total: 0, from: 0, to: 0, per_page: 20, path: "", links: [] }, links: {} });
+                                  }
+                                  return materialUnitsService.index(Number(item.material_id), {
+                                    page,
+                                    per_page: 20,
+                                    search: search || undefined,
+                                    status: "available",
+                                  });
+                                }}
+                                mapOption={(unit) => ({
+                                  value: String(unit.id),
+                                  label: unit.patrimony_number_1
+                                    ? `${unit.patrimony_number_1} (${unit.status?.label || ""})`
+                                    : `Unidade #${unit.id}`,
+                                })}
+                                selectedOption={null}
+                                placeholder="Selecione a unidade"
+                                searchPlaceholder="Buscar por número patrimonial"
+                                emptyMessage={
+                                  !item?.material_id || item.material_id === "none"
+                                    ? "Selecione um material primeiro"
+                                    : "Nenhuma unidade disponível"
+                                }
+                                disabled={!item?.material_id || item.material_id === "none"}
                               />
-                              <p className="text-xs text-slate-500">
-                                A API bloqueia unidade indisponivel, vencida ou
-                                vinculada a outro material.
-                              </p>
                               {errors.items?.[index]?.material_unit_id ? (
                                 <p className="text-sm text-destructive">
                                   {errors.items[index]?.material_unit_id?.message}
@@ -687,16 +692,42 @@ export function MaterialLoanForm({ mode, loan }: MaterialLoanFormProps) {
                             </div>
                           ) : (
                             <div className="space-y-2 md:col-span-2">
-                              <Label>ID do lote</Label>
-                              <Input
-                                inputMode="numeric"
-                                placeholder="Ex.: 34"
-                                {...register(`items.${index}.material_batch_id`)}
+                              <Label>Lote</Label>
+                              <AsyncSearchableSelect
+                                value={item?.material_batch_id || undefined}
+                                onValueChange={(value) =>
+                                  setValue(`items.${index}.material_batch_id`, value, {
+                                    shouldDirty: true,
+                                    shouldValidate: true,
+                                  })
+                                }
+                                queryKey={["material-batches", item?.material_id, index]}
+                                loadPage={({ page, search }) => {
+                                  if (!item?.material_id || item.material_id === "none") {
+                                    return Promise.resolve({ data: [], meta: { last_page: 1, current_page: 1, total: 0, from: 0, to: 0, per_page: 20, path: "", links: [] }, links: {} });
+                                  }
+                                  return materialBatchesService.index({
+                                    page,
+                                    per_page: 20,
+                                    search: search || undefined,
+                                    material_id: Number(item.material_id),
+                                    only_available: true,
+                                  });
+                                }}
+                                mapOption={(batch) => ({
+                                  value: String(batch.id),
+                                  label: `${batch.batch_number} - Disponível: ${batch.available_quantity}/${batch.quantity}`,
+                                })}
+                                selectedOption={null}
+                                placeholder="Selecione o lote"
+                                searchPlaceholder="Buscar por número do lote"
+                                emptyMessage={
+                                  !item?.material_id || item.material_id === "none"
+                                    ? "Selecione um material primeiro"
+                                    : "Nenhum lote disponível"
+                                }
+                                disabled={!item?.material_id || item.material_id === "none"}
                               />
-                              <p className="text-xs text-slate-500">
-                                Para lotes, o backend verifica saldo disponível
-                                antes de confirmar o empréstimo.
-                              </p>
                               {errors.items?.[index]?.material_batch_id ? (
                                 <p className="text-sm text-destructive">
                                   {errors.items[index]?.material_batch_id?.message}

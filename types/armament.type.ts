@@ -56,6 +56,19 @@ export interface ArmamentFilters {
   with_counts?: boolean;
 }
 
+export interface CreateArmamentUnitDTO {
+  serial_number?: string | null;
+  acquisition_date?: string | null;
+  expiration_date?: string | null;
+  status?: string | null;
+}
+
+export interface CreateArmamentBatchDTO {
+  batch_number: string;
+  quantity: number;
+  expiration_date?: string | null;
+}
+
 export interface CreateArmamentDTO {
   subunit_id?: number | null;
   armament_type_id: number;
@@ -64,6 +77,8 @@ export interface CreateArmamentDTO {
   armament_size_id?: number | null;
   gender_id?: number | null;
   specifications?: ArmamentSpecifications | null;
+  units?: CreateArmamentUnitDTO[];
+  batches?: CreateArmamentBatchDTO[];
 }
 
 export type UpdateArmamentDTO = Partial<CreateArmamentDTO>;

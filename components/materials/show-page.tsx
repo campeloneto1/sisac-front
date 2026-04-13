@@ -226,16 +226,19 @@ export function MaterialShowPage() {
 
       {material.type?.control_type === "unit" ? (
         <Card className="border-slate-200/70 bg-white/80">
-          <CardHeader>
-            <CardTitle>Unidades</CardTitle>
-            <CardDescription>Unidades individualizadas vinculadas a este material.</CardDescription>
+          <CardHeader className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <CardTitle>Unidades</CardTitle>
+              <CardDescription>Acesse a area dedicada para gerenciar as unidades fisicas deste material.</CardDescription>
+            </div>
+            <Button asChild variant="outline">
+              <Link href={`/materials/${material.id}/units`}>
+                <Package className="mr-2 h-4 w-4" />
+                Gerenciar unidades
+              </Link>
+            </Button>
           </CardHeader>
           <CardContent>
-            <div className="mb-4 flex justify-end">
-              <Button asChild variant="outline">
-                <Link href={`/materials/${material.id}/units`}>Gerenciar unidades</Link>
-              </Button>
-            </div>
             <div className="mb-4 grid gap-4 md:grid-cols-3">
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
                 <p className="text-sm font-medium text-slate-600">Disponíveis</p>
@@ -294,16 +297,19 @@ export function MaterialShowPage() {
 
       {material.type?.control_type === "batch" ? (
         <Card className="border-slate-200/70 bg-white/80">
-          <CardHeader>
-            <CardTitle>Lotes</CardTitle>
-            <CardDescription>Lotes e saldos disponíveis retornados pela API.</CardDescription>
+          <CardHeader className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <CardTitle>Lotes</CardTitle>
+              <CardDescription>Acesse a area dedicada para gerenciar lotes e disponibilidade deste material.</CardDescription>
+            </div>
+            <Button asChild variant="outline">
+              <Link href={`/materials/${material.id}/batches`}>
+                <Layers3 className="mr-2 h-4 w-4" />
+                Gerenciar lotes
+              </Link>
+            </Button>
           </CardHeader>
           <CardContent>
-            <div className="mb-4 flex justify-end">
-              <Button asChild variant="outline">
-                <Link href={`/materials/${material.id}/batches`}>Gerenciar lotes</Link>
-              </Button>
-            </div>
             <div className="mb-4 grid gap-4 md:grid-cols-2">
               <div className="rounded-2xl border border-slate-200/70 bg-slate-50 p-4">
                 <p className="text-sm font-medium text-slate-600">Quantidade total</p>

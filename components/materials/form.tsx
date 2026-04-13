@@ -136,6 +136,11 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
     Boolean(selectedBrandId),
   );
 
+  const selectedMaterialType = materialTypesQuery.data?.data.find(
+    (materialType) => String(materialType.id) === selectedMaterialTypeId,
+  );
+  const controlType = selectedMaterialType?.control_type;
+
   useEffect(() => {
     if (!material) {
       return;
@@ -333,99 +338,109 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
 
           {mode === "create" ? (
             <>
-              <section className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-semibold text-slate-900">Unidades iniciais</h3>
-                    <p className="text-sm text-slate-500">Opcional. Registre unidades individualizadas junto com o material.</p>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => unitsArray.append({ patrimony_number_1: "", patrimony_number_2: "", acquisition_date: "", expiration_date: "", status: "available" })}
-                  >
-                    <Plus className="mr-2 h-4 w-4" />
-                    Adicionar unidade
-                  </Button>
+              {!controlType ? (
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-800">
+                  Selecione um tipo de material para adicionar unidades ou lotes iniciais.
                 </div>
+              ) : null}
 
-                {unitsArray.fields.length ? (
-                  <div className="space-y-3">
-                    {unitsArray.fields.map((field, index) => (
-                      <div key={field.id} className="grid gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_0.9fr_0.9fr_0.9fr_auto]">
-                        <Input placeholder="Patrimônio 1" {...register(`units.${index}.patrimony_number_1` as const)} />
-                        <Input placeholder="Patrimônio 2" {...register(`units.${index}.patrimony_number_2` as const)} />
-                        <Input type="date" {...register(`units.${index}.acquisition_date` as const)} />
-                        <Input type="date" {...register(`units.${index}.expiration_date` as const)} />
-                        <Select
-                          value={watchedUnits?.[index]?.status || "available"}
-                          onValueChange={(value) => setValue(`units.${index}.status`, value as MaterialUnitStatus, { shouldDirty: true, shouldValidate: true })}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Status" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {materialUnitStatusOptions.map((option) => (
-                              <SelectItem key={option.value} value={option.value}>
-                                {option.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <Button type="button" variant="outline" size="icon" onClick={() => unitsArray.remove(index)}>
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
+              {controlType === "unit" ? (
+                <section className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">Unidades iniciais</h3>
+                      <p className="text-sm text-slate-500">Opcional. Registre unidades individualizadas junto com o material.</p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => unitsArray.append({ patrimony_number_1: "", patrimony_number_2: "", acquisition_date: "", expiration_date: "", status: "available" })}
+                    >
+                      <Plus className="mr-2 h-4 w-4" />
+                      Adicionar unidade
+                    </Button>
                   </div>
-                ) : (
-                  <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-5 text-sm text-slate-500">
-                    Nenhuma unidade inicial adicionada.
-                  </div>
-                )}
-              </section>
 
-              <section className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-semibold text-slate-900">Lotes iniciais</h3>
-                    <p className="text-sm text-slate-500">Opcional. Registre lotes quando o material for controlado por quantidade.</p>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => batchesArray.append({ batch_number: "", quantity: 1, expiration_date: "" })}
-                  >
-                    <Plus className="mr-2 h-4 w-4" />
-                    Adicionar lote
-                  </Button>
-                </div>
-
-                {batchesArray.fields.length ? (
-                  <div className="space-y-3">
-                    {batchesArray.fields.map((field, index) => (
-                      <div key={field.id} className="grid gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-[1.2fr_0.8fr_1fr_auto]">
-                        <div className="space-y-2">
-                          <Input placeholder="Número do lote" {...register(`batches.${index}.batch_number` as const)} />
-                          {errors.batches?.[index]?.batch_number ? <p className="text-sm text-destructive">{errors.batches[index]?.batch_number?.message}</p> : null}
+                  {unitsArray.fields.length ? (
+                    <div className="space-y-3">
+                      {unitsArray.fields.map((field, index) => (
+                        <div key={field.id} className="grid gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_0.9fr_0.9fr_0.9fr_auto]">
+                          <Input placeholder="Patrimônio 1" {...register(`units.${index}.patrimony_number_1` as const)} />
+                          <Input placeholder="Patrimônio 2" {...register(`units.${index}.patrimony_number_2` as const)} />
+                          <Input type="date" {...register(`units.${index}.acquisition_date` as const)} />
+                          <Input type="date" {...register(`units.${index}.expiration_date` as const)} />
+                          <Select
+                            value={watchedUnits?.[index]?.status || "available"}
+                            onValueChange={(value) => setValue(`units.${index}.status`, value as MaterialUnitStatus, { shouldDirty: true, shouldValidate: true })}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {materialUnitStatusOptions.map((option) => (
+                                <SelectItem key={option.value} value={option.value}>
+                                  {option.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <Button type="button" variant="outline" size="icon" onClick={() => unitsArray.remove(index)}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
                         </div>
-                        <div className="space-y-2">
-                          <Input type="number" min={1} placeholder="Quantidade" {...register(`batches.${index}.quantity` as const)} />
-                          {errors.batches?.[index]?.quantity ? <p className="text-sm text-destructive">{errors.batches[index]?.quantity?.message}</p> : null}
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-5 text-sm text-slate-500">
+                      Nenhuma unidade inicial adicionada.
+                    </div>
+                  )}
+                </section>
+              ) : null}
+
+              {controlType === "batch" ? (
+                <section className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">Lotes iniciais</h3>
+                      <p className="text-sm text-slate-500">Opcional. Registre lotes quando o material for controlado por quantidade.</p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => batchesArray.append({ batch_number: "", quantity: 1, expiration_date: "" })}
+                    >
+                      <Plus className="mr-2 h-4 w-4" />
+                      Adicionar lote
+                    </Button>
+                  </div>
+
+                  {batchesArray.fields.length ? (
+                    <div className="space-y-3">
+                      {batchesArray.fields.map((field, index) => (
+                        <div key={field.id} className="grid gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-[1.2fr_0.8fr_1fr_auto]">
+                          <div className="space-y-2">
+                            <Input placeholder="Número do lote" {...register(`batches.${index}.batch_number` as const)} />
+                            {errors.batches?.[index]?.batch_number ? <p className="text-sm text-destructive">{errors.batches[index]?.batch_number?.message}</p> : null}
+                          </div>
+                          <div className="space-y-2">
+                            <Input type="number" min={1} placeholder="Quantidade" {...register(`batches.${index}.quantity` as const)} />
+                            {errors.batches?.[index]?.quantity ? <p className="text-sm text-destructive">{errors.batches[index]?.quantity?.message}</p> : null}
+                          </div>
+                          <Input type="date" {...register(`batches.${index}.expiration_date` as const)} />
+                          <Button type="button" variant="outline" size="icon" onClick={() => batchesArray.remove(index)}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
                         </div>
-                        <Input type="date" {...register(`batches.${index}.expiration_date` as const)} />
-                        <Button type="button" variant="outline" size="icon" onClick={() => batchesArray.remove(index)}>
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-5 text-sm text-slate-500">
-                    Nenhum lote inicial adicionado.
-                  </div>
-                )}
-              </section>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-5 text-sm text-slate-500">
+                      Nenhum lote inicial adicionado.
+                    </div>
+                  )}
+                </section>
+              ) : null}
             </>
           ) : (
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4 text-sm text-slate-600">

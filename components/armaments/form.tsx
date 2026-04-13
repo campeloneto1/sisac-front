@@ -25,6 +25,7 @@ import type {
   CreateArmamentDTO,
   UpdateArmamentDTO,
 } from "@/types/armament.type";
+import { armamentUnitStatusOptions, type ArmamentUnitStatus } from "@/types/armament-unit.type";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -48,6 +49,19 @@ const specificationRowSchema = z.object({
   value: z.string(),
 });
 
+const unitRowSchema = z.object({
+  serial_number: z.string().max(100, "O número de série deve ter no máximo 100 caracteres.").optional().or(z.literal("")),
+  acquisition_date: z.string().optional().or(z.literal("")),
+  expiration_date: z.string().optional().or(z.literal("")),
+  status: z.enum(armamentUnitStatusOptions.map((option) => option.value) as [ArmamentUnitStatus, ...ArmamentUnitStatus[]]),
+});
+
+const batchRowSchema = z.object({
+  batch_number: z.string().min(1, "Informe o número do lote.").max(100, "O número do lote deve ter no máximo 100 caracteres."),
+  quantity: z.coerce.number().int().min(1, "A quantidade deve ser maior que zero."),
+  expiration_date: z.string().optional().or(z.literal("")),
+});
+
 const armamentFormSchema = z.object({
   armament_type_id: z.string().min(1, "Selecione o tipo de armamento."),
   brand_id: z.string().min(1, "Selecione a marca."),
@@ -56,6 +70,8 @@ const armamentFormSchema = z.object({
   armament_size_id: z.string(),
   gender_id: z.string(),
   specifications_rows: z.array(specificationRowSchema),
+  units: z.array(unitRowSchema),
+  batches: z.array(batchRowSchema),
 });
 
 type ArmamentFormValues = z.infer<typeof armamentFormSchema>;
@@ -129,12 +145,24 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
         : "none",
       gender_id: armament?.gender_id ? String(armament.gender_id) : "none",
       specifications_rows: specificationRowsFromRecord(armament?.specifications),
+      units: [],
+      batches: [],
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const specificationsArray = useFieldArray({
     control,
     name: "specifications_rows",
+  });
+
+  const unitsArray = useFieldArray({
+    control,
+    name: "units",
+  });
+
+  const batchesArray = useFieldArray({
+    control,
+    name: "batches",
   });
 
   const selectedTypeId = useWatch({ control, name: "armament_type_id" });
@@ -143,6 +171,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
   const selectedCaliberId = useWatch({ control, name: "armament_caliber_id" });
   const selectedSizeId = useWatch({ control, name: "armament_size_id" });
   const selectedGenderId = useWatch({ control, name: "gender_id" });
+  const watchedUnits = useWatch({ control, name: "units" });
   const variantsQuery = useVariants(
     {
       per_page: 100,
@@ -150,6 +179,11 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
     },
     Boolean(selectedBrandId),
   );
+
+  const selectedArmamentType = typesQuery.data?.data.find(
+    (type) => String(type.id) === selectedTypeId,
+  );
+  const controlType = selectedArmamentType?.control_type;
 
   useEffect(() => {
     if (!armament) {
@@ -168,6 +202,8 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
         : "none",
       gender_id: armament.gender_id ? String(armament.gender_id) : "none",
       specifications_rows: specificationRowsFromRecord(armament.specifications),
+      units: [],
+      batches: [],
     });
   }, [armament, reset]);
 
@@ -176,7 +212,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
       return;
     }
 
-    const payload = {
+    const payloadBase = {
       armament_type_id: Number(values.armament_type_id),
       variant_id: Number(values.variant_id),
       armament_caliber_id:
@@ -193,9 +229,24 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
     };
 
     if (mode === "create") {
-      const response = await createMutation.mutateAsync(
-        payload satisfies CreateArmamentDTO,
-      );
+      const response = await createMutation.mutateAsync({
+        ...payloadBase,
+        units: values.units
+          .map((unit) => ({
+            serial_number: unit.serial_number?.trim() || null,
+            acquisition_date: unit.acquisition_date || null,
+            expiration_date: unit.expiration_date || null,
+            status: unit.status || null,
+          }))
+          .filter((unit) => unit.serial_number || unit.acquisition_date || unit.expiration_date || unit.status),
+        batches: values.batches
+          .map((batch) => ({
+            batch_number: batch.batch_number.trim(),
+            quantity: batch.quantity,
+            expiration_date: batch.expiration_date || null,
+          }))
+          .filter((batch) => batch.batch_number),
+      } satisfies CreateArmamentDTO);
       router.push(`/armaments/${response.data.id}`);
       return;
     }
@@ -206,7 +257,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
 
     const response = await updateMutation.mutateAsync({
       id: armament.id,
-      payload: payload satisfies UpdateArmamentDTO,
+      payload: payloadBase satisfies UpdateArmamentDTO,
     });
     router.push(`/armaments/${response.data.id}`);
   }
@@ -429,7 +480,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => append({ key: "", value: "" })}
+                onClick={() => specificationsArray.append({ key: "", value: "" })}
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Adicionar campo
@@ -437,7 +488,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
             </div>
 
             <div className="space-y-3">
-              {fields.map((field, index) => (
+              {specificationsArray.fields.map((field, index) => (
                 <div
                   key={field.id}
                   className="grid gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-[1fr_1fr_auto]"
@@ -464,7 +515,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
                       variant="outline"
                       size="icon"
                       onClick={() => {
-                        if (fields.length === 1) {
+                        if (specificationsArray.fields.length === 1) {
                           setValue(
                             "specifications_rows",
                             [{ key: "", value: "" }],
@@ -473,7 +524,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
                           return;
                         }
 
-                        remove(index);
+                        specificationsArray.remove(index);
                       }}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -483,6 +534,117 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
               ))}
             </div>
           </section>
+
+          {mode === "create" ? (
+            <>
+              {!controlType ? (
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-800">
+                  Selecione um tipo de armamento para adicionar unidades ou lotes iniciais.
+                </div>
+              ) : null}
+
+              {controlType === "unit" ? (
+                <section className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">Unidades iniciais</h3>
+                      <p className="text-sm text-slate-500">Opcional. Registre unidades individualizadas junto com o armamento.</p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => unitsArray.append({ serial_number: "", acquisition_date: "", expiration_date: "", status: "available" })}
+                    >
+                      <Plus className="mr-2 h-4 w-4" />
+                      Adicionar unidade
+                    </Button>
+                  </div>
+
+                  {unitsArray.fields.length ? (
+                    <div className="space-y-3">
+                      {unitsArray.fields.map((field, index) => (
+                        <div key={field.id} className="grid gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-2 xl:grid-cols-[1fr_0.9fr_0.9fr_0.9fr_auto]">
+                          <Input placeholder="Número de série" {...register(`units.${index}.serial_number` as const)} />
+                          <Input type="date" {...register(`units.${index}.acquisition_date` as const)} />
+                          <Input type="date" {...register(`units.${index}.expiration_date` as const)} />
+                          <Select
+                            value={watchedUnits?.[index]?.status || "available"}
+                            onValueChange={(value) => setValue(`units.${index}.status`, value as ArmamentUnitStatus, { shouldDirty: true, shouldValidate: true })}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {armamentUnitStatusOptions.map((option) => (
+                                <SelectItem key={option.value} value={option.value}>
+                                  {option.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <Button type="button" variant="outline" size="icon" onClick={() => unitsArray.remove(index)}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-5 text-sm text-slate-500">
+                      Nenhuma unidade inicial adicionada.
+                    </div>
+                  )}
+                </section>
+              ) : null}
+
+              {controlType === "batch" ? (
+                <section className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">Lotes iniciais</h3>
+                      <p className="text-sm text-slate-500">Opcional. Registre lotes quando o armamento for controlado por quantidade.</p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => batchesArray.append({ batch_number: "", quantity: 1, expiration_date: "" })}
+                    >
+                      <Plus className="mr-2 h-4 w-4" />
+                      Adicionar lote
+                    </Button>
+                  </div>
+
+                  {batchesArray.fields.length ? (
+                    <div className="space-y-3">
+                      {batchesArray.fields.map((field, index) => (
+                        <div key={field.id} className="grid gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-[1.2fr_0.8fr_1fr_auto]">
+                          <div className="space-y-2">
+                            <Input placeholder="Número do lote" {...register(`batches.${index}.batch_number` as const)} />
+                            {errors.batches?.[index]?.batch_number ? <p className="text-sm text-destructive">{errors.batches[index]?.batch_number?.message}</p> : null}
+                          </div>
+                          <div className="space-y-2">
+                            <Input type="number" min={1} placeholder="Quantidade" {...register(`batches.${index}.quantity` as const)} />
+                            {errors.batches?.[index]?.quantity ? <p className="text-sm text-destructive">{errors.batches[index]?.quantity?.message}</p> : null}
+                          </div>
+                          <Input type="date" {...register(`batches.${index}.expiration_date` as const)} />
+                          <Button type="button" variant="outline" size="icon" onClick={() => batchesArray.remove(index)}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-5 text-sm text-slate-500">
+                      Nenhum lote inicial adicionado.
+                    </div>
+                  )}
+                </section>
+              ) : null}
+            </>
+          ) : (
+            <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4 text-sm text-slate-600">
+              A edição deste formulario atualiza apenas os dados-base do armamento. Unidades e lotes permanecem somente para consulta neste fluxo.
+            </div>
+          )}
 
           <div className="flex flex-wrap justify-end gap-3">
             <Button asChild type="button" variant="outline">
