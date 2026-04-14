@@ -67,9 +67,7 @@ const materialTypeFormSchema = z.object({
     .max(1000, "A descrição deve ter no máximo 1000 caracteres.")
     .optional()
     .or(z.literal("")),
-  control_type: z.enum(["unit", "batch"], {
-    required_error: "Selecione o tipo de controle.",
-  }),
+  control_type: z.enum(["unit", "batch"], "Selecione o tipo de controle."),
 });
 
 type MaterialTypeFormValues = z.infer<typeof materialTypeFormSchema>;

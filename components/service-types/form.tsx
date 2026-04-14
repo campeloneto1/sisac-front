@@ -41,7 +41,7 @@ const serviceTypeFormSchema = z.object({
   requires_approval: z.boolean(),
   estimated_duration_hours: z.union([
     z.literal(""),
-    z.coerce
+    z
       .number()
       .int("A duracao estimada deve ser inteira.")
       .min(1, "A duracao estimada deve ser de no mínimo 1 hora.")

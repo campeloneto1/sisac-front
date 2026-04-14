@@ -62,7 +62,7 @@ export function LeaveTypesTable({ leaveTypes }: LeaveTypesTableProps) {
                       <Badge variant={leaveType.requires_medical_report ? "default" : "secondary"}>
                         {leaveType.requires_medical_report ? "Exige laudo" : "Sem laudo"}
                       </Badge>
-                      <Badge variant={leaveType.affects_salary ? "destructive" : "secondary"}>
+                      <Badge variant={leaveType.affects_salary ? "danger" : "secondary"}>
                         {leaveType.affects_salary ? "Afeta salario" : "Não afeta salario"}
                       </Badge>
                       {leaveType.max_days ? (

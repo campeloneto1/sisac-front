@@ -209,7 +209,7 @@ export function ArmamentBatchesListPage() {
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full sm:w-64"
               />
-              <Button type="submit" variant="secondary">
+              <Button type="submit" variant="default">
                 Buscar
               </Button>
             </form>

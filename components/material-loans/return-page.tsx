@@ -33,15 +33,15 @@ const returnSchema = z
       .max(1000, "As observações devem ter no máximo 1000 caracteres."),
     items: z.array(
       z.object({
-        id: z.coerce.number(),
-        current_returned_quantity: z.coerce.number().int().min(0),
-        current_consumed_quantity: z.coerce.number().int().min(0),
-        current_lost_quantity: z.coerce.number().int().min(0),
-        quantity: z.coerce.number().int().min(1),
+        id: z.number(),
+        current_returned_quantity: z.number().int().min(0),
+        current_consumed_quantity: z.number().int().min(0),
+        current_lost_quantity: z.number().int().min(0),
+        quantity: z.number().int().min(1),
         is_unit_item: z.boolean(),
-        returned_now: z.coerce.number().int().min(0),
-        consumed_now: z.coerce.number().int().min(0),
-        lost_now: z.coerce.number().int().min(0),
+        returned_now: z.number().int().min(0),
+        consumed_now: z.number().int().min(0),
+        lost_now: z.number().int().min(0),
         consumed_justification: z
           .string()
           .max(1000, "A justificativa deve ter no máximo 1000 caracteres."),

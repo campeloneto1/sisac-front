@@ -132,7 +132,7 @@ export function PoliceOfficerAllocationHistoryReportPage() {
         <TableWrap headers={["Policial","Setor","Função","Período","Situação"]}>
           {reportQuery.data.data.map((item) => (
             <tr key={item.id} className="border-t border-slate-200/70">
-              <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.police_officer?.name ?? item.police_officer?.war_name ?? "Sem nome"}</p><p className="text-xs text-slate-500">{item.police_officer?.registration_number ?? "-"}</p></td>
+              <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.police_officer?.name ?? "Sem nome"}</p><p className="text-xs text-slate-500">{item.police_officer?.registration_number ?? "-"}</p></td>
               <td className="px-4 py-4 text-slate-700">{item.sector?.name ?? "-"}</td>
               <td className="px-4 py-4 text-slate-700">{item.assignment?.name ?? "-"}</td>
               <td className="px-4 py-4 text-slate-700">{formatBrazilianDate(item.start_date)} até {item.end_date ? formatBrazilianDate(item.end_date) : "Atual"}</td>
@@ -214,7 +214,7 @@ export function PoliceOfficerPromotionHistoryReportPage() {
         <TableWrap headers={["Policial","Graduação","Tipo","Data da promoção","Boletim"]}>
           {reportQuery.data.data.map((item) => (
             <tr key={item.id} className="border-t border-slate-200/70">
-              <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.police_officer?.name ?? item.police_officer?.war_name ?? "Sem nome"}</p><p className="text-xs text-slate-500">{item.police_officer?.registration_number ?? "-"}</p></td>
+              <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.police_officer?.name ?? "Sem nome"}</p><p className="text-xs text-slate-500">{item.police_officer?.registration_number ?? "-"}</p></td>
               <td className="px-4 py-4 text-slate-700">{item.rank?.name ?? "-"}</td>
               <td className="px-4 py-4 text-slate-700">{item.promotion_type ?? "-"}</td>
               <td className="px-4 py-4 text-slate-700">{formatBrazilianDate(item.promotion_date)}</td>

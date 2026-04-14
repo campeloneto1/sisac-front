@@ -45,8 +45,8 @@ import { Textarea } from "@/components/ui/textarea";
 
 const replacedPartSchema = z.object({
   part: z.string().min(1, "Informe a peça."),
-  quantity: z.coerce.number().int().min(1, "A quantidade deve ser ao menos 1."),
-  cost: z.union([z.coerce.number().min(0), z.literal("")]).optional(),
+  quantity: z.number().int().min(1, "A quantidade deve ser ao menos 1."),
+  cost: z.union([z.number().min(0), z.literal("")]).optional(),
 });
 
 const vehicleMaintenanceFormSchema = z.object({
@@ -59,14 +59,14 @@ const vehicleMaintenanceFormSchema = z.object({
     .max(1000, "A descrição deve ter no máximo 1000 caracteres."),
   entry_date: z.string().min(1, "Informe a data de entrada."),
   entry_time: z.string(),
-  entry_km: z.coerce.number().int().min(0, "Informe uma quilometragem válida."),
+  entry_km: z.number().int().min(0, "Informe uma quilometragem válida."),
   exit_date: z.string().optional().or(z.literal("")),
   exit_time: z.string().optional().or(z.literal("")),
-  exit_km: z.union([z.coerce.number().int().min(0), z.literal("")]),
+  exit_km: z.union([z.number().int().min(0), z.literal("")]),
   expected_completion_date: z.string().optional().or(z.literal("")),
-  cost: z.union([z.coerce.number().min(0), z.literal("")]),
-  parts_cost: z.union([z.coerce.number().min(0), z.literal("")]),
-  labor_cost: z.union([z.coerce.number().min(0), z.literal("")]),
+  cost: z.union([z.number().min(0), z.literal("")]),
+  parts_cost: z.union([z.number().min(0), z.literal("")]),
+  labor_cost: z.union([z.number().min(0), z.literal("")]),
   status: z.string(),
   notes: z
     .string()

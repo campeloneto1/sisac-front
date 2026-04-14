@@ -9,6 +9,7 @@ import { usePermissions } from "@/hooks/use-permissions";
 import { useSubunits } from "@/hooks/use-subunits";
 import { useVehicleLoans } from "@/hooks/use-vehicle-loans";
 import { useVehicles } from "@/hooks/use-vehicles";
+import type { VehicleLoanBorrowerType, VehicleLoanStatus } from "@/types/vehicle-loan.type";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -37,8 +38,8 @@ export function VehicleLoansListPage() {
       page,
       per_page: 15,
       vehicle_id: vehicleId !== "all" ? Number(vehicleId) : null,
-      status: status !== "all" ? status : undefined,
-      borrower_type: borrowerType !== "all" ? borrowerType : undefined,
+      status: status !== "all" ? (status as VehicleLoanStatus) : undefined,
+      borrower_type: borrowerType !== "all" ? (borrowerType as VehicleLoanBorrowerType) : undefined,
       city_id: cityId !== "all" ? Number(cityId) : null,
       subunit_id: subunitId !== "all" ? Number(subunitId) : null,
       start_date_from: startDateFrom || undefined,

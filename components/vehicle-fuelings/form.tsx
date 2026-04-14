@@ -54,11 +54,11 @@ const vehicleFuelingFormSchema = z
     context_id: z.string().min(1, "Selecione o registro relacionado."),
     fueling_date: z.string().min(1, "Informe a data do abastecimento."),
     fueling_time: z.string(),
-    km: z.coerce.number().int().min(0, "Informe uma quilometragem válida."),
+    km: z.number().int().min(0, "Informe uma quilometragem válida."),
     fuel_type: z.string().min(1, "Selecione o combustivel."),
-    liters: z.coerce.number().min(0.01, "Informe a quantidade de litros."),
-    price_per_liter: z.union([z.coerce.number().min(0), z.literal("")]),
-    total_cost: z.union([z.coerce.number().min(0), z.literal("")]),
+    liters: z.number().min(0.01, "Informe a quantidade de litros."),
+    price_per_liter: z.union([z.number().min(0), z.literal("")]),
+    total_cost: z.union([z.number().min(0), z.literal("")]),
     gas_station: z
       .string()
       .max(100, "O posto deve ter no máximo 100 caracteres."),

@@ -28,7 +28,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 
 const bulkPromotionSchema = z.object({
-  rank_id: z.coerce.number().min(1, "Selecione a graduação de destino."),
+  rank_id: z.number().min(1, "Selecione a graduação de destino."),
   start_date: z.string().min(1, "A data de promoção é obrigatória."),
   promotion_type: z.enum(["merit", "seniority", "bravery"]).nullable().optional(),
   promotion_bulletin: z.string().max(100, "O boletim deve ter no máximo 100 caracteres.").optional(),

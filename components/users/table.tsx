@@ -153,7 +153,7 @@ export function UsersTable({ users }: UsersTableProps) {
                         {permissions.canUpdate && item.type === "external" && item.status === "temporarily_authorized" ? (
                           <Button
                             size="icon"
-                            variant="destructive"
+                            variant="outline"
                             title="Revogar acesso"
                             onClick={() => setUserToRevoke(item)}
                           >
@@ -209,7 +209,7 @@ export function UsersTable({ users }: UsersTableProps) {
             <Button variant="ghost" onClick={() => setUserToRevoke(null)}>
               Cancelar
             </Button>
-            <Button variant="destructive" disabled={revokeAccessMutation.isPending} onClick={() => void handleRevoke()}>
+            <Button variant="outline" disabled={revokeAccessMutation.isPending} onClick={() => void handleRevoke()}>
               {revokeAccessMutation.isPending ? "Revogando..." : "Revogar acesso"}
             </Button>
           </DialogFooter>

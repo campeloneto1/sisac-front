@@ -12,7 +12,7 @@ import { usePermissions } from "@/hooks/use-permissions";
 import { useSectors } from "@/hooks/use-sectors";
 import { useSubunits } from "@/hooks/use-subunits";
 import { hasPermission } from "@/lib/permissions";
-import { getDomainLabel } from "@/types/notification-responsibility.type";
+import { getDomainLabel, type NotificationResponsibilityDomain } from "@/types/notification-responsibility.type";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pagination } from "@/components/ui/pagination";
@@ -33,7 +33,7 @@ export function NotificationResponsibilitiesListPage() {
     () => ({
       page,
       per_page: 15,
-      domain: domain === "all" ? undefined : domain,
+      domain: domain === "all" ? undefined : (domain as NotificationResponsibilityDomain),
       subunit_id: subunitId === "all" ? undefined : Number(subunitId),
       sector_id: sectorId === "all" ? undefined : Number(sectorId),
     }),

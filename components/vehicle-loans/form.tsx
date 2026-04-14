@@ -54,7 +54,7 @@ const vehicleLoanFormSchema = z
     borrower_type: z.string(),
     borrower_id: z.string(),
     city_id: z.string(),
-    start_km: z.coerce.number().int().min(0, "A quilometragem inicial deve ser maior ou igual a 0."),
+    start_km: z.number().int().min(0, "A quilometragem inicial deve ser maior ou igual a 0."),
     start_notes: z
       .string()
       .max(1000, "As observações de retirada devem ter no máximo 1000 caracteres."),

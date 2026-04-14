@@ -76,8 +76,8 @@ const vehicleDamageFormSchema = z
     responsible_external_name: z
       .string()
       .max(100, "O nome do responsável externo deve ter no máximo 100 caracteres."),
-    estimated_repair_cost: z.union([z.coerce.number().min(0), z.literal("")]),
-    actual_repair_cost: z.union([z.coerce.number().min(0), z.literal("")]),
+    estimated_repair_cost: z.union([z.number().min(0), z.literal("")]),
+    actual_repair_cost: z.union([z.number().min(0), z.literal("")]),
     status: z.string(),
     repair_date: z.string(),
     notes: z

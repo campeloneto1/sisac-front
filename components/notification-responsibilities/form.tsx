@@ -16,6 +16,7 @@ import {
 import { useSectors } from "@/hooks/use-sectors";
 import type {
   CreateNotificationResponsibilityDTO,
+  NotificationResponsibilityDomain,
   NotificationResponsibilityItem,
   UpdateNotificationResponsibilityDTO,
 } from "@/types/notification-responsibility.type";
@@ -80,7 +81,7 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
     }
 
     const payloadBase = {
-      domain: values.domain,
+      domain: values.domain as NotificationResponsibilityDomain,
       sector_id: Number(values.sector_id),
     };
 

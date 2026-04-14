@@ -45,7 +45,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 
 const returnSchema = z.object({
-  end_km: z.coerce.number().int().min(0, "Informe a quilometragem final."),
+  end_km: z.number().int().min(0, "Informe a quilometragem final."),
   return_notes: z
     .string()
     .max(1000, "As observações devem ter no máximo 1000 caracteres."),
@@ -117,6 +117,7 @@ export function VehicleLoanShowPage() {
     await returnMutation.mutateAsync({
       id: loan.id,
       payload: {
+        end_date: new Date().toISOString().split('T')[0],
         end_km: values.end_km,
         return_notes: values.return_notes.trim() || null,
       },

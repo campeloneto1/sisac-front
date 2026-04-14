@@ -8,6 +8,7 @@ import { useCourseEnrollments } from "@/hooks/use-course-enrollments";
 import { useCourses } from "@/hooks/use-courses";
 import { usePermissions } from "@/hooks/use-permissions";
 import { usePoliceOfficers } from "@/hooks/use-police-officers";
+import type { CourseEnrollmentStatus } from "@/types/course-enrollment.type";
 import { ExternalCourseEnrollmentsFilters } from "@/components/external-course-enrollments/filters";
 import { ExternalCourseEnrollmentsTable } from "@/components/external-course-enrollments/table";
 import { Button } from "@/components/ui/button";
@@ -28,7 +29,7 @@ export function ExternalCourseEnrollmentsListPage() {
     () => ({
       per_page: 100,
       search: search || undefined,
-      status: status !== "all" ? status : undefined,
+      status: status !== "all" ? (status as CourseEnrollmentStatus) : undefined,
       course_id: courseId !== "all" ? Number(courseId) : undefined,
       user_id: policeOfficerId !== "all" ? Number(policeOfficerId) : undefined,
     }),

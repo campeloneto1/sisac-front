@@ -30,8 +30,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const allocationSchema = z.object({
-  sector_id: z.coerce.number().min(1, "Selecione o setor."),
-  assignment_id: z.coerce.number().min(1, "Selecione a função."),
+  sector_id: z.number().min(1, "Selecione o setor."),
+  assignment_id: z.number().min(1, "Selecione a função."),
   start_date: z.string().min(1, "A data de início é obrigatória."),
   end_date: z.string().optional(),
 }).refine((data) => {

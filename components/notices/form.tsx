@@ -42,9 +42,9 @@ const noticeFormSchema = z
     is_pinned: z.boolean(),
     requires_acknowledgement: z.boolean(),
     target_mode: z.enum(["general", "all", "custom"]),
-    sector_ids: z.array(z.string()).default([]),
-    user_ids: z.array(z.string()).default([]),
-    role_ids: z.array(z.string()).default([]),
+    sector_ids: z.array(z.string()),
+    user_ids: z.array(z.string()),
+    role_ids: z.array(z.string()),
   })
   .superRefine((values, ctx) => {
     if (values.starts_at && values.ends_at) {
@@ -465,27 +465,27 @@ export function NoticeForm({ mode, notice }: NoticeFormProps) {
                     title="Setores"
                     description="Setores da subunidade ativa que receberão o aviso."
                     options={sectorOptions}
-                    selectedValues={watchedValues.sector_ids}
+                    selectedValues={watchedValues.sector_ids ?? []}
                     disabled={!customModeEnabled}
-                    onToggle={(value, checked) => setValue("sector_ids", toggleSelection(watchedValues.sector_ids, value, checked), { shouldValidate: true })}
+                    onToggle={(value, checked) => setValue("sector_ids", toggleSelection(watchedValues.sector_ids ?? [], value, checked), { shouldValidate: true })}
                   />
 
                   <SelectionGroup
                     title="Usuários"
                     description="Usuários vinculados à subunidade ativa que devem receber o aviso."
                     options={userOptions}
-                    selectedValues={watchedValues.user_ids}
+                    selectedValues={watchedValues.user_ids ?? []}
                     disabled={!customModeEnabled}
-                    onToggle={(value, checked) => setValue("user_ids", toggleSelection(watchedValues.user_ids, value, checked), { shouldValidate: true })}
+                    onToggle={(value, checked) => setValue("user_ids", toggleSelection(watchedValues.user_ids ?? [], value, checked), { shouldValidate: true })}
                   />
 
                   <SelectionGroup
                     title="Perfis"
                     description="Perfis globais do sistema para segmentação por RBAC."
                     options={roleOptions}
-                    selectedValues={watchedValues.role_ids}
+                    selectedValues={watchedValues.role_ids ?? []}
                     disabled={!customModeEnabled}
-                    onToggle={(value, checked) => setValue("role_ids", toggleSelection(watchedValues.role_ids, value, checked), { shouldValidate: true })}
+                    onToggle={(value, checked) => setValue("role_ids", toggleSelection(watchedValues.role_ids ?? [], value, checked), { shouldValidate: true })}
                   />
                 </div>
               </>

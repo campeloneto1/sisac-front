@@ -35,7 +35,7 @@ export function RevokeAccessDialog({ userId, userName }: RevokeAccessDialogProps
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive" size="default">
+        <Button variant="outline" size="default">
           <ShieldBan className="mr-2 h-4 w-4" />
           Revogar Acesso
         </Button>
@@ -54,7 +54,7 @@ export function RevokeAccessDialog({ userId, userName }: RevokeAccessDialogProps
           </Button>
           <Button
             type="button"
-            variant="destructive"
+            variant="outline"
             onClick={handleRevoke}
             disabled={revokeAccessMutation.isPending}
           >

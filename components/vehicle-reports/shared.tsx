@@ -686,7 +686,7 @@ export function VehicleStateBadge({
   variant,
 }: {
   label: string;
-  variant: "default" | "secondary" | "destructive" | "outline" | "success" | "warning" | "danger" | "info";
+  variant: "default" | "secondary" | "outline" | "success" | "warning" | "danger" | "info";
 }) {
   return <Badge variant={variant}>{label}</Badge>;
 }

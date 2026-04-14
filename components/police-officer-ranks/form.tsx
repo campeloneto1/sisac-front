@@ -21,8 +21,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const policeOfficerRankFormSchema = z.object({
-  police_officer_id: z.coerce.number().min(1, "Selecione um policial"),
-  rank_id: z.coerce.number().min(1, "Selecione uma graduação"),
+  police_officer_id: z.number().min(1, "Selecione um policial"),
+  rank_id: z.number().min(1, "Selecione uma graduação"),
   start_date: z.string().min(1, "A data de início é obrigatória"),
   end_date: z.string().optional(),
   promotion_type: z.enum(["merit", "seniority", "bravery"]).optional().nullable(),

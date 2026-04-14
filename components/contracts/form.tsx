@@ -33,7 +33,7 @@ const contractFormSchema = z
     renewed_from_contract_id: z.string(),
     contract_number: z.string().min(2, "Informe o número do contrato.").max(50, "O número do contrato deve ter no máximo 50 caracteres."),
     sacc_number: z.string().min(2, "Informe o número SACC.").max(50, "O número SACC deve ter no máximo 50 caracteres."),
-    total_value: z.coerce.number().min(0, "O valor total não pode ser negativo."),
+    total_value: z.number().min(0, "O valor total não pode ser negativo."),
     start_date: z.string().min(1, "Informe a data inicial."),
     end_date: z.string().min(1, "Informe a data final."),
     status: z.string().min(1, "Selecione um status."),

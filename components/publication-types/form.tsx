@@ -21,8 +21,8 @@ const publicationTypeFormSchema = z.object({
   name: z.string().min(1, "Informe o nome.").max(100, "O nome deve ter no máximo 100 caracteres."),
   slug: z.string().min(1, "Informe o slug.").max(120, "O slug deve ter no máximo 120 caracteres."),
   description: z.string().optional(),
-  nature: z.enum(["positive", "neutral", "negative"]).default("neutral"),
-  generates_points: z.boolean().default(false),
+  nature: z.enum(["positive", "neutral", "negative"]),
+  generates_points: z.boolean(),
 });
 
 type PublicationTypeFormValues = z.infer<typeof publicationTypeFormSchema>;

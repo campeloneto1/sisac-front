@@ -36,7 +36,7 @@ const unitRowSchema = z.object({
 
 const batchRowSchema = z.object({
   batch_number: z.string().min(1, "Informe o número do lote.").max(100, "O número do lote deve ter no máximo 100 caracteres."),
-  quantity: z.coerce.number().int().min(1, "A quantidade deve ser maior que zero."),
+  quantity: z.number().int().min(1, "A quantidade deve ser maior que zero."),
   expiration_date: z.string().optional().or(z.literal("")),
 });
 

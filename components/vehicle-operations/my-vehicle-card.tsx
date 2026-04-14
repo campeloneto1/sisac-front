@@ -93,13 +93,13 @@ const damageDraftSchema = z.object({
 const takeVehicleSchema = z.object({
   vehicle_id: z.string().min(1, "Selecione uma viatura."),
   city_id: z.string(),
-  start_km: z.coerce.number().int().min(0, "Informe um KM inicial válido."),
+  start_km: z.number().int().min(0, "Informe um KM inicial válido."),
   start_notes: z.string().max(1000, "As observações devem ter no máximo 1000 caracteres."),
   damages: z.array(damageDraftSchema),
 });
 
 const returnVehicleSchema = z.object({
-  end_km: z.coerce.number().int().min(0, "Informe um KM final válido."),
+  end_km: z.number().int().min(0, "Informe um KM final válido."),
   return_notes: z.string().max(1000, "As observações devem ter no máximo 1000 caracteres."),
   damages: z.array(damageDraftSchema),
 });
@@ -107,11 +107,11 @@ const returnVehicleSchema = z.object({
 const fuelingSchema = z.object({
   fueling_date: z.string().min(1, "Informe a data do abastecimento."),
   fueling_time: z.string(),
-  km: z.coerce.number().int().min(0, "Informe um KM válido."),
+  km: z.number().int().min(0, "Informe um KM válido."),
   fuel_type: z.string().min(1, "Selecione o combustível."),
-  liters: z.coerce.number().min(0.01, "Informe a quantidade de litros."),
-  price_per_liter: z.union([z.coerce.number().min(0), z.literal("")]),
-  total_cost: z.union([z.coerce.number().min(0), z.literal("")]),
+  liters: z.number().min(0.01, "Informe a quantidade de litros."),
+  price_per_liter: z.union([z.number().min(0), z.literal("")]),
+  total_cost: z.union([z.number().min(0), z.literal("")]),
   gas_station: z.string().max(100, "O posto deve ter no máximo 100 caracteres."),
   gas_station_city: z.string().max(100, "A cidade deve ter no máximo 100 caracteres."),
   is_full_tank: z.boolean(),

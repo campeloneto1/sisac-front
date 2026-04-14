@@ -90,12 +90,7 @@ export function SearchableSelect({
       <SelectTrigger className={triggerClassName}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent
-        onOpenAutoFocus={(event) => {
-          event.preventDefault();
-          inputRef.current?.focus();
-        }}
-      >
+      <SelectContent>
         <div className="border-b border-slate-200 p-2">
           <Input
             ref={inputRef}

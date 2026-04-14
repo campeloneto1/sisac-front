@@ -142,7 +142,7 @@ export function Pager({ data, onPageChange, disabled }: { data: { meta: { curren
   return <Pagination currentPage={data.meta.current_page} lastPage={data.meta.last_page} total={data.meta.total} from={data.meta.from} to={data.meta.to} onPageChange={onPageChange} isDisabled={disabled} />;
 }
 
-function GenericSelect({ value, placeholder, allLabel, options, onChange }: { value: string; placeholder: string; allLabel: string; options: Array<{ value: string; label: string }>; onChange: (value: string) => void }) {
+function GenericSelect({ value, placeholder, allLabel, options, onChange }: { value: string; placeholder: string; allLabel: string; options: readonly { value: string; label: string }[]; onChange: (value: string) => void }) {
   return <Select value={value} onValueChange={onChange}><SelectTrigger><SelectValue placeholder={placeholder} /></SelectTrigger><SelectContent><SelectItem value="all">{allLabel}</SelectItem>{options.map((option) => <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}</SelectContent></Select>;
 }
 
@@ -167,7 +167,7 @@ export function ContractObjectSelect({ value, onChange }: { value: string; onCha
 }
 
 export function StatusSelect({ value, onChange, placeholder = "Status" }: { value: string; onChange: (value: string) => void; placeholder?: string }) {
-  return <GenericSelect value={value} onChange={onChange} placeholder={placeholder} allLabel="Todos os status" options={contractStatusOptions as Array<{ value: string; label: string }>} />;
+  return <GenericSelect value={value} onChange={onChange} placeholder={placeholder} allLabel="Todos os status" options={contractStatusOptions} />;
 }
 
 export function TransactionTypeSelect({ value, onChange }: { value: string; onChange: (value: string) => void }) {
@@ -179,11 +179,11 @@ export function TransactionStatusSelect({ value, onChange }: { value: string; on
 }
 
 export function AlertTypeSelect({ value, onChange }: { value: string; onChange: (value: string) => void }) {
-  return <GenericSelect value={value} onChange={onChange} placeholder="Tipo de alerta" allLabel="Todos os alertas" options={contractAlertTypeOptions as Array<{ value: string; label: string }>} />;
+  return <GenericSelect value={value} onChange={onChange} placeholder="Tipo de alerta" allLabel="Todos os alertas" options={contractAlertTypeOptions} />;
 }
 
 export function AlertStatusSelect({ value, onChange }: { value: string; onChange: (value: string) => void }) {
-  return <GenericSelect value={value} onChange={onChange} placeholder="Status alerta" allLabel="Todos os status" options={contractAlertStatusOptions as Array<{ value: string; label: string }>} />;
+  return <GenericSelect value={value} onChange={onChange} placeholder="Status alerta" allLabel="Todos os status" options={contractAlertStatusOptions} />;
 }
 
 export function YesNoSelect({ value, onChange, placeholder, allLabel, yesLabel = "Sim", noLabel = "Não" }: { value: string; onChange: (value: string) => void; placeholder: string; allLabel: string; yesLabel?: string; noLabel?: string }) {
