@@ -1,19 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
-  useFieldArray,
   useForm,
   useWatch,
-  type Control,
-  type FieldArray,
-  type FieldArrayPath,
-  type FieldErrors,
-  type FieldValues,
-  type Path,
   type Resolver,
-  type UseFormRegister,
-  type UseFormSetValue,
 } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,7 +31,7 @@ import { getApiErrorMessage } from "@/lib/api";
 import { vehicleDamagesService } from "@/services/vehicle-damages/service";
 import { vehicleFuelingsService } from "@/services/vehicle-fuelings/service";
 import { vehicleLoansService } from "@/services/vehicle-loans/service";
-import type { CreateVehicleDamageDTO } from "@/types/vehicle-damage.type";
+import type { CreateVehicleDamageWithFilesDTO } from "@/types/vehicle-damage.type";
 import {
   vehicleDamageDetectionMomentOptions,
   vehicleDamageSeverityOptions,
@@ -73,35 +64,16 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 
-const damageDraftSchema = z.object({
-  damage_type: z.string().min(1, "Selecione o tipo do problema."),
-  location: z
-    .string()
-    .trim()
-    .min(3, "Informe o local do problema.")
-    .max(100, "O local deve ter no máximo 100 caracteres."),
-  description: z
-    .string()
-    .trim()
-    .min(5, "Descreva o problema com mais detalhes.")
-    .max(1000, "A descrição deve ter no máximo 1000 caracteres."),
-  severity: z.string().min(1, "Selecione a gravidade."),
-  notes: z.string().max(1000, "As observações devem ter no máximo 1000 caracteres."),
-  photos_text: z.string().max(3000, "As URLs das fotos devem ter no máximo 3000 caracteres."),
-});
-
 const takeVehicleSchema = z.object({
   vehicle_id: z.string().min(1, "Selecione uma viatura."),
   city_id: z.string(),
   start_km: z.number().int().min(0, "Informe um KM inicial válido."),
   start_notes: z.string().max(1000, "As observações devem ter no máximo 1000 caracteres."),
-  damages: z.array(damageDraftSchema),
 });
 
 const returnVehicleSchema = z.object({
   end_km: z.number().int().min(0, "Informe um KM final válido."),
   return_notes: z.string().max(1000, "As observações devem ter no máximo 1000 caracteres."),
-  damages: z.array(damageDraftSchema),
 });
 
 const fuelingSchema = z.object({
@@ -132,24 +104,12 @@ const quickDamageSchema = z.object({
     .min(5, "Descreva o problema com mais detalhes.")
     .max(1000, "A descrição deve ter no máximo 1000 caracteres."),
   severity: z.string().min(1, "Selecione a gravidade."),
-  notes: z.string().max(1000, "As observações devem ter no máximo 1000 caracteres."),
-  photos_text: z.string().max(3000, "As URLs das fotos devem ter no máximo 3000 caracteres."),
 });
 
-type DamageDraftValues = z.output<typeof damageDraftSchema>;
 type TakeVehicleValues = z.output<typeof takeVehicleSchema>;
 type ReturnVehicleValues = z.output<typeof returnVehicleSchema>;
 type FuelingValues = z.output<typeof fuelingSchema>;
 type QuickDamageValues = z.output<typeof quickDamageSchema>;
-
-const emptyDamageDraft: DamageDraftValues = {
-  damage_type: "other",
-  location: "",
-  description: "",
-  severity: "minor",
-  notes: "",
-  photos_text: "",
-};
 
 function toDateInput(value = new Date()) {
   return new Date(value.getTime() - value.getTimezoneOffset() * 60_000)
@@ -161,17 +121,6 @@ function toTimeInput(value = new Date()) {
   return new Date(value.getTime() - value.getTimezoneOffset() * 60_000)
     .toISOString()
     .slice(11, 16);
-}
-
-function parsePhotoLines(value?: string) {
-  if (!value) {
-    return [];
-  }
-
-  return value
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
 }
 
 function normalizeTime(value: string) {
@@ -188,14 +137,28 @@ function parseNumberField(value: number | "" | undefined) {
 
 function formatPlateLabel(item?: {
   license_plate?: string | null;
+  special_plate?: string | null;
   vehicle_type?: { name?: string | null } | null;
-  variant?: { name?: string | null } | null;
+  variant?: {
+    name?: string | null;
+    brand?: { name?: string | null } | null;
+  } | null;
 } | null) {
-  const details = [item?.vehicle_type?.name, item?.variant?.name]
+  // Combinar placa normal e placa especial
+  const plates = [item?.license_plate, item?.special_plate]
+    .filter(Boolean)
+    .join(" / ");
+
+  // Combinar marca, modelo e tipo de veículo
+  const details = [
+    item?.variant?.brand?.name,
+    item?.variant?.name,
+    item?.vehicle_type?.name,
+  ]
     .filter(Boolean)
     .join(" • ");
 
-  return [item?.license_plate ?? "Viatura", details].filter(Boolean).join(" • ");
+  return [plates || "Viatura", details].filter(Boolean).join(" • ");
 }
 
 function formatDateLabel(value?: string | null) {
@@ -264,198 +227,6 @@ function StepBadge({
   );
 }
 
-function DamageDraftList<T extends FieldValues & { damages: DamageDraftValues[] }>({
-  control,
-  register,
-  setValue,
-  errors,
-  title,
-  description,
-}: {
-  control: Control<T>;
-  register: UseFormRegister<T>;
-  setValue: UseFormSetValue<T>;
-  errors: FieldErrors<T>;
-  title: string;
-  description: string;
-}) {
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "damages" as FieldArrayPath<T>,
-  });
-  const damages = useWatch({ control, name: "damages" as Path<T> }) as DamageDraftValues[];
-  const damageErrors = errors.damages as
-    | Array<Partial<Record<keyof DamageDraftValues, { message?: string }>>>
-    | undefined;
-
-  return (
-    <section className="space-y-4">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <h3 className="text-base font-semibold text-slate-900">{title}</h3>
-          <p className="text-sm text-slate-500">{description}</p>
-        </div>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() =>
-            append({ ...emptyDamageDraft } as unknown as FieldArray<T, FieldArrayPath<T>>)
-          }
-        >
-          Adicionar problema
-        </Button>
-      </div>
-
-      {!fields.length ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-500">
-          Nenhum problema informado nesta etapa.
-        </div>
-      ) : null}
-
-      <div className="space-y-4">
-        {fields.map((field, index) => {
-          const previewPhotos = parsePhotoLines(damages?.[index]?.photos_text).slice(
-            0,
-            3,
-          );
-
-          return (
-            <div
-              key={field.id}
-              className="space-y-4 rounded-[24px] border border-slate-200/70 bg-slate-50 p-4"
-            >
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <p className="text-sm font-medium text-slate-900">
-                    Problema #{index + 1}
-                  </p>
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                    Registro operacional
-                  </p>
-                </div>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  className="text-slate-500"
-                  onClick={() => remove(index)}
-                >
-                  Remover
-                </Button>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label>Tipo</Label>
-                  <Select
-                    value={damages?.[index]?.damage_type ?? "other"}
-                    onValueChange={(value) =>
-                      setValue(`damages.${index}.damage_type` as Path<T>, value as never, {
-                        shouldDirty: true,
-                        shouldValidate: true,
-                      })
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o tipo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {vehicleDamageTypeOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-sm text-destructive">
-                    {damageErrors?.[index]?.damage_type?.message ?? ""}
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Gravidade</Label>
-                  <Select
-                    value={damages?.[index]?.severity ?? "minor"}
-                    onValueChange={(value) =>
-                      setValue(`damages.${index}.severity` as Path<T>, value as never, {
-                        shouldDirty: true,
-                        shouldValidate: true,
-                      })
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione a gravidade" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {vehicleDamageSeverityOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-sm text-destructive">
-                    {damageErrors?.[index]?.severity?.message ?? ""}
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Local</Label>
-                <Input {...register(`damages.${index}.location` as Path<T>)} placeholder="Ex.: para-choque dianteiro" />
-                <p className="text-sm text-destructive">
-                  {damageErrors?.[index]?.location?.message ?? ""}
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Descricao</Label>
-                <Textarea
-                  {...register(`damages.${index}.description` as Path<T>)}
-                  rows={3}
-                  placeholder="Descreva o que foi encontrado."
-                />
-                <p className="text-sm text-destructive">
-                  {damageErrors?.[index]?.description?.message ?? ""}
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Observacoes</Label>
-                <Textarea
-                  {...register(`damages.${index}.notes` as Path<T>)}
-                  rows={2}
-                  placeholder="Informacoes complementares, se houver."
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>URLs das fotos</Label>
-                <Textarea
-                  {...register(`damages.${index}.photos_text` as Path<T>)}
-                  rows={3}
-                  placeholder="Uma URL por linha para gerar preview."
-                />
-                {previewPhotos.length > 0 ? (
-                  <div className="grid grid-cols-3 gap-3">
-                    {previewPhotos.map((photo, photoIndex) => (
-                      <div
-                        key={`${photo}-${photoIndex}`}
-                        className="h-20 rounded-2xl border border-slate-200 bg-cover bg-center"
-                        style={{ backgroundImage: `url(${photo})` }}
-                        aria-label={`Preview da foto ${photoIndex + 1}`}
-                      />
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
 export function MyVehicleCard() {
   const queryClient = useQueryClient();
   const { user } = useAuth();
@@ -480,7 +251,7 @@ export function MyVehicleCard() {
         throw new Error("Sessão inválida. Entre novamente para continuar.");
       }
 
-      const loanResponse = await vehicleLoansService.create({
+      return vehicleLoansService.create({
         vehicle_id: Number(values.vehicle_id),
         borrower_id: user.id,
         borrower_type: getAuthenticatedBorrowerType(user),
@@ -488,22 +259,6 @@ export function MyVehicleCard() {
         start_km: Number(values.start_km),
         start_notes: values.start_notes.trim() || null,
       });
-
-      for (const damage of values.damages) {
-        await vehicleDamagesService.create({
-          vehicle_id: Number(values.vehicle_id),
-          vehicle_loan_id: loanResponse.data.id,
-          detection_moment: "pickup",
-          damage_type: damage.damage_type as CreateVehicleDamageDTO["damage_type"],
-          location: damage.location.trim(),
-          description: damage.description.trim(),
-          severity: damage.severity as CreateVehicleDamageDTO["severity"],
-          notes: damage.notes.trim() || null,
-          photos: parsePhotoLines(damage.photos_text),
-        });
-      }
-
-      return loanResponse;
     },
     onSuccess: async (response) => {
       await invalidateOperationalQueries(queryClient);
@@ -525,28 +280,12 @@ export function MyVehicleCard() {
         throw new Error("Nenhum empréstimo ativo disponível para devolução.");
       }
 
-      const response = await vehicleLoansService.markAsReturned(activeLoan.id, {
+      return vehicleLoansService.markAsReturned(activeLoan.id, {
         end_km: Number(values.end_km),
         return_notes: values.return_notes.trim() || null,
         end_date: toDateInput(),
         end_time: normalizeTime(toTimeInput()),
       });
-
-      for (const damage of values.damages) {
-        await vehicleDamagesService.create({
-          vehicle_id: activeLoan.vehicle_id,
-          vehicle_loan_id: activeLoan.id,
-          detection_moment: "return",
-          damage_type: damage.damage_type as CreateVehicleDamageDTO["damage_type"],
-          location: damage.location.trim(),
-          description: damage.description.trim(),
-          severity: damage.severity as CreateVehicleDamageDTO["severity"],
-          notes: damage.notes.trim() || null,
-          photos: parsePhotoLines(damage.photos_text),
-        });
-      }
-
-      return response;
     },
     onSuccess: async () => {
       await invalidateOperationalQueries(queryClient);
@@ -591,23 +330,24 @@ export function MyVehicleCard() {
   });
 
   const damageMutation = useMutation({
-    mutationFn: async (values: QuickDamageValues) => {
+    mutationFn: async (values: QuickDamageValues & { photo_file?: File }) => {
       if (!activeLoan) {
         throw new Error("Nenhum empréstimo ativo disponível para registrar problema.");
       }
 
-      return vehicleDamagesService.create({
+      const payload: CreateVehicleDamageWithFilesDTO = {
         vehicle_id: activeLoan.vehicle_id,
         vehicle_loan_id: activeLoan.id,
         detection_moment:
-          values.detection_moment as CreateVehicleDamageDTO["detection_moment"],
-        damage_type: values.damage_type as CreateVehicleDamageDTO["damage_type"],
+          values.detection_moment as CreateVehicleDamageWithFilesDTO["detection_moment"],
+        damage_type: values.damage_type as CreateVehicleDamageWithFilesDTO["damage_type"],
         location: values.location.trim(),
         description: values.description.trim(),
-        severity: values.severity as CreateVehicleDamageDTO["severity"],
-        notes: values.notes.trim() || null,
-        photos: parsePhotoLines(values.photos_text),
-      });
+        severity: values.severity as CreateVehicleDamageWithFilesDTO["severity"],
+        photo_files: values.photo_file ? [values.photo_file] : undefined,
+      };
+
+      return vehicleDamagesService.create(payload);
     },
     onSuccess: async () => {
       await invalidateOperationalQueries(queryClient);
@@ -829,7 +569,6 @@ function TakeVehicleDialog({
 }) {
   const vehiclesQuery = useAvailableVehicles({ per_page: 100 });
   const citiesQuery = useCities({ per_page: 100 });
-  const damagePermissions = usePermissions("vehicle-damages");
   const [step, setStep] = useState(1);
   const {
     control,
@@ -845,7 +584,6 @@ function TakeVehicleDialog({
       city_id: "none",
       start_km: 0,
       start_notes: "",
-      damages: [],
     },
   });
   const values = useWatch({ control }) as TakeVehicleValues;
@@ -883,14 +621,13 @@ function TakeVehicleDialog({
         <DialogHeader>
           <DialogTitle>Assumir viatura</DialogTitle>
           <DialogDescription>
-            Retirada guiada para registrar viatura, KM inicial e avarias de saída.
+            Registre a viatura e o KM inicial. Apos confirmar, use &quot;Registrar problema&quot; para informar avarias.
           </DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-wrap gap-4 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
           <StepBadge step={1} currentStep={step} label="Dados iniciais" />
-          <StepBadge step={2} currentStep={step} label="Problemas" />
-          <StepBadge step={3} currentStep={step} label="Confirmacao" />
+          <StepBadge step={2} currentStep={step} label="Confirmacao" />
         </div>
 
         <form className="space-y-6" onSubmit={handleSubmit(submit)}>
@@ -949,7 +686,7 @@ function TakeVehicleDialog({
 
               <div className="space-y-2">
                 <Label>KM inicial</Label>
-                <Input type="number" min={0} {...register("start_km")} />
+                <Input type="number" min={0} {...register("start_km", { valueAsNumber: true })} />
                 <p className="text-sm text-destructive">{errors.start_km?.message}</p>
               </div>
 
@@ -974,23 +711,6 @@ function TakeVehicleDialog({
           ) : null}
 
           {step === 2 ? (
-            damagePermissions.canCreate ? (
-              <DamageDraftList
-                control={control}
-                register={register}
-                setValue={setValue}
-                errors={errors}
-                title="Avarias de retirada"
-                description="Registre os problemas encontrados antes da saída da viatura."
-              />
-            ) : (
-              <div className="rounded-[24px] border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-900">
-                Seu perfil nao possui permissão para criar danos. A retirada pode continuar sem essa etapa.
-              </div>
-            )
-          ) : null}
-
-          {step === 3 ? (
             <section className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="rounded-[24px] border border-slate-200/70 bg-slate-50 p-4">
@@ -1013,12 +733,9 @@ function TakeVehicleDialog({
                 </div>
               </div>
 
-              <div className="rounded-[24px] border border-slate-200/70 bg-slate-50 p-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Problemas registrados
-                </p>
-                <p className="mt-2 text-base font-semibold text-slate-900">
-                  {values.damages.length} {values.damages.length === 1 ? "problema" : "problemas"}
+              <div className="rounded-[24px] border border-amber-100 bg-amber-50 p-4">
+                <p className="text-sm text-amber-800">
+                  Apos confirmar a retirada, use o botao &quot;Registrar problema&quot; para informar avarias encontradas na viatura com fotos.
                 </p>
               </div>
             </section>
@@ -1031,7 +748,7 @@ function TakeVehicleDialog({
               </Button>
             ) : null}
 
-            {step < 3 ? (
+            {step < 2 ? (
               <Button type="button" onClick={() => setStep((current) => current + 1)}>
                 Avancar <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -1060,14 +777,12 @@ function ReturnVehicleDialog({
   isPending: boolean;
   onSubmit: (values: ReturnVehicleValues) => Promise<unknown>;
 }) {
-  const damagePermissions = usePermissions("vehicle-damages");
   const [step, setStep] = useState(1);
   const {
     control,
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm<ReturnVehicleValues>({
     resolver: zodResolver(
@@ -1088,7 +803,6 @@ function ReturnVehicleDialog({
     defaultValues: {
       end_km: activeLoan?.start_km ?? 0,
       return_notes: "",
-      damages: [],
     },
   });
   const values = useWatch({ control }) as ReturnVehicleValues;
@@ -1108,7 +822,6 @@ function ReturnVehicleDialog({
           reset({
             end_km: activeLoan?.start_km ?? 0,
             return_notes: "",
-            damages: [],
           });
           setStep(1);
         }
@@ -1118,14 +831,13 @@ function ReturnVehicleDialog({
         <DialogHeader>
           <DialogTitle>Devolver viatura</DialogTitle>
           <DialogDescription>
-            Fechamento rápido do empréstimo com KM final e problemas encontrados no retorno.
+            Registre o KM final. Problemas encontrados no retorno podem ser informados antes via &quot;Registrar problema&quot;.
           </DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-wrap gap-4 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
           <StepBadge step={1} currentStep={step} label="Devolucao" />
-          <StepBadge step={2} currentStep={step} label="Avarias" />
-          <StepBadge step={3} currentStep={step} label="Confirmacao" />
+          <StepBadge step={2} currentStep={step} label="Confirmacao" />
         </div>
 
         <form className="space-y-6" onSubmit={handleSubmit(submit)}>
@@ -1142,7 +854,7 @@ function ReturnVehicleDialog({
 
               <div className="space-y-2">
                 <Label>KM final</Label>
-                <Input type="number" min={0} {...register("end_km")} />
+                <Input type="number" min={0} {...register("end_km", { valueAsNumber: true })} />
                 <p className="text-sm text-destructive">{errors.end_km?.message}</p>
               </div>
 
@@ -1169,23 +881,6 @@ function ReturnVehicleDialog({
           ) : null}
 
           {step === 2 ? (
-            damagePermissions.canCreate ? (
-              <DamageDraftList
-                control={control}
-                register={register}
-                setValue={setValue}
-                errors={errors}
-                title="Avarias de devolucao"
-                description="Registre novos problemas percebidos no retorno da viatura."
-              />
-            ) : (
-              <div className="rounded-[24px] border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-900">
-                Seu perfil nao possui permissão para criar danos. A devolução pode continuar sem essa etapa.
-              </div>
-            )
-          ) : null}
-
-          {step === 3 ? (
             <section className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="rounded-[24px] border border-slate-200/70 bg-slate-50 p-4">
@@ -1198,11 +893,21 @@ function ReturnVehicleDialog({
                   </p>
                 </div>
                 <div className="rounded-[24px] border border-slate-200/70 bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Problemas</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">KM rodado</p>
                   <p className="mt-2 text-base font-semibold text-slate-900">
-                    {values.damages.length} {values.damages.length === 1 ? "registro" : "registros"}
+                    {activeLoan
+                      ? `${new Intl.NumberFormat("pt-BR").format(
+                          Math.max(0, Number(values.end_km ?? 0) - activeLoan.start_km),
+                        )} km`
+                      : "-"}
                   </p>
                 </div>
+              </div>
+
+              <div className="rounded-[24px] border border-amber-100 bg-amber-50 p-4">
+                <p className="text-sm text-amber-800">
+                  Problemas encontrados no retorno devem ser registrados antes de devolver, usando o botao &quot;Registrar problema&quot;.
+                </p>
               </div>
             </section>
           ) : null}
@@ -1214,7 +919,7 @@ function ReturnVehicleDialog({
               </Button>
             ) : null}
 
-            {step < 3 ? (
+            {step < 2 ? (
               <Button type="button" onClick={() => setStep((current) => current + 1)}>
                 Avancar <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -1338,7 +1043,7 @@ function FuelingDialog({
 
             <div className="space-y-2">
               <Label>KM</Label>
-              <Input type="number" min={0} {...register("km")} />
+              <Input type="number" min={0} {...register("km", { valueAsNumber: true })} />
               <p className="text-sm text-destructive">{errors.km?.message}</p>
             </div>
 
@@ -1369,18 +1074,18 @@ function FuelingDialog({
 
             <div className="space-y-2">
               <Label>Litros</Label>
-              <Input type="number" min={0} step="0.01" {...register("liters")} />
+              <Input type="number" min={0} step="0.01" {...register("liters", { valueAsNumber: true })} />
               <p className="text-sm text-destructive">{errors.liters?.message}</p>
             </div>
 
             <div className="space-y-2">
               <Label>Preco por litro</Label>
-              <Input type="number" min={0} step="0.01" {...register("price_per_liter")} />
+              <Input type="number" min={0} step="0.01" {...register("price_per_liter", { valueAsNumber: true })} />
             </div>
 
             <div className="space-y-2">
               <Label>Valor total</Label>
-              <Input type="number" min={0} step="0.01" {...register("total_cost")} />
+              <Input type="number" min={0} step="0.01" {...register("total_cost", { valueAsNumber: true })} />
               {totalPreview !== null ? (
                 <p className="text-xs text-slate-500">
                   Sugestao automática: R$ {totalPreview.toFixed(2)}
@@ -1437,8 +1142,12 @@ function QuickDamageDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   isPending: boolean;
-  onSubmit: (values: QuickDamageValues) => Promise<unknown>;
+  onSubmit: (values: QuickDamageValues & { photo_file?: File }) => Promise<unknown>;
 }) {
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const {
     register,
     handleSubmit,
@@ -1449,24 +1158,42 @@ function QuickDamageDialog({
   } = useForm<QuickDamageValues>({
     resolver: zodResolver(quickDamageSchema) as Resolver<QuickDamageValues>,
     defaultValues: {
-      detection_moment: "inspection",
+      detection_moment: "pickup",
       damage_type: "other",
       location: "",
       description: "",
       severity: "minor",
-      notes: "",
-      photos_text: "",
     },
   });
   const selectedDetectionMoment = useWatch({ control, name: "detection_moment" });
   const selectedDamageType = useWatch({ control, name: "damage_type" });
   const selectedSeverity = useWatch({ control, name: "severity" });
-  const photosText = useWatch({ control, name: "photos_text" });
-  const previews = parsePhotoLines(photosText).slice(0, 3);
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPhotoFile(file);
+      setPhotoPreview(URL.createObjectURL(file));
+    }
+    e.target.value = "";
+  }
+
+  function clearPhoto() {
+    setPhotoFile(null);
+    if (photoPreview) {
+      URL.revokeObjectURL(photoPreview);
+      setPhotoPreview(null);
+    }
+  }
+
+  function resetForm() {
+    reset();
+    clearPhoto();
+  }
 
   async function submit(values: QuickDamageValues) {
-    await onSubmit(values);
-    reset();
+    await onSubmit({ ...values, photo_file: photoFile ?? undefined });
+    resetForm();
   }
 
   return (
@@ -1475,24 +1202,84 @@ function QuickDamageDialog({
       onOpenChange={(nextOpen) => {
         onOpenChange(nextOpen);
         if (!nextOpen) {
-          reset();
+          resetForm();
         }
       }}
     >
-      <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto">
+      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Registrar problema</DialogTitle>
           <DialogDescription>
-            Ação rápida para registrar dano ou irregularidade durante o uso da viatura.
+            Tire uma foto e descreva o problema encontrado na viatura.
           </DialogDescription>
         </DialogHeader>
 
-        <form className="space-y-6" onSubmit={handleSubmit(submit)}>
-          <div className="grid gap-5 md:grid-cols-2">
+        <form className="space-y-5" onSubmit={handleSubmit(submit)}>
+          {/* Foto - seção principal para mobile */}
+          <div className="space-y-3">
+            <Label>Foto do problema</Label>
+            {photoPreview ? (
+              <div className="relative">
+                <img
+                  src={photoPreview}
+                  alt="Preview da foto"
+                  className="aspect-video w-full rounded-2xl border border-slate-200 object-cover"
+                />
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  className="absolute right-2 top-2"
+                  onClick={clearPhoto}
+                >
+                  Remover
+                </Button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 text-slate-500 transition-colors hover:border-primary hover:bg-slate-100"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-10 w-10"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                <span className="text-sm font-medium">Tirar foto ou selecionar</span>
+              </button>
+            )}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+          </div>
+
+          {/* Campos simplificados */}
+          <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label>Momento</Label>
               <Select
-                value={selectedDetectionMoment || "inspection"}
+                value={selectedDetectionMoment || "pickup"}
                 onValueChange={(value) =>
                   setValue("detection_moment", value, {
                     shouldDirty: true,
@@ -1501,7 +1288,7 @@ function QuickDamageDialog({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione o momento" />
+                  <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
                   {vehicleDamageDetectionMomentOptions.map((option) => (
@@ -1511,7 +1298,6 @@ function QuickDamageDialog({
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-sm text-destructive">{errors.detection_moment?.message}</p>
             </div>
 
             <div className="space-y-2">
@@ -1526,7 +1312,7 @@ function QuickDamageDialog({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione o tipo" />
+                  <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
                   {vehicleDamageTypeOptions.map((option) => (
@@ -1536,7 +1322,6 @@ function QuickDamageDialog({
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-sm text-destructive">{errors.damage_type?.message}</p>
             </div>
 
             <div className="space-y-2">
@@ -1551,7 +1336,7 @@ function QuickDamageDialog({
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione a gravidade" />
+                  <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
                   {vehicleDamageSeverityOptions.map((option) => (
@@ -1561,47 +1346,35 @@ function QuickDamageDialog({
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-sm text-destructive">{errors.severity?.message}</p>
             </div>
 
             <div className="space-y-2">
               <Label>Local</Label>
-              <Input {...register("location")} placeholder="Ex.: porta traseira direita" />
+              <Input {...register("location")} placeholder="Ex.: porta traseira" />
               <p className="text-sm text-destructive">{errors.location?.message}</p>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label>Descricao</Label>
-            <Textarea {...register("description")} rows={4} placeholder="Explique o que aconteceu e o que foi observado." />
+            <Label>Descricao do problema</Label>
+            <Textarea
+              {...register("description")}
+              rows={3}
+              placeholder="Descreva o que foi encontrado..."
+            />
             <p className="text-sm text-destructive">{errors.description?.message}</p>
           </div>
 
-          <div className="space-y-2">
-            <Label>Observacoes</Label>
-            <Textarea {...register("notes")} rows={3} placeholder="Detalhes adicionais, testemunhas ou encaminhamentos." />
-          </div>
-
-          <div className="space-y-2">
-            <Label>URLs das fotos</Label>
-            <Textarea {...register("photos_text")} rows={3} placeholder="Uma URL por linha para preview." />
-            {previews.length > 0 ? (
-              <div className="grid grid-cols-3 gap-3">
-                {previews.map((photo, index) => (
-                  <div
-                    key={`${photo}-${index}`}
-                    className="h-20 rounded-2xl border border-slate-200 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${photo})` }}
-                    aria-label={`Preview da foto ${index + 1}`}
-                  />
-                ))}
-              </div>
-            ) : null}
-          </div>
-
-          <DialogFooter>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
+              Cancelar
+            </Button>
             <Button type="submit" disabled={isPending}>
-              Registrar problema
+              {isPending ? "Enviando..." : "Registrar problema"}
             </Button>
           </DialogFooter>
         </form>

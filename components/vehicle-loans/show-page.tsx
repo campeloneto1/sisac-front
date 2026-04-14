@@ -20,6 +20,7 @@ import { useVehicleLoan } from "@/hooks/use-vehicle-loans";
 import { formatBrazilianDate } from "@/lib/date-formatter";
 import {
   getVehicleLoanBorrowerLabel,
+  getVehicleLoanBorrowerTypeLabel,
   getVehicleLoanStatusVariant,
 } from "@/types/vehicle-loan.type";
 import { Badge } from "@/components/ui/badge";
@@ -203,9 +204,7 @@ export function VehicleLoanShowPage() {
                     {getVehicleLoanBorrowerLabel(loan)}
                   </p>
                   <p className="text-sm text-slate-500">
-                    {loan.borrower_type === "App\\Models\\PoliceOfficer"
-                      ? "Policial"
-                      : "Usuário"}
+                    {getVehicleLoanBorrowerTypeLabel(loan)}
                   </p>
                 </div>
               </div>

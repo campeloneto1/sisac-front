@@ -28,6 +28,29 @@ export const usersService = {
     return data;
   },
   async create(payload: CreateUserDTO): Promise<UserResponse> {
+    // Se houver foto, enviar como FormData
+    if (payload.profile_photo) {
+      const formData = new FormData();
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          if (value instanceof File) {
+            formData.append(key, value);
+          } else {
+            formData.append(key, String(value));
+          }
+        }
+      });
+
+      const { data } = await api.post<UserResponse>("/users", formData, {
+        skipSubunit: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      return data;
+    }
+
     const { data } = await api.post<UserResponse>("/users", payload, {
       skipSubunit: true,
     });
@@ -35,6 +58,32 @@ export const usersService = {
     return data;
   },
   async update(id: number | string, payload: UpdateUserDTO): Promise<UserResponse> {
+    // Se houver foto ou flag de deletar foto, enviar como FormData
+    if (payload.profile_photo || payload.delete_profile_photo) {
+      const formData = new FormData();
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          if (value instanceof File) {
+            formData.append(key, value);
+          } else {
+            formData.append(key, String(value));
+          }
+        }
+      });
+
+      // Laravel precisa do _method para simular PUT com FormData
+      formData.append("_method", "PUT");
+
+      const { data } = await api.post<UserResponse>(`/users/${id}`, formData, {
+        skipSubunit: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      return data;
+    }
+
     const { data } = await api.put<UserResponse>(`/users/${id}`, payload, {
       skipSubunit: true,
     });

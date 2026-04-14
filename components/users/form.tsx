@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 
 import { useCreateUserMutation, useUpdateUserMutation } from "@/hooks/use-user-mutations";
 import { useRoles } from "@/hooks/use-users";
@@ -70,6 +71,9 @@ export function UserForm({ mode, user }: UserFormProps) {
   const rolesQuery = useRoles();
   const createMutation = useCreateUserMutation();
   const updateMutation = useUpdateUserMutation();
+  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
+  const [profilePhotoPreview, setProfilePhotoPreview] = useState<string | null>(null);
+  const [deleteProfilePhoto, setDeleteProfilePhoto] = useState(false);
   const {
     register,
     handleSubmit,
@@ -126,6 +130,25 @@ export function UserForm({ mode, user }: UserFormProps) {
     name: "status",
   });
 
+  function handleProfilePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) {
+      setProfilePhoto(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePhotoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+      setDeleteProfilePhoto(false);
+    }
+  }
+
+  function handleRemoveProfilePhoto() {
+    setProfilePhoto(null);
+    setProfilePhotoPreview(null);
+    setDeleteProfilePhoto(true);
+  }
+
   async function onSubmit(values: UserFormValues) {
     const basePayload = {
       name: values.name.trim(),
@@ -159,6 +182,7 @@ export function UserForm({ mode, user }: UserFormProps) {
         ...basePayload,
         password: values.password ?? "",
         password_confirmation: values.password_confirmation ?? "",
+        profile_photo: profilePhoto,
       };
 
       const response = await createMutation.mutateAsync(payload);
@@ -172,6 +196,8 @@ export function UserForm({ mode, user }: UserFormProps) {
 
     const payload: UpdateUserDTO = {
       ...basePayload,
+      profile_photo: profilePhoto,
+      delete_profile_photo: deleteProfilePhoto,
     };
 
     if (values.password?.trim()) {
@@ -202,6 +228,46 @@ export function UserForm({ mode, user }: UserFormProps) {
             <Label htmlFor="name">Nome</Label>
             <Input id="name" {...register("name")} />
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <Label htmlFor="profile_photo">Foto de Perfil</Label>
+            <div className="flex items-start gap-4">
+              <div className="relative w-24 h-24 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center">
+                {profilePhotoPreview || (user?.profile_photo?.url && !deleteProfilePhoto) ? (
+                  <Image
+                    src={profilePhotoPreview || user?.profile_photo?.url || ""}
+                    alt="Preview da foto de perfil"
+                    width={96}
+                    height={96}
+                    className="object-cover w-full h-full"
+                  />
+                ) : (
+                  <span className="text-slate-400 text-3xl">{user?.name?.charAt(0).toUpperCase() || "?"}</span>
+                )}
+              </div>
+              <div className="flex-1 space-y-2">
+                <Input
+                  id="profile_photo"
+                  type="file"
+                  accept="image/jpeg,image/jpg,image/png,image/webp"
+                  onChange={handleProfilePhotoChange}
+                />
+                <p className="text-xs text-slate-500">
+                  Formatos aceitos: JPG, JPEG, PNG, WEBP. Tamanho máximo: 10MB.
+                </p>
+                {(user?.profile_photo?.url || profilePhotoPreview) && !deleteProfilePhoto ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleRemoveProfilePhoto}
+                  >
+                    Remover foto
+                  </Button>
+                ) : null}
+              </div>
+            </div>
           </div>
 
           <div className="space-y-2">

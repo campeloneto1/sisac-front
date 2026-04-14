@@ -137,6 +137,15 @@ export interface CreateVehicleDamageDTO {
 export interface UpdateVehicleDamageDTO
   extends Partial<CreateVehicleDamageDTO> {}
 
+export interface CreateVehicleDamageWithFilesDTO extends CreateVehicleDamageDTO {
+  photo_files?: File[];
+}
+
+export interface UpdateVehicleDamageWithFilesDTO extends UpdateVehicleDamageDTO {
+  photo_files?: File[];
+  delete_upload_ids?: number[];
+}
+
 export interface VehicleDamageResponse {
   message: string;
   data: VehicleDamageItem;

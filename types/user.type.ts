@@ -88,6 +88,7 @@ export interface CreateUserDTO {
   status?: string | null;
   authorized_until?: string | null;
   role_id: number;
+  profile_photo?: File | null;
 }
 
 export interface UpdateUserDTO {
@@ -101,6 +102,8 @@ export interface UpdateUserDTO {
   status?: string | null;
   authorized_until?: string | null;
   role_id?: number;
+  profile_photo?: File | null;
+  delete_profile_photo?: boolean;
 }
 
 export interface ResetUserPasswordDTO {

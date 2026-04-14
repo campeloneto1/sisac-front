@@ -8,7 +8,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useDeleteUserMutation, useRevokeAccessMutation, useRenewAccessMutation } from "@/hooks/use-user-mutations";
 import type { UserListItem } from "@/types/user.type";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -101,6 +101,9 @@ export function UsersTable({ users }: UsersTableProps) {
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-3">
                         <Avatar className="h-10 w-10">
+                          {item.profile_photo?.url ? (
+                            <AvatarImage src={item.profile_photo.url} alt={item.name} />
+                          ) : null}
                           <AvatarFallback>{item.name.slice(0, 2).toUpperCase()}</AvatarFallback>
                         </Avatar>
                         <div>

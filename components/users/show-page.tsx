@@ -9,7 +9,7 @@ import { usePermissions } from "@/hooks/use-permissions";
 import { useUser } from "@/hooks/use-users";
 import { useUserSubunits } from "@/hooks/use-user-subunits";
 import type { Subunit } from "@/types/subunit.type";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -85,6 +85,9 @@ export function UserShowPage() {
       <div className="flex flex-col gap-4 rounded-[28px] border border-slate-200/70 bg-white/80 p-6 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex items-center gap-4">
           <Avatar className="h-20 w-20">
+            {user.profile_photo?.url ? (
+              <AvatarImage src={user.profile_photo.url} alt={user.name} />
+            ) : null}
             <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div>

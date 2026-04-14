@@ -160,18 +160,45 @@ export const vehicleLoanBorrowerTypeOptions: Array<{
   { value: "App\\Models\\User", label: "Usuário" },
 ];
 
+export function hasPoliceOfficerData(borrower?: VehicleLoanBorrower | null): boolean {
+  if (!borrower) return false;
+
+  return !!(
+    borrower.war_name ||
+    borrower.badge_number ||
+    borrower.registration_number ||
+    borrower.current_rank
+  );
+}
+
+export function getVehicleLoanBorrowerTypeLabel(loan: VehicleLoanItem): string {
+  // Prioriza os dados reais ao invés do borrower_type registrado
+  if (loan.borrower && hasPoliceOfficerData(loan.borrower)) {
+    return "Policial";
+  }
+
+  if (loan.borrower_type === "App\\Models\\User") {
+    return "Usuário";
+  }
+
+  return "Externo";
+}
+
 export function getVehicleLoanBorrowerLabel(loan: VehicleLoanItem) {
   if (loan.borrower) {
-    const policeOfficerLabel =
-      loan.borrower.war_name ||
-      loan.borrower.name ||
-      loan.borrower.registration_number;
+    // Sempre prioriza informações de policial se existirem
+    if (hasPoliceOfficerData(loan.borrower)) {
+      // Formato: Abreviação do rank + Numeral + Nome de guerra
+      const parts = [
+        loan.borrower.current_rank?.abbreviation,
+        loan.borrower.badge_number,
+        loan.borrower.war_name,
+      ].filter(Boolean);
 
-    if (loan.borrower_type === "App\\Models\\PoliceOfficer") {
-      return `${loan.borrower.current_rank?.abbreviation} ${loan.borrower.badge_number} ${loan.borrower.war_name}`;
-      //return policeOfficerLabel ?? "Policial vinculado";
+      return parts.length > 0 ? parts.join(" ") : "Policial vinculado";
     }
 
+    // Se não tem dados de policial, exibe apenas o nome do usuário
     return loan.borrower.name ?? loan.borrower.email ?? "Usuário vinculado";
   }
 

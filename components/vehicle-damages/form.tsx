@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo } from "react";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -17,10 +17,11 @@ import { useVehicleLoans } from "@/hooks/use-vehicle-loans";
 import { useVehicleMaintenances } from "@/hooks/use-vehicle-maintenances";
 import { useVehicles } from "@/hooks/use-vehicles";
 import type {
-  CreateVehicleDamageDTO,
-  UpdateVehicleDamageDTO,
+  CreateVehicleDamageWithFilesDTO,
+  UpdateVehicleDamageWithFilesDTO,
   VehicleDamageContextType,
   VehicleDamageItem,
+  VehicleDamageUploadItem,
 } from "@/types/vehicle-damage.type";
 import {
   getVehicleDamageContextType,
@@ -49,10 +50,6 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-const photoSchema = z.object({
-  value: z.string().trim().max(500, "A URL da foto deve ter no máximo 500 caracteres."),
-});
-
 const vehicleDamageFormSchema = z
   .object({
     vehicle_id: z.string().min(1, "Selecione um veículo."),
@@ -71,7 +68,6 @@ const vehicleDamageFormSchema = z
       .min(5, "A descrição deve ter ao menos 5 caracteres.")
       .max(1000, "A descrição deve ter no máximo 1000 caracteres."),
     severity: z.string(),
-    photos: z.array(photoSchema),
     responsible_user_id: z.string(),
     responsible_external_name: z
       .string()
@@ -171,7 +167,6 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
       location: damage?.location ?? "",
       description: damage?.description ?? "",
       severity: damage?.severity ?? "minor",
-      photos: damage?.photos?.map((photo) => ({ value: photo })) ?? [],
       responsible_user_id: damage?.responsible_user_id
         ? String(damage.responsible_user_id)
         : "none",
@@ -184,10 +179,23 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "photos",
-  });
+  // Estado para novos arquivos de foto
+  const [photoFiles, setPhotoFiles] = useState<File[]>([]);
+  // Estado para IDs de uploads existentes a serem deletados
+  const [deleteUploadIds, setDeleteUploadIds] = useState<number[]>([]);
+  // Uploads existentes (do damage carregado)
+  const [existingUploads, setExistingUploads] = useState<VehicleDamageUploadItem[]>(
+    damage?.uploads ?? [],
+  );
+  // Ref para o input de arquivo
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Atualizar uploads existentes quando damage mudar
+  useEffect(() => {
+    setExistingUploads(damage?.uploads ?? []);
+    setDeleteUploadIds([]);
+    setPhotoFiles([]);
+  }, [damage]);
 
   const selectedVehicleId = useWatch({ control, name: "vehicle_id" });
   const selectedContextType = useWatch({ control, name: "context_type" });
@@ -225,7 +233,6 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
       location: damage.location ?? "",
       description: damage.description ?? "",
       severity: damage.severity ?? "minor",
-      photos: damage.photos?.map((photo) => ({ value: photo })) ?? [],
       responsible_user_id: damage.responsible_user_id
         ? String(damage.responsible_user_id)
         : "none",
@@ -292,7 +299,7 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
         : null;
     const contextId = values.context_id ? Number(values.context_id) : null;
 
-    const payload = {
+    const basePayload = {
       vehicle_id: Number(values.vehicle_id),
       vehicle_loan_id:
         contextType === "vehicle_loan" && contextId ? contextId : null,
@@ -303,18 +310,13 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
       detected_date: values.detected_date || null,
       detected_time: normalizeTime(values.detected_time),
       detection_moment:
-        values.detection_moment as CreateVehicleDamageDTO["detection_moment"],
-      damage_type: values.damage_type as CreateVehicleDamageDTO["damage_type"],
+        values.detection_moment as CreateVehicleDamageWithFilesDTO["detection_moment"],
+      damage_type: values.damage_type as CreateVehicleDamageWithFilesDTO["damage_type"],
       location: values.location.trim(),
       description: values.description.trim(),
       severity: values.severity
-        ? (values.severity as CreateVehicleDamageDTO["severity"])
+        ? (values.severity as CreateVehicleDamageWithFilesDTO["severity"])
         : undefined,
-      photos: values.photos.length
-        ? values.photos
-            .map((photo) => photo.value.trim())
-            .filter(Boolean)
-        : null,
       responsible_user_id:
         values.responsible_user_id && values.responsible_user_id !== "none"
           ? Number(values.responsible_user_id)
@@ -323,16 +325,18 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
       estimated_repair_cost: parseNumberField(values.estimated_repair_cost),
       actual_repair_cost: parseNumberField(values.actual_repair_cost),
       status: values.status
-        ? (values.status as CreateVehicleDamageDTO["status"])
+        ? (values.status as CreateVehicleDamageWithFilesDTO["status"])
         : undefined,
       repair_date: values.repair_date || null,
       notes: values.notes.trim() || null,
     };
 
     if (mode === "create") {
-      const response = await createMutation.mutateAsync(
-        payload satisfies CreateVehicleDamageDTO,
-      );
+      const payload: CreateVehicleDamageWithFilesDTO = {
+        ...basePayload,
+        photo_files: photoFiles.length > 0 ? photoFiles : undefined,
+      };
+      const response = await createMutation.mutateAsync(payload);
       router.push(`/vehicle-damages/${response.data.id}`);
       return;
     }
@@ -341,9 +345,14 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
       return;
     }
 
+    const payload: UpdateVehicleDamageWithFilesDTO = {
+      ...basePayload,
+      photo_files: photoFiles.length > 0 ? photoFiles : undefined,
+      delete_upload_ids: deleteUploadIds.length > 0 ? deleteUploadIds : undefined,
+    };
     const response = await updateMutation.mutateAsync({
       id: damage.id,
-      payload: payload satisfies UpdateVehicleDamageDTO,
+      payload,
     });
     router.push(`/vehicle-damages/${response.data.id}`);
   }
@@ -616,41 +625,111 @@ export function VehicleDamageForm({ mode, damage }: VehicleDamageFormProps) {
               <div>
                 <Label>Fotos do dano</Label>
                 <p className="text-sm text-slate-500">
-                  Informe URLs retornadas por outro fluxo de upload, se houver.
+                  Selecione imagens para documentar o dano (JPEG, PNG, WebP, max 10MB cada).
                 </p>
               </div>
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => append({ value: "" })}
+                onClick={() => fileInputRef.current?.click()}
               >
-                Adicionar foto
+                Adicionar fotos
               </Button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/jpg,image/png,image/webp"
+                multiple
+                className="hidden"
+                onChange={(e) => {
+                  const files = Array.from(e.target.files ?? []);
+                  if (files.length > 0) {
+                    setPhotoFiles((prev) => [...prev, ...files]);
+                  }
+                  e.target.value = "";
+                }}
+              />
             </div>
 
-            {fields.length ? (
+            {/* Uploads existentes */}
+            {existingUploads.length > 0 && (
               <div className="space-y-3">
-                {fields.map((field, index) => (
-                  <div key={field.id} className="flex gap-3">
-                    <Input
-                      placeholder="https://..."
-                      {...register(`photos.${index}.value`)}
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => remove(index)}
-                    >
-                      Remover
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
-                Nenhuma foto adicionada.
+                <p className="text-sm font-medium text-slate-700">Fotos existentes:</p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+                  {existingUploads
+                    .filter((upload) => !deleteUploadIds.includes(upload.id))
+                    .map((upload) => (
+                      <div
+                        key={upload.id}
+                        className="group relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50"
+                      >
+                        {upload.url ? (
+                          <img
+                            src={upload.url}
+                            alt={upload.original_name ?? "Foto do dano"}
+                            className="aspect-square w-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex aspect-square items-center justify-center bg-slate-100 text-xs text-slate-500">
+                            {upload.original_name ?? "Sem preview"}
+                          </div>
+                        )}
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="sm"
+                          className="absolute right-1 top-1 h-7 w-7 p-0 opacity-0 transition-opacity group-hover:opacity-100"
+                          onClick={() => setDeleteUploadIds((prev) => [...prev, upload.id])}
+                        >
+                          X
+                        </Button>
+                      </div>
+                    ))}
+                </div>
               </div>
             )}
+
+            {/* Novos arquivos selecionados */}
+            {photoFiles.length > 0 && (
+              <div className="space-y-3">
+                <p className="text-sm font-medium text-slate-700">Novas fotos a enviar:</p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+                  {photoFiles.map((file, index) => (
+                    <div
+                      key={`new-${index}-${file.name}`}
+                      className="group relative overflow-hidden rounded-lg border border-slate-200 bg-slate-50"
+                    >
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={file.name}
+                        className="aspect-square w-full object-cover"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        className="absolute right-1 top-1 h-7 w-7 p-0 opacity-0 transition-opacity group-hover:opacity-100"
+                        onClick={() =>
+                          setPhotoFiles((prev) => prev.filter((_, i) => i !== index))
+                        }
+                      >
+                        X
+                      </Button>
+                      <div className="absolute bottom-0 left-0 right-0 truncate bg-black/50 px-2 py-1 text-xs text-white">
+                        {file.name}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {existingUploads.filter((u) => !deleteUploadIds.includes(u.id)).length === 0 &&
+              photoFiles.length === 0 && (
+                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
+                  Nenhuma foto adicionada.
+                </div>
+              )}
           </section>
 
           <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">

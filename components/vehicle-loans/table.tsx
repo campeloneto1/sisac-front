@@ -10,6 +10,7 @@ import { formatBrazilianDate } from "@/lib/date-formatter";
 import type { VehicleLoanItem } from "@/types/vehicle-loan.type";
 import {
   getVehicleLoanBorrowerLabel,
+  getVehicleLoanBorrowerTypeLabel,
   getVehicleLoanStatusVariant,
 } from "@/types/vehicle-loan.type";
 import { Badge } from "@/components/ui/badge";
@@ -94,11 +95,7 @@ export function VehicleLoansTable({ loans }: VehicleLoansTableProps) {
                         {getVehicleLoanBorrowerLabel(loan)}
                       </p>
                       <p className="mt-1 text-slate-500">
-                        {loan.borrower_type === "App\\Models\\PoliceOfficer"
-                          ? "Policial"
-                          : loan.borrower_type === "App\\Models\\User"
-                            ? "Usuário"
-                            : "Externo"}
+                        {getVehicleLoanBorrowerTypeLabel(loan)}
                       </p>
                     </div>
                   </td>
