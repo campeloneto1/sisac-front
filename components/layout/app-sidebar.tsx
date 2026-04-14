@@ -213,6 +213,13 @@ const generalItems = [
     permissionResource: "course-classes",
   },
   {
+    href: "/external-course-enrollments",
+    label: "Cursos externos",
+    icon: Award,
+    visible: false,
+    permissionResource: "course-enrollments",
+  },
+  {
     href: "/contracts",
     label: "Contratos",
     icon: BriefcaseBusiness,

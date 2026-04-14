@@ -14,6 +14,11 @@ export interface VehicleLoanBorrower {
   badge_number?: string | null;
   type?: string | null;
   type_label?: string | null;
+  current_rank?: {
+    id: number;
+    name: string;
+    abbreviation: string;
+  };
 }
 
 export interface VehicleLoanItem {
@@ -163,7 +168,8 @@ export function getVehicleLoanBorrowerLabel(loan: VehicleLoanItem) {
       loan.borrower.registration_number;
 
     if (loan.borrower_type === "App\\Models\\PoliceOfficer") {
-      return policeOfficerLabel ?? "Policial vinculado";
+      return `${loan.borrower.current_rank?.abbreviation} ${loan.borrower.badge_number} ${loan.borrower.war_name}`;
+      //return policeOfficerLabel ?? "Policial vinculado";
     }
 
     return loan.borrower.name ?? loan.borrower.email ?? "Usuário vinculado";

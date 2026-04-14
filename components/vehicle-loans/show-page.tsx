@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { CalendarDays, CarFront, Gauge, MapPin, UserCircle2 } from "lucide-react";
+import {
+  CalendarDays,
+  CarFront,
+  Gauge,
+  MapPin,
+  UserCircle2,
+} from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -172,9 +178,12 @@ export function VehicleLoanShowPage() {
                   </p>
                   <p className="text-sm text-slate-700">
                     {loan.vehicle?.license_plate ?? `#${loan.vehicle_id}`}
+                    {loan.vehicle?.special_plate
+                      ? ` • ${loan.vehicle.special_plate}`
+                      : ""}
                   </p>
                   <p className="text-sm text-slate-500">
-                    {loan.vehicle?.vehicle_type?.name ?? "Tipo não informado"}
+                    {loan.vehicle?.variant?.brand?.name ?? ""}
                     {loan.vehicle?.variant?.name
                       ? ` • ${loan.vehicle.variant.name}`
                       : ""}
@@ -356,7 +365,12 @@ export function VehicleLoanShowPage() {
 
             <div className="space-y-2">
               <Label htmlFor="end_km">KM final</Label>
-              <Input id="end_km" type="number" min={0} {...register("end_km")} />
+              <Input
+                id="end_km"
+                type="number"
+                min={0}
+                {...register("end_km")}
+              />
               {errors.end_km ? (
                 <p className="text-sm text-destructive">
                   {errors.end_km.message}
@@ -387,7 +401,9 @@ export function VehicleLoanShowPage() {
                 Cancelar
               </Button>
               <Button type="submit" disabled={returnMutation.isPending}>
-                {returnMutation.isPending ? "Salvando..." : "Confirmar devolução"}
+                {returnMutation.isPending
+                  ? "Salvando..."
+                  : "Confirmar devolução"}
               </Button>
             </DialogFooter>
           </form>

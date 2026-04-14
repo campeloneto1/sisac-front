@@ -37,7 +37,9 @@ function formatDateTime(date?: string | null, time?: string | null) {
 export function VehicleLoansTable({ loans }: VehicleLoansTableProps) {
   const permissions = usePermissions("vehicle-loans");
   const deleteMutation = useDeleteVehicleLoanMutation();
-  const [loanToDelete, setLoanToDelete] = useState<VehicleLoanItem | null>(null);
+  const [loanToDelete, setLoanToDelete] = useState<VehicleLoanItem | null>(
+    null,
+  );
 
   async function handleDelete() {
     if (!loanToDelete) {
@@ -70,9 +72,15 @@ export function VehicleLoansTable({ loans }: VehicleLoansTableProps) {
                     <div>
                       <p className="font-medium text-slate-900">
                         {loan.vehicle?.license_plate ?? `#${loan.vehicle_id}`}
+                        {loan.vehicle?.special_plate
+                          ? ` • ${loan.vehicle.special_plate}`
+                          : ""}
                       </p>
+
                       <p className="mt-1 text-slate-500">
-                        {loan.vehicle?.vehicle_type?.name ?? "Tipo não informado"}
+                        {loan.vehicle?.variant?.brand?.name
+                          ? `${loan.vehicle.variant.brand.name}`
+                          : ""}
                         {loan.vehicle?.variant?.name
                           ? ` • ${loan.vehicle.variant.name}`
                           : ""}
@@ -94,8 +102,12 @@ export function VehicleLoansTable({ loans }: VehicleLoansTableProps) {
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
-                    <p>Saida: {formatDateTime(loan.start_date, loan.start_time)}</p>
-                    <p>Retorno: {formatDateTime(loan.end_date, loan.end_time)}</p>
+                    <p>
+                      Saida: {formatDateTime(loan.start_date, loan.start_time)}
+                    </p>
+                    <p>
+                      Retorno: {formatDateTime(loan.end_date, loan.end_time)}
+                    </p>
                   </td>
                   <td className="px-4 py-4 text-slate-600">
                     <p>Início: {loan.start_km.toLocaleString("pt-BR")}</p>
@@ -156,8 +168,9 @@ export function VehicleLoansTable({ loans }: VehicleLoansTableProps) {
             <DialogTitle>Excluir empréstimo</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja excluir o empréstimo do veículo{" "}
-              {loanToDelete?.vehicle?.license_plate ?? `#${loanToDelete?.vehicle_id}`}?
-              Essa ação não podera ser desfeita.
+              {loanToDelete?.vehicle?.license_plate ??
+                `#${loanToDelete?.vehicle_id}`}
+              ? Essa ação não podera ser desfeita.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

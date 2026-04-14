@@ -24,6 +24,7 @@ import {
 } from "@/hooks/use-service-status-history-mutations";
 import { useServiceStatusHistories } from "@/hooks/use-service-status-histories";
 import { useService } from "@/hooks/use-services";
+import { useUpdateServiceMutation } from "@/hooks/use-service-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
 import {
   getServiceStatusVariant,
@@ -66,25 +67,39 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 
-const historyDialogSchema = z.object({
-  from_status: z.string(),
-  to_status: z.enum([
-    "solicitado",
-    "aprovado",
-    "agendado",
-    "em_andamento",
-    "pausado",
-    "concluido",
-    "cancelado",
-    "abandonado",
-  ]),
-  notes: z
-    .string()
-    .max(2000, "As observações devem ter no máximo 2000 caracteres.")
-    .optional()
-    .or(z.literal("")),
-  changed_at: z.string().optional().or(z.literal("")),
-});
+const historyDialogSchema = z
+  .object({
+    from_status: z.string(),
+    to_status: z.enum([
+      "solicitado",
+      "aprovado",
+      "agendado",
+      "em_andamento",
+      "pausado",
+      "concluido",
+      "cancelado",
+      "abandonado",
+    ]),
+    notes: z
+      .string()
+      .max(2000, "As observações devem ter no máximo 2000 caracteres.")
+      .optional()
+      .or(z.literal("")),
+    changed_at: z.string().optional().or(z.literal("")),
+  })
+  .refine(
+    (data) => {
+      // Se from_status não é "none", garante que to_status seja diferente
+      if (data.from_status !== "none") {
+        return data.to_status !== data.from_status;
+      }
+      return true;
+    },
+    {
+      message: "O novo status deve ser diferente do status anterior",
+      path: ["to_status"],
+    },
+  );
 
 type HistoryDialogValues = z.output<typeof historyDialogSchema>;
 
@@ -128,6 +143,7 @@ function StatusHistoryDialog({
   const { user } = useAuth();
   const createMutation = useCreateServiceStatusHistoryMutation(serviceId);
   const updateMutation = useUpdateServiceStatusHistoryMutation(serviceId);
+  const updateServiceMutation = useUpdateServiceMutation();
   const {
     handleSubmit,
     reset,
@@ -147,7 +163,10 @@ function StatusHistoryDialog({
 
   const selectedFromStatus = useWatch({ control, name: "from_status" });
   const selectedToStatus = useWatch({ control, name: "to_status" });
-  const isPending = createMutation.isPending || updateMutation.isPending;
+  const isPending =
+    createMutation.isPending ||
+    updateMutation.isPending ||
+    updateServiceMutation.isPending;
 
   useEffect(() => {
     reset({
@@ -164,18 +183,49 @@ function StatusHistoryDialog({
     }
 
     if (mode === "create") {
-      const payload = {
-        service_id: Number(serviceId),
-        from_status:
-          values.from_status === "none"
-            ? null
-            : (values.from_status as ServiceStatus),
-        to_status: values.to_status,
-        notes: values.notes?.trim() || null,
-        changed_by: user.id,
-      } satisfies CreateServiceStatusHistoryDTO;
+      // Prepara o payload base
+      const servicePayload: {
+        status: ServiceStatus;
+        started_at?: string;
+        finished_at?: string;
+      } = {
+        status: values.to_status,
+      };
 
-      await createMutation.mutateAsync(payload);
+      // Seta started_at automaticamente quando mudar para "em_andamento"
+      if (values.to_status === "em_andamento") {
+        servicePayload.started_at = new Date().toISOString();
+      }
+
+      // Seta finished_at automaticamente quando mudar para "concluido"
+      if (values.to_status === "concluido") {
+        servicePayload.finished_at = new Date().toISOString();
+      }
+
+      // Primeiro atualiza o status do serviço
+      // O ServiceObserver no back criará o histórico automaticamente
+      await updateServiceMutation.mutateAsync({
+        id: serviceId,
+        payload: servicePayload,
+      });
+
+      // Se houver observações, cria/atualiza o registro de histórico
+      // para garantir que as notes sejam salvas
+      if (values.notes?.trim()) {
+        const historyPayload = {
+          service_id: Number(serviceId),
+          from_status:
+            values.from_status === "none"
+              ? null
+              : (values.from_status as ServiceStatus),
+          to_status: values.to_status,
+          notes: values.notes.trim(),
+          changed_by: user.id,
+        } satisfies CreateServiceStatusHistoryDTO;
+
+        await createMutation.mutateAsync(historyPayload);
+      }
+
       onOpenChange(false);
       return;
     }
@@ -223,6 +273,7 @@ function StatusHistoryDialog({
                 onValueChange={(value) =>
                   setValue("from_status", value, { shouldValidate: true })
                 }
+                disabled
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Não informar" />
@@ -236,6 +287,11 @@ function StatusHistoryDialog({
                   ))}
                 </SelectContent>
               </Select>
+              <p className="text-xs text-slate-500">
+                {mode === "create"
+                  ? "Fixado no status atual do serviço"
+                  : "A transição de status é imutável. Delete e crie novamente se necessário."}
+              </p>
             </div>
 
             <div className="space-y-2">
@@ -247,21 +303,36 @@ function StatusHistoryDialog({
                     shouldValidate: true,
                   })
                 }
+                disabled={mode === "edit"}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione o novo status" />
                 </SelectTrigger>
                 <SelectContent>
-                  {serviceStatusOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
+                  {serviceStatusOptions
+                    .filter((option) =>
+                      selectedFromStatus === "none" || option.value !== selectedFromStatus
+                    )
+                    .map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
               {errors.to_status ? (
                 <p className="text-sm text-destructive">
                   {errors.to_status.message}
+                </p>
+              ) : null}
+              {mode === "create" && selectedFromStatus !== "none" ? (
+                <p className="text-xs text-slate-500">
+                  O novo status deve ser diferente do status anterior selecionado
+                </p>
+              ) : null}
+              {mode === "edit" ? (
+                <p className="text-xs text-slate-500">
+                  A transição de status é imutável. Delete e crie novamente se necessário.
                 </p>
               ) : null}
             </div>
@@ -283,10 +354,19 @@ function StatusHistoryDialog({
               </p>
             </div>
           ) : (
-            <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
-              O usuário autenticado será usado como responsável pela mudança e o
-              horario pode ser definido automaticamente pela API.
-            </div>
+            <>
+              <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
+                O usuário autenticado será usado como responsável pela mudança e o
+                horario pode ser definido automaticamente pela API.
+              </div>
+              {(selectedToStatus === "em_andamento" || selectedToStatus === "concluido") ? (
+                <div className="rounded-2xl border border-dashed border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700">
+                  <strong>Atenção:</strong> {selectedToStatus === "em_andamento"
+                    ? "A data de início será setada automaticamente com a data/hora atual."
+                    : "A data de término será setada automaticamente com a data/hora atual."}
+                </div>
+              ) : null}
+            </>
           )}
 
           <div className="space-y-2">

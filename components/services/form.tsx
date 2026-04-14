@@ -243,6 +243,18 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
 
     const editValues = values as ServiceEditFormValues;
 
+    // Calcula started_at: usa o valor do form ou seta automaticamente se mudando para "em_andamento"
+    let startedAt = editValues.started_at ? new Date(editValues.started_at).toISOString() : null;
+    if (editValues.status === "em_andamento" && !editValues.started_at && !service.started_at) {
+      startedAt = new Date().toISOString();
+    }
+
+    // Calcula finished_at: usa o valor do form ou seta automaticamente se mudando para "concluido"
+    let finishedAt = editValues.finished_at ? new Date(editValues.finished_at).toISOString() : null;
+    if (editValues.status === "concluido" && !editValues.finished_at && !service.finished_at) {
+      finishedAt = new Date().toISOString();
+    }
+
     const payload: UpdateServiceDTO = {
       company_id: Number(editValues.company_id),
       service_type_id: Number(editValues.service_type_id),
@@ -256,8 +268,8 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
         : null,
       status: editValues.status as ServiceStatus,
       priority: editValues.priority as ServicePriority,
-      started_at: editValues.started_at ? new Date(editValues.started_at).toISOString() : null,
-      finished_at: editValues.finished_at ? new Date(editValues.finished_at).toISOString() : null,
+      started_at: startedAt,
+      finished_at: finishedAt,
       start_observations: editValues.start_observations?.trim() || null,
       finish_observations: editValues.finish_observations?.trim() || null,
       cancellation_reason: editValues.cancellation_reason?.trim() || null,
@@ -503,13 +515,28 @@ export function ServiceForm({ mode, service }: ServiceFormProps) {
                       <SelectValue placeholder="Selecione o status" />
                     </SelectTrigger>
                     <SelectContent>
-                      {serviceStatusOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
+                      {serviceStatusOptions
+                        .filter((option) => option.value !== service?.status)
+                        .map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
                     </SelectContent>
                   </Select>
+                  <p className="text-xs text-slate-500">
+                    Status atual: {service?.status_label || service?.status}
+                  </p>
+                  {(selectedStatus as string) === "em_andamento" && !service?.started_at ? (
+                    <p className="text-xs text-blue-600">
+                      A data de início será setada automaticamente
+                    </p>
+                  ) : null}
+                  {(selectedStatus as string) === "concluido" && !service?.finished_at ? (
+                    <p className="text-xs text-blue-600">
+                      A data de término será setada automaticamente
+                    </p>
+                  ) : null}
                 </div>
 
                 <div className="space-y-2">
