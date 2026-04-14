@@ -392,10 +392,20 @@ export function VehicleMaintenanceForm({
             <div className="space-y-2">
               <Label htmlFor="entry_date">Data de entrada</Label>
               <Input id="entry_date" type="date" {...register("entry_date")} />
+              {errors.entry_date ? (
+                <p className="text-sm text-destructive">
+                  {errors.entry_date.message}
+                </p>
+              ) : null}
             </div>
             <div className="space-y-2">
               <Label htmlFor="entry_time">Hora de entrada</Label>
               <Input id="entry_time" type="time" {...register("entry_time")} />
+              {errors.entry_time ? (
+                <p className="text-sm text-destructive">
+                  {errors.entry_time.message}
+                </p>
+              ) : null}
             </div>
             <div className="space-y-2">
               <Label htmlFor="entry_km">KM de entrada</Label>
@@ -403,8 +413,13 @@ export function VehicleMaintenanceForm({
                 id="entry_km"
                 type="number"
                 min={0}
-                {...register("entry_km")}
+                {...register("entry_km", { valueAsNumber: true })}
               />
+              {errors.entry_km ? (
+                <p className="text-sm text-destructive">
+                  {errors.entry_km.message}
+                </p>
+              ) : null}
             </div>
           </section>
 
@@ -412,13 +427,24 @@ export function VehicleMaintenanceForm({
             <div className="space-y-2">
               <Label htmlFor="exit_date">Data de saida (opcional)</Label>
               <Input id="exit_date" type="date" {...register("exit_date")} />
-              <p className="text-xs text-slate-500">
-                Preencher quando a manutenção for concluída.
-              </p>
+              {errors.exit_date ? (
+                <p className="text-sm text-destructive">
+                  {errors.exit_date.message}
+                </p>
+              ) : (
+                <p className="text-xs text-slate-500">
+                  Preencher quando a manutenção for concluída.
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="exit_time">Hora de saida (opcional)</Label>
               <Input id="exit_time" type="time" {...register("exit_time")} />
+              {errors.exit_time ? (
+                <p className="text-sm text-destructive">
+                  {errors.exit_time.message}
+                </p>
+              ) : null}
             </div>
             <div className="space-y-2">
               <Label htmlFor="exit_km">KM de saida (opcional)</Label>
@@ -426,8 +452,13 @@ export function VehicleMaintenanceForm({
                 id="exit_km"
                 type="number"
                 min={0}
-                {...register("exit_km")}
+                {...register("exit_km", { valueAsNumber: true })}
               />
+              {errors.exit_km ? (
+                <p className="text-sm text-destructive">
+                  {errors.exit_km.message}
+                </p>
+              ) : null}
             </div>
             <div className="space-y-2">
               <Label htmlFor="expected_completion_date">
@@ -438,6 +469,11 @@ export function VehicleMaintenanceForm({
                 type="date"
                 {...register("expected_completion_date")}
               />
+              {errors.expected_completion_date ? (
+                <p className="text-sm text-destructive">
+                  {errors.expected_completion_date.message}
+                </p>
+              ) : null}
             </div>
           </section>
 
@@ -449,8 +485,11 @@ export function VehicleMaintenanceForm({
                 type="number"
                 step="0.01"
                 min={0}
-                {...register("cost")}
+                {...register("cost", { valueAsNumber: true })}
               />
+              {errors.cost ? (
+                <p className="text-sm text-destructive">{errors.cost.message}</p>
+              ) : null}
             </div>
             <div className="space-y-2">
               <Label htmlFor="parts_cost">Custo de pecas</Label>
@@ -459,8 +498,13 @@ export function VehicleMaintenanceForm({
                 type="number"
                 step="0.01"
                 min={0}
-                {...register("parts_cost")}
+                {...register("parts_cost", { valueAsNumber: true })}
               />
+              {errors.parts_cost ? (
+                <p className="text-sm text-destructive">
+                  {errors.parts_cost.message}
+                </p>
+              ) : null}
             </div>
             <div className="space-y-2">
               <Label htmlFor="labor_cost">Custo de mao de obra</Label>
@@ -469,8 +513,13 @@ export function VehicleMaintenanceForm({
                 type="number"
                 step="0.01"
                 min={0}
-                {...register("labor_cost")}
+                {...register("labor_cost", { valueAsNumber: true })}
               />
+              {errors.labor_cost ? (
+                <p className="text-sm text-destructive">
+                  {errors.labor_cost.message}
+                </p>
+              ) : null}
             </div>
           </section>
 
@@ -494,34 +543,58 @@ export function VehicleMaintenanceForm({
             <div className="space-y-4">
               {fields.length ? (
                 fields.map((field, index) => (
-                  <div
-                    key={field.id}
-                    className="grid gap-4 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-[1.6fr_0.7fr_0.9fr_auto]"
-                  >
-                    <Input
-                      placeholder="Nome da peça"
-                      {...register(`replaced_parts.${index}.part`)}
-                    />
-                    <Input
-                      type="number"
-                      min={1}
-                      placeholder="Qtd."
-                      {...register(`replaced_parts.${index}.quantity`)}
-                    />
-                    <Input
-                      type="number"
-                      min={0}
-                      step="0.01"
-                      placeholder="Custo"
-                      {...register(`replaced_parts.${index}.cost`)}
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      onClick={() => remove(index)}
-                    >
-                      Remover
-                    </Button>
+                  <div key={field.id} className="space-y-2">
+                    <div className="grid gap-4 rounded-2xl border border-slate-200/70 bg-slate-50 p-4 md:grid-cols-[1.6fr_0.7fr_0.9fr_auto]">
+                      <div>
+                        <Input
+                          placeholder="Nome da peça"
+                          {...register(`replaced_parts.${index}.part`)}
+                        />
+                        {errors.replaced_parts?.[index]?.part ? (
+                          <p className="mt-1 text-xs text-destructive">
+                            {errors.replaced_parts[index]?.part?.message}
+                          </p>
+                        ) : null}
+                      </div>
+                      <div>
+                        <Input
+                          type="number"
+                          min={1}
+                          placeholder="Qtd."
+                          {...register(`replaced_parts.${index}.quantity`, {
+                            valueAsNumber: true,
+                          })}
+                        />
+                        {errors.replaced_parts?.[index]?.quantity ? (
+                          <p className="mt-1 text-xs text-destructive">
+                            {errors.replaced_parts[index]?.quantity?.message}
+                          </p>
+                        ) : null}
+                      </div>
+                      <div>
+                        <Input
+                          type="number"
+                          min={0}
+                          step="0.01"
+                          placeholder="Custo"
+                          {...register(`replaced_parts.${index}.cost`, {
+                            valueAsNumber: true,
+                          })}
+                        />
+                        {errors.replaced_parts?.[index]?.cost ? (
+                          <p className="mt-1 text-xs text-destructive">
+                            {errors.replaced_parts[index]?.cost?.message}
+                          </p>
+                        ) : null}
+                      </div>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={() => remove(index)}
+                      >
+                        Remover
+                      </Button>
+                    </div>
                   </div>
                 ))
               ) : (
