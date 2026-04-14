@@ -8,6 +8,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useSubunit } from "@/contexts/subunit-context";
+import { useNotificationDomains } from "@/hooks/use-notification-domains";
 import {
   useCreateNotificationResponsibilityMutation,
   useUpdateNotificationResponsibilityMutation,
@@ -18,16 +19,14 @@ import type {
   NotificationResponsibilityItem,
   UpdateNotificationResponsibilityDTO,
 } from "@/types/notification-responsibility.type";
-import { getNotificationResponsibilityDomainLabel, notificationResponsibilityDomains } from "@/types/notification-responsibility.type";
+import { getDomainValue } from "@/types/notification-responsibility.type";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const notificationResponsibilityFormSchema = z.object({
-  domain: z.enum(notificationResponsibilityDomains, {
-    message: "Selecione um dominio válido.",
-  }),
+  domain: z.string().min(1, "Selecione um dominio válido."),
   sector_id: z.string().min(1, "Selecione um setor responsável."),
 });
 
@@ -49,6 +48,7 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
     },
     Boolean(activeSubunit),
   );
+  const domainsQuery = useNotificationDomains();
   const {
     handleSubmit,
     reset,
@@ -58,7 +58,7 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
   } = useForm<NotificationResponsibilityFormValues>({
     resolver: zodResolver(notificationResponsibilityFormSchema),
     defaultValues: {
-      domain: item?.domain ?? "vehicle",
+      domain: item?.domain ? getDomainValue(item.domain) : (domainsQuery.data?.data[0]?.value ?? "vehicle"),
       sector_id: item?.sector_id ? String(item.sector_id) : "",
     },
   });
@@ -69,7 +69,7 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
     }
 
     reset({
-      domain: item.domain,
+      domain: getDomainValue(item.domain),
       sector_id: String(item.sector_id),
     });
   }, [item, reset]);
@@ -125,7 +125,7 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
             <Select
               value={selectedDomain}
               onValueChange={(value) =>
-                setValue("domain", value as NotificationResponsibilityFormValues["domain"], {
+                setValue("domain", value, {
                   shouldValidate: true,
                 })
               }
@@ -134,9 +134,9 @@ export function NotificationResponsibilityForm({ mode, item }: NotificationRespo
                 <SelectValue placeholder="Selecione um dominio" />
               </SelectTrigger>
               <SelectContent>
-                {notificationResponsibilityDomains.map((domain) => (
-                  <SelectItem key={domain} value={domain}>
-                    {getNotificationResponsibilityDomainLabel(domain)}
+                {(domainsQuery.data?.data ?? []).map((domain) => (
+                  <SelectItem key={domain.value} value={domain.value}>
+                    {domain.label}
                   </SelectItem>
                 ))}
               </SelectContent>

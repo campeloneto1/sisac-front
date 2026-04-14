@@ -6,6 +6,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { useDeleteCourseClassMutation } from "@/hooks/use-course-class-mutations";
+import { formatBrazilianDateRange } from "@/lib/date-formatter";
 import type { CourseClassItem } from "@/types/course-class.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -93,12 +94,12 @@ export function CourseClassesTable({ courseClasses }: CourseClassesTableProps) {
                   </td>
                   <td className="px-4 py-4 text-slate-700">
                     <div>
-                      <p>{courseClass.planned_start_date ?? "-"} ate {courseClass.planned_end_date ?? "-"}</p>
+                      <p>{formatBrazilianDateRange(courseClass.planned_start_date, courseClass.planned_end_date)}</p>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-700">
                     <div>
-                      <p>{courseClass.start_date ?? "-"} ate {courseClass.end_date ?? "-"}</p>
+                      <p>{formatBrazilianDateRange(courseClass.start_date, courseClass.end_date)}</p>
                     </div>
                   </td>
                   <td className="px-4 py-4">

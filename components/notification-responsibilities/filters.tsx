@@ -2,8 +2,7 @@
 
 import { X } from "lucide-react";
 
-import type { NotificationResponsibilityItem } from "@/types/notification-responsibility.type";
-import { getNotificationResponsibilityDomainLabel, notificationResponsibilityDomains } from "@/types/notification-responsibility.type";
+import type { NotificationDomainOption, NotificationResponsibilityItem } from "@/types/notification-responsibility.type";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -13,6 +12,7 @@ interface NotificationResponsibilitiesFiltersProps {
   sectorId: string;
   subunits: Array<NonNullable<NotificationResponsibilityItem["subunit"]>>;
   sectors: Array<NonNullable<NotificationResponsibilityItem["sector"]>>;
+  domains: NotificationDomainOption[];
   onDomainChange: (value: string) => void;
   onSubunitChange: (value: string) => void;
   onSectorChange: (value: string) => void;
@@ -25,6 +25,7 @@ export function NotificationResponsibilitiesFilters({
   sectorId,
   subunits,
   sectors,
+  domains,
   onDomainChange,
   onSubunitChange,
   onSectorChange,
@@ -38,9 +39,9 @@ export function NotificationResponsibilitiesFilters({
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todos os dominios</SelectItem>
-          {notificationResponsibilityDomains.map((domainValue) => (
-            <SelectItem key={domainValue} value={domainValue}>
-              {getNotificationResponsibilityDomainLabel(domainValue)}
+          {domains.map((domainOption) => (
+            <SelectItem key={domainOption.value} value={domainOption.value}>
+              {domainOption.label}
             </SelectItem>
           ))}
         </SelectContent>

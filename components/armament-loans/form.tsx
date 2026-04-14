@@ -783,7 +783,7 @@ export function ArmamentLoanForm({ mode, loan }: ArmamentLoanFormProps) {
                                   mapOption={(unit) => ({
                                     value: String(unit.id),
                                     label: unit.serial_number
-                                      ? `${unit.serial_number} (${unit.status?.name || ""})`
+                                      ? `${unit.serial_number} (${unit.status?.label || ""})`
                                       : `Unidade #${unit.id}`,
                                   })}
                                   selectedOption={null}

@@ -6,6 +6,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 
 import { useDeleteVehicleMaintenanceMutation } from "@/hooks/use-vehicle-maintenance-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import type { VehicleMaintenanceItem } from "@/types/vehicle-maintenance.type";
 import { getVehicleMaintenanceStatusVariant } from "@/types/vehicle-maintenance.type";
 import { Badge } from "@/components/ui/badge";
@@ -24,7 +25,7 @@ interface VehicleMaintenancesTableProps {
 }
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "-";
+  return formatBrazilianDate(date);
 }
 
 export function VehicleMaintenancesTable({

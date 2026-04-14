@@ -6,6 +6,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 
 import { useDeleteVehicleCustodyMutation } from "@/hooks/use-vehicle-custody-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import type { VehicleCustodyItem } from "@/types/vehicle-custody.type";
 import {
   getVehicleCustodyCustodianLabel,
@@ -27,7 +28,7 @@ interface VehicleCustodiesTableProps {
 }
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "-";
+  return formatBrazilianDate(date);
 }
 
 export function VehicleCustodiesTable({

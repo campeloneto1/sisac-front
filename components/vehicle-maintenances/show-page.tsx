@@ -6,6 +6,7 @@ import { CalendarDays, CarFront, Cog, Receipt, Wrench } from "lucide-react";
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { useVehicleMaintenance } from "@/hooks/use-vehicle-maintenances";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import { getVehicleMaintenanceStatusVariant } from "@/types/vehicle-maintenance.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "Não informado";
+  return date ? formatBrazilianDate(date) : "Não informado";
 }
 
 function formatCurrency(value?: number | string | null) {

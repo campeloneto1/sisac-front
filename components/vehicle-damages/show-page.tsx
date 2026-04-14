@@ -13,6 +13,7 @@ import {
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { useVehicleDamage } from "@/hooks/use-vehicle-damages";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import {
   getVehicleDamageContextLabel,
   getVehicleDamageSeverityVariant,
@@ -30,7 +31,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "Não informado";
+  return date ? formatBrazilianDate(date) : "Não informado";
 }
 
 function formatCurrency(value?: number | null) {

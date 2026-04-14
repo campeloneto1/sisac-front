@@ -6,6 +6,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 
 import { useDeleteVehicleDamageMutation } from "@/hooks/use-vehicle-damage-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import type { VehicleDamageItem } from "@/types/vehicle-damage.type";
 import {
   getVehicleDamageContextLabel,
@@ -28,7 +29,7 @@ interface VehicleDamagesTableProps {
 }
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "-";
+  return formatBrazilianDate(date);
 }
 
 export function VehicleDamagesTable({ damages }: VehicleDamagesTableProps) {

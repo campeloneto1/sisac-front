@@ -9,7 +9,7 @@ import { useSubunit } from "@/contexts/subunit-context";
 import { useNotificationResponsibility } from "@/hooks/use-notification-responsibilities";
 import { usePermissions } from "@/hooks/use-permissions";
 import { hasPermission } from "@/lib/permissions";
-import { getNotificationResponsibilityDomainLabel } from "@/types/notification-responsibility.type";
+import { getDomainLabel, getDomainValue } from "@/types/notification-responsibility.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -68,8 +68,8 @@ export function NotificationResponsibilityShowPage() {
       <div className="flex flex-col gap-4 rounded-[24px] border border-slate-200/70 bg-white/80 p-6 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="font-display text-3xl text-slate-900">{getNotificationResponsibilityDomainLabel(item.domain)}</h1>
-            <Badge variant="info">{item.domain}</Badge>
+            <h1 className="font-display text-3xl text-slate-900">{getDomainLabel(item.domain)}</h1>
+            <Badge variant="info">{getDomainValue(item.domain)}</Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">Subunidade: {item.subunit?.name ?? `#${item.subunit_id}`}</p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
@@ -95,7 +95,7 @@ export function NotificationResponsibilityShowPage() {
               <BellRing className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Dominio</p>
-                <p className="text-sm text-slate-700">{getNotificationResponsibilityDomainLabel(item.domain)}</p>
+                <p className="text-sm text-slate-700">{getDomainLabel(item.domain)}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">

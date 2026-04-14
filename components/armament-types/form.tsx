@@ -70,7 +70,7 @@ const armamentTypeFormSchema = z.object({
     .string()
     .max(5000, "A descrição deve ter no máximo 5000 caracteres."),
   control_type: z.enum(["unit", "batch"], {
-    required_error: "Selecione o tipo de controle.",
+    message: "Selecione o tipo de controle.",
   }),
 });
 

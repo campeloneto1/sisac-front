@@ -32,7 +32,13 @@ export interface PoliceOfficerVacationPeriodItem {
       user_id?: number | null;
       name?: string | null;
       war_name?: string | null;
+      badge_number?: string | null;
       registration_number?: string | null;
+      current_rank?: {
+        id: number;
+        name: string;
+        abbreviation?: string | null;
+      } | null;
       user?: {
         id: number;
         name: string;
@@ -76,7 +82,13 @@ export interface PoliceOfficerVacationItem {
     user_id?: number | null;
     name?: string | null;
     war_name?: string | null;
+    badge_number?: string | null;
     registration_number?: string | null;
+    current_rank?: {
+      id: number;
+      name: string;
+      abbreviation?: string | null;
+    } | null;
     user?: {
       id: number;
       name: string;

@@ -34,9 +34,26 @@ export function getNotificationResponsibilityDomainLabel(domain: string) {
   return notificationResponsibilityDomainLabels[domain as NotificationResponsibilityDomain] ?? domain;
 }
 
+// Novos types para o endpoint de domínios dinâmicos
+export interface NotificationDomainOption {
+  value: string;
+  label: string;
+  color: string;
+  description: string;
+}
+
+export interface NotificationDomainsResponse {
+  message: string;
+  data: NotificationDomainOption[];
+}
+
 export interface NotificationResponsibilityItem {
   id: number;
-  domain: NotificationResponsibilityDomain;
+  domain: NotificationResponsibilityDomain | {
+    value: string;
+    label: string;
+    color: string;
+  };
   subunit_id: number;
   sector_id: number;
   subunit?: Pick<SubunitItem, "id" | "name" | "abbreviation"> | null;
@@ -53,6 +70,19 @@ export interface NotificationResponsibilityItem {
   } | null;
   created_at?: string | null;
   updated_at?: string | null;
+}
+
+// Helper para extrair o valor do domínio (compatível com ambos os formatos)
+export function getDomainValue(domain: NotificationResponsibilityItem["domain"]): string {
+  return typeof domain === "string" ? domain : domain.value;
+}
+
+// Helper para extrair o label do domínio (compatível com ambos os formatos)
+export function getDomainLabel(domain: NotificationResponsibilityItem["domain"]): string {
+  if (typeof domain === "string") {
+    return getNotificationResponsibilityDomainLabel(domain);
+  }
+  return domain.label;
 }
 
 export interface NotificationResponsibilityFilters {

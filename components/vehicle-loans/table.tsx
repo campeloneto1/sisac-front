@@ -6,6 +6,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 
 import { useDeleteVehicleLoanMutation } from "@/hooks/use-vehicle-loan-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import type { VehicleLoanItem } from "@/types/vehicle-loan.type";
 import {
   getVehicleLoanBorrowerLabel,
@@ -31,7 +32,7 @@ function formatDateTime(date?: string | null, time?: string | null) {
     return "-";
   }
 
-  return `${date.slice(0, 10)}${time ? ` • ${time.slice(0, 5)}` : ""}`;
+  return `${formatBrazilianDate(date)}${time ? ` • ${time.slice(0, 5)}` : ""}`;
 }
 
 export function VehicleLoansTable({ loans }: VehicleLoansTableProps) {

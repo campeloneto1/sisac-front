@@ -6,6 +6,7 @@ import { Eye, ExternalLink, Pencil, Trash2 } from "lucide-react";
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { useDeletePoliceOfficerPublicationMutation } from "@/hooks/use-police-officer-publication-mutations";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import type { PoliceOfficerPublicationItem } from "@/types/police-officer-publication.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -67,18 +68,11 @@ export function PoliceOfficerPublicationsTable({
                   className="border-t border-slate-200/70"
                 >
                   <td className="px-4 py-4">
-                    <div>
-                      <p className="font-medium text-slate-900">
-                        {publication.police_officer?.war_name ??
-                          publication.police_officer?.user?.name ??
-                          `Policial #${publication.police_officer_id}`}
-                      </p>
-                      <p className="mt-1 text-slate-500">
-                        Matrícula:{" "}
-                        {publication.police_officer?.registration_number ??
-                          "Não informada"}
-                      </p>
-                    </div>
+                    <p className="font-medium text-slate-900">
+                      {publication.police_officer
+                        ? `${publication.police_officer.current_rank?.abbreviation ?? ""} ${publication.police_officer.badge_number ?? ""} ${publication.police_officer.war_name ?? ""}`.trim() || `Policial #${publication.police_officer_id}`
+                        : `Policial #${publication.police_officer_id}`}
+                    </p>
                   </td>
                   <td className="px-4 py-4">
                     {publication.publication_type ? (
@@ -105,7 +99,7 @@ export function PoliceOfficerPublicationsTable({
                     </p>
                   </td>
                   <td className="px-4 py-4 text-slate-700">
-                    {publication.publication_date ?? "-"}
+                    {formatBrazilianDate(publication.publication_date)}
                   </td>
                   <td className="max-w-xs px-4 py-4">
                     <p className="line-clamp-2 text-slate-700">
@@ -173,8 +167,9 @@ export function PoliceOfficerPublicationsTable({
             <DialogDescription>
               Tem certeza que deseja excluir a publicação &quot;
               {publicationToDelete?.bulletin}&quot; de{" "}
-              {publicationToDelete?.police_officer?.war_name ??
-                publicationToDelete?.police_officer?.user?.name}
+              {publicationToDelete?.police_officer
+                ? `${publicationToDelete.police_officer.current_rank?.abbreviation ?? ""} ${publicationToDelete.police_officer.badge_number ?? ""} ${publicationToDelete.police_officer.war_name ?? ""}`.trim() || `Policial #${publicationToDelete.police_officer_id}`
+                : `Policial #${publicationToDelete?.police_officer_id}`}
               ?
             </DialogDescription>
           </DialogHeader>

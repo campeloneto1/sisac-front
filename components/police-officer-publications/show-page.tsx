@@ -12,6 +12,8 @@ import {
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { usePoliceOfficerPublication } from "@/hooks/use-police-officer-publications";
+import { formatBrazilianDate } from "@/lib/date-formatter";
+import type { PoliceOfficerPublicationItem } from "@/types/police-officer-publication.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +24,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+
+function getPoliceOfficerLabel(publication: PoliceOfficerPublicationItem) {
+  if (!publication.police_officer) {
+    return `Policial #${publication.police_officer_id}`;
+  }
+
+  const { current_rank, badge_number, war_name } = publication.police_officer;
+  const label = `${current_rank?.abbreviation ?? ""} ${badge_number ?? ""} ${war_name ?? ""}`.trim();
+
+  return label || `Policial #${publication.police_officer_id}`;
+}
 
 function getNatureVariant(isPositive?: boolean | null) {
   if (isPositive === true) return "success";
@@ -88,10 +101,7 @@ export function PoliceOfficerPublicationShowPage() {
             ) : null}
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            {publication.police_officer?.war_name ??
-              publication.police_officer?.user?.name ??
-              `Policial #${publication.police_officer_id}`}{" "}
-            • {publication.publication_date ?? "-"}
+            {getPoliceOfficerLabel(publication)} • {formatBrazilianDate(publication.publication_date)}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             Registro completo da publicação em boletim, incluindo tipo, conteudo
@@ -134,7 +144,7 @@ export function PoliceOfficerPublicationShowPage() {
                   Data da publicação
                 </p>
                 <p className="text-sm text-slate-700">
-                  {publication.publication_date ?? "-"}
+                  {formatBrazilianDate(publication.publication_date)}
                 </p>
               </div>
             </div>
@@ -194,9 +204,7 @@ export function PoliceOfficerPublicationShowPage() {
                 Policial
               </p>
               <p className="mt-1 text-sm text-slate-700">
-                {publication.police_officer?.war_name ??
-                  publication.police_officer?.user?.name ??
-                  `Policial #${publication.police_officer_id}`}
+                {getPoliceOfficerLabel(publication)}
               </p>
               <p className="mt-1 text-xs text-slate-500">
                 Matrícula:{" "}

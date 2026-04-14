@@ -6,6 +6,7 @@ import { CalendarDays, GraduationCap, Printer, UserCircle2, Users2 } from "lucid
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { useCourseClass } from "@/hooks/use-course-classes";
+import { formatBrazilianDateRange } from "@/lib/date-formatter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -138,7 +139,7 @@ export function CourseClassShowPage() {
               <CalendarDays className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Período planejado</p>
-                <p className="text-sm text-slate-700">{courseClass.planned_start_date ?? "-"} ate {courseClass.planned_end_date ?? "-"}</p>
+                <p className="text-sm text-slate-700">{formatBrazilianDateRange(courseClass.planned_start_date, courseClass.planned_end_date)}</p>
               </div>
             </div>
 
@@ -146,7 +147,7 @@ export function CourseClassShowPage() {
               <CalendarDays className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Período real</p>
-                <p className="text-sm text-slate-700">{courseClass.start_date ?? "-"} ate {courseClass.end_date ?? "-"}</p>
+                <p className="text-sm text-slate-700">{formatBrazilianDateRange(courseClass.start_date, courseClass.end_date)}</p>
               </div>
             </div>
 

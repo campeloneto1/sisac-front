@@ -6,12 +6,13 @@ import { Plus } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { useSubunit } from "@/contexts/subunit-context";
+import { useNotificationDomains } from "@/hooks/use-notification-domains";
 import { useNotificationResponsibilities } from "@/hooks/use-notification-responsibilities";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useSectors } from "@/hooks/use-sectors";
 import { useSubunits } from "@/hooks/use-subunits";
 import { hasPermission } from "@/lib/permissions";
-import { getNotificationResponsibilityDomainLabel } from "@/types/notification-responsibility.type";
+import { getDomainLabel } from "@/types/notification-responsibility.type";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pagination } from "@/components/ui/pagination";
@@ -42,6 +43,7 @@ export function NotificationResponsibilitiesListPage() {
   const itemsQuery = useNotificationResponsibilities(filters, Boolean(activeSubunit));
   const subunitsQuery = useSubunits({ per_page: 100 });
   const sectorsQuery = useSectors({ per_page: 100 }, Boolean(activeSubunit));
+  const domainsQuery = useNotificationDomains();
   const activeSubunitId = activeSubunit ? String(activeSubunit.id) : null;
   const isDifferentSubunitSelected = Boolean(subunitId !== "all" && activeSubunitId && subunitId !== activeSubunitId);
 
@@ -96,6 +98,7 @@ export function NotificationResponsibilitiesListPage() {
           abbreviation: sector.abbreviation,
           subunit_id: sector.subunit_id,
         }))}
+        domains={domainsQuery.data?.data ?? []}
         onDomainChange={(value) => {
           setDomain(value);
           setPage(1);
@@ -155,7 +158,7 @@ export function NotificationResponsibilitiesListPage() {
           <CardHeader>
             <CardTitle>Nenhuma regra encontrada</CardTitle>
             <CardDescription>
-              Não ha responsabilidade cadastrada para os filtros atuais{domain !== "all" ? ` no dominio ${getNotificationResponsibilityDomainLabel(domain)}.` : "."}
+              Não ha responsabilidade cadastrada para os filtros atuais{domain !== "all" ? ` no dominio ${domainsQuery.data?.data.find((d) => d.value === domain)?.label ?? domain}.` : "."}
             </CardDescription>
           </CardHeader>
         </Card>

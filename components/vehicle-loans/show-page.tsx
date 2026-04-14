@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMarkVehicleLoanReturnedMutation } from "@/hooks/use-vehicle-loan-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useVehicleLoan } from "@/hooks/use-vehicle-loans";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import {
   getVehicleLoanBorrowerLabel,
   getVehicleLoanStatusVariant,
@@ -57,7 +58,7 @@ function formatDateTime(date?: string | null, time?: string | null) {
     return "Não informado";
   }
 
-  return `${date.slice(0, 10)}${time ? ` • ${time.slice(0, 5)}` : ""}`;
+  return `${formatBrazilianDate(date)}${time ? ` • ${time.slice(0, 5)}` : ""}`;
 }
 
 export function VehicleLoanShowPage() {

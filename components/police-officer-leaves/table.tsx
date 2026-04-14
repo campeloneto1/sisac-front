@@ -6,6 +6,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { useDeletePoliceOfficerLeaveMutation } from "@/hooks/use-police-officer-leave-mutations";
+import { formatBrazilianDateRange } from "@/lib/date-formatter";
 import type { PoliceOfficerLeaveItem } from "@/types/police-officer-leave.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -76,12 +77,11 @@ export function PoliceOfficerLeavesTable({ policeOfficerLeaves }: PoliceOfficerL
               {policeOfficerLeaves.map((leave) => (
                 <tr key={leave.id} className="border-t border-slate-200/70">
                   <td className="px-4 py-4">
-                    <div>
-                      <p className="font-medium text-slate-900">
-                        {leave.police_officer?.name ?? leave.police_officer?.user?.name ?? leave.police_officer?.war_name ?? `Policial #${leave.police_officer_id}`}
-                      </p>
-                      <p className="mt-1 text-slate-500">Matrícula: {leave.police_officer?.registration_number ?? "Não informada"}</p>
-                    </div>
+                    <p className="font-medium text-slate-900">
+                      {leave.police_officer
+                        ? `${leave.police_officer.current_rank?.abbreviation ?? ""} ${leave.police_officer.badge_number ?? ""} ${leave.police_officer.war_name ?? ""}`.trim() || `Policial #${leave.police_officer_id}`
+                        : `Policial #${leave.police_officer_id}`}
+                    </p>
                   </td>
                   <td className="px-4 py-4">
                     <div>
@@ -92,7 +92,7 @@ export function PoliceOfficerLeavesTable({ policeOfficerLeaves }: PoliceOfficerL
                   <td className="px-4 py-4 text-slate-700">
                     <div>
                       <p>
-                        {leave.start_date ?? "-"} ate {leave.end_date ?? "-"}
+                        {formatBrazilianDateRange(leave.start_date, leave.end_date)}
                       </p>
                       <p className="mt-1 text-slate-500">{leave.days ? `${leave.days} dias` : "Período sem total calculado"}</p>
                     </div>
@@ -149,7 +149,9 @@ export function PoliceOfficerLeavesTable({ policeOfficerLeaves }: PoliceOfficerL
             <DialogTitle>Excluir afastamento</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja excluir o afastamento de{" "}
-              {leaveToDelete?.police_officer?.name ?? leaveToDelete?.police_officer?.user?.name ?? leaveToDelete?.police_officer?.war_name}?
+              {leaveToDelete?.police_officer
+                ? `${leaveToDelete.police_officer.current_rank?.abbreviation ?? ""} ${leaveToDelete.police_officer.badge_number ?? ""} ${leaveToDelete.police_officer.war_name ?? ""}`.trim() || `Policial #${leaveToDelete.police_officer_id}`
+                : `Policial #${leaveToDelete?.police_officer_id}`}?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

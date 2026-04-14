@@ -13,6 +13,7 @@ import {
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { useVehicleRental } from "@/hooks/use-vehicle-rentals";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import { getVehicleRentalStatusVariant } from "@/types/vehicle-rental.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "Não informado";
+  return date ? formatBrazilianDate(date) : "Não informado";
 }
 
 function formatCurrency(value?: number | null) {

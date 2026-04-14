@@ -19,6 +19,7 @@ import {
   usePoliceOfficerRetirementRequestsReport,
 } from "@/hooks/use-police-officer-reports";
 import { useRanks } from "@/hooks/use-ranks";
+import { formatBrazilianDate, formatBrazilianDateRange } from "@/lib/date-formatter";
 import { hasPermission } from "@/lib/permissions";
 import type { PoliceOfficerReportFilters } from "@/types/police-officer-report.type";
 import { PoliceOfficerAggregateFilters } from "@/components/police-officer-reports/aggregate-filters";
@@ -134,7 +135,7 @@ export function PoliceOfficerAllocationHistoryReportPage() {
               <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.police_officer?.name ?? item.police_officer?.war_name ?? "Sem nome"}</p><p className="text-xs text-slate-500">{item.police_officer?.registration_number ?? "-"}</p></td>
               <td className="px-4 py-4 text-slate-700">{item.sector?.name ?? "-"}</td>
               <td className="px-4 py-4 text-slate-700">{item.assignment?.name ?? "-"}</td>
-              <td className="px-4 py-4 text-slate-700">{item.start_date} até {item.end_date ?? "Atual"}</td>
+              <td className="px-4 py-4 text-slate-700">{formatBrazilianDate(item.start_date)} até {item.end_date ? formatBrazilianDate(item.end_date) : "Atual"}</td>
               <td className="px-4 py-4"><Badge variant={item.is_current ? "success" : "outline"}>{item.is_current ? "Atual" : "Encerrada"}</Badge></td>
             </tr>
           ))}
@@ -216,7 +217,7 @@ export function PoliceOfficerPromotionHistoryReportPage() {
               <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.police_officer?.name ?? item.police_officer?.war_name ?? "Sem nome"}</p><p className="text-xs text-slate-500">{item.police_officer?.registration_number ?? "-"}</p></td>
               <td className="px-4 py-4 text-slate-700">{item.rank?.name ?? "-"}</td>
               <td className="px-4 py-4 text-slate-700">{item.promotion_type ?? "-"}</td>
-              <td className="px-4 py-4 text-slate-700">{item.promotion_date ?? "-"}</td>
+              <td className="px-4 py-4 text-slate-700">{formatBrazilianDate(item.promotion_date)}</td>
               <td className="px-4 py-4 text-slate-700">{item.promotion_bulletin ?? "-"}</td>
             </tr>
           ))}
@@ -259,7 +260,7 @@ export function PoliceOfficerPendingCopemReportPage() {
               <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.police_officer?.name ?? item.police_officer?.war_name ?? "Sem nome"}</p></td>
               <td className="px-4 py-4 text-slate-700">{item.leave_type?.name ?? "-"}</td>
               <td className="px-4 py-4"><Badge variant="outline">{item.status?.label ?? "-"}</Badge></td>
-              <td className="px-4 py-4 text-slate-700">{item.copem_scheduled_date ?? item.copem_evaluation_date ?? "-"}</td>
+              <td className="px-4 py-4 text-slate-700">{formatBrazilianDate(item.copem_scheduled_date ?? item.copem_evaluation_date)}</td>
               <td className="px-4 py-4 text-slate-700">{item.copem_protocol ?? "-"}</td>
             </tr>
           ))}
@@ -305,8 +306,8 @@ export function PoliceOfficerCoursesOverviewReportPage() {
               <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.user?.name ?? "Sem nome"}</p></td>
               <td className="px-4 py-4 text-slate-700">{item.course?.name ?? item.course_class?.name ?? "-"}</td>
               <td className="px-4 py-4"><Badge variant="outline">{item.status_label ?? "-"}</Badge></td>
-              <td className="px-4 py-4 text-slate-700">{item.start_date ?? "-"} até {item.end_date ?? "-"}</td>
-              <td className="px-4 py-4 text-slate-700">{item.certificate_issued_at ?? (item.has_certificate ? "Emitido" : "Não emitido")}</td>
+              <td className="px-4 py-4 text-slate-700">{formatBrazilianDateRange(item.start_date, item.end_date)}</td>
+              <td className="px-4 py-4 text-slate-700">{item.certificate_issued_at ? formatBrazilianDate(item.certificate_issued_at) : (item.has_certificate ? "Emitido" : "Não emitido")}</td>
             </tr>
           ))}
         </TableWrap>
@@ -342,7 +343,7 @@ export function PoliceOfficerPendingCertificatesReportPage() {
             <tr key={item.id} className="border-t border-slate-200/70">
               <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.user?.name ?? "Sem nome"}</p></td>
               <td className="px-4 py-4 text-slate-700">{item.course?.name ?? item.course_class?.name ?? "-"}</td>
-              <td className="px-4 py-4 text-slate-700">{item.end_date ?? "-"}</td>
+              <td className="px-4 py-4 text-slate-700">{formatBrazilianDate(item.end_date)}</td>
               <td className="px-4 py-4 text-slate-700">{item.course?.workload ?? 0}h</td>
               <td className="px-4 py-4"><Badge variant="warning">Pendente</Badge></td>
             </tr>
@@ -394,8 +395,8 @@ export function PoliceOfficerRetirementRequestsReportPage() {
               <td className="px-4 py-4"><p className="font-medium text-slate-900">{item.police_officer?.name ?? item.police_officer?.war_name ?? "Sem nome"}</p></td>
               <td className="px-4 py-4 text-slate-700">{item.nup ?? "-"}</td>
               <td className="px-4 py-4"><Badge variant="outline">{item.status}</Badge></td>
-              <td className="px-4 py-4 text-slate-700">{item.requested_at ?? "-"}</td>
-              <td className="px-4 py-4 text-slate-700">{item.published_at ?? "-"}</td>
+              <td className="px-4 py-4 text-slate-700">{formatBrazilianDate(item.requested_at)}</td>
+              <td className="px-4 py-4 text-slate-700">{formatBrazilianDate(item.published_at)}</td>
             </tr>
           ))}
         </TableWrap>
@@ -426,12 +427,12 @@ export function PoliceOfficerFunctionalPanelReportPage() {
         <StatCard label="Aposentadoria" value={reportQuery.data.data.summary.total_retirement_requests} />
       </div>
       <div className="grid gap-6 xl:grid-cols-2">
-        <MiniListCard title="Lotações" items={reportQuery.data.data.allocations.map((item) => `${item.start_date} • ${item.sector?.name ?? "-"} • ${item.assignment?.name ?? "-"}`)} />
-        <MiniListCard title="Promoções" items={reportQuery.data.data.rank_history.map((item) => `${item.promotion_date ?? item.start_date} • ${item.rank?.name ?? "-"} • ${item.promotion_type ?? "-"}`)} />
-        <MiniListCard title="Afastamentos" items={reportQuery.data.data.leaves.map((item) => `${item.start_date ?? "-"} até ${item.end_date ?? "-"} • ${item.leave_type?.name ?? "-"}`)} />
+        <MiniListCard title="Lotações" items={reportQuery.data.data.allocations.map((item) => `${formatBrazilianDate(item.start_date)} • ${item.sector?.name ?? "-"} • ${item.assignment?.name ?? "-"}`)} />
+        <MiniListCard title="Promoções" items={reportQuery.data.data.rank_history.map((item) => `${formatBrazilianDate(item.promotion_date ?? item.start_date)} • ${item.rank?.name ?? "-"} • ${item.promotion_type ?? "-"}`)} />
+        <MiniListCard title="Afastamentos" items={reportQuery.data.data.leaves.map((item) => `${formatBrazilianDateRange(item.start_date, item.end_date)} • ${item.leave_type?.name ?? "-"}`)} />
         <MiniListCard title="Cursos" items={reportQuery.data.data.courses.map((item) => `${item.course?.name ?? item.course_class?.name ?? "-"} • ${item.status_label ?? "-"}`)} />
         <MiniListCard title="Férias" items={reportQuery.data.data.vacations.map((item) => `${item.reference_year} • ${item.status?.label ?? "-"} • disponível ${item.available_days ?? 0}`)} />
-        <MiniListCard title="Aposentadoria" items={reportQuery.data.data.retirement_requests.map((item) => `${item.requested_at ?? "-"} • ${item.status}`)} />
+        <MiniListCard title="Aposentadoria" items={reportQuery.data.data.retirement_requests.map((item) => `${formatBrazilianDate(item.requested_at)} • ${item.status}`)} />
       </div>
     </ReportShell>
   )}</Guard>;

@@ -7,7 +7,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 import { useDeleteNotificationResponsibilityMutation } from "@/hooks/use-notification-responsibility-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
 import type { NotificationResponsibilityItem } from "@/types/notification-responsibility.type";
-import { getNotificationResponsibilityDomainLabel } from "@/types/notification-responsibility.type";
+import { getDomainLabel, getDomainValue } from "@/types/notification-responsibility.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -56,8 +56,8 @@ export function NotificationResponsibilitiesTable({ items }: NotificationRespons
                 <tr key={item.id} className="border-t border-slate-200/70">
                   <td className="px-4 py-4">
                     <div className="space-y-2">
-                      <Badge variant="info">{getNotificationResponsibilityDomainLabel(item.domain)}</Badge>
-                      <p className="text-xs text-slate-500">{item.domain}</p>
+                      <Badge variant="info">{getDomainLabel(item.domain)}</Badge>
+                      <p className="text-xs text-slate-500">{getDomainValue(item.domain)}</p>
                     </div>
                   </td>
                   <td className="px-4 py-4 text-slate-700">
@@ -115,7 +115,7 @@ export function NotificationResponsibilitiesTable({ items }: NotificationRespons
           <DialogHeader>
             <DialogTitle>Excluir responsabilidade de notificação</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja remover a regra de {itemToDelete ? getNotificationResponsibilityDomainLabel(itemToDelete.domain) : ""}?
+              Tem certeza que deseja remover a regra de {itemToDelete ? getDomainLabel(itemToDelete.domain) : ""}?
               Isso pode impedir o envio automático de notificações para a subunidade configurada.
             </DialogDescription>
           </DialogHeader>

@@ -32,8 +32,8 @@ const formSchema = z.object({
     .trim()
     .min(2, "O número do lote deve ter no mínimo 2 caracteres.")
     .max(100, "O número do lote deve ter no máximo 100 caracteres."),
-  quantity: z.coerce
-    .number({ invalid_type_error: "A quantidade deve ser um número." })
+  quantity: z
+    .number()
     .int("A quantidade deve ser um número inteiro.")
     .min(1, "A quantidade deve ser no mínimo 1."),
   expiration_date: z.string().optional(),

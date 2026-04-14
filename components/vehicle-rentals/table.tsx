@@ -6,6 +6,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { useDeleteVehicleRentalMutation } from "@/hooks/use-vehicle-rental-mutations";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import {
   getVehicleRentalStatusVariant,
   type VehicleRentalItem,
@@ -26,7 +27,7 @@ interface VehicleRentalsTableProps {
 }
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "-";
+  return formatBrazilianDate(date);
 }
 
 function formatCurrency(value?: number | null) {

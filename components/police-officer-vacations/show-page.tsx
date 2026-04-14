@@ -6,11 +6,24 @@ import { CalendarDays, Coins, FileText, TimerReset, UserCircle2 } from "lucide-r
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { usePoliceOfficerVacation } from "@/hooks/use-police-officer-vacations";
+import { formatBrazilianDate } from "@/lib/date-formatter";
+import type { PoliceOfficerVacationItem } from "@/types/police-officer-vacation.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PoliceOfficerVacationPeriodsSection } from "@/components/police-officer-vacations/periods-section";
+
+function getPoliceOfficerLabel(vacation: PoliceOfficerVacationItem) {
+  if (!vacation.police_officer) {
+    return `Policial #${vacation.police_officer_id}`;
+  }
+
+  const { current_rank, badge_number, war_name } = vacation.police_officer;
+  const label = `${current_rank?.abbreviation ?? ""} ${badge_number ?? ""} ${war_name ?? ""}`.trim();
+
+  return label || `Policial #${vacation.police_officer_id}`;
+}
 
 function getStatusVariant(status?: string | null) {
   switch (status) {
@@ -68,12 +81,12 @@ export function PoliceOfficerVacationShowPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="font-display text-3xl text-slate-900">
-              {vacation.police_officer?.name ?? vacation.police_officer?.user?.name ?? vacation.police_officer?.war_name ?? `Policial #${vacation.police_officer_id}`}
+              {getPoliceOfficerLabel(vacation)}
             </h1>
             <Badge variant={getStatusVariant(vacation.status?.value)}>{vacation.status?.label ?? "Sem status"}</Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            Férias de {vacation.reference_year} • validade {vacation.valid_from ?? "-"} ate {vacation.valid_until ?? "-"}
+            Férias de {vacation.reference_year} • validade {formatBrazilianDate(vacation.valid_from)} até {formatBrazilianDate(vacation.valid_until)}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             Registro anual de férias com saldo, boletins e planejamento de períodos de gozo para o policial.
@@ -117,7 +130,7 @@ export function PoliceOfficerVacationShowPage() {
               <CalendarDays className="h-4 w-4 text-primary" />
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Vigência</p>
-                <p className="text-sm text-slate-700">{vacation.valid_from ?? "-"} ate {vacation.valid_until ?? "-"}</p>
+                <p className="text-sm text-slate-700">{formatBrazilianDate(vacation.valid_from)} até {formatBrazilianDate(vacation.valid_until)}</p>
               </div>
             </div>
 

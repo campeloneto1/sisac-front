@@ -6,10 +6,23 @@ import { CalendarDays, FileText, HeartPulse, ShieldAlert, UserCircle2 } from "lu
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { usePoliceOfficerLeave } from "@/hooks/use-police-officer-leaves";
+import { formatBrazilianDateRange } from "@/lib/date-formatter";
+import type { PoliceOfficerLeaveItem } from "@/types/police-officer-leave.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+
+function getPoliceOfficerLabel(leave: PoliceOfficerLeaveItem) {
+  if (!leave.police_officer) {
+    return `Policial #${leave.police_officer_id}`;
+  }
+
+  const { current_rank, badge_number, war_name } = leave.police_officer;
+  const label = `${current_rank?.abbreviation ?? ""} ${badge_number ?? ""} ${war_name ?? ""}`.trim();
+
+  return label || `Policial #${leave.police_officer_id}`;
+}
 
 function getStatusVariant(status?: string | null) {
   switch (status) {
@@ -71,12 +84,12 @@ export function PoliceOfficerLeaveShowPage() {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="font-display text-3xl text-slate-900">
-              {leave.police_officer?.name ?? leave.police_officer?.user?.name ?? leave.police_officer?.war_name ?? `Policial #${leave.police_officer_id}`}
+              {getPoliceOfficerLabel(leave)}
             </h1>
             <Badge variant={getStatusVariant(leave.status?.value)}>{leave.status?.label ?? "Sem status"}</Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
-            {leave.leave_type?.name ?? `Tipo #${leave.leave_type_id}`} • {leave.start_date ?? "-"} ate {leave.end_date ?? "-"}
+            {leave.leave_type?.name ?? `Tipo #${leave.leave_type_id}`} • {formatBrazilianDateRange(leave.start_date, leave.end_date)}
           </p>
           <p className="mt-3 max-w-3xl text-sm text-slate-600">
             Registro completo do afastamento, incluindo dados médicos, regra de renovação, auditoria e acompanhamento de COPEM.
@@ -102,7 +115,7 @@ export function PoliceOfficerLeaveShowPage() {
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Período</p>
                 <p className="text-sm text-slate-700">
-                  {leave.start_date ?? "-"} ate {leave.end_date ?? "-"} {leave.days ? `(${leave.days} dias)` : ""}
+                  {formatBrazilianDateRange(leave.start_date, leave.end_date)} {leave.days ? `(${leave.days} dias)` : ""}
                 </p>
               </div>
             </div>
@@ -144,7 +157,7 @@ export function PoliceOfficerLeaveShowPage() {
             <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Policial</p>
               <p className="mt-1 text-sm text-slate-700">
-                {leave.police_officer?.name ?? leave.police_officer?.user?.name ?? leave.police_officer?.war_name ?? `Policial #${leave.police_officer_id}`}
+                {getPoliceOfficerLabel(leave)}
               </p>
             </div>
 

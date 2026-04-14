@@ -14,6 +14,7 @@ import {
 } from "@/hooks/use-vehicle-custody-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
 import { useVehicleCustody } from "@/hooks/use-vehicle-custodies";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import {
   getVehicleCustodyCustodianLabel,
   getVehicleCustodyStatusVariant,
@@ -46,7 +47,7 @@ const finalizeSchema = z.object({
 type FinalizeValues = z.output<typeof finalizeSchema>;
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "Não informado";
+  return date ? formatBrazilianDate(date) : "Não informado";
 }
 
 export function VehicleCustodyShowPage() {

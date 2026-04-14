@@ -6,6 +6,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 
 import { useDeleteVehicleFuelingMutation } from "@/hooks/use-vehicle-fueling-mutations";
 import { usePermissions } from "@/hooks/use-permissions";
+import { formatBrazilianDate } from "@/lib/date-formatter";
 import type { VehicleFuelingItem } from "@/types/vehicle-fueling.type";
 import {
   getVehicleFuelingContextLabel,
@@ -27,7 +28,7 @@ interface VehicleFuelingsTableProps {
 }
 
 function formatDate(date?: string | null) {
-  return date ? date.slice(0, 10) : "-";
+  return formatBrazilianDate(date);
 }
 
 function formatCurrency(value?: number | null) {
