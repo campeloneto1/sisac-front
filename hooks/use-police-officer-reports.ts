@@ -180,3 +180,14 @@ export function usePoliceOfficerFunctionalPanelReport(
     enabled: Boolean(policeOfficerId) && enabled,
   });
 }
+
+export function usePoliceOfficerPhotoBoardReport(
+  filters: PoliceOfficerReportFilters,
+  enabled = true,
+) {
+  return useQuery({
+    queryKey: ["police-officer-reports", "photo-board", filters],
+    queryFn: () => policeOfficerReportsService.photoBoard(filters),
+    enabled,
+  });
+}

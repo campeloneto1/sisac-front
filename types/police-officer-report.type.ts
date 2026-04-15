@@ -286,3 +286,31 @@ export interface PoliceOfficerFunctionalPanelResponse {
   message: string;
   data: PoliceOfficerFunctionalPanelData;
 }
+
+export interface PoliceOfficerPhotoBoardItem {
+  id: number;
+  name: string | null;
+  war_name: string | null;
+  registration_number: string | null;
+  badge_number: string | null;
+  profile_photo?: {
+    id: number;
+    url: string;
+  } | null;
+  current_rank?: {
+    id: number;
+    name: string;
+    abbreviation: string | null;
+    hierarchy_level: number | null;
+  } | null;
+  current_allocation?: {
+    sector?: {
+      id: number;
+      name: string;
+      abbreviation: string | null;
+    } | null;
+  } | null;
+}
+
+export type PoliceOfficerPhotoBoardReportResponse =
+  CollectionPoliceOfficerReportResponse<PoliceOfficerPhotoBoardItem>;

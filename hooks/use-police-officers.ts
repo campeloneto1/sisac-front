@@ -55,3 +55,24 @@ export function usePoliceOfficerRoles(search?: string) {
     queryFn: () => policeOfficersService.roles(search),
   });
 }
+
+export function usePoliceOfficerSectors(search?: string) {
+  return useQuery({
+    queryKey: ["police-officer-sectors", search ?? ""],
+    queryFn: () => policeOfficersService.sectors(search),
+  });
+}
+
+export function usePoliceOfficerRanks(search?: string) {
+  return useQuery({
+    queryKey: ["police-officer-ranks", search ?? ""],
+    queryFn: () => policeOfficersService.ranks(search),
+  });
+}
+
+export function usePoliceOfficerAssignments(search?: string) {
+  return useQuery({
+    queryKey: ["police-officer-assignments", search ?? ""],
+    queryFn: () => policeOfficersService.assignments(search),
+  });
+}

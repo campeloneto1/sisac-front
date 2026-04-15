@@ -20,6 +20,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ResetPasswordDialog } from "@/components/users/reset-password-dialog";
+import { PhotoModal } from "@/components/ui/photo-modal";
 
 interface UsersTableProps {
   users: UserListItem[];
@@ -49,6 +50,7 @@ export function UsersTable({ users }: UsersTableProps) {
   const [userToDelete, setUserToDelete] = useState<UserListItem | null>(null);
   const [userToRevoke, setUserToRevoke] = useState<UserListItem | null>(null);
   const [userToRenew, setUserToRenew] = useState<UserListItem | null>(null);
+  const [photoModalData, setPhotoModalData] = useState<{ photoUrl?: string | null; name: string } | null>(null);
 
   async function handleDelete() {
     if (!userToDelete) {
@@ -100,7 +102,10 @@ export function UsersTable({ users }: UsersTableProps) {
                   <tr key={item.id} className="border-t border-slate-200/70">
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-3">
-                        <Avatar className="h-10 w-10">
+                        <Avatar
+                          className="h-10 w-10 cursor-pointer hover:opacity-80 transition-opacity"
+                          onClick={() => setPhotoModalData({ photoUrl: item.profile_photo?.url, name: item.name })}
+                        >
                           {item.profile_photo?.url ? (
                             <AvatarImage src={item.profile_photo.url} alt={item.name} />
                           ) : null}
@@ -238,6 +243,16 @@ export function UsersTable({ users }: UsersTableProps) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {photoModalData ? (
+        <PhotoModal
+          isOpen={Boolean(photoModalData)}
+          onClose={() => setPhotoModalData(null)}
+          photoUrl={photoModalData.photoUrl}
+          fallbackText={photoModalData.name.slice(0, 2).toUpperCase()}
+          alt={photoModalData.name}
+        />
+      ) : null}
     </>
   );
 }

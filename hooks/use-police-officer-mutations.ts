@@ -52,3 +52,36 @@ export function useDeletePoliceOfficerMutation() {
     },
   });
 }
+
+export function useUploadPoliceOfficerProfilePhotoMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, photo }: { id: number | string; photo: File }) =>
+      policeOfficersService.uploadProfilePhoto(id, photo),
+    onSuccess(response, variables) {
+      queryClient.invalidateQueries({ queryKey: ["police-officers"] });
+      queryClient.invalidateQueries({ queryKey: ["police-officers", variables.id] });
+      toast.success(response.message);
+    },
+    onError(error) {
+      toast.error(getApiErrorMessage(error));
+    },
+  });
+}
+
+export function useDeletePoliceOfficerProfilePhotoMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number | string) => policeOfficersService.deleteProfilePhoto(id),
+    onSuccess(response, variables) {
+      queryClient.invalidateQueries({ queryKey: ["police-officers"] });
+      queryClient.invalidateQueries({ queryKey: ["police-officers", variables] });
+      toast.success(response.message);
+    },
+    onError(error) {
+      toast.error(getApiErrorMessage(error));
+    },
+  });
+}

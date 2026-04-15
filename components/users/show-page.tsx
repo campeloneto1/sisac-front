@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CalendarClock, CreditCard, Mail, Phone, Shield, UserCircle2 } from "lucide-react";
+import { useState } from "react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
@@ -18,6 +19,7 @@ import { ResetPasswordDialog } from "@/components/users/reset-password-dialog";
 import { UserSubunitsDialog } from "@/components/users/user-subunits-dialog";
 import { RevokeAccessDialog } from "@/components/users/revoke-access-dialog";
 import { RenewAccessDialog } from "@/components/users/renew-access-dialog";
+import { PhotoModal } from "@/components/ui/photo-modal";
 
 function InfoRow({ icon: Icon, label, value }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string }) {
   return (
@@ -43,6 +45,7 @@ export function UserShowPage() {
   const canViewUserSubunits = userSubunitPermissions.canViewAny;
   const canManageUserSubunits = userSubunitPermissions.canViewAny && (userSubunitPermissions.canCreate || userSubunitPermissions.canDelete);
   const userSubunitsQuery = useUserSubunits(canViewUserSubunits ? Number(params.id) : undefined);
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
 
   if (!permissions.canView && !isSelf) {
     return (
@@ -84,7 +87,7 @@ export function UserShowPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 rounded-[28px] border border-slate-200/70 bg-white/80 p-6 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex items-center gap-4">
-          <Avatar className="h-20 w-20">
+          <Avatar className="h-20 w-20 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setIsPhotoModalOpen(true)}>
             {user.profile_photo?.url ? (
               <AvatarImage src={user.profile_photo.url} alt={user.name} />
             ) : null}
@@ -200,6 +203,14 @@ export function UserShowPage() {
           )}
         </CardContent>
       </Card>
+
+      <PhotoModal
+        isOpen={isPhotoModalOpen}
+        onClose={() => setIsPhotoModalOpen(false)}
+        photoUrl={user.profile_photo?.url}
+        fallbackText={user.name.slice(0, 2).toUpperCase()}
+        alt={user.name}
+      />
     </div>
   );
 }

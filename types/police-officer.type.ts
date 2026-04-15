@@ -1,4 +1,5 @@
 import type { PaginatedMeta } from "@/types/brand.type";
+import type { AuthProfilePhoto } from "@/types/auth.type";
 
 export interface PoliceOfficerOption {
   id: number;
@@ -80,7 +81,23 @@ export interface PoliceOfficerItem {
     name: string;
     abbreviation?: string | null;
   } | null;
+  current_allocation?: {
+    id: number;
+    start_date?: string | null;
+    end_date?: string | null;
+    sector?: {
+      id: number;
+      name: string;
+      abbreviation?: string | null;
+    } | null;
+    assignment?: {
+      id: number;
+      name: string;
+      category?: string | null;
+    } | null;
+  } | null;
   rank_history?: PoliceOfficerRankItem[];
+  profile_photo?: AuthProfilePhoto | null;
   creator?: {
     id: number;
     name: string;
@@ -99,8 +116,9 @@ export interface PoliceOfficerFilters {
   page?: number;
   per_page?: number;
   search?: string;
-  city_id?: number | null;
-  bank_id?: number | null;
+  sector_id?: number | null;
+  rank_id?: number | null;
+  assignment_id?: number | null;
   gender_id?: number | null;
   education_level_id?: number | null;
   is_active?: boolean | null;
@@ -185,6 +203,24 @@ export interface PoliceOfficerRoleOption {
   slug: string;
 }
 
+export interface PoliceOfficerSectorOption {
+  id: number;
+  name: string;
+  abbreviation?: string | null;
+}
+
+export interface PoliceOfficerRankOption {
+  id: number;
+  name: string;
+  abbreviation?: string | null;
+}
+
+export interface PoliceOfficerAssignmentOption {
+  id: number;
+  name: string;
+  category?: string | null;
+}
+
 export interface PoliceOfficerBankListResponse {
   data: PoliceOfficerBankOption[];
   meta: PaginatedMeta;
@@ -207,5 +243,20 @@ export interface PoliceOfficerEducationLevelListResponse {
 
 export interface PoliceOfficerRoleListResponse {
   data: PoliceOfficerRoleOption[];
+  meta: PaginatedMeta;
+}
+
+export interface PoliceOfficerSectorListResponse {
+  data: PoliceOfficerSectorOption[];
+  meta: PaginatedMeta;
+}
+
+export interface PoliceOfficerRankListResponse {
+  data: PoliceOfficerRankOption[];
+  meta: PaginatedMeta;
+}
+
+export interface PoliceOfficerAssignmentListResponse {
+  data: PoliceOfficerAssignmentOption[];
   meta: PaginatedMeta;
 }

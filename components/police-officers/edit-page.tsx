@@ -7,6 +7,7 @@ import { usePoliceOfficer } from "@/hooks/use-police-officers";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PoliceOfficerForm } from "@/components/police-officers/form";
+import { ProfilePhotoSection } from "@/components/police-officers/profile-photo-section";
 
 export function PoliceOfficerEditPage() {
   const params = useParams<{ id: string }>();
@@ -39,5 +40,10 @@ export function PoliceOfficerEditPage() {
     );
   }
 
-  return <PoliceOfficerForm mode="edit" policeOfficer={policeOfficerQuery.data.data} />;
+  return (
+    <div className="space-y-6">
+      <ProfilePhotoSection policeOfficer={policeOfficerQuery.data.data} />
+      <PoliceOfficerForm mode="edit" policeOfficer={policeOfficerQuery.data.data} />
+    </div>
+  );
 }

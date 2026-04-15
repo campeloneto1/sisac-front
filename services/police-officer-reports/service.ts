@@ -17,6 +17,7 @@ import type {
   PoliceOfficerVacationsOverviewReportResponse,
   PoliceOfficerVacationBalancesReportResponse,
   PoliceOfficerFunctionalPanelResponse,
+  PoliceOfficerPhotoBoardReportResponse,
 } from "@/types/police-officer-report.type";
 
 const basePath = "/police-officer-reports";
@@ -194,6 +195,19 @@ export const policeOfficerReportsService = {
   ): Promise<PoliceOfficerFunctionalPanelResponse> {
     const { data } = await api.get<PoliceOfficerFunctionalPanelResponse>(
       `${basePath}/functional-panel/${policeOfficerId}`,
+    );
+
+    return data;
+  },
+
+  async photoBoard(
+    filters: PoliceOfficerReportFilters = {},
+  ): Promise<PoliceOfficerPhotoBoardReportResponse> {
+    const { data } = await api.get<PoliceOfficerPhotoBoardReportResponse>(
+      `${basePath}/photo-board`,
+      {
+        params: filters,
+      },
     );
 
     return data;

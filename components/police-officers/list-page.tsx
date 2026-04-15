@@ -6,11 +6,12 @@ import { Plus } from "lucide-react";
 
 import { usePermissions } from "@/hooks/use-permissions";
 import {
-  usePoliceOfficerBanks,
-  usePoliceOfficerCities,
   usePoliceOfficerEducationLevels,
   usePoliceOfficerGenders,
   usePoliceOfficers,
+  usePoliceOfficerSectors,
+  usePoliceOfficerRanks,
+  usePoliceOfficerAssignments,
 } from "@/hooks/use-police-officers";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,8 +23,9 @@ import { PoliceOfficersTable } from "@/components/police-officers/table";
 export function PoliceOfficersListPage() {
   const permissions = usePermissions("police-officers");
   const [search, setSearch] = useState("");
-  const [cityId, setCityId] = useState("all");
-  const [bankId, setBankId] = useState("all");
+  const [sectorId, setSectorId] = useState("all");
+  const [rankId, setRankId] = useState("all");
+  const [assignmentId, setAssignmentId] = useState("all");
   const [genderId, setGenderId] = useState("all");
   const [educationLevelId, setEducationLevelId] = useState("all");
   const [isActive, setIsActive] = useState("all");
@@ -34,18 +36,20 @@ export function PoliceOfficersListPage() {
       page,
       per_page: 15,
       search: search || undefined,
-      city_id: cityId !== "all" ? Number(cityId) : null,
-      bank_id: bankId !== "all" ? Number(bankId) : null,
+      sector_id: sectorId !== "all" ? Number(sectorId) : null,
+      rank_id: rankId !== "all" ? Number(rankId) : null,
+      assignment_id: assignmentId !== "all" ? Number(assignmentId) : null,
       gender_id: genderId !== "all" ? Number(genderId) : null,
       education_level_id: educationLevelId !== "all" ? Number(educationLevelId) : null,
       is_active: isActive === "all" ? null : isActive === "active",
     }),
-    [bankId, cityId, educationLevelId, genderId, isActive, page, search],
+    [sectorId, rankId, assignmentId, educationLevelId, genderId, isActive, page, search],
   );
 
   const policeOfficersQuery = usePoliceOfficers(filters);
-  const banksQuery = usePoliceOfficerBanks();
-  const citiesQuery = usePoliceOfficerCities();
+  const sectorsQuery = usePoliceOfficerSectors();
+  const ranksQuery = usePoliceOfficerRanks();
+  const assignmentsQuery = usePoliceOfficerAssignments();
   const gendersQuery = usePoliceOfficerGenders();
   const educationLevelsQuery = usePoliceOfficerEducationLevels();
 
@@ -80,25 +84,31 @@ export function PoliceOfficersListPage() {
 
       <PoliceOfficersFilters
         search={search}
-        cityId={cityId}
-        bankId={bankId}
+        sectorId={sectorId}
+        rankId={rankId}
+        assignmentId={assignmentId}
         genderId={genderId}
         educationLevelId={educationLevelId}
         isActive={isActive}
-        cities={citiesQuery.data?.data ?? []}
-        banks={banksQuery.data?.data ?? []}
+        sectors={sectorsQuery.data?.data ?? []}
+        ranks={ranksQuery.data?.data ?? []}
+        assignments={assignmentsQuery.data?.data ?? []}
         genders={gendersQuery.data?.data ?? []}
         educationLevels={educationLevelsQuery.data?.data ?? []}
         onSearchChange={(value) => {
           setSearch(value);
           setPage(1);
         }}
-        onCityChange={(value) => {
-          setCityId(value);
+        onSectorChange={(value) => {
+          setSectorId(value);
           setPage(1);
         }}
-        onBankChange={(value) => {
-          setBankId(value);
+        onRankChange={(value) => {
+          setRankId(value);
+          setPage(1);
+        }}
+        onAssignmentChange={(value) => {
+          setAssignmentId(value);
           setPage(1);
         }}
         onGenderChange={(value) => {
@@ -115,8 +125,9 @@ export function PoliceOfficersListPage() {
         }}
         onClear={() => {
           setSearch("");
-          setCityId("all");
-          setBankId("all");
+          setSectorId("all");
+          setRankId("all");
+          setAssignmentId("all");
           setGenderId("all");
           setEducationLevelId("all");
           setIsActive("all");

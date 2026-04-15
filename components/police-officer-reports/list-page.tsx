@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BarChart3, CalendarClock, FileHeart, Layers3, Shield, ShieldCheck, Users, Workflow } from "lucide-react";
+import { BarChart3, CalendarClock, Camera, FileHeart, Layers3, Shield, ShieldCheck, Users, Workflow } from "lucide-react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { useSubunit } from "@/contexts/subunit-context";
@@ -30,6 +30,13 @@ const reportCards = [
     description: "Resumo analítico por graduação atual, com ativos e inativos.",
     href: "/police-officer-reports/rank-distribution",
     icon: BarChart3,
+    available: true,
+  },
+  {
+    title: "Quadro de fotos",
+    description: "Relatório visual com foto, graduação, numeral, nome de guerra e matrícula por setor.",
+    href: "/police-officer-reports/photo-board",
+    icon: Camera,
     available: true,
   },
   {

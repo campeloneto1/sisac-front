@@ -3,10 +3,11 @@
 import { Search, X } from "lucide-react";
 
 import type {
-  PoliceOfficerBankOption,
-  PoliceOfficerCityOption,
   PoliceOfficerEducationLevelOption,
   PoliceOfficerGenderOption,
+  PoliceOfficerSectorOption,
+  PoliceOfficerRankOption,
+  PoliceOfficerAssignmentOption,
 } from "@/types/police-officer.type";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,18 +15,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 interface PoliceOfficersFiltersProps {
   search: string;
-  cityId: string;
-  bankId: string;
+  sectorId: string;
+  rankId: string;
+  assignmentId: string;
   genderId: string;
   educationLevelId: string;
   isActive: string;
-  cities: PoliceOfficerCityOption[];
-  banks: PoliceOfficerBankOption[];
+  sectors: PoliceOfficerSectorOption[];
+  ranks: PoliceOfficerRankOption[];
+  assignments: PoliceOfficerAssignmentOption[];
   genders: PoliceOfficerGenderOption[];
   educationLevels: PoliceOfficerEducationLevelOption[];
   onSearchChange: (value: string) => void;
-  onCityChange: (value: string) => void;
-  onBankChange: (value: string) => void;
+  onSectorChange: (value: string) => void;
+  onRankChange: (value: string) => void;
+  onAssignmentChange: (value: string) => void;
   onGenderChange: (value: string) => void;
   onEducationLevelChange: (value: string) => void;
   onStatusChange: (value: string) => void;
@@ -34,18 +38,21 @@ interface PoliceOfficersFiltersProps {
 
 export function PoliceOfficersFilters({
   search,
-  cityId,
-  bankId,
+  sectorId,
+  rankId,
+  assignmentId,
   genderId,
   educationLevelId,
   isActive,
-  cities,
-  banks,
+  sectors,
+  ranks,
+  assignments,
   genders,
   educationLevels,
   onSearchChange,
-  onCityChange,
-  onBankChange,
+  onSectorChange,
+  onRankChange,
+  onAssignmentChange,
   onGenderChange,
   onEducationLevelChange,
   onStatusChange,
@@ -63,29 +70,43 @@ export function PoliceOfficersFilters({
         />
       </div>
 
-      <Select value={cityId} onValueChange={onCityChange}>
+      <Select value={sectorId} onValueChange={onSectorChange}>
         <SelectTrigger>
-          <SelectValue placeholder="Cidade" />
+          <SelectValue placeholder="Setor" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todas as cidades</SelectItem>
-          {cities.map((city) => (
-            <SelectItem key={city.id} value={String(city.id)}>
-              {city.name}
+          <SelectItem value="all">Todos os setores</SelectItem>
+          {sectors.map((sector) => (
+            <SelectItem key={sector.id} value={String(sector.id)}>
+              {sector.name}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Select value={bankId} onValueChange={onBankChange}>
+      <Select value={rankId} onValueChange={onRankChange}>
         <SelectTrigger>
-          <SelectValue placeholder="Banco" />
+          <SelectValue placeholder="Graduação" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todos os bancos</SelectItem>
-          {banks.map((bank) => (
-            <SelectItem key={bank.id} value={String(bank.id)}>
-              {bank.name}
+          <SelectItem value="all">Todas as graduações</SelectItem>
+          {ranks.map((rank) => (
+            <SelectItem key={rank.id} value={String(rank.id)}>
+              {rank.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select value={assignmentId} onValueChange={onAssignmentChange}>
+        <SelectTrigger>
+          <SelectValue placeholder="Função" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Todas as funções</SelectItem>
+          {assignments.map((assignment) => (
+            <SelectItem key={assignment.id} value={String(assignment.id)}>
+              {assignment.name}
             </SelectItem>
           ))}
         </SelectContent>

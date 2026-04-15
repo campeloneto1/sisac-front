@@ -11,6 +11,9 @@ import type {
   PoliceOfficerItem,
   PoliceOfficerResponse,
   PoliceOfficerRoleListResponse,
+  PoliceOfficerSectorListResponse,
+  PoliceOfficerRankListResponse,
+  PoliceOfficerAssignmentListResponse,
   UpdatePoliceOfficerDTO,
 } from "@/types/police-officer.type";
 
@@ -79,6 +82,47 @@ export const policeOfficersService = {
       params: { per_page: 100, search },
       skipSubunit: true,
     });
+
+    return data;
+  },
+  async sectors(search?: string): Promise<PoliceOfficerSectorListResponse> {
+    const { data } = await api.get<PoliceOfficerSectorListResponse>("/sectors", {
+      params: { per_page: 100, search },
+      skipSubunit: true,
+    });
+
+    return data;
+  },
+  async ranks(search?: string): Promise<PoliceOfficerRankListResponse> {
+    const { data } = await api.get<PoliceOfficerRankListResponse>("/ranks", {
+      params: { per_page: 100, search },
+      skipSubunit: true,
+    });
+
+    return data;
+  },
+  async assignments(search?: string): Promise<PoliceOfficerAssignmentListResponse> {
+    const { data } = await api.get<PoliceOfficerAssignmentListResponse>("/assignments", {
+      params: { per_page: 100, search },
+      skipSubunit: true,
+    });
+
+    return data;
+  },
+  async uploadProfilePhoto(id: number | string, photo: File): Promise<ApiMessageResponse> {
+    const formData = new FormData();
+    formData.append("photo", photo);
+
+    const { data } = await api.post<ApiMessageResponse>(`/police-officers/${id}/profile-photo`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return data;
+  },
+  async deleteProfilePhoto(id: number | string): Promise<ApiMessageResponse> {
+    const { data } = await api.delete<ApiMessageResponse>(`/police-officers/${id}/profile-photo`);
 
     return data;
   },

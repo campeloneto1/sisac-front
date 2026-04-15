@@ -31,6 +31,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VehicleCustodiesTable } from "@/components/vehicle-custodies/table";
 import { VehicleLoansTable } from "@/components/vehicle-loans/table";
 import { PoliceOfficerAllocationsSection } from "@/components/police-officers/allocations-section";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PhotoModal } from "@/components/ui/photo-modal";
 
 type RelatedTabSectionProps = {
   title: string;
@@ -96,6 +98,7 @@ export function PoliceOfficerShowPage() {
   const permissions = usePermissions("police-officers");
   const policeOfficerQuery = usePoliceOfficer(params.id);
   const [activeTab, setActiveTab] = useState("summary");
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
 
   const leavesQuery = usePoliceOfficerLeaves(
     { per_page: 100, police_officer_id: Number(params.id) },
@@ -173,14 +176,22 @@ export function PoliceOfficerShowPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 rounded-[24px] border border-slate-200/70 bg-white/80 p-6 lg:flex-row lg:items-center lg:justify-between">
-        <div>
-          <h1 className="font-display text-3xl text-slate-900">{policeOfficer.name ?? policeOfficer.user?.name ?? "Sem nome"}</h1>
-          <p className="mt-2 text-sm text-slate-500">
-            Nome de guerra: {policeOfficer.war_name} • Matrícula: {policeOfficer.registration_number}
-          </p>
-          <p className="mt-3 max-w-3xl text-sm text-slate-600">
-            Registro funcional completo do policial, incluindo dados civis, identificação militar, escolaridade e histórico de graduações.
-          </p>
+        <div className="flex items-start gap-4">
+          <Avatar className="h-16 w-16 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => setIsPhotoModalOpen(true)}>
+            {policeOfficer.profile_photo?.url ? (
+              <AvatarImage src={policeOfficer.profile_photo.url} alt={policeOfficer.name ?? policeOfficer.war_name} />
+            ) : null}
+            <AvatarFallback className="text-lg">{(policeOfficer.name ?? policeOfficer.war_name).slice(0, 2).toUpperCase()}</AvatarFallback>
+          </Avatar>
+          <div>
+            <h1 className="font-display text-3xl text-slate-900">{policeOfficer.name ?? policeOfficer.user?.name ?? "Sem nome"}</h1>
+            <p className="mt-2 text-sm text-slate-500">
+              Nome de guerra: {policeOfficer.war_name} • Matrícula: {policeOfficer.registration_number}
+            </p>
+            <p className="mt-3 max-w-3xl text-sm text-slate-600">
+              Registro funcional completo do policial, incluindo dados civis, identificação militar, escolaridade e histórico de graduações.
+            </p>
+          </div>
         </div>
 
         {permissions.canUpdate ? (
@@ -459,6 +470,14 @@ export function PoliceOfficerShowPage() {
           </RelatedTabSection>
         </TabsContent>
       </Tabs>
+
+      <PhotoModal
+        isOpen={isPhotoModalOpen}
+        onClose={() => setIsPhotoModalOpen(false)}
+        photoUrl={policeOfficer.profile_photo?.url}
+        fallbackText={(policeOfficer.name ?? policeOfficer.war_name).slice(0, 2).toUpperCase()}
+        alt={policeOfficer.name ?? policeOfficer.war_name}
+      />
     </div>
   );
 }
