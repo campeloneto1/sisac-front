@@ -313,4 +313,4 @@ export interface PoliceOfficerPhotoBoardItem {
 }
 
 export type PoliceOfficerPhotoBoardReportResponse =
-  CollectionPoliceOfficerReportResponse<PoliceOfficerPhotoBoardItem>;
+  PaginatedPoliceOfficerReportResponse<PoliceOfficerPhotoBoardItem>;

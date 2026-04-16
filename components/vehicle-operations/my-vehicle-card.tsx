@@ -1,11 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import {
-  useForm,
-  useWatch,
-  type Resolver,
-} from "react-hook-form";
+import { useForm, useWatch, type Resolver } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -39,10 +35,19 @@ import {
 } from "@/types/vehicle-damage.type";
 import type { CreateVehicleFuelingDTO } from "@/types/vehicle-fueling.type";
 import { vehicleFuelTypeOptions } from "@/types/vehicle-fueling.type";
-import { getVehicleLoanBorrowerLabel, type VehicleLoanItem } from "@/types/vehicle-loan.type";
+import {
+  getVehicleLoanBorrowerLabel,
+  type VehicleLoanItem,
+} from "@/types/vehicle-loan.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
@@ -68,12 +73,16 @@ const takeVehicleSchema = z.object({
   vehicle_id: z.string().min(1, "Selecione uma viatura."),
   city_id: z.string(),
   start_km: z.number().int().min(0, "Informe um KM inicial válido."),
-  start_notes: z.string().max(1000, "As observações devem ter no máximo 1000 caracteres."),
+  start_notes: z
+    .string()
+    .max(1000, "As observações devem ter no máximo 1000 caracteres."),
 });
 
 const returnVehicleSchema = z.object({
   end_km: z.number().int().min(0, "Informe um KM final válido."),
-  return_notes: z.string().max(1000, "As observações devem ter no máximo 1000 caracteres."),
+  return_notes: z
+    .string()
+    .max(1000, "As observações devem ter no máximo 1000 caracteres."),
 });
 
 const fuelingSchema = z.object({
@@ -84,10 +93,16 @@ const fuelingSchema = z.object({
   liters: z.number().min(0.01, "Informe a quantidade de litros."),
   price_per_liter: z.union([z.number().min(0), z.literal("")]),
   total_cost: z.union([z.number().min(0), z.literal("")]),
-  gas_station: z.string().max(100, "O posto deve ter no máximo 100 caracteres."),
-  gas_station_city: z.string().max(100, "A cidade deve ter no máximo 100 caracteres."),
+  gas_station: z
+    .string()
+    .max(100, "O posto deve ter no máximo 100 caracteres."),
+  gas_station_city: z
+    .string()
+    .max(100, "A cidade deve ter no máximo 100 caracteres."),
   is_full_tank: z.boolean(),
-  notes: z.string().max(1000, "As observações devem ter no máximo 1000 caracteres."),
+  notes: z
+    .string()
+    .max(1000, "As observações devem ter no máximo 1000 caracteres."),
 });
 
 const quickDamageSchema = z.object({
@@ -135,15 +150,17 @@ function parseNumberField(value: number | "" | undefined) {
   return value === "" || value === undefined ? null : Number(value);
 }
 
-function formatPlateLabel(item?: {
-  license_plate?: string | null;
-  special_plate?: string | null;
-  vehicle_type?: { name?: string | null } | null;
-  variant?: {
-    name?: string | null;
-    brand?: { name?: string | null } | null;
-  } | null;
-} | null) {
+function formatPlateLabel(
+  item?: {
+    license_plate?: string | null;
+    special_plate?: string | null;
+    vehicle_type?: { name?: string | null } | null;
+    variant?: {
+      name?: string | null;
+      brand?: { name?: string | null } | null;
+    } | null;
+  } | null,
+) {
   // Combinar placa normal e placa especial
   const plates = [item?.license_plate, item?.special_plate]
     .filter(Boolean)
@@ -166,8 +183,9 @@ function formatDateLabel(value?: string | null) {
     return "Nao informado";
   }
 
-  const normalizedValue =
-    /^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00:00` : value;
+  const normalizedValue = /^\d{4}-\d{2}-\d{2}$/.test(value)
+    ? `${value}T00:00:00`
+    : value;
   const parsedDate = new Date(normalizedValue);
 
   if (Number.isNaN(parsedDate.getTime())) {
@@ -182,7 +200,9 @@ function formatDateLabel(value?: string | null) {
   }).format(parsedDate);
 }
 
-async function invalidateOperationalQueries(queryClient: ReturnType<typeof useQueryClient>) {
+async function invalidateOperationalQueries(
+  queryClient: ReturnType<typeof useQueryClient>,
+) {
   await Promise.all([
     queryClient.invalidateQueries({ queryKey: ["vehicle-loans"] }),
     queryClient.invalidateQueries({ queryKey: ["vehicle-damages"] }),
@@ -220,7 +240,13 @@ function StepBadge({
       >
         {isDone ? "✓" : step}
       </div>
-      <span className={isActive ? "text-sm font-medium text-slate-900" : "text-sm text-slate-500"}>
+      <span
+        className={
+          isActive
+            ? "text-sm font-medium text-slate-900"
+            : "text-sm text-slate-500"
+        }
+      >
         {label}
       </span>
     </div>
@@ -235,6 +261,7 @@ export function MyVehicleCard() {
   const fuelingPermissions = usePermissions("vehicle-fuelings");
   const canSeeCard =
     loanPermissions.canCreate ||
+    loanPermissions.canBorrow ||
     loanPermissions.canUpdate ||
     damagePermissions.canCreate ||
     fuelingPermissions.canCreate;
@@ -255,7 +282,10 @@ export function MyVehicleCard() {
         vehicle_id: Number(values.vehicle_id),
         borrower_id: user.id,
         borrower_type: getAuthenticatedBorrowerType(user),
-        city_id: values.city_id && values.city_id !== "none" ? Number(values.city_id) : null,
+        city_id:
+          values.city_id && values.city_id !== "none"
+            ? Number(values.city_id)
+            : null,
         start_km: Number(values.start_km),
         start_notes: values.start_notes.trim() || null,
       });
@@ -300,7 +330,9 @@ export function MyVehicleCard() {
   const fuelingMutation = useMutation({
     mutationFn: async (values: FuelingValues) => {
       if (!activeLoan) {
-        throw new Error("Nenhum empréstimo ativo disponível para abastecimento.");
+        throw new Error(
+          "Nenhum empréstimo ativo disponível para abastecimento.",
+        );
       }
 
       return vehicleFuelingsService.create({
@@ -332,7 +364,9 @@ export function MyVehicleCard() {
   const damageMutation = useMutation({
     mutationFn: async (values: QuickDamageValues & { photo_file?: File }) => {
       if (!activeLoan) {
-        throw new Error("Nenhum empréstimo ativo disponível para registrar problema.");
+        throw new Error(
+          "Nenhum empréstimo ativo disponível para registrar problema.",
+        );
       }
 
       const payload: CreateVehicleDamageWithFilesDTO = {
@@ -340,10 +374,12 @@ export function MyVehicleCard() {
         vehicle_loan_id: activeLoan.id,
         detection_moment:
           values.detection_moment as CreateVehicleDamageWithFilesDTO["detection_moment"],
-        damage_type: values.damage_type as CreateVehicleDamageWithFilesDTO["damage_type"],
+        damage_type:
+          values.damage_type as CreateVehicleDamageWithFilesDTO["damage_type"],
         location: values.location.trim(),
         description: values.description.trim(),
-        severity: values.severity as CreateVehicleDamageWithFilesDTO["severity"],
+        severity:
+          values.severity as CreateVehicleDamageWithFilesDTO["severity"],
         photo_files: values.photo_file ? [values.photo_file] : undefined,
       };
 
@@ -375,7 +411,8 @@ export function MyVehicleCard() {
               <div>
                 <CardTitle>Minha viatura</CardTitle>
                 <CardDescription>
-                  Fluxo operacional rápido para retirada, devolução, danos e abastecimento.
+                  Fluxo operacional rápido para retirada, devolução, danos e
+                  abastecimento.
                 </CardDescription>
               </div>
             </div>
@@ -397,7 +434,8 @@ export function MyVehicleCard() {
             </div>
           ) : activeLoanQuery.isError ? (
             <div className="rounded-[24px] border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-900">
-              Nao foi possível confirmar seu empréstimo ativo nesta subunidade. Verifique as permissões do módulo de empréstimos de veículos.
+              Nao foi possível confirmar seu empréstimo ativo nesta subunidade.
+              Verifique as permissões do módulo de empréstimos de veículos.
             </div>
           ) : activeLoan ? (
             <>
@@ -409,18 +447,23 @@ export function MyVehicleCard() {
                         Viatura atual
                       </p>
                       <h3 className="mt-2 text-2xl font-semibold text-slate-900">
-                        {activeLoan.vehicle?.license_plate ?? `#${activeLoan.vehicle_id}`}
+                        {activeLoan.vehicle?.license_plate ??
+                          `#${activeLoan.vehicle_id}`}
                       </h3>
                       <p className="mt-1 text-sm text-slate-500">
                         {formatPlateLabel(activeLoan.vehicle)}
                       </p>
                     </div>
-                    <Badge variant="outline">{activeLoan.status_label ?? "Em uso"}</Badge>
+                    <Badge variant="outline">
+                      {activeLoan.status_label ?? "Em uso"}
+                    </Badge>
                   </div>
 
                   <div className="mt-5 grid gap-3 md:grid-cols-3">
                     <div className="rounded-2xl border border-slate-200/70 bg-white px-4 py-3">
-                      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Saida</p>
+                      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                        Saida
+                      </p>
                       <p className="mt-2 text-sm font-medium text-slate-900">
                         {formatDateLabel(
                           activeLoan.start_time
@@ -430,13 +473,19 @@ export function MyVehicleCard() {
                       </p>
                     </div>
                     <div className="rounded-2xl border border-slate-200/70 bg-white px-4 py-3">
-                      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">KM inicial</p>
+                      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                        KM inicial
+                      </p>
                       <p className="mt-2 text-sm font-medium text-slate-900">
-                        {new Intl.NumberFormat("pt-BR").format(activeLoan.start_km)}
+                        {new Intl.NumberFormat("pt-BR").format(
+                          activeLoan.start_km,
+                        )}
                       </p>
                     </div>
                     <div className="rounded-2xl border border-slate-200/70 bg-white px-4 py-3">
-                      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Destino base</p>
+                      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                        Destino base
+                      </p>
                       <p className="mt-2 text-sm font-medium text-slate-900">
                         {activeLoan.city?.name ?? "Nao informado"}
                       </p>
@@ -454,7 +503,9 @@ export function MyVehicleCard() {
                   <div className="flex items-center gap-2 text-slate-600">
                     <MapPin className="h-4 w-4 text-primary" />
                     <p className="text-sm">
-                      {activeLoan.subunit?.abbreviation ?? activeLoan.subunit?.name ?? "Subunidade ativa"}
+                      {activeLoan.subunit?.abbreviation ??
+                        activeLoan.subunit?.name ??
+                        "Subunidade ativa"}
                     </p>
                   </div>
                   <div className="flex items-start gap-2 text-slate-600">
@@ -471,21 +522,21 @@ export function MyVehicleCard() {
               <div className="grid gap-3 md:grid-cols-3">
                 <Button
                   onClick={() => setIsReturnDialogOpen(true)}
-                  disabled={!loanPermissions.canUpdate}
+                  disabled={!loanPermissions.canBorrow && !loanPermissions.canUpdate}
                 >
                   Devolver viatura
                 </Button>
                 <Button
                   variant="outline"
                   onClick={() => setIsFuelingDialogOpen(true)}
-                  disabled={!fuelingPermissions.canCreate}
+                  disabled={!loanPermissions.canBorrow && !fuelingPermissions.canCreate}
                 >
                   Informar abastecimento
                 </Button>
                 <Button
                   variant="outline"
                   onClick={() => setIsDamageDialogOpen(true)}
-                  disabled={!damagePermissions.canCreate}
+                  disabled={!loanPermissions.canBorrow && !damagePermissions.canCreate}
                 >
                   Registrar problema
                 </Button>
@@ -501,7 +552,9 @@ export function MyVehicleCard() {
                       Nenhuma viatura em uso neste momento
                     </p>
                     <p className="mt-1 text-sm text-slate-500">
-                      Quando você assumir uma viatura, este painel passa a mostrar o resumo do empréstimo e as ações rápidas da operação.
+                      Quando você assumir uma viatura, este painel passa a
+                      mostrar o resumo do empréstimo e as ações rápidas da
+                      operação.
                     </p>
                   </div>
                 </div>
@@ -510,12 +563,13 @@ export function MyVehicleCard() {
               <div className="grid gap-3 md:grid-cols-3">
                 <Button
                   onClick={() => setIsTakeDialogOpen(true)}
-                  disabled={!loanPermissions.canCreate}
+                  disabled={!loanPermissions.canBorrow}
                 >
                   Assumir viatura
                 </Button>
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-500 md:col-span-2">
-                  O fluxo operacional preenche o empréstimo com sua sessão atual e mantém o CRUD administrativo intacto.
+                  O fluxo operacional preenche o empréstimo com sua sessão atual
+                  e mantém o CRUD administrativo intacto.
                 </div>
               </div>
             </>
@@ -596,7 +650,9 @@ function TakeVehicleDialog({
   );
   const selectedCity = useMemo(
     () =>
-      citiesQuery.data?.data.find((city) => String(city.id) === values.city_id) ?? null,
+      citiesQuery.data?.data.find(
+        (city) => String(city.id) === values.city_id,
+      ) ?? null,
     [citiesQuery.data?.data, values.city_id],
   );
 
@@ -621,7 +677,8 @@ function TakeVehicleDialog({
         <DialogHeader>
           <DialogTitle>Assumir viatura</DialogTitle>
           <DialogDescription>
-            Registre a viatura e o KM inicial. Apos confirmar, use &quot;Registrar problema&quot; para informar avarias.
+            Registre a viatura e o KM inicial. Apos confirmar, use
+            &quot;Registrar problema&quot; para informar avarias.
           </DialogDescription>
         </DialogHeader>
 
@@ -656,7 +713,9 @@ function TakeVehicleDialog({
                     ))}
                   </SelectContent>
                 </Select>
-                <p className="text-sm text-destructive">{errors.vehicle_id?.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.vehicle_id?.message}
+                </p>
               </div>
 
               <div className="space-y-2">
@@ -686,8 +745,14 @@ function TakeVehicleDialog({
 
               <div className="space-y-2">
                 <Label>KM inicial</Label>
-                <Input type="number" min={0} {...register("start_km", { valueAsNumber: true })} />
-                <p className="text-sm text-destructive">{errors.start_km?.message}</p>
+                <Input
+                  type="number"
+                  min={0}
+                  {...register("start_km", { valueAsNumber: true })}
+                />
+                <p className="text-sm text-destructive">
+                  {errors.start_km?.message}
+                </p>
               </div>
 
               <div className="space-y-2">
@@ -714,28 +779,40 @@ function TakeVehicleDialog({
             <section className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="rounded-[24px] border border-slate-200/70 bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Viatura</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                    Viatura
+                  </p>
                   <p className="mt-2 text-base font-semibold text-slate-900">
-                    {selectedVehicle ? formatPlateLabel(selectedVehicle) : "Nao selecionada"}
+                    {selectedVehicle
+                      ? formatPlateLabel(selectedVehicle)
+                      : "Nao selecionada"}
                   </p>
                   <p className="mt-1 text-sm text-slate-500">
                     Cidade: {selectedCity?.name ?? "Nao informada"}
                   </p>
                 </div>
                 <div className="rounded-[24px] border border-slate-200/70 bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Saida</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                    Saida
+                  </p>
                   <p className="mt-2 text-base font-semibold text-slate-900">
-                    KM inicial {new Intl.NumberFormat("pt-BR").format(values.start_km ?? 0)}
+                    KM inicial{" "}
+                    {new Intl.NumberFormat("pt-BR").format(
+                      values.start_km ?? 0,
+                    )}
                   </p>
                   <p className="mt-1 text-sm text-slate-500">
-                    {values.start_notes?.trim() || "Sem observacoes de retirada."}
+                    {values.start_notes?.trim() ||
+                      "Sem observacoes de retirada."}
                   </p>
                 </div>
               </div>
 
               <div className="rounded-[24px] border border-amber-100 bg-amber-50 p-4">
                 <p className="text-sm text-amber-800">
-                  Apos confirmar a retirada, use o botao &quot;Registrar problema&quot; para informar avarias encontradas na viatura com fotos.
+                  Apos confirmar a retirada, use o botao &quot;Registrar
+                  problema&quot; para informar avarias encontradas na viatura
+                  com fotos.
                 </p>
               </div>
             </section>
@@ -743,13 +820,20 @@ function TakeVehicleDialog({
 
           <DialogFooter>
             {step > 1 ? (
-              <Button type="button" variant="outline" onClick={() => setStep((current) => current - 1)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setStep((current) => current - 1)}
+              >
                 Voltar
               </Button>
             ) : null}
 
             {step < 2 ? (
-              <Button type="button" onClick={() => setStep((current) => current + 1)}>
+              <Button
+                type="button"
+                onClick={() => setStep((current) => current + 1)}
+              >
                 Avancar <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             ) : (
@@ -795,7 +879,8 @@ function ReturnVehicleDialog({
           context.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["end_km"],
-            message: "O KM final nao pode ser menor que o KM inicial da retirada.",
+            message:
+              "O KM final nao pode ser menor que o KM inicial da retirada.",
           });
         }
       }),
@@ -831,7 +916,8 @@ function ReturnVehicleDialog({
         <DialogHeader>
           <DialogTitle>Devolver viatura</DialogTitle>
           <DialogDescription>
-            Registre o KM final. Problemas encontrados no retorno podem ser informados antes via &quot;Registrar problema&quot;.
+            Registre o KM final. Problemas encontrados no retorno podem ser
+            informados antes via &quot;Registrar problema&quot;.
           </DialogDescription>
         </DialogHeader>
 
@@ -854,8 +940,14 @@ function ReturnVehicleDialog({
 
               <div className="space-y-2">
                 <Label>KM final</Label>
-                <Input type="number" min={0} {...register("end_km", { valueAsNumber: true })} />
-                <p className="text-sm text-destructive">{errors.end_km?.message}</p>
+                <Input
+                  type="number"
+                  min={0}
+                  {...register("end_km", { valueAsNumber: true })}
+                />
+                <p className="text-sm text-destructive">
+                  {errors.end_km?.message}
+                </p>
               </div>
 
               <div className="space-y-2">
@@ -863,7 +955,10 @@ function ReturnVehicleDialog({
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-600">
                   {activeLoan
                     ? `${new Intl.NumberFormat("pt-BR").format(
-                        Math.max(0, Number(values.end_km ?? 0) - activeLoan.start_km),
+                        Math.max(
+                          0,
+                          Number(values.end_km ?? 0) - activeLoan.start_km,
+                        ),
                       )} km`
                     : "-"}
                 </div>
@@ -884,20 +979,29 @@ function ReturnVehicleDialog({
             <section className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="rounded-[24px] border border-slate-200/70 bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Encerramento</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                    Encerramento
+                  </p>
                   <p className="mt-2 text-base font-semibold text-slate-900">
-                    KM final {new Intl.NumberFormat("pt-BR").format(values.end_km ?? 0)}
+                    KM final{" "}
+                    {new Intl.NumberFormat("pt-BR").format(values.end_km ?? 0)}
                   </p>
                   <p className="mt-1 text-sm text-slate-500">
-                    {values.return_notes?.trim() || "Sem observacoes de devolucao."}
+                    {values.return_notes?.trim() ||
+                      "Sem observacoes de devolucao."}
                   </p>
                 </div>
                 <div className="rounded-[24px] border border-slate-200/70 bg-slate-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">KM rodado</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                    KM rodado
+                  </p>
                   <p className="mt-2 text-base font-semibold text-slate-900">
                     {activeLoan
                       ? `${new Intl.NumberFormat("pt-BR").format(
-                          Math.max(0, Number(values.end_km ?? 0) - activeLoan.start_km),
+                          Math.max(
+                            0,
+                            Number(values.end_km ?? 0) - activeLoan.start_km,
+                          ),
                         )} km`
                       : "-"}
                   </p>
@@ -906,7 +1010,8 @@ function ReturnVehicleDialog({
 
               <div className="rounded-[24px] border border-amber-100 bg-amber-50 p-4">
                 <p className="text-sm text-amber-800">
-                  Problemas encontrados no retorno devem ser registrados antes de devolver, usando o botao &quot;Registrar problema&quot;.
+                  Problemas encontrados no retorno devem ser registrados antes
+                  de devolver, usando o botao &quot;Registrar problema&quot;.
                 </p>
               </div>
             </section>
@@ -914,13 +1019,20 @@ function ReturnVehicleDialog({
 
           <DialogFooter>
             {step > 1 ? (
-              <Button type="button" variant="outline" onClick={() => setStep((current) => current - 1)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setStep((current) => current - 1)}
+              >
                 Voltar
               </Button>
             ) : null}
 
             {step < 2 ? (
-              <Button type="button" onClick={() => setStep((current) => current + 1)}>
+              <Button
+                type="button"
+                onClick={() => setStep((current) => current + 1)}
+              >
                 Avancar <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             ) : (
@@ -1018,7 +1130,8 @@ function FuelingDialog({
         <DialogHeader>
           <DialogTitle>Informar abastecimento</DialogTitle>
           <DialogDescription>
-            Registro rápido do abastecimento vinculado ao empréstimo ativo da viatura.
+            Registro rápido do abastecimento vinculado ao empréstimo ativo da
+            viatura.
           </DialogDescription>
         </DialogHeader>
 
@@ -1033,7 +1146,9 @@ function FuelingDialog({
             <div className="space-y-2">
               <Label>Data</Label>
               <Input type="date" {...register("fueling_date")} />
-              <p className="text-sm text-destructive">{errors.fueling_date?.message}</p>
+              <p className="text-sm text-destructive">
+                {errors.fueling_date?.message}
+              </p>
             </div>
 
             <div className="space-y-2">
@@ -1043,7 +1158,11 @@ function FuelingDialog({
 
             <div className="space-y-2">
               <Label>KM</Label>
-              <Input type="number" min={0} {...register("km", { valueAsNumber: true })} />
+              <Input
+                type="number"
+                min={0}
+                {...register("km", { valueAsNumber: true })}
+              />
               <p className="text-sm text-destructive">{errors.km?.message}</p>
             </div>
 
@@ -1069,23 +1188,42 @@ function FuelingDialog({
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-sm text-destructive">{errors.fuel_type?.message}</p>
+              <p className="text-sm text-destructive">
+                {errors.fuel_type?.message}
+              </p>
             </div>
 
             <div className="space-y-2">
               <Label>Litros</Label>
-              <Input type="number" min={0} step="0.01" {...register("liters", { valueAsNumber: true })} />
-              <p className="text-sm text-destructive">{errors.liters?.message}</p>
+              <Input
+                type="number"
+                min={0}
+                step="0.01"
+                {...register("liters", { valueAsNumber: true })}
+              />
+              <p className="text-sm text-destructive">
+                {errors.liters?.message}
+              </p>
             </div>
 
             <div className="space-y-2">
               <Label>Preco por litro</Label>
-              <Input type="number" min={0} step="0.01" {...register("price_per_liter", { valueAsNumber: true })} />
+              <Input
+                type="number"
+                min={0}
+                step="0.01"
+                {...register("price_per_liter", { valueAsNumber: true })}
+              />
             </div>
 
             <div className="space-y-2">
               <Label>Valor total</Label>
-              <Input type="number" min={0} step="0.01" {...register("total_cost", { valueAsNumber: true })} />
+              <Input
+                type="number"
+                min={0}
+                step="0.01"
+                {...register("total_cost", { valueAsNumber: true })}
+              />
               {totalPreview !== null ? (
                 <p className="text-xs text-slate-500">
                   Sugestao automática: R$ {totalPreview.toFixed(2)}
@@ -1100,26 +1238,39 @@ function FuelingDialog({
 
             <div className="space-y-2">
               <Label>Cidade do posto</Label>
-              <Input {...register("gas_station_city")} placeholder="Cidade do abastecimento" />
+              <Input
+                {...register("gas_station_city")}
+                placeholder="Cidade do abastecimento"
+              />
             </div>
 
             <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
               <Checkbox
                 checked={isFullTank}
                 onCheckedChange={(checked) =>
-                  setValue("is_full_tank", Boolean(checked), { shouldDirty: true })
+                  setValue("is_full_tank", Boolean(checked), {
+                    shouldDirty: true,
+                  })
                 }
               />
               <div>
-                <p className="text-sm font-medium text-slate-900">Tanque cheio</p>
-                <p className="text-xs text-slate-500">Marque se o abastecimento completou o tanque.</p>
+                <p className="text-sm font-medium text-slate-900">
+                  Tanque cheio
+                </p>
+                <p className="text-xs text-slate-500">
+                  Marque se o abastecimento completou o tanque.
+                </p>
               </div>
             </div>
           </div>
 
           <div className="space-y-2">
             <Label>Observacoes</Label>
-            <Textarea {...register("notes")} rows={4} placeholder="Cupom, rota, consumo ou observações." />
+            <Textarea
+              {...register("notes")}
+              rows={4}
+              placeholder="Cupom, rota, consumo ou observações."
+            />
           </div>
 
           <DialogFooter>
@@ -1142,7 +1293,9 @@ function QuickDamageDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   isPending: boolean;
-  onSubmit: (values: QuickDamageValues & { photo_file?: File }) => Promise<unknown>;
+  onSubmit: (
+    values: QuickDamageValues & { photo_file?: File },
+  ) => Promise<unknown>;
 }) {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
@@ -1165,7 +1318,10 @@ function QuickDamageDialog({
       severity: "minor",
     },
   });
-  const selectedDetectionMoment = useWatch({ control, name: "detection_moment" });
+  const selectedDetectionMoment = useWatch({
+    control,
+    name: "detection_moment",
+  });
   const selectedDamageType = useWatch({ control, name: "damage_type" });
   const selectedSeverity = useWatch({ control, name: "severity" });
 
@@ -1261,7 +1417,9 @@ function QuickDamageDialog({
                     d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                <span className="text-sm font-medium">Tirar foto ou selecionar</span>
+                <span className="text-sm font-medium">
+                  Tirar foto ou selecionar
+                </span>
               </button>
             )}
             <input
@@ -1350,8 +1508,13 @@ function QuickDamageDialog({
 
             <div className="space-y-2">
               <Label>Local</Label>
-              <Input {...register("location")} placeholder="Ex.: porta traseira" />
-              <p className="text-sm text-destructive">{errors.location?.message}</p>
+              <Input
+                {...register("location")}
+                placeholder="Ex.: porta traseira"
+              />
+              <p className="text-sm text-destructive">
+                {errors.location?.message}
+              </p>
             </div>
           </div>
 
@@ -1362,7 +1525,9 @@ function QuickDamageDialog({
               rows={3}
               placeholder="Descreva o que foi encontrado..."
             />
-            <p className="text-sm text-destructive">{errors.description?.message}</p>
+            <p className="text-sm text-destructive">
+              {errors.description?.message}
+            </p>
           </div>
 
           <DialogFooter className="gap-2 sm:gap-0">

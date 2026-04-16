@@ -37,9 +37,9 @@ export interface HomePoliceOfficerSectorItem {
     name: string;
     abbreviation?: string | null;
   } | null;
-  total_police_officers: number;
-  active_police_officers: number;
-  inactive_police_officers: number;
+  total_officers: number;
+  active_officers: number;
+  inactive_officers: number;
 }
 
 export interface HomePoliceOfficerRankDistributionItem {
@@ -49,8 +49,8 @@ export interface HomePoliceOfficerRankDistributionItem {
     abbreviation?: string | null;
     hierarchy_level?: number | null;
   } | null;
-  total_police_officers: number;
-  active_police_officers: number;
+  total_officers: number;
+  active_officers: number;
 }
 
 export interface HomeVehicleFleetStatusItem {

@@ -9,6 +9,8 @@ import { useSubunit } from "@/contexts/subunit-context";
 import { usePermissions } from "@/hooks/use-permissions";
 import { usePoliceOfficerPhotoBoardReport } from "@/hooks/use-police-officer-reports";
 import { useSectors } from "@/hooks/use-sectors";
+import { useRanks } from "@/hooks/use-ranks";
+import { useAssignments } from "@/hooks/use-assignments";
 import { hasPermission } from "@/lib/permissions";
 import type { PoliceOfficerReportFilters } from "@/types/police-officer-report.type";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -25,34 +27,34 @@ export function PoliceOfficerPhotoBoardReportPage() {
   const permissions = usePermissions("police-officers");
   const printRef = useRef<HTMLDivElement>(null);
   const [sectorId, setSectorId] = useState("all");
+  const [rankId, setRankId] = useState("all");
+  const [assignmentId, setAssignmentId] = useState("all");
   const [photoModalData, setPhotoModalData] = useState<{
     photoUrl: string | null;
     name: string;
   } | null>(null);
 
   const sectorsQuery = useSectors({ per_page: 100 });
+  const ranksQuery = useRanks({ per_page: 100 });
+  const assignmentsQuery = useAssignments({ per_page: 100 });
 
   const filters = useMemo<PoliceOfficerReportFilters>(
     () => ({
       sector_id: sectorId !== "all" ? Number(sectorId) : undefined,
+      rank_id: rankId !== "all" ? Number(rankId) : undefined,
+      assignment_id: assignmentId !== "all" ? Number(assignmentId) : undefined,
       is_active: true,
+      per_page: 100,
     }),
-    [sectorId],
+    [sectorId, rankId, assignmentId],
   );
 
   const reportQuery = usePoliceOfficerPhotoBoardReport(
     filters,
-    Boolean(activeSubunit) && hasPermission(user, "reports") && permissions.canViewAny,
+    Boolean(activeSubunit) && hasPermission(user, "reports") && permissions.canViewAny && sectorId !== "all",
   );
 
-  const items = useMemo(() => {
-    const data = reportQuery.data?.data ?? [];
-    return [...data].sort((a, b) => {
-      const levelA = a.current_rank?.hierarchy_level ?? 0;
-      const levelB = b.current_rank?.hierarchy_level ?? 0;
-      return levelB - levelA;
-    });
-  }, [reportQuery.data?.data]);
+  const items = reportQuery.data?.data ?? [];
 
   const selectedSector = sectorsQuery.data?.data.find((s) => s.id === Number(sectorId));
 
@@ -109,9 +111,9 @@ export function PoliceOfficerPhotoBoardReportPage() {
       </div>
 
       <div className="space-y-4 print:hidden">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <Select value={sectorId} onValueChange={setSectorId}>
-            <SelectTrigger className="w-full md:w-80">
+            <SelectTrigger className="w-full md:w-64">
               <SelectValue placeholder="Selecione um setor" />
             </SelectTrigger>
             <SelectContent>
@@ -119,6 +121,34 @@ export function PoliceOfficerPhotoBoardReportPage() {
               {(sectorsQuery.data?.data ?? []).map((sector) => (
                 <SelectItem key={sector.id} value={String(sector.id)}>
                   {sector.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={rankId} onValueChange={setRankId}>
+            <SelectTrigger className="w-full md:w-64">
+              <SelectValue placeholder="Selecione uma graduação" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todas as graduações</SelectItem>
+              {(ranksQuery.data?.data ?? []).map((rank) => (
+                <SelectItem key={rank.id} value={String(rank.id)}>
+                  {rank.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={assignmentId} onValueChange={setAssignmentId}>
+            <SelectTrigger className="w-full md:w-64">
+              <SelectValue placeholder="Selecione uma função" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todas as funções</SelectItem>
+              {(assignmentsQuery.data?.data ?? []).map((assignment) => (
+                <SelectItem key={assignment.id} value={String(assignment.id)}>
+                  {assignment.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -154,11 +184,18 @@ export function PoliceOfficerPhotoBoardReportPage() {
             <CardDescription>Não foi possível carregar o quadro de fotos no momento.</CardDescription>
           </CardHeader>
         </Card>
+      ) : sectorId === "all" ? (
+        <Card className="border-slate-200/70 bg-white/80 print:hidden">
+          <CardHeader>
+            <CardTitle>Selecione um setor</CardTitle>
+            <CardDescription>Escolha um setor para visualizar o quadro de fotos dos policiais.</CardDescription>
+          </CardHeader>
+        </Card>
       ) : !items.length ? (
         <Card className="border-slate-200/70 bg-white/80 print:hidden">
           <CardHeader>
             <CardTitle>Nenhum resultado encontrado</CardTitle>
-            <CardDescription>Selecione um setor para visualizar o quadro de fotos.</CardDescription>
+            <CardDescription>Nenhum policial encontrado com os filtros selecionados.</CardDescription>
           </CardHeader>
         </Card>
       ) : (

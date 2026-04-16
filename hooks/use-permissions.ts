@@ -17,5 +17,6 @@ export function usePermissions(resource: string) {
     canDispose: can(user, "dispose", resource),
     canBulkPromote: can(user, "bulkPromote", resource),
     canResetPassword: can(user, "resetPassword", resource),
+    canBorrow: can(user, "borrow", resource),
   };
 }

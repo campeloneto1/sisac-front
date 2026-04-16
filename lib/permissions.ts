@@ -9,12 +9,17 @@ export type PermissionAction =
   | "resetPassword"
   | "bulkPromote"
   | "transfer"
-  | "dispose";
+  | "dispose"
+  | "borrow";
 export type PermissionRequirement =
   | { type: "slug"; value: string }
   | { type: "resource"; resource: string; action: PermissionAction };
 
-export function can(user: AuthUser | null, action: PermissionAction, resource: string) {
+export function can(
+  user: AuthUser | null,
+  action: PermissionAction,
+  resource: string,
+) {
   if (!user) {
     return false;
   }
@@ -29,7 +34,9 @@ export function can(user: AuthUser | null, action: PermissionAction, resource: s
     return false;
   }
 
-  return resourcePermissions.includes("*") || resourcePermissions.includes(action);
+  return (
+    resourcePermissions.includes("*") || resourcePermissions.includes(action)
+  );
 }
 
 export function hasPermission(user: AuthUser | null, permissionSlug: string) {
@@ -44,7 +51,10 @@ export function hasPermission(user: AuthUser | null, permissionSlug: string) {
   return user.permissionSlugs.includes(permissionSlug);
 }
 
-export function hasAllPermissions(user: AuthUser | null, requirements: PermissionRequirement[]) {
+export function hasAllPermissions(
+  user: AuthUser | null,
+  requirements: PermissionRequirement[],
+) {
   return requirements.every((requirement) => {
     if (requirement.type === "slug") {
       return hasPermission(user, requirement.value);

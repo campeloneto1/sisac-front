@@ -54,6 +54,19 @@ api.interceptors.request.use((config) => {
 
   config.headers.set("X-SUBUNIT-ACTIVE", activeSubunit);
 
+  // Remove undefined and null values from params
+  if (config.params) {
+    const cleanedParams: Record<string, unknown> = {};
+
+    for (const [key, value] of Object.entries(config.params)) {
+      if (value !== undefined && value !== null) {
+        cleanedParams[key] = value;
+      }
+    }
+
+    config.params = cleanedParams;
+  }
+
   return config;
 });
 

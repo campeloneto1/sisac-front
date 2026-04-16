@@ -208,9 +208,8 @@ export function DashboardHomePage() {
                   Leitura rápida da distribuição do efetivo na subunidade ativa.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="max-h-96 space-y-3 overflow-y-auto">
                 {home.police_officers.by_sector
-                  .slice(0, 6)
                   .map((item, index) => (
                     <div
                       key={`${item.sector?.id ?? index}-${item.sector?.name ?? "Sem setor"}`}
@@ -223,11 +222,11 @@ export function DashboardHomePage() {
                             "Sem setor"}
                         </p>
                         <p className="text-sm text-slate-500">
-                          {formatNumber(item.active_police_officers)} ativos
+                          {formatNumber(item.active_officers)} ativos
                         </p>
                       </div>
                       <Badge variant="outline">
-                        {formatNumber(item.total_police_officers)}
+                        {formatNumber(item.total_officers)}
                       </Badge>
                     </div>
                   ))}
@@ -240,9 +239,8 @@ export function DashboardHomePage() {
                   As graduações mais presentes no efetivo atual.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="max-h-96 space-y-3 overflow-y-auto">
                 {home.police_officers.rank_distribution
-                  .slice(0, 6)
                   .map((item, index) => (
                     <div
                       key={`${item.rank?.id ?? index}-${item.rank?.name ?? "Sem graduação"}`}
@@ -255,11 +253,11 @@ export function DashboardHomePage() {
                             "Sem graduação"}
                         </p>
                         <p className="text-sm text-slate-500">
-                          {formatNumber(item.active_police_officers)} ativos
+                          {formatNumber(item.active_officers)} ativos
                         </p>
                       </div>
                       <Badge variant="outline">
-                        {formatNumber(item.total_police_officers)}
+                        {formatNumber(item.total_officers)}
                       </Badge>
                     </div>
                   ))}
