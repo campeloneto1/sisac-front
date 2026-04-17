@@ -6,7 +6,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 
 import { usePermissions } from "@/hooks/use-permissions";
 import { useDeleteBrandMutation } from "@/hooks/use-brand-mutations";
-import { getBrandTypeLabel, type BrandItem } from "@/types/brand.type";
+import { type BrandItem } from "@/types/brand.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,11 +24,11 @@ interface BrandsTableProps {
 
 function typeVariant(type: string) {
   switch (type) {
-    case "weapon":
+    case "armament":
       return "warning";
-    case "logistics":
+    case "material":
       return "info";
-    case "transport":
+    case "vehicle":
       return "success";
     default:
       return "outline";
@@ -84,8 +84,8 @@ export function BrandsTable({ brands }: BrandsTableProps) {
                       {brand.abbreviation ?? "-"}
                     </td>
                     <td className="px-4 py-4">
-                      <Badge variant={typeVariant(brand.type)}>
-                        {getBrandTypeLabel(brand.type)}
+                      <Badge variant={typeVariant(brand.type.value)}>
+                        {brand.type.label}
                       </Badge>
                     </td>
                     <td className="px-4 py-4 text-slate-600">

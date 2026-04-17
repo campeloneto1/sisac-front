@@ -80,8 +80,8 @@ export function VariantShowPage() {
             <h1 className="font-display text-3xl text-slate-900">
               {variant.name}
             </h1>
-            <Badge variant={typeVariant(variant.brand?.type)}>
-              {getBrandTypeLabel(variant.brand?.type)}
+            <Badge variant={typeVariant(variant.brand?.type?.value)}>
+              {variant.brand?.type?.label ?? "Não informado"}
             </Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">

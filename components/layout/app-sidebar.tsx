@@ -123,7 +123,7 @@ const generalItems = [
   },
   {
     href: "/vehicle-maintenances",
-    label: "Manutencoes",
+    label: "Manutenções",
     icon: Wrench,
     visible: false,
     permissionResource: "vehicle-maintenances",

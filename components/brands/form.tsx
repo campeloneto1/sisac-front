@@ -46,7 +46,7 @@ const brandFormSchema = z.object({
     .max(5, "A sigla deve ter no máximo 5 caracteres.")
     .optional()
     .or(z.literal("")),
-  type: z.enum(["weapon", "logistics", "transport"], {
+  type: z.enum(["armament", "material", "vehicle"], {
     message: "Selecione um tipo válido.",
   }),
 });
@@ -74,7 +74,7 @@ export function BrandForm({ mode, brand }: BrandFormProps) {
     defaultValues: {
       name: brand?.name ?? "",
       abbreviation: brand?.abbreviation ?? "",
-      type: (brand?.type ?? "weapon") as BrandType,
+      type: brand?.type?.value ?? "armament",
     },
   });
 
@@ -86,7 +86,7 @@ export function BrandForm({ mode, brand }: BrandFormProps) {
     reset({
       name: brand.name,
       abbreviation: brand.abbreviation ?? "",
-      type: brand.type,
+      type: brand.type.value,
     });
   }, [brand, reset]);
 

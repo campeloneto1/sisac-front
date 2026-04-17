@@ -136,7 +136,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
   const updateMutation = useUpdateVehicleMutation();
   const colorsQuery = useColors({ per_page: 100 });
   const vehicleTypesQuery = useVehicleTypes({ per_page: 100 });
-  const brandsQuery = useBrands({ per_page: 100, type: "transport" });
+  const brandsQuery = useBrands({ per_page: 100, type: "vehicle" });
   const usersQuery = useUsers({ per_page: 100 });
 
   const {

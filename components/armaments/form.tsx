@@ -117,7 +117,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
   const createMutation = useCreateArmamentMutation();
   const updateMutation = useUpdateArmamentMutation();
   const typesQuery = useArmamentTypes({ per_page: 100 });
-  const brandsQuery = useBrands({ per_page: 100, type: "weapon" });
+  const brandsQuery = useBrands({ per_page: 100, type: "armament" });
   const calibersQuery = useArmamentCalibers({ per_page: 100 });
   const sizesQuery = useArmamentSizes({ per_page: 100 });
   const gendersQuery = useGenders({ per_page: 100 });

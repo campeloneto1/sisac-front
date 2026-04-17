@@ -76,7 +76,7 @@ export function VariantsTable({ variants }: VariantsTableProps) {
                   <td className="px-4 py-4 text-slate-600">{variant.abbreviation ?? "-"}</td>
                   <td className="px-4 py-4 text-slate-600">{variant.brand?.name ?? "Sem marca vinculada"}</td>
                   <td className="px-4 py-4">
-                    <Badge variant={typeVariant(variant.brand?.type)}>{getBrandTypeLabel(variant.brand?.type)}</Badge>
+                    <Badge variant={typeVariant(variant.brand?.type?.value)}>{variant.brand?.type?.label ?? "Não informado"}</Badge>
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex justify-end gap-2">

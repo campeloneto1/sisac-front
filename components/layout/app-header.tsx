@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Search, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 import { useAuth } from "@/contexts/auth-context";
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import { GlobalSearch } from "@/components/layout/global-search";
 import { SubunitSwitcher } from "@/components/layout/subunit-switcher";
 import { NoticeBell } from "@/components/notices/notice-bell";
 import { NotificationBell } from "@/components/notifications/notification-bell";
@@ -19,7 +20,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Dialog, DialogOverlay, DialogPortal, DialogTitle } from "@/components/ui/dialog";
 
 export function AppHeader() {
@@ -47,9 +47,8 @@ export function AppHeader() {
         </div>
 
         <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
-          <div className="relative hidden min-w-[220px] md:block xl:min-w-[260px]">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <Input className="h-10 pl-9" placeholder="Buscar módulos, pessoas ou processos" />
+          <div className="hidden md:block">
+            <GlobalSearch />
           </div>
 
           <div className="min-w-0">

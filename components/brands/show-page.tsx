@@ -8,7 +8,6 @@ import { useAuth } from "@/contexts/auth-context";
 import { usePermissions } from "@/hooks/use-permissions";
 import { hasPermission } from "@/lib/permissions";
 import { useBrand } from "@/hooks/use-brands";
-import { getBrandTypeLabel } from "@/types/brand.type";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,11 +21,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function typeVariant(type: string) {
   switch (type) {
-    case "weapon":
+    case "armament":
       return "warning";
-    case "logistics":
+    case "material":
       return "info";
-    case "transport":
+    case "vehicle":
       return "success";
     default:
       return "outline";
@@ -80,8 +79,8 @@ export function BrandShowPage() {
             <h1 className="font-display text-3xl text-slate-900">
               {brand.name}
             </h1>
-            <Badge variant={typeVariant(brand.type)}>
-              {getBrandTypeLabel(brand.type)}
+            <Badge variant={typeVariant(brand.type.value)}>
+              {brand.type.label}
             </Badge>
           </div>
           <p className="mt-2 text-sm text-slate-500">
@@ -114,7 +113,7 @@ export function BrandShowPage() {
                   Tipo
                 </p>
                 <p className="text-sm text-slate-700">
-                  {getBrandTypeLabel(brand.type)}
+                  {brand.type.label}
                 </p>
               </div>
             </div>

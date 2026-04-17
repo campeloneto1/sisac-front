@@ -88,7 +88,7 @@ export function MaterialForm({ mode, material }: MaterialFormProps) {
   const createMutation = useCreateMaterialMutation();
   const updateMutation = useUpdateMaterialMutation();
   const materialTypesQuery = useMaterialTypes({ per_page: 100 });
-  const brandsQuery = useBrands({ per_page: 100, type: "logistics" });
+  const brandsQuery = useBrands({ per_page: 100, type: "material" });
 
   const {
     control,

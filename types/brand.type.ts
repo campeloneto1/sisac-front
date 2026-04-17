@@ -5,11 +5,18 @@ export interface BrandVariantItem {
   abbreviation?: string | null;
 }
 
+export interface BrandTypeObject {
+  value: BrandType;
+  label: string;
+  color: string;
+  icon: string;
+}
+
 export interface BrandItem {
   id: number;
   name: string;
   abbreviation: string | null;
-  type: BrandType;
+  type: BrandTypeObject;
   variants_count?: number | null;
   variants?: BrandVariantItem[];
   creator?: {
@@ -79,13 +86,23 @@ export interface PaginatedResponse<T> {
 }
 
 export const brandTypeOptions = [
-  { value: "weapon", label: "Armamento" },
-  { value: "logistics", label: "Logística" },
-  { value: "transport", label: "Transporte" },
+  { value: "armament", label: "Armamento" },
+  { value: "material", label: "Material" },
+  { value: "vehicle", label: "Veículo" },
 ] as const;
 
 export type BrandType = (typeof brandTypeOptions)[number]["value"];
 
-export function getBrandTypeLabel(type: BrandType | string | null | undefined) {
+export function getBrandTypeLabel(type: BrandTypeObject | BrandType | string | null | undefined) {
+  if (type && typeof type === "object") {
+    return type.label;
+  }
   return brandTypeOptions.find((option) => option.value === type)?.label ?? "Não informado";
+}
+
+export function getBrandTypeValue(type: BrandTypeObject | BrandType | string | null | undefined): BrandType | null {
+  if (type && typeof type === "object") {
+    return type.value;
+  }
+  return type as BrandType | null;
 }

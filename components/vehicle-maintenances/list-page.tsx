@@ -45,7 +45,8 @@ export function VehicleMaintenancesListPage() {
         maintenanceType !== "all"
           ? (maintenanceType as VehicleMaintenanceType)
           : undefined,
-      status: status !== "all" ? (status as VehicleMaintenanceStatus) : undefined,
+      status:
+        status !== "all" ? (status as VehicleMaintenanceStatus) : undefined,
     }),
     [maintenanceType, page, search, status, vehicleId, workshopId],
   );
@@ -77,7 +78,7 @@ export function VehicleMaintenancesListPage() {
           </div>
           <div>
             <h1 className="font-display text-3xl text-slate-900">
-              Manutencoes de veículos
+              Manutenções de veículos
             </h1>
             <p className="text-sm text-slate-500">
               Controle entradas em oficina, custos, previsoes e encerramentos.
