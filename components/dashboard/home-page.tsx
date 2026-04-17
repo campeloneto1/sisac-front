@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useSubunit } from "@/contexts/subunit-context";
 import { useHome } from "@/hooks/use-home";
 import { usePermissions } from "@/hooks/use-permissions";
+import { cn, formatCurrency, formatDateTime, formatNumber, formatPercent } from "@/lib/utils";
 import { getContractAlertBadgeVariant } from "@/types/contract-alert.type";
 import { getContractStatusBadgeVariant } from "@/types/contract.type";
 import { MyVehicleCard } from "@/components/vehicle-operations/my-vehicle-card";
@@ -23,29 +24,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-function formatDateTime(value?: string | null) {
-  if (!value) return "-";
-  return new Intl.DateTimeFormat("pt-BR", {
-    dateStyle: "short",
-    timeStyle: "short",
-  }).format(new Date(value));
-}
-
-function formatNumber(value?: number | null) {
-  return new Intl.NumberFormat("pt-BR").format(value ?? 0);
-}
-
-function formatPercent(value?: number | null) {
-  return `${new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(value ?? 0)}%`;
-}
-
-function formatCurrency(value?: number | null) {
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(value ?? 0);
-}
-
 function formatArmamentLabel(
   item?: {
     type?: string | null;
@@ -60,6 +38,57 @@ function formatArmamentLabel(
     [item.type, item.variant, item.caliber, item.size]
       .filter(Boolean)
       .join(" • ") || "Armamento"
+  );
+}
+
+function getStatusDotColor(status?: string | null) {
+  switch (status) {
+    case "available":
+      return "bg-green-500";
+    case "loaned":
+      return "bg-blue-500";
+    case "assigned":
+      return "bg-purple-500";
+    case "maintenance":
+      return "bg-yellow-500";
+    case "discharged":
+      return "bg-slate-400";
+    case "lost":
+      return "bg-red-500";
+    default:
+      return "bg-slate-300";
+  }
+}
+
+function HomeListItem({
+  children,
+  href,
+  className,
+}: {
+  children: React.ReactNode;
+  href?: string;
+  className?: string;
+}) {
+  const baseClass = cn(
+    "rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3",
+    href && "transition-colors hover:bg-slate-100",
+    className,
+  );
+
+  if (href) {
+    return (
+      <Link href={href} className={cn(baseClass, "block")}>
+        {children}
+      </Link>
+    );
+  }
+
+  return <div className={baseClass}>{children}</div>;
+}
+
+function EmptyListMessage({ message }: { message: string }) {
+  return (
+    <p className="py-4 text-center text-sm text-slate-500">{message}</p>
   );
 }
 
@@ -209,27 +238,32 @@ export function DashboardHomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="max-h-96 space-y-3 overflow-y-auto">
-                {home.police_officers.by_sector
-                  .map((item, index) => (
-                    <div
+                {!home.police_officers.by_sector.length ? (
+                  <EmptyListMessage message="Nenhum setor com efetivo cadastrado." />
+                ) : (
+                  home.police_officers.by_sector.map((item, index) => (
+                    <HomeListItem
                       key={`${item.sector?.id ?? index}-${item.sector?.name ?? "Sem setor"}`}
-                      className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                      href={item.sector?.id ? `/sectors/${item.sector.id}` : undefined}
                     >
-                      <div>
-                        <p className="font-medium text-slate-900">
-                          {item.sector?.abbreviation ||
-                            item.sector?.name ||
-                            "Sem setor"}
-                        </p>
-                        <p className="text-sm text-slate-500">
-                          {formatNumber(item.active_officers)} ativos
-                        </p>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium text-slate-900">
+                            {item.sector?.abbreviation ||
+                              item.sector?.name ||
+                              "Sem setor"}
+                          </p>
+                          <p className="text-sm text-slate-500">
+                            {formatNumber(item.active_officers)} ativos
+                          </p>
+                        </div>
+                        <Badge variant="outline">
+                          {formatNumber(item.total_officers)}
+                        </Badge>
                       </div>
-                      <Badge variant="outline">
-                        {formatNumber(item.total_officers)}
-                      </Badge>
-                    </div>
-                  ))}
+                    </HomeListItem>
+                  ))
+                )}
               </CardContent>
             </Card>
             <Card className="border-slate-200/70 bg-white/80">
@@ -240,27 +274,31 @@ export function DashboardHomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="max-h-96 space-y-3 overflow-y-auto">
-                {home.police_officers.rank_distribution
-                  .map((item, index) => (
-                    <div
+                {!home.police_officers.rank_distribution.length ? (
+                  <EmptyListMessage message="Nenhuma graduação com efetivo cadastrado." />
+                ) : (
+                  home.police_officers.rank_distribution.map((item, index) => (
+                    <HomeListItem
                       key={`${item.rank?.id ?? index}-${item.rank?.name ?? "Sem graduação"}`}
-                      className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
                     >
-                      <div>
-                        <p className="font-medium text-slate-900">
-                          {item.rank?.abbreviation ||
-                            item.rank?.name ||
-                            "Sem graduação"}
-                        </p>
-                        <p className="text-sm text-slate-500">
-                          {formatNumber(item.active_officers)} ativos
-                        </p>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium text-slate-900">
+                            {item.rank?.abbreviation ||
+                              item.rank?.name ||
+                              "Sem graduação"}
+                          </p>
+                          <p className="text-sm text-slate-500">
+                            {formatNumber(item.active_officers)} ativos
+                          </p>
+                        </div>
+                        <Badge variant="outline">
+                          {formatNumber(item.total_officers)}
+                        </Badge>
                       </div>
-                      <Badge variant="outline">
-                        {formatNumber(item.total_officers)}
-                      </Badge>
-                    </div>
-                  ))}
+                    </HomeListItem>
+                  ))
+                )}
               </CardContent>
             </Card>
           </div>
@@ -297,26 +335,29 @@ export function DashboardHomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.vehicles.fleet_status.slice(0, 6).map((item, index) => (
-                  <div
-                    key={`${item.status.operational_status}-${item.status.ownership_type}-${index}`}
-                    className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900">
-                        {item.status.operational_status_label}
+                {!home.vehicles.fleet_status.length ? (
+                  <EmptyListMessage message="Nenhum status de frota disponível." />
+                ) : (
+                  home.vehicles.fleet_status.slice(0, 6).map((item, index) => (
+                    <HomeListItem
+                      key={`${item.status.operational_status}-${item.status.ownership_type}-${index}`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-medium text-slate-900">
+                          {item.status.operational_status_label}
+                        </p>
+                        <Badge variant="outline">
+                          {formatNumber(item.total_vehicles)}
+                        </Badge>
+                      </div>
+                      <p className="mt-1 text-sm text-slate-500">
+                        {item.status.ownership_type_label} •{" "}
+                        {formatNumber(item.travel_ready_vehicles)} aptos para
+                        viagem
                       </p>
-                      <Badge variant="outline">
-                        {formatNumber(item.total_vehicles)}
-                      </Badge>
-                    </div>
-                    <p className="mt-1 text-sm text-slate-500">
-                      {item.status.ownership_type_label} •{" "}
-                      {formatNumber(item.travel_ready_vehicles)} aptos para
-                      viagem
-                    </p>
-                  </div>
-                ))}
+                    </HomeListItem>
+                  ))
+                )}
               </CardContent>
             </Card>
             <Card className="border-slate-200/70 bg-white/80">
@@ -327,28 +368,31 @@ export function DashboardHomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.vehicles.fleet_composition
-                  .slice(0, 6)
-                  .map((item, index) => (
-                    <div
-                      key={`${item.type?.id ?? index}-${item.variant?.id ?? index}`}
-                      className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <p className="font-medium text-slate-900">
-                          {item.type?.name || "Sem tipo"} •{" "}
-                          {item.variant?.name || "Sem variante"}
+                {!home.vehicles.fleet_composition.length ? (
+                  <EmptyListMessage message="Nenhuma composição de frota disponível." />
+                ) : (
+                  home.vehicles.fleet_composition
+                    .slice(0, 6)
+                    .map((item, index) => (
+                      <HomeListItem
+                        key={`${item.type?.id ?? index}-${item.variant?.id ?? index}`}
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="font-medium text-slate-900">
+                            {item.type?.name || "Sem tipo"} •{" "}
+                            {item.variant?.name || "Sem variante"}
+                          </p>
+                          <Badge variant="outline">
+                            {formatNumber(item.total_vehicles)}
+                          </Badge>
+                        </div>
+                        <p className="mt-1 text-sm text-slate-500">
+                          {formatNumber(item.owned_vehicles)} próprios •{" "}
+                          {formatNumber(item.rented_vehicles)} locados
                         </p>
-                        <Badge variant="outline">
-                          {formatNumber(item.total_vehicles)}
-                        </Badge>
-                      </div>
-                      <p className="mt-1 text-sm text-slate-500">
-                        {formatNumber(item.owned_vehicles)} próprios •{" "}
-                        {formatNumber(item.rented_vehicles)} locados
-                      </p>
-                    </div>
-                  ))}
+                      </HomeListItem>
+                    ))
+                )}
               </CardContent>
             </Card>
           </div>
@@ -391,20 +435,28 @@ export function DashboardHomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.armaments.availability.slice(0, 6).map((item) => (
-                  <div
-                    key={item.status}
-                    className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="h-2.5 w-2.5 rounded-full bg-slate-300" />
-                      <p className="font-medium text-slate-900">{item.label}</p>
-                    </div>
-                    <Badge variant="outline">
-                      {formatNumber(item.total_units)}
-                    </Badge>
-                  </div>
-                ))}
+                {!home.armaments.availability.length ? (
+                  <EmptyListMessage message="Nenhuma disponibilidade registrada." />
+                ) : (
+                  home.armaments.availability.slice(0, 6).map((item) => (
+                    <HomeListItem key={item.status}>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span
+                            className={cn(
+                              "h-2.5 w-2.5 rounded-full",
+                              getStatusDotColor(item.status),
+                            )}
+                          />
+                          <p className="font-medium text-slate-900">{item.label}</p>
+                        </div>
+                        <Badge variant="outline">
+                          {formatNumber(item.total_units)}
+                        </Badge>
+                      </div>
+                    </HomeListItem>
+                  ))
+                )}
               </CardContent>
             </Card>
             <Card className="border-slate-200/70 bg-white/80">
@@ -415,25 +467,29 @@ export function DashboardHomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.armaments.inventory.slice(0, 6).map((item, index) => (
-                  <div
-                    key={item.armament?.id ?? `inventory-${index}`}
-                    className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900">
-                        {formatArmamentLabel(item.armament)}
+                {!home.armaments.inventory.length ? (
+                  <EmptyListMessage message="Nenhum armamento no inventário." />
+                ) : (
+                  home.armaments.inventory.slice(0, 6).map((item, index) => (
+                    <HomeListItem
+                      key={item.armament?.id ?? `inventory-${index}`}
+                      href={item.armament?.id ? `/armaments/${item.armament.id}` : undefined}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-medium text-slate-900">
+                          {formatArmamentLabel(item.armament)}
+                        </p>
+                        <Badge variant="outline">
+                          {formatNumber(item.total_units)}
+                        </Badge>
+                      </div>
+                      <p className="mt-1 text-sm text-slate-500">
+                        {formatNumber(item.available_units)} disponíveis •{" "}
+                        {formatNumber(item.loaned_units)} emprestadas
                       </p>
-                      <Badge variant="outline">
-                        {formatNumber(item.total_units)}
-                      </Badge>
-                    </div>
-                    <p className="mt-1 text-sm text-slate-500">
-                      {formatNumber(item.available_units)} disponíveis •{" "}
-                      {formatNumber(item.loaned_units)} emprestadas
-                    </p>
-                  </div>
-                ))}
+                    </HomeListItem>
+                  ))
+                )}
               </CardContent>
             </Card>
             <Card className="border-slate-200/70 bg-white/80 xl:col-span-2">
@@ -445,14 +501,12 @@ export function DashboardHomePage() {
               </CardHeader>
               <CardContent className="space-y-3">
                 {!home.armaments.expiring_units.length ? (
-                  <p className="text-sm text-slate-500">
-                    Nenhuma unidade próxima do vencimento no momento.
-                  </p>
+                  <EmptyListMessage message="Nenhuma unidade próxima do vencimento no momento." />
                 ) : (
                   home.armaments.expiring_units.slice(0, 8).map((item) => (
-                    <div
+                    <HomeListItem
                       key={item.id}
-                      className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
+                      href={item.armament?.id ? `/armaments/${item.armament.id}` : undefined}
                     >
                       <div className="flex items-center justify-between gap-3">
                         <div>
@@ -474,7 +528,7 @@ export function DashboardHomePage() {
                           item.armament?.subunit?.name ||
                           "-"}
                       </p>
-                    </div>
+                    </HomeListItem>
                   ))
                 )}
               </CardContent>
@@ -519,26 +573,29 @@ export function DashboardHomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.contracts.status_overview.slice(0, 6).map((item) => (
-                  <div
-                    key={item.status.value}
-                    className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
-                  >
-                    <div>
-                      <p className="font-medium text-slate-900">
-                        {item.status.label}
-                      </p>
-                      <p className="text-sm text-slate-500">
-                        {formatCurrency(item.executed_amount)} executado
-                      </p>
-                    </div>
-                    <Badge
-                      variant={getContractStatusBadgeVariant(item.status.value)}
-                    >
-                      {formatNumber(item.total_contracts)}
-                    </Badge>
-                  </div>
-                ))}
+                {!home.contracts.status_overview.length ? (
+                  <EmptyListMessage message="Nenhum contrato cadastrado." />
+                ) : (
+                  home.contracts.status_overview.slice(0, 6).map((item) => (
+                    <HomeListItem key={item.status.value}>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium text-slate-900">
+                            {item.status.label}
+                          </p>
+                          <p className="text-sm text-slate-500">
+                            {formatCurrency(item.executed_amount)} executado
+                          </p>
+                        </div>
+                        <Badge
+                          variant={getContractStatusBadgeVariant(item.status.value)}
+                        >
+                          {formatNumber(item.total_contracts)}
+                        </Badge>
+                      </div>
+                    </HomeListItem>
+                  ))
+                )}
               </CardContent>
             </Card>
             <Card className="border-slate-200/70 bg-white/80">
@@ -549,27 +606,31 @@ export function DashboardHomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.contracts.execution_overview
-                  .slice(0, 6)
-                  .map((item, index) => (
-                    <div
-                      key={`${item.company.id ?? index}-${item.company.name}`}
-                      className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <p className="font-medium text-slate-900">
-                          {item.company.name}
+                {!home.contracts.execution_overview.length ? (
+                  <EmptyListMessage message="Nenhuma execução de contrato disponível." />
+                ) : (
+                  home.contracts.execution_overview
+                    .slice(0, 6)
+                    .map((item, index) => (
+                      <HomeListItem
+                        key={`${item.company.id ?? index}-${item.company.name}`}
+                        href={item.company.id ? `/companies/${item.company.id}` : undefined}
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="font-medium text-slate-900">
+                            {item.company.name}
+                          </p>
+                          <Badge variant="outline">
+                            {formatPercent(item.executed_percentage)}
+                          </Badge>
+                        </div>
+                        <p className="mt-1 text-sm text-slate-500">
+                          {formatCurrency(item.executed_amount)} executado •{" "}
+                          {formatCurrency(item.remaining_amount)} restante
                         </p>
-                        <Badge variant="outline">
-                          {formatPercent(item.executed_percentage)}
-                        </Badge>
-                      </div>
-                      <p className="mt-1 text-sm text-slate-500">
-                        {formatCurrency(item.executed_amount)} executado •{" "}
-                        {formatCurrency(item.remaining_amount)} restante
-                      </p>
-                    </div>
-                  ))}
+                      </HomeListItem>
+                    ))
+                )}
               </CardContent>
             </Card>
             <Card className="border-slate-200/70 bg-white/80">
@@ -580,29 +641,30 @@ export function DashboardHomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.contracts.expiring_contracts.slice(0, 6).map((item) => (
-                  <div
-                    key={item.id}
-                    className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900">
-                        {item.contract_number}
+                {!home.contracts.expiring_contracts.length ? (
+                  <EmptyListMessage message="Nenhum contrato próximo do vencimento." />
+                ) : (
+                  home.contracts.expiring_contracts.slice(0, 6).map((item) => (
+                    <HomeListItem key={item.id} href={`/contracts/${item.id}`}>
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-medium text-slate-900">
+                          {item.contract_number}
+                        </p>
+                        <Badge
+                          variant={getContractStatusBadgeVariant(
+                            item.status?.value ?? "closed",
+                          )}
+                        >
+                          {item.days_until_end ?? 0} dias
+                        </Badge>
+                      </div>
+                      <p className="mt-1 text-sm text-slate-500">
+                        {item.company || "Sem empresa"} •{" "}
+                        {formatPercent(item.executed_percentage)}
                       </p>
-                      <Badge
-                        variant={getContractStatusBadgeVariant(
-                          item.status?.value ?? "closed",
-                        )}
-                      >
-                        {item.days_until_end ?? 0} dias
-                      </Badge>
-                    </div>
-                    <p className="mt-1 text-sm text-slate-500">
-                      {item.company || "Sem empresa"} •{" "}
-                      {formatPercent(item.executed_percentage)}
-                    </p>
-                  </div>
-                ))}
+                    </HomeListItem>
+                  ))
+                )}
               </CardContent>
             </Card>
             <Card className="border-slate-200/70 bg-white/80">
@@ -614,30 +676,34 @@ export function DashboardHomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {home.contracts.critical_alerts.slice(0, 6).map((item) => (
-                  <div
-                    key={item.id}
-                    className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900">
-                        {item.contract?.contract_number || "Contrato"}
+                {!home.contracts.critical_alerts.length ? (
+                  <EmptyListMessage message="Nenhum alerta crítico no momento." />
+                ) : (
+                  home.contracts.critical_alerts.slice(0, 6).map((item) => (
+                    <HomeListItem
+                      key={item.id}
+                      href={item.contract?.id ? `/contracts/${item.contract.id}` : undefined}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-medium text-slate-900">
+                          {item.contract?.contract_number || "Contrato"}
+                        </p>
+                        <Badge
+                          variant={getContractAlertBadgeVariant(item.type?.color)}
+                        >
+                          {item.type?.label || "Alerta"}
+                        </Badge>
+                      </div>
+                      <p className="mt-1 text-sm text-slate-500">
+                        {item.contract?.company || "Sem empresa"} •{" "}
+                        {formatDateTime(item.alert_date)}
                       </p>
-                      <Badge
-                        variant={getContractAlertBadgeVariant(item.type?.color)}
-                      >
-                        {item.type?.label || "Alerta"}
-                      </Badge>
-                    </div>
-                    <p className="mt-1 text-sm text-slate-500">
-                      {item.contract?.company || "Sem empresa"} •{" "}
-                      {formatDateTime(item.alert_date)}
-                    </p>
-                    <p className="mt-2 text-sm text-slate-600">
-                      {item.message}
-                    </p>
-                  </div>
-                ))}
+                      <p className="mt-2 text-sm text-slate-600">
+                        {item.message}
+                      </p>
+                    </HomeListItem>
+                  ))
+                )}
               </CardContent>
             </Card>
           </div>
@@ -646,16 +712,15 @@ export function DashboardHomePage() {
     },
   ].filter((section) => section.visible);
 
-  const visibleTabs = tabs;
-  const currentTab = visibleTabs.some((tab) => tab.key === activeTab)
+  const currentTab = tabs.some((tab) => tab.key === activeTab)
     ? activeTab
-    : (visibleTabs[0]?.key ?? "");
+    : (tabs[0]?.key ?? "");
 
   return (
     <div className="space-y-6">
       <MyVehicleCard />
 
-      {!visibleTabs.length ? (
+      {!tabs.length ? (
         <Card className="border-slate-200/70 bg-white/80">
           <CardHeader>
             <CardTitle>Nenhum painel disponível</CardTitle>
@@ -668,13 +733,13 @@ export function DashboardHomePage() {
       ) : (
         <Tabs value={currentTab} onValueChange={setActiveTab}>
           <TabsList>
-            {visibleTabs.map((tab) => (
+            {tabs.map((tab) => (
               <TabsTrigger key={tab.key} value={tab.key}>
                 {tab.label}
               </TabsTrigger>
             ))}
           </TabsList>
-          {visibleTabs.map((tab) => (
+          {tabs.map((tab) => (
             <TabsContent key={tab.key} value={tab.key}>
               {tab.content}
             </TabsContent>
