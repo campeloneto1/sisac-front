@@ -139,13 +139,13 @@ export function LoginForm() {
         <CardContent>
           <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-2">
-              <Label htmlFor="email">E-mail</Label>
+              <Label htmlFor="email">E-mail *</Label>
               <Input id="email" placeholder="você@empresa.com" {...register("email")} />
               {errors.email ? <p className="text-sm text-destructive">{errors.email.message}</p> : null}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
+              <Label htmlFor="password">Senha *</Label>
               <Input id="password" type="password" placeholder="Sua senha" {...register("password")} />
               {errors.password ? <p className="text-sm text-destructive">{errors.password.message}</p> : null}
             </div>

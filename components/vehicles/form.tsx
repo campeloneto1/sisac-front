@@ -349,7 +349,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
             </div>
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
               <div className="space-y-2">
-                <Label htmlFor="license_plate">Placa</Label>
+                <Label htmlFor="license_plate">Placa *</Label>
                 <Input
                   id="license_plate"
                   placeholder="Ex.: ABC1234"
@@ -426,7 +426,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label>Marca</Label>
+                <Label>Marca *</Label>
                 <Select
                   value={selectedBrandId || "none"}
                   onValueChange={(value) => {
@@ -509,7 +509,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label>Status operacional</Label>
+                <Label>Status operacional *</Label>
                 <Select
                   value={selectedOperationalStatus}
                   onValueChange={(value) =>
@@ -532,7 +532,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label>Tipo de posse</Label>
+                <Label>Tipo de posse *</Label>
                 <Select
                   value={selectedOwnershipType}
                   onValueChange={(value) =>
@@ -567,7 +567,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
             </div>
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="initial_km">KM inicial</Label>
+                <Label htmlFor="initial_km">KM inicial *</Label>
                 <Input
                   id="initial_km"
                   type="number"
@@ -582,7 +582,7 @@ export function VehicleForm({ mode, vehicle }: VehicleFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="current_km">KM atual</Label>
+                <Label htmlFor="current_km">KM atual *</Label>
                 <Input
                   id="current_km"
                   type="number"

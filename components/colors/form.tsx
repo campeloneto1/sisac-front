@@ -174,7 +174,7 @@ export function ColorForm({ mode, color }: ColorFormProps) {
           <section className="grid gap-5 md:grid-cols-[1.2fr_0.8fr]">
             <div className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="name">Nome</Label>
+                <Label htmlFor="name">Nome *</Label>
                 <Input
                   id="name"
                   placeholder="Ex.: Azul marinho, Vermelho, Preto"
@@ -191,7 +191,7 @@ export function ColorForm({ mode, color }: ColorFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="slug">Slug</Label>
+                <Label htmlFor="slug">Slug *</Label>
                 <Input
                   id="slug"
                   placeholder="Ex.: azul-marinho"

@@ -108,7 +108,7 @@ export function CityForm({ mode, city }: CityFormProps) {
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name">Nome *</Label>
             <Input id="name" placeholder="Ex.: Fortaleza" {...register("name")} />
             <p className="text-xs text-slate-500">Obrigatório. O backend aplica trim e válida unicidade dentro do mesmo estado.</p>
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}

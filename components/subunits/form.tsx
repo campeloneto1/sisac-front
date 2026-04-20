@@ -161,13 +161,13 @@ export function SubunitForm({ mode, subunit }: SubunitFormProps) {
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name">Nome *</Label>
             <Input id="name" placeholder="Ex.: 1ª Companhia" {...register("name")} />
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="abbreviation">Sigla</Label>
+            <Label htmlFor="abbreviation">Sigla *</Label>
             <Input id="abbreviation" maxLength={20} placeholder="Ex.: 1CIA" {...register("abbreviation")} />
             <p className="text-xs text-slate-500">Obrigatória. O backend salva automaticamente em caixa alta.</p>
             {errors.abbreviation ? <p className="text-sm text-destructive">{errors.abbreviation.message}</p> : null}

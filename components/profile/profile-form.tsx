@@ -146,13 +146,13 @@ export function ProfileForm() {
         <CardContent>
           <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="name">Nome</Label>
+              <Label htmlFor="name">Nome *</Label>
               <Input id="name" {...register("name")} />
               {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">E-mail</Label>
+              <Label htmlFor="email">E-mail *</Label>
               <Input id="email" {...register("email")} />
               {errors.email ? <p className="text-sm text-destructive">{errors.email.message}</p> : null}
             </div>
@@ -195,7 +195,7 @@ export function ProfileForm() {
             onSubmit={handleSubmitPassword(onSubmitPassword)}
           >
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="current_password">Senha atual</Label>
+              <Label htmlFor="current_password">Senha atual *</Label>
               <Input
                 id="current_password"
                 type="password"
@@ -210,7 +210,7 @@ export function ProfileForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Nova senha</Label>
+              <Label htmlFor="password">Nova senha *</Label>
               <Input
                 id="password"
                 type="password"
@@ -225,7 +225,7 @@ export function ProfileForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password_confirmation">Confirmar nova senha</Label>
+              <Label htmlFor="password_confirmation">Confirmar nova senha *</Label>
               <Input
                 id="password_confirmation"
                 type="password"

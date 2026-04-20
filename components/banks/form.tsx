@@ -88,13 +88,13 @@ export function BankForm({ mode, bank }: BankFormProps) {
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name">Nome *</Label>
             <Input id="name" placeholder="Ex.: Banco do Brasil" {...register("name")} />
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="code">Codigo</Label>
+            <Label htmlFor="code">Codigo *</Label>
             <Input id="code" maxLength={20} placeholder="Ex.: 001" {...register("code")} />
             <p className="text-xs text-slate-500">Obrigatório. O backend salva automaticamente em caixa alta.</p>
             {errors.code ? <p className="text-sm text-destructive">{errors.code.message}</p> : null}

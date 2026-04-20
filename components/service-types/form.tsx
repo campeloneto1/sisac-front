@@ -175,7 +175,7 @@ export function ServiceTypeForm({ mode, serviceType }: ServiceTypeFormProps) {
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="name">Nome</Label>
+              <Label htmlFor="name">Nome *</Label>
               <Input
                 id="name"
                 placeholder="Ex.: Manutenção corretiva, Visita técnica, Atendimento"
@@ -190,7 +190,7 @@ export function ServiceTypeForm({ mode, serviceType }: ServiceTypeFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="code">Codigo</Label>
+              <Label htmlFor="code">Codigo *</Label>
               <Input
                 id="code"
                 placeholder="Ex.: manutenção-corretiva"

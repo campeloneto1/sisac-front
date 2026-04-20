@@ -158,7 +158,7 @@ export function ArmamentSizeForm({
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="armament-size-name">Nome</Label>
+              <Label htmlFor="armament-size-name">Nome *</Label>
               <Input
                 id="armament-size-name"
                 placeholder="Ex.: M"

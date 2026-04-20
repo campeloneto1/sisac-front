@@ -90,13 +90,13 @@ export function CourseForm({ mode, course }: CourseFormProps) {
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name">Nome *</Label>
             <Input id="name" placeholder="Ex.: Curso de Formacao de Sargentos" {...register("name")} />
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="abbreviation">Sigla</Label>
+            <Label htmlFor="abbreviation">Sigla *</Label>
             <Input id="abbreviation" placeholder="Ex.: CFS" {...register("abbreviation")} />
             <p className="text-xs text-slate-500">A API converte a sigla para maiúsculas automaticamente.</p>
             {errors.abbreviation ? <p className="text-sm text-destructive">{errors.abbreviation.message}</p> : null}

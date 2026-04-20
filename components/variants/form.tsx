@@ -143,7 +143,7 @@ export function VariantForm({ mode, variant }: VariantFormProps) {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name">Nome *</Label>
             <Input
               id="name"
               placeholder="Ex.: Glock 17, Actros, Ranger"

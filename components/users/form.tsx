@@ -225,7 +225,7 @@ export function UserForm({ mode, user }: UserFormProps) {
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name">Nome *</Label>
             <Input id="name" {...register("name")} />
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
@@ -271,7 +271,7 @@ export function UserForm({ mode, user }: UserFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="document">Documento</Label>
+            <Label htmlFor="document">Documento *</Label>
             <Input id="document" placeholder="Somente numeros" {...register("document")} />
             {errors.document ? <p className="text-sm text-destructive">{errors.document.message}</p> : null}
           </div>
@@ -283,13 +283,13 @@ export function UserForm({ mode, user }: UserFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">E-mail</Label>
+            <Label htmlFor="email">E-mail *</Label>
             <Input id="email" type="email" {...register("email")} />
             {errors.email ? <p className="text-sm text-destructive">{errors.email.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label>Perfil</Label>
+            <Label>Perfil *</Label>
             <Select
               value={selectedRoleId || undefined}
               onValueChange={(value) => setValue("role_id", value, { shouldValidate: true })}
@@ -309,7 +309,7 @@ export function UserForm({ mode, user }: UserFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label>Tipo</Label>
+            <Label>Tipo *</Label>
             <Select value={selectedType || undefined} onValueChange={(value) => setValue("type", value, { shouldValidate: true })}>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione o tipo" />

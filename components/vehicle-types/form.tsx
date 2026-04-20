@@ -169,7 +169,7 @@ export function VehicleTypeForm({
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="name">Nome</Label>
+              <Label htmlFor="name">Nome *</Label>
               <Input
                 id="name"
                 placeholder="Ex.: Sedan, SUV, Motocicleta, Caminhonete"
@@ -184,7 +184,7 @@ export function VehicleTypeForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="slug">Slug</Label>
+              <Label htmlFor="slug">Slug *</Label>
               <Input
                 id="slug"
                 placeholder="Ex.: sedan"

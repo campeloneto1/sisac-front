@@ -106,20 +106,20 @@ export function RankForm({ mode, rank }: RankFormProps) {
       <CardContent>
         <form className="grid gap-5 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name">Nome *</Label>
             <Input id="name" placeholder="Ex.: Soldado, Cabo, Tenente" {...register("name")} />
             {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="abbreviation">Sigla</Label>
+            <Label htmlFor="abbreviation">Sigla *</Label>
             <Input id="abbreviation" maxLength={5} placeholder="Ex.: SD, CB, TEN" {...register("abbreviation")} />
             <p className="text-xs text-slate-500">A sigla será enviada em caixa alta para manter padrao com a API.</p>
             {errors.abbreviation ? <p className="text-sm text-destructive">{errors.abbreviation.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="hierarchy_level">Nivel hierarquico</Label>
+            <Label htmlFor="hierarchy_level">Nivel hierarquico *</Label>
             <Input id="hierarchy_level" type="number" min={1} placeholder="Ex.: 1" {...register("hierarchy_level")} />
             <p className="text-xs text-slate-500">Use um número unico para ordenar a progressao hierárquica.</p>
             {errors.hierarchy_level ? <p className="text-sm text-destructive">{errors.hierarchy_level.message}</p> : null}

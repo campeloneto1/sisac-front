@@ -30,7 +30,7 @@ import { Textarea } from "@/components/ui/textarea";
 const bulkPromotionSchema = z.object({
   rank_id: z.number().min(1, "Selecione a graduação de destino."),
   start_date: z.string().min(1, "A data de promoção é obrigatória."),
-  promotion_type: z.enum(["merit", "seniority", "bravery"]).nullable().optional(),
+  promotion_type: z.enum(["merit", "seniority", "bravery"], { message: "Selecione o tipo de promoção" }),
   promotion_bulletin: z.string().max(100, "O boletim deve ter no máximo 100 caracteres.").optional(),
   promotion_date: z.string().optional(),
   notes: z.string().max(500, "As observações devem ter no máximo 500 caracteres.").optional(),
@@ -79,7 +79,7 @@ export function BulkPromotionDialog({
     defaultValues: {
       rank_id: 0,
       start_date: "",
-      promotion_type: null,
+      promotion_type: undefined,
       promotion_bulletin: "",
       promotion_date: "",
       notes: "",
@@ -199,18 +199,17 @@ export function BulkPromotionDialog({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="bulk-promotion-type">Tipo de promoção</Label>
+              <Label htmlFor="bulk-promotion-type">Tipo de promoção *</Label>
               <Select
-                value={selectedPromotionType ?? "none"}
+                value={selectedPromotionType ?? ""}
                 onValueChange={(value) =>
-                  setValue("promotion_type", value === "none" ? null : (value as PromotionType), { shouldValidate: true })
+                  setValue("promotion_type", value as PromotionType, { shouldValidate: true })
                 }
               >
                 <SelectTrigger id="bulk-promotion-type">
                   <SelectValue placeholder="Selecione o tipo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">Nenhum</SelectItem>
                   {Object.entries(promotionTypeLabels).map(([value, label]) => (
                     <SelectItem key={value} value={value}>
                       {label}

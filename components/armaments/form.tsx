@@ -292,7 +292,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             <div className="space-y-2">
-              <Label>Tipo</Label>
+              <Label>Tipo *</Label>
               <Select
                 value={selectedTypeId || "none"}
                 onValueChange={(value) =>
@@ -322,7 +322,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label>Marca</Label>
+              <Label>Marca *</Label>
               <Select
                 value={selectedBrandId || "none"}
                 onValueChange={(value) => {
@@ -358,7 +358,7 @@ export function ArmamentForm({ mode, armament }: ArmamentFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label>Variante</Label>
+              <Label>Variante *</Label>
               <Select
                 value={selectedVariantId || "none"}
                 disabled={!selectedBrandId}

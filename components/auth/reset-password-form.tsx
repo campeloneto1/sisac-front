@@ -82,25 +82,25 @@ export function ResetPasswordForm() {
       <CardContent>
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
-            <Label htmlFor="token">Token</Label>
+            <Label htmlFor="token">Token *</Label>
             <Input id="token" placeholder="Cole o token aqui" {...register("token")} />
             {errors.token ? <p className="text-sm text-destructive">{errors.token.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">E-mail</Label>
+            <Label htmlFor="email">E-mail *</Label>
             <Input id="email" placeholder="você@empresa.com" {...register("email")} />
             {errors.email ? <p className="text-sm text-destructive">{errors.email.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Nova senha</Label>
+            <Label htmlFor="password">Nova senha *</Label>
             <Input id="password" type="password" {...register("password")} />
             {errors.password ? <p className="text-sm text-destructive">{errors.password.message}</p> : null}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password_confirmation">Confirmar nova senha</Label>
+            <Label htmlFor="password_confirmation">Confirmar nova senha *</Label>
             <Input id="password_confirmation" type="password" {...register("password_confirmation")} />
             {errors.password_confirmation ? (
               <p className="text-sm text-destructive">{errors.password_confirmation.message}</p>

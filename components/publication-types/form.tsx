@@ -111,13 +111,13 @@ export function PublicationTypeForm({ mode, publicationType }: PublicationTypeFo
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="publication-type-name">Nome</Label>
+              <Label htmlFor="publication-type-name">Nome *</Label>
               <Input id="publication-type-name" placeholder="Ex.: Elogio individual" {...register("name")} />
               {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="publication-type-slug">Slug</Label>
+              <Label htmlFor="publication-type-slug">Slug *</Label>
               <Input id="publication-type-slug" placeholder="Ex.: elogio-individual" {...register("slug")} />
               {errors.slug ? <p className="text-sm text-destructive">{errors.slug.message}</p> : null}
             </div>
@@ -131,7 +131,7 @@ export function PublicationTypeForm({ mode, publicationType }: PublicationTypeFo
 
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label>Natureza</Label>
+              <Label>Natureza *</Label>
               <Select
                 value={nature}
                 onValueChange={(value) => setValue("nature", value as "positive" | "neutral" | "negative", { shouldValidate: true })}

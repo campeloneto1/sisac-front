@@ -187,19 +187,19 @@ export function ContractForm({ mode, contract }: ContractFormProps) {
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="contract_number">Número do contrato</Label>
+              <Label htmlFor="contract_number">Número do contrato *</Label>
               <Input id="contract_number" placeholder="Ex.: CTR-2026-001" {...register("contract_number")} />
               {errors.contract_number ? <p className="text-sm text-destructive">{errors.contract_number.message}</p> : null}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="sacc_number">Número SACC</Label>
+              <Label htmlFor="sacc_number">Número SACC *</Label>
               <Input id="sacc_number" placeholder="Ex.: SACC-2026-0001" {...register("sacc_number")} />
               {errors.sacc_number ? <p className="text-sm text-destructive">{errors.sacc_number.message}</p> : null}
             </div>
 
             <div className="space-y-2">
-              <Label>Empresa</Label>
+              <Label>Empresa *</Label>
               <Select value={selectedCompanyId} onValueChange={(value) => setValue("company_id", value, { shouldValidate: true })}>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione uma empresa" />
@@ -219,7 +219,7 @@ export function ContractForm({ mode, contract }: ContractFormProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="total_value">Valor total</Label>
+              <Label htmlFor="total_value">Valor total *</Label>
               <Input id="total_value" step="0.01" type="number" placeholder="0,00" {...register("total_value", { valueAsNumber: true })} />
               <p className="text-xs text-slate-500">Preview: {formatCurrencyPreview(Number.isFinite(selectedTotalValue) ? selectedTotalValue : 0)}</p>
               {errors.total_value ? <p className="text-sm text-destructive">{errors.total_value.message}</p> : null}
@@ -292,19 +292,19 @@ export function ContractForm({ mode, contract }: ContractFormProps) {
 
           <section className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="start_date">Data inicial</Label>
+              <Label htmlFor="start_date">Data inicial *</Label>
               <Input id="start_date" type="date" {...register("start_date")} />
               {errors.start_date ? <p className="text-sm text-destructive">{errors.start_date.message}</p> : null}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="end_date">Data final</Label>
+              <Label htmlFor="end_date">Data final *</Label>
               <Input id="end_date" type="date" {...register("end_date")} />
               {errors.end_date ? <p className="text-sm text-destructive">{errors.end_date.message}</p> : null}
             </div>
 
             <div className="space-y-2">
-              <Label>Status</Label>
+              <Label>Status *</Label>
               <Select value={selectedStatus} onValueChange={(value) => setValue("status", value, { shouldValidate: true })}>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione um status" />

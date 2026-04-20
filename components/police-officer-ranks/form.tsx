@@ -25,7 +25,7 @@ const policeOfficerRankFormSchema = z.object({
   rank_id: z.number().min(1, "Selecione uma graduação"),
   start_date: z.string().min(1, "A data de início é obrigatória"),
   end_date: z.string().optional(),
-  promotion_type: z.enum(["merit", "seniority", "bravery"]).optional().nullable(),
+  promotion_type: z.enum(["merit", "seniority", "bravery"], { message: "Selecione o tipo de promoção" }),
   promotion_bulletin: z.string().max(100, "O boletim deve ter no máximo 100 caracteres").optional(),
   promotion_date: z.string().optional(),
   notes: z.string().optional(),
@@ -67,7 +67,7 @@ export function PoliceOfficerRankForm({ mode, policeOfficerRank, policeOfficers:
       rank_id: policeOfficerRank?.rank_id ?? 0,
       start_date: policeOfficerRank?.start_date ?? "",
       end_date: policeOfficerRank?.end_date ?? "",
-      promotion_type: policeOfficerRank?.promotion_type ?? null,
+      promotion_type: policeOfficerRank?.promotion_type ?? undefined,
       promotion_bulletin: policeOfficerRank?.promotion_bulletin ?? "",
       promotion_date: policeOfficerRank?.promotion_date ?? "",
       notes: policeOfficerRank?.notes ?? "",
@@ -86,7 +86,7 @@ export function PoliceOfficerRankForm({ mode, policeOfficerRank, policeOfficers:
     control,
     name: "rank_id",
   });
-  const promotionTypeValue = selectedPromotionType ?? "none";
+  const promotionTypeValue = selectedPromotionType ?? "";
 
   useEffect(() => {
     if (!policeOfficerRank) {
@@ -98,7 +98,7 @@ export function PoliceOfficerRankForm({ mode, policeOfficerRank, policeOfficers:
       rank_id: policeOfficerRank.rank_id,
       start_date: policeOfficerRank.start_date,
       end_date: policeOfficerRank.end_date ?? "",
-      promotion_type: policeOfficerRank.promotion_type ?? null,
+      promotion_type: policeOfficerRank.promotion_type ?? undefined,
       promotion_bulletin: policeOfficerRank.promotion_bulletin ?? "",
       promotion_date: policeOfficerRank.promotion_date ?? "",
       notes: policeOfficerRank.notes ?? "",
@@ -211,16 +211,15 @@ export function PoliceOfficerRankForm({ mode, policeOfficerRank, policeOfficers:
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="promotion_type">Tipo de promoção</Label>
+            <Label htmlFor="promotion_type">Tipo de promoção *</Label>
             <Select
               value={promotionTypeValue}
-              onValueChange={(value) => setValue("promotion_type", value === "none" ? null : (value as PromotionType))}
+              onValueChange={(value) => setValue("promotion_type", value as PromotionType)}
             >
               <SelectTrigger id="promotion_type">
                 <SelectValue placeholder="Selecione o tipo" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">Nenhum</SelectItem>
                 {Object.entries(promotionTypeLabels).map(([value, label]) => (
                   <SelectItem key={value} value={value}>
                     {label}

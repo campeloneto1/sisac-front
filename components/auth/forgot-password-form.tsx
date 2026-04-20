@@ -60,7 +60,7 @@ export function ForgotPasswordForm() {
       <CardContent className="space-y-5">
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
-            <Label htmlFor="email">E-mail</Label>
+            <Label htmlFor="email">E-mail *</Label>
             <Input id="email" placeholder="você@empresa.com" {...register("email")} />
             {errors.email ? <p className="text-sm text-destructive">{errors.email.message}</p> : null}
           </div>

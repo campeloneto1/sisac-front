@@ -148,7 +148,7 @@ export function BrandForm({ mode, brand }: BrandFormProps) {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="name">Nome</Label>
+            <Label htmlFor="name">Nome *</Label>
             <Input
               id="name"
               placeholder="Ex.: Glock, Mercedes-Benz, CBC"
@@ -178,7 +178,7 @@ export function BrandForm({ mode, brand }: BrandFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label>Tipo</Label>
+            <Label>Tipo *</Label>
             <Select
               value={selectedType}
               onValueChange={(value) =>

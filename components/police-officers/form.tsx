@@ -235,17 +235,17 @@ export function PoliceOfficerForm({ mode, policeOfficer }: PoliceOfficerFormProp
             </div>
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="name">Nome completo</Label>
+                <Label htmlFor="name">Nome completo *</Label>
                 <Input id="name" {...register("name")} />
                 {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="cpf">CPF</Label>
+                <Label htmlFor="cpf">CPF *</Label>
                 <Input id="cpf" placeholder="Somente numeros" {...register("cpf")} />
                 {errors.cpf ? <p className="text-sm text-destructive">{errors.cpf.message}</p> : null}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">Email *</Label>
                 <Input id="email" type="email" {...register("email")} />
                 {errors.email ? <p className="text-sm text-destructive">{errors.email.message}</p> : null}
               </div>
@@ -291,12 +291,12 @@ export function PoliceOfficerForm({ mode, policeOfficer }: PoliceOfficerFormProp
             </div>
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="war_name">Nome de guerra</Label>
+                <Label htmlFor="war_name">Nome de guerra *</Label>
                 <Input id="war_name" {...register("war_name")} />
                 {errors.war_name ? <p className="text-sm text-destructive">{errors.war_name.message}</p> : null}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="registration_number">Matrícula</Label>
+                <Label htmlFor="registration_number">Matrícula *</Label>
                 <Input id="registration_number" {...register("registration_number")} />
                 {errors.registration_number ? <p className="text-sm text-destructive">{errors.registration_number.message}</p> : null}
               </div>
